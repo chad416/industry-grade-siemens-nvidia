@@ -1,0 +1,75 @@
+symbol,direction,address,module,channel,device,description,safe_default,classification
+SAFETY_OK,DI,I0.0,-A102,0,Safety relay mirror,External safety chain healthy (monitor only),FALSE,Standard control
+GUARD_CLOSED_STATUS,DI,I0.1,-A102,1,Guard circuit mirror,Guard status monitor only,FALSE,Standard control
+AIR_PRESSURE_OK,DI,I0.2,-A102,2,-B100,Pneumatic pressure switch,FALSE,Standard control
+PRODUCT_SUPPLY_OK,DI,I0.3,-A102,3,-B101,Product supply permissive,FALSE,Standard control
+CONVEYOR_READY,DI,I0.4,-A102,4,-U100,Conveyor VFD ready,FALSE,Standard control
+CONVEYOR_RUNNING,DI,I0.5,-A102,5,-U100,Conveyor VFD running,FALSE,Standard control
+CONVEYOR_FAULT,DI,I0.6,-A102,6,-U100,Conveyor VFD fault,FALSE,Standard control
+PUMP_READY,DI,I0.7,-A102,7,-U101,Pump VFD ready,FALSE,Standard control
+PUMP_RUNNING,DI,I1.0,-A102,8,-U101,Pump VFD running,FALSE,Standard control
+PUMP_FAULT,DI,I1.1,-A102,9,-U101,Pump VFD fault,FALSE,Standard control
+BOTTLE_AT_NEST_1,DI,I1.2,-A102,10,-B110,Bottle 1 position sensor,FALSE,Standard control
+BOTTLE_AT_NEST_2,DI,I1.3,-A102,11,-B111,Bottle 2 position sensor,FALSE,Standard control
+GATE_OPEN_FB,DI,I1.4,-A102,12,-B120,Gate open feedback,FALSE,Standard control
+GATE_CLOSED_FB,DI,I1.5,-A102,13,-B121,Gate closed feedback,FALSE,Standard control
+CLAMP_RELEASED_FB,DI,I1.6,-A102,14,-B122,Clamp released feedback,FALSE,Standard control
+CLAMP_ENGAGED_FB,DI,I1.7,-A102,15,-B123,Clamp engaged feedback,FALSE,Standard control
+FILL_VALVE_1_CLOSED_FB,DI,I2.0,-A102,16,-B130,Valve 1 closed proof,FALSE,Standard control
+FILL_VALVE_2_CLOSED_FB,DI,I2.1,-A102,17,-B131,Valve 2 closed proof,FALSE,Standard control
+CAPPER_READY,DI,I2.2,-A102,18,-IF140,Capping station ready,FALSE,Standard control
+CAPPER_BUSY,DI,I2.3,-A102,19,-IF140,Capping station busy,FALSE,Standard control
+CAPPER_COMPLETE,DI,I2.4,-A102,20,-IF140,Capping complete acknowledgement,FALSE,Standard control
+CAPPER_FAULT,DI,I2.5,-A102,21,-IF140,Capping fault,FALSE,Standard control
+LOCAL_RESET_PB,DI,I2.6,-A102,22,-S100,Local reset pushbutton,FALSE,Standard control
+LOCAL_STOP_PB,DI,I2.7,-A102,23,-S101,Local controlled-stop pushbutton,FALSE,Standard control
+DI_SPARE_01,DI,I3.0,-A102,24,SPARE,Allocated spare input,FALSE,Standard control
+DI_SPARE_02,DI,I3.1,-A102,25,SPARE,Allocated spare input,FALSE,Standard control
+DI_SPARE_03,DI,I3.2,-A102,26,SPARE,Allocated spare input,FALSE,Standard control
+DI_SPARE_04,DI,I3.3,-A102,27,SPARE,Allocated spare input,FALSE,Standard control
+DI_SPARE_05,DI,I3.4,-A102,28,SPARE,Allocated spare input,FALSE,Standard control
+DI_SPARE_06,DI,I3.5,-A102,29,SPARE,Allocated spare input,FALSE,Standard control
+DI_SPARE_07,DI,I3.6,-A102,30,SPARE,Allocated spare input,FALSE,Standard control
+DI_SPARE_08,DI,I3.7,-A102,31,SPARE,Allocated spare input,FALSE,Standard control
+CONVEYOR_RUN_CMD,DO,Q0.0,-A103,0,-K200,Conveyor run relay,FALSE,Standard control
+PUMP_RUN_CMD,DO,Q0.1,-A103,1,-K201,Pump run relay,FALSE,Standard control
+FILL_VALVE_1_OPEN_CMD,DO,Q0.2,-A103,2,-K202,Valve 1 interposing relay,FALSE,Standard control
+FILL_VALVE_2_OPEN_CMD,DO,Q0.3,-A103,3,-K203,Valve 2 interposing relay,FALSE,Standard control
+GATE_OPEN_CMD,DO,Q0.4,-A103,4,-K204,Gate open relay,FALSE,Standard control
+GATE_CLOSE_CMD,DO,Q0.5,-A103,5,-K205,Gate close relay,FALSE,Standard control
+CLAMP_ENGAGE_CMD,DO,Q0.6,-A103,6,-K206,Clamp engage relay,FALSE,Standard control
+CLAMP_RELEASE_CMD,DO,Q0.7,-A103,7,-K207,Clamp release relay,FALSE,Standard control
+CAPPER_REQUEST,DO,Q1.0,-A103,8,-K208,Capping request relay,FALSE,Standard control
+STACK_GREEN,DO,Q1.1,-A103,9,-K209,Green beacon relay,FALSE,Standard control
+STACK_AMBER,DO,Q1.2,-A103,10,-K210,Amber beacon relay,FALSE,Standard control
+STACK_RED,DO,Q1.3,-A103,11,-K211,Red beacon relay,FALSE,Standard control
+AUDIBLE_ALARM,DO,Q1.4,-A103,12,-K212,Sounder relay,FALSE,Standard control
+CAMERA_LIGHT_ENABLE,DO,Q1.5,-A103,13,-K213,Vision lighting relay,FALSE,Standard control
+DO_SPARE_01,DO,Q1.6,-A103,14,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_02,DO,Q1.7,-A103,15,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_03,DO,Q2.0,-A103,16,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_04,DO,Q2.1,-A103,17,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_05,DO,Q2.2,-A103,18,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_06,DO,Q2.3,-A103,19,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_07,DO,Q2.4,-A103,20,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_08,DO,Q2.5,-A103,21,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_09,DO,Q2.6,-A103,22,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_10,DO,Q2.7,-A103,23,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_11,DO,Q3.0,-A103,24,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_12,DO,Q3.1,-A103,25,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_13,DO,Q3.2,-A103,26,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_14,DO,Q3.3,-A103,27,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_15,DO,Q3.4,-A103,28,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_16,DO,Q3.5,-A103,29,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_17,DO,Q3.6,-A103,30,SPARE,Allocated spare output,FALSE,Standard control
+DO_SPARE_18,DO,Q3.7,-A103,31,SPARE,Allocated spare output,FALSE,Standard control
+FLOW_1_MA_RAW,AI,IW64,-A104,0,-FT100,Flow channel 1 instantaneous 4–20 mA,0,Standard control
+FLOW_2_MA_RAW,AI,IW66,-A104,1,-FT101,Flow channel 2 instantaneous 4–20 mA,0,Standard control
+AI_SPARE_01,AI,IW68,-A104,2,SPARE,Allocated spare analog input,0,Standard control
+AI_SPARE_02,AI,IW70,-A104,3,SPARE,Allocated spare analog input,0,Standard control
+AI_SPARE_03,AI,IW72,-A104,4,SPARE,Allocated spare analog input,0,Standard control
+AI_SPARE_04,AI,IW74,-A104,5,SPARE,Allocated spare analog input,0,Standard control
+AI_SPARE_05,AI,IW76,-A104,6,SPARE,Allocated spare analog input,0,Standard control
+AI_SPARE_06,AI,IW78,-A104,7,SPARE,Allocated spare analog input,0,Standard control
+FLOW_1_PULSE,HSC,TM1.CH0.A,-A101,CH0 A,-FT100,24 V pulse input channel 1,0,Standard control
+FLOW_2_PULSE,HSC,TM1.CH1.A,-A101,CH1 A,-FT101,24 V pulse input channel 2,0,Standard control

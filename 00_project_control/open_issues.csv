@@ -1,0 +1,7 @@
+issue_id,severity,issue,owner,closure_evidence
+OI-001,Blocking,"TIA Portal V20 is installed, but licence/native access is unproven; current identity lacks Openness authorization; Startdrive and PLCSIM are absent",Project sponsor / Siemens engineer,"Licensed V20 project open/compile/archive reports, authorized Openness or manual workflow, Startdrive installation and PLCSIM traces"
+OI-002,Blocking,"RTX 5060 Laptop GPU is present, but CUDA development stack, TAO, DeepStream, TensorRT, Omniverse/OpenUSD and a real labeled dataset are absent",Vision engineer,"Named dataset, installed supported NVIDIA stack, training/evaluation logs, model hash and tested hardware latency"
+OI-003,Blocking,Native QET baseline predates final Siemens/NVIDIA hardware and detailed upgrade,Electrical engineer,"Updated QET reopen, populated BOM/xrefs, continuity reconciliation and page review"
+OI-004,Blocking,Native CAD baseline predates selected hardware envelopes,Panel engineer,Updated FCStd reopen and STEP/IGES/DXF validation
+OI-005,High,"Motor, pump, utilities, enclosure environment and site protection data absent",Project sponsor,Approved site and manufacturer data; calculations revised
+OI-006,High,"Camera, lens, light, carrier and reject/disposition workflow not physically validated",Vision/process,Optical trial and approved operator disposition procedure

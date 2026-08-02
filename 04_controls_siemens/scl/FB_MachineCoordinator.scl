@@ -1,0 +1,33 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+FUNCTION_BLOCK "FB_MachineCoordinator"
+VAR_INPUT InitDone : Bool; PermissivesOk : Bool; StartEdge : Bool; StopEdge : Bool; ResetEdge : Bool; ManualRequest : Bool; PairPresent : Bool; GateClosed : Bool; ClampEngaged : Bool; Fill1Done : Bool; Fill2Done : Bool; DripDone : Bool; VisionAccepted : Bool; VisionPass : Bool; CapperReady : Bool; CapperComplete : Bool; BlockingFault : Bool; END_VAR
+VAR_OUTPUT State : UInt; IndexRequest : Bool; GateCloseRequest : Bool; ClampRequest : Bool; FillStartPulse : Bool; VisionRequestPulse : Bool; CapperRequest : Bool; QualityHold : Bool; END_VAR
+VAR step : UInt; lastState : UInt; END_VAR
+BEGIN
+  #FillStartPulse := FALSE; #VisionRequestPulse := FALSE;
+  CASE #State OF
+    0: IF #InitDone THEN #State := 10; END_IF; // UNINITIALIZED -> INITIALIZING
+    10: IF #BlockingFault THEN #State := 80; ELSIF #PermissivesOk THEN #State := 20; END_IF;
+    20: #step := 0; IF #ResetEdge AND #PermissivesOk THEN #State := 30; END_IF;
+    30: IF #ManualRequest THEN #State := 50; ELSIF #StartEdge THEN #State := 40; END_IF;
+    40:
++      IF #BlockingFault THEN #State := 80;
++      ELSIF #StopEdge THEN #State := 70;
++      ELSE
++        CASE #step OF
++          0: #IndexRequest := TRUE; IF #PairPresent THEN #IndexRequest := FALSE; #step := 10; END_IF;
++          10: #GateCloseRequest := TRUE; #ClampRequest := TRUE; IF #GateClosed AND #ClampEngaged THEN #FillStartPulse := TRUE; #step := 20; END_IF;
++          20: IF #Fill1Done AND #Fill2Done AND #DripDone THEN #VisionRequestPulse := TRUE; #step := 30; END_IF;
++          30: IF #VisionAccepted THEN IF #VisionPass THEN #step := 40; ELSE #QualityHold := TRUE; #State := 60; END_IF; END_IF;
++          40: #CapperRequest := #CapperReady; IF #CapperComplete THEN #CapperRequest := FALSE; #GateCloseRequest := FALSE; #ClampRequest := FALSE; #step := 0; END_IF;
++        END_CASE;
++      END_IF;
++    50: IF #StopEdge THEN #State := 70; ELSIF #BlockingFault THEN #State := 80; END_IF;
++    60: #QualityHold := TRUE; IF #ResetEdge AND NOT #BlockingFault THEN #State := 90; END_IF;
++    70: #IndexRequest := FALSE; #CapperRequest := FALSE; #State := 20;
++    80: #QualityHold := TRUE; IF #ResetEdge AND NOT #BlockingFault THEN #State := 90; END_IF;
++    90: #IndexRequest := FALSE; #CapperRequest := FALSE; #GateCloseRequest := FALSE; #ClampRequest := FALSE; #QualityHold := FALSE; #State := 20;
++    ELSE #State := 0;
++  END_CASE;
++  IF #BlockingFault THEN #IndexRequest := FALSE; #CapperRequest := FALSE; END_IF;
++END_FUNCTION_BLOCK

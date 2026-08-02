@@ -1,0 +1,11 @@
+tag,description,manufacturer,order_no,qty,procurement_status
+-A100,SIMATIC S7-1500 CPU 1511-1 PN,Siemens,6ES7511-1AL03-0AB0,1,Selected; official lifecycle page checked
+-A101,TM Count 2x24V,Siemens,6ES7550-1AA01-0AB0,1,Selected; official lifecycle page checked
+-A102,DI 32x24V DC HF,Siemens,6ES7521-1BL00-0AB0,1,Selected; official product page checked
+-A103,DQ 32x24V DC/0.5A HF,Siemens,6ES7522-1BL01-0AB0,1,Selected; official product page checked
+-A104,AI 8xU/I HF,Siemens,6ES7531-7NF00-0AB0,1,Selected; official product page checked
+-H100,MTP700 Unified Comfort,Siemens,6AV2128-3GB06-0AX1,1,Selected; official active product page checked
+-U100,SINAMICS G120C PN 0.75 kW unfiltered,Siemens,6SL3210-1KE12-3UF2,1,Selected; motor/site validation required
+-U101,SINAMICS G120C PN 0.75 kW unfiltered,Siemens,6SL3210-1KE12-3UF2,1,Selected; motor/site validation required
+-PC200,Jetson Orin NX 16GB module on industrial carrier,NVIDIA,Carrier/integration SKU TBD,1,Architecture selection; procurement decision open
+-SW100,SCALANCE XB208 unmanaged,Siemens,6GK5008-0BA10-1AB2,1,Preliminary; official compatibility/procurement check open

@@ -1,0 +1,3 @@
+revision,date,description,authority
+A,2026-08-01,Primary electrical/CAD and secondary controls concepts,Legacy sources
+B,2026-08-02,"Integrated Siemens/NVIDIA architecture, canonical model, reviewable sources and deterministic tests",Chief systems engineer; native gates remain open

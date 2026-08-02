@@ -1,0 +1,812 @@
+{
+  "project": "FC01",
+  "revision": "B",
+  "status": "PARTIALLY COMPLETE",
+  "files": [
+    {
+      "path": ".gitignore",
+      "bytes": 80,
+      "sha256": "8ce0a10a2d9b4184830cf7967d4e6635e53e629cabafcdbf94dbe6a70c590dd8"
+    },
+    {
+      "path": "00_project_control/agent_ownership.csv",
+      "bytes": 404,
+      "sha256": "1ff702a97c695320e44af605adf0a727ff7cc7459eb02179d03501bb9b38c226"
+    },
+    {
+      "path": "00_project_control/canonical_model.json",
+      "bytes": 57010,
+      "sha256": "0d81e5490af5747f7de9aaab3ee53d96e90e0784737e7e157ca4b79b75b93f38"
+    },
+    {
+      "path": "00_project_control/component_rationale_register.md",
+      "bytes": 1694,
+      "sha256": "8268701c9b66660c83c5e8635d8a00c752013d745d3c0e21bed0572a148029f8"
+    },
+    {
+      "path": "00_project_control/delivery_plan.md",
+      "bytes": 1460,
+      "sha256": "eb69496b216244229ff5574e090392835685ac65f025b60195e23c19d55559f0"
+    },
+    {
+      "path": "00_project_control/dependency_graph.mmd",
+      "bytes": 573,
+      "sha256": "cc6b2276119ed8c1378be4b940faa2985c74bbc4f92bbde3ea2b2facbb027878"
+    },
+    {
+      "path": "00_project_control/design_basis.md",
+      "bytes": 1585,
+      "sha256": "1d32177a157704f319f455afb38eb96c829bdf9d297883f42b80d6af9daf0b6d"
+    },
+    {
+      "path": "00_project_control/final_release_checklist.md",
+      "bytes": 1273,
+      "sha256": "9afb6688d3583bb8460b7858145b4f963862bd414f6e8c1e9244ce8a549fec59"
+    },
+    {
+      "path": "00_project_control/open_issues.csv",
+      "bytes": 1361,
+      "sha256": "cac52d9395035edfd972acb8aed574ae554098cc824983065977bf33482b8c3c"
+    },
+    {
+      "path": "00_project_control/revision_history.csv",
+      "bytes": 286,
+      "sha256": "efe93c5ebe2dfcb969151c9fd663791e7b1406bb42bba2176da5f2e00cea4e53"
+    },
+    {
+      "path": "01_requirements/assumption_register.md",
+      "bytes": 1446,
+      "sha256": "47792f9490ceaf1ea244af6288eebd04c998a2e52aa43caa2770301ccdfbe585"
+    },
+    {
+      "path": "01_requirements/legacy_tag_migration.md",
+      "bytes": 952,
+      "sha256": "3d8b5a52fc5f9965bf663027a4dfa8f91800cf0a3f624c0ae48c44eebab718ae"
+    },
+    {
+      "path": "01_requirements/user_requirements_specification.md",
+      "bytes": 2496,
+      "sha256": "d614a32a067ecf6f74f2fb8c457439b85db9a95f3b0ca5dcb66ab0fdacdbb8c7"
+    },
+    {
+      "path": "02_system_architecture/architecture_decisions.md",
+      "bytes": 11217,
+      "sha256": "31c09f7fefcb914da3c619ed65859d5fd10ce1a6acd794226aafe2c4261cfb2d"
+    },
+    {
+      "path": "02_system_architecture/interface_control_document.md",
+      "bytes": 1738,
+      "sha256": "c9993f9be67add52c887c7f230db5bb087ec2fc6d895ce698119763e70bf10a8"
+    },
+    {
+      "path": "02_system_architecture/state_and_sequence.md",
+      "bytes": 1618,
+      "sha256": "8a72b9c709944f35c12830f9472c777b12aef8cecc373d2ca08d83b340594ae3"
+    },
+    {
+      "path": "02_system_architecture/system_architecture.md",
+      "bytes": 1598,
+      "sha256": "2b29aace42d700a24b9e1b24ef4be6c28bed3104efb48266aabfa85cd258bb66"
+    },
+    {
+      "path": "03_electrical/electrical_calculations.md",
+      "bytes": 1316,
+      "sha256": "4c1572b744bda94ce93a4d1dd931b4342203ff9e8fb8d5d81bdc10a56e3b2afa"
+    },
+    {
+      "path": "03_electrical/native_baseline/filling_cell.qet",
+      "bytes": 875734,
+      "sha256": "d817036497afbf0f48379da4dbce81cd1d7b7cca28bfc8341d5b437d2421660b"
+    },
+    {
+      "path": "03_electrical/native_baseline/filling_cell_schematics.pdf",
+      "bytes": 122358,
+      "sha256": "77391ee282cc2c35f5f69b5c9262a076a9606a736e203b209a13dc00be61bd62"
+    },
+    {
+      "path": "03_electrical/README.md",
+      "bytes": 988,
+      "sha256": "3eba2b63752964cea99ff353d736de88a7ceb5ac6f7bb364b6ffa4e90d6bb094"
+    },
+    {
+      "path": "04_controls_siemens/hardware_selection_report.md",
+      "bytes": 3521,
+      "sha256": "ff7742be7ca2046dca17fea673c547da8792f660f97ccffddef6aff8b6634e34"
+    },
+    {
+      "path": "04_controls_siemens/scl/00_types.scl",
+      "bytes": 747,
+      "sha256": "50916d22ec2378b7e9071837fa77cc27b65d00689b61a32b2360a0cea9744b15"
+    },
+    {
+      "path": "04_controls_siemens/scl/FB_Actuator2Pos.scl",
+      "bytes": 1049,
+      "sha256": "d62c3fd3b7e4c7403d95dd5a7aad86844a0dfdf42baa20dadea165d3c7fbefcc"
+    },
+    {
+      "path": "04_controls_siemens/scl/FB_AlarmManager.scl",
+      "bytes": 725,
+      "sha256": "9e86a4d22141df1fa4d18ea05b7cf8e80e0bb9d99865fcdb41094d1e0ed308b8"
+    },
+    {
+      "path": "04_controls_siemens/scl/FB_FillChannel.scl",
+      "bytes": 1585,
+      "sha256": "c43833f8ec2582f46c8966159faf45079cb31835f6c0a228fd44cb430bc1a813"
+    },
+    {
+      "path": "04_controls_siemens/scl/FB_MachineCoordinator.scl",
+      "bytes": 2602,
+      "sha256": "8753159eda35f7e0cb571f9c1481aacc25e9aca49eee205a705df208539ba773"
+    },
+    {
+      "path": "04_controls_siemens/scl/FB_RecipeManager.scl",
+      "bytes": 694,
+      "sha256": "efd067c1231fb0f351f5c8fb7998c51b623828f7c365cf2f4961c9c87fad63bb"
+    },
+    {
+      "path": "04_controls_siemens/scl/FB_VFD.scl",
+      "bytes": 772,
+      "sha256": "87d31b2f850b2461191b6d4eaec019f8b366012b6e06b2e7de2e65b7b7e5420f"
+    },
+    {
+      "path": "04_controls_siemens/scl/FB_VisionInterface.scl",
+      "bytes": 1792,
+      "sha256": "a5ff902aba06624a5094369a1f7bf40b94b2c74fe502de57c79848157cc41282"
+    },
+    {
+      "path": "04_controls_siemens/scl/OB1_Call_Structure.scl",
+      "bytes": 809,
+      "sha256": "409bf7a10d8ca8f4949114f7fef663aac926a0a508662a99877332f2ac7d3490"
+    },
+    {
+      "path": "04_controls_siemens/software_architecture.md",
+      "bytes": 1107,
+      "sha256": "c7b53387cbb7bf769be06170bb8b497fd03996a6db693624e247ea0d79484852"
+    },
+    {
+      "path": "04_controls_siemens/toolchain_status.md",
+      "bytes": 1180,
+      "sha256": "442f4b438030e17a4e006457bf37ef621246dee424bad16681ec8f410ea02b34"
+    },
+    {
+      "path": "05_hmi/hmi_specification.md",
+      "bytes": 1632,
+      "sha256": "7075900f1c949eb0a459aee02b0e06da9b7f45aa8eeb9083c501e82c931d90ef"
+    },
+    {
+      "path": "05_hmi/navigation.mmd",
+      "bytes": 343,
+      "sha256": "1d4e8a762fc78f98519c5688951a07f939401d51dfae5742de0ec42f724fa8c8"
+    },
+    {
+      "path": "06_drives/drive_control_philosophy.md",
+      "bytes": 1074,
+      "sha256": "2e5aceff0f8bdeb774a830e1f4e34a0e84b7cba587b26b63803b5da5af76c3c1"
+    },
+    {
+      "path": "07_nvidia_vision/annotation_schema.json",
+      "bytes": 628,
+      "sha256": "d26742a7097bcfff3e388e0fa7275e16075a354fda4396ff72bc8a97f8696cca"
+    },
+    {
+      "path": "07_nvidia_vision/camera_fov_calculation.md",
+      "bytes": 1043,
+      "sha256": "cc4f949be36b38c61d518acbea1ad569d0a74672e4a351e8c3b207007f9855b2"
+    },
+    {
+      "path": "07_nvidia_vision/config_infer_primary.txt",
+      "bytes": 404,
+      "sha256": "880fcb2136c2f06d20ec32eec9773b375a4d4c42852c1853f5b837f4e42b621b"
+    },
+    {
+      "path": "07_nvidia_vision/dataset_annotation_guide.md",
+      "bytes": 1061,
+      "sha256": "45668250d37a44c4b6cab841c8c73d39dfa5f2c11cc702c28c593dcd3ab28932"
+    },
+    {
+      "path": "07_nvidia_vision/dataset_manifest.csv",
+      "bytes": 102,
+      "sha256": "67b0d6602df3a996b1fb6b5b87f32de047e2ebb2b970c3764572c51e2bc7174f"
+    },
+    {
+      "path": "07_nvidia_vision/deepstream_app_config.txt",
+      "bytes": 583,
+      "sha256": "3bb4b976cd4ba1cde20b47539ae6b08f383ba640f8c6eba29290b953e8d57a2a"
+    },
+    {
+      "path": "07_nvidia_vision/evaluation_report.md",
+      "bytes": 996,
+      "sha256": "ee09a77d84af9a255ee9feec4cf57e196832f8e80bf0f57d3cf36bc05b455170"
+    },
+    {
+      "path": "07_nvidia_vision/labels.txt",
+      "bytes": 84,
+      "sha256": "879535fd7e3dffaa65e8a112863b7f3d8114765ef1991e97728341e038f4e63e"
+    },
+    {
+      "path": "07_nvidia_vision/model_card.md",
+      "bytes": 1241,
+      "sha256": "4d72d4edc46445eb2dff806533ca9f1e14cedda4e7da9c8676fff597ebefdce7"
+    },
+    {
+      "path": "07_nvidia_vision/plc_ai_node_map.csv",
+      "bytes": 1356,
+      "sha256": "caca140ae81a07364b15c0bd3124cedeeb7426655e5dfaa6c2a5c440297ba8c5"
+    },
+    {
+      "path": "07_nvidia_vision/plc_interface_harness.py",
+      "bytes": 2135,
+      "sha256": "0abf6651c50321598a839588c3ae57a7a7d6e3cf59d809b30319da7a14e52b08"
+    },
+    {
+      "path": "07_nvidia_vision/tao_execution_plan.md",
+      "bytes": 1315,
+      "sha256": "7fb6cbefc7843ef0876a30b95ba62b6b5fbd0f964b4f07c18573c5a52110d076"
+    },
+    {
+      "path": "07_nvidia_vision/test_plc_interface_harness.py",
+      "bytes": 1448,
+      "sha256": "c4de9ca5b86133eb934ba7a71644d14423f4207bdb468b97356738e1a1cbceed"
+    },
+    {
+      "path": "07_nvidia_vision/vision_system_specification.md",
+      "bytes": 1184,
+      "sha256": "96956deabb35b11f54534e3301d988ae936a9c475eaed5a3267c8c3a43c6c3b0"
+    },
+    {
+      "path": "08_digital_twin/digital_twin_architecture.md",
+      "bytes": 1156,
+      "sha256": "2a902d10075c8b160979583abcafd73e343899f68ec38b57defbbf97fb3ae98f"
+    },
+    {
+      "path": "08_digital_twin/synthetic_variation_plan.csv",
+      "bytes": 428,
+      "sha256": "7663d27f3b2699bb4baf5c2277f72a64cc39a5080853890b046be4b8a0a06d82"
+    },
+    {
+      "path": "09_panel_cad/native_baseline/filling_cell_panel.FCStd",
+      "bytes": 81770,
+      "sha256": "306b7376fd2b870b879cf78171e51b02b68fe23678fe15c61c81d48bcc90cf31"
+    },
+    {
+      "path": "09_panel_cad/native_baseline/filling_cell_panel.iges",
+      "bytes": 870345,
+      "sha256": "ad6447e85e81e4960e3e2b8f68287dafe0554401b24169f4ffde34d47fe26630"
+    },
+    {
+      "path": "09_panel_cad/native_baseline/filling_cell_panel.step",
+      "bytes": 427908,
+      "sha256": "6340777b10172ba7cae5b1749cb5611d00f5dc2f8371ac249a0dd921e96db36a"
+    },
+    {
+      "path": "09_panel_cad/native_baseline/mounting_plate.dxf",
+      "bytes": 15277,
+      "sha256": "9ddd38069e43c74c92393bf7f2d3dda729dfce041cedcd16fcdfca0dd433828d"
+    },
+    {
+      "path": "09_panel_cad/README.md",
+      "bytes": 1006,
+      "sha256": "5a803fd0688ce0a83b2d3adc1db750d5bb2261fcbc30de49e21fecbe534d7298"
+    },
+    {
+      "path": "10_schedules/alarms.csv",
+      "bytes": 3063,
+      "sha256": "5aed8c4011991a25234ef5954da348f1d669a4c24e63ec8c87150ac09067b7d8"
+    },
+    {
+      "path": "10_schedules/bom.csv",
+      "bytes": 1139,
+      "sha256": "10d63d4eb0ab9f02b45acf5ec4203af3364851fa1f0b6b493376258f3d0d5cc6"
+    },
+    {
+      "path": "10_schedules/cable_schedule.csv",
+      "bytes": 1768,
+      "sha256": "1f9addafce94ce9215f6fa72cdd4a288c8d2ef5df7afaba7113606dabe13f355"
+    },
+    {
+      "path": "10_schedules/FC01_engineering_schedules.xlsx",
+      "bytes": 47056,
+      "sha256": "53f532729ead4677ce68684bcb1708feb29d93b7905a606e6869bc3a5859c629"
+    },
+    {
+      "path": "10_schedules/hmi_tags.csv",
+      "bytes": 9699,
+      "sha256": "adcb61e66adbcf8d76565c4fbace5c6bbc97b39df31fbabe080fda87028bbf43"
+    },
+    {
+      "path": "10_schedules/load_budget.csv",
+      "bytes": 664,
+      "sha256": "250ad07352f640d8191ca34228678182fb96e3c7db65559743037e50e3ac6270"
+    },
+    {
+      "path": "10_schedules/network_nodes.csv",
+      "bytes": 411,
+      "sha256": "148d742a90ff426aa003d1d59f1fcffcf9c4bf643f99b3871fe23529805f1f04"
+    },
+    {
+      "path": "10_schedules/nvidia_interface_tags.csv",
+      "bytes": 1980,
+      "sha256": "affaeb05792c6005542001c5d6e24007710bb2dd09b68a3bfef9570e27a4b20c"
+    },
+    {
+      "path": "10_schedules/panel_placement.csv",
+      "bytes": 976,
+      "sha256": "05f31cb2f93ed9579bd1d94bb49dee44562c9618c660fa6c63141fb0cfc7ee86"
+    },
+    {
+      "path": "10_schedules/plc_io.csv",
+      "bytes": 6305,
+      "sha256": "b10b786b802fcab35f0bdb399963a6d56a11fa4252805b744cc9da1b48210224"
+    },
+    {
+      "path": "10_schedules/requirements_traceability.csv",
+      "bytes": 4873,
+      "sha256": "9e441daaef945047756b6b4dcb260da349004c87cfe6c6ba616f9a1ca519908f"
+    },
+    {
+      "path": "10_schedules/siemens_hardware.csv",
+      "bytes": 2011,
+      "sha256": "b153b03848c447ebf83caa1737f2ee74f49b01fdd2e74a2f81e12bdb9a6d4d0a"
+    },
+    {
+      "path": "10_schedules/terminal_plan.csv",
+      "bytes": 7044,
+      "sha256": "03166ce5f193a20f639ee7eb861e16dcf3855fbd6e606483a9ba0860b6c90395"
+    },
+    {
+      "path": "10_schedules/test_coverage.csv",
+      "bytes": 6191,
+      "sha256": "283818b1337faa1efe2254294f981141b77e840393fd7175670b077b4247c5a0"
+    },
+    {
+      "path": "10_schedules/vfd_parameters.csv",
+      "bytes": 409,
+      "sha256": "fa6dfb86f3681505a21cff1bcd36bbcbf5f861c0494cb199cbdbb8f767576095"
+    },
+    {
+      "path": "10_schedules/wire_list.csv",
+      "bytes": 3460,
+      "sha256": "a546ae1a9798edaff7ccb2e954e1e33b5f0b48e9f8b026300e4930c53ce91de5"
+    },
+    {
+      "path": "11_simulation/filling_cell_simulator.py",
+      "bytes": 2069,
+      "sha256": "17c103c3c0bc333ad04e68c0359910f2c1b5ead2354bd9e0692d707def6ef495"
+    },
+    {
+      "path": "11_simulation/outputs/scenario_results.csv",
+      "bytes": 3473,
+      "sha256": "77f50c46514d4cf0023e58c8ec2cce52e2aeec9ba4a8731bd903222f0757f357"
+    },
+    {
+      "path": "11_simulation/run_scenarios.py",
+      "bytes": 1258,
+      "sha256": "e1de569ce0ac1f8f07c72cfd9cb5429e42ba3b10fe38461da98afc3d8e18279c"
+    },
+    {
+      "path": "11_simulation/tests/test_scenarios.py",
+      "bytes": 1141,
+      "sha256": "76cc7decf5bf812f8796d2bb08ffa3f1c5bea9942fa3710b939fdc20d93068cc"
+    },
+    {
+      "path": "12_testing/FAT_procedure.md",
+      "bytes": 897,
+      "sha256": "23943b3ec3b896f382a4d16215460e97f79705d7b341a5e93e9cfa025e95b8e5"
+    },
+    {
+      "path": "12_testing/io_checkout.csv",
+      "bytes": 5941,
+      "sha256": "6162b772f186835cd124f7156066421f5721021b800bd3d9de8fe1f6851bfba0"
+    },
+    {
+      "path": "12_testing/SAT_procedure.md",
+      "bytes": 784,
+      "sha256": "c9f3857cd3502b38e66ca2b01ff9f69de0e7ddae6bbad8d21bab7b677f5a1b33"
+    },
+    {
+      "path": "13_documentation/alarm_philosophy.md",
+      "bytes": 602,
+      "sha256": "59752802a558a7de3c6435e2066f821292257c64b72e1868215db988a0ebf9c4"
+    },
+    {
+      "path": "13_documentation/backup_recovery.md",
+      "bytes": 717,
+      "sha256": "7740126358c34f3f423beb3b13abd651ec6dbe603bd3c2285de7e4537a69ac2e"
+    },
+    {
+      "path": "13_documentation/commissioning_maintenance.md",
+      "bytes": 753,
+      "sha256": "796616e313278248f1e3df2ca408e2b065730a382289f10c57be59fcaebba1ad"
+    },
+    {
+      "path": "13_documentation/functional_design_specification.md",
+      "bytes": 720,
+      "sha256": "76c44d3019db7d3113bfc0766aaf6ac00ad0255283a0c05b77c302cf45b7c318"
+    },
+    {
+      "path": "13_documentation/network_cybersecurity.md",
+      "bytes": 742,
+      "sha256": "7bbf1b1c0346c91768066558194633865fa60bd2ce2858a055873113ab5c9070"
+    },
+    {
+      "path": "13_documentation/operator_training.md",
+      "bytes": 685,
+      "sha256": "5ba7a7768ce88ff1ba43d7658798f2b8261dd372dfd763115fe13d2f9655dcec"
+    },
+    {
+      "path": "13_documentation/risk_register.md",
+      "bytes": 789,
+      "sha256": "66da9c689e429e09430948207b7628a22aae472df8942bb37564ab36d64bc7d5"
+    },
+    {
+      "path": "13_documentation/software_design_specification.md",
+      "bytes": 640,
+      "sha256": "e8475f8be43f0fb27cb01a1837eb76d19bd3a4754404b7cf081eab50665642b4"
+    },
+    {
+      "path": "14_qa/acceptance_gate_status.md",
+      "bytes": 1296,
+      "sha256": "9d947863787424c2efcf95500bc335539635fc535836012eec3e8a514c029773"
+    },
+    {
+      "path": "14_qa/automated_validation_report.md",
+      "bytes": 4282,
+      "sha256": "868b1a9075350c6460d6e372911b2b119b705e3af554939b062b6defa44ffbd2"
+    },
+    {
+      "path": "14_qa/design_review_checklist.md",
+      "bytes": 1290,
+      "sha256": "666ceff7cd599aa748728114597cfaf4cf3a0f8238d4e8882aabbfa6891a9bba"
+    },
+    {
+      "path": "14_qa/executed_test_report.md",
+      "bytes": 1398,
+      "sha256": "ef981a502a3e4e47161aaf2c855684d82de029c659252368d3d0eb8d2c859ea2"
+    },
+    {
+      "path": "14_qa/pdf_contact_sheets/qet-baseline-contact-01.png",
+      "bytes": 289031,
+      "sha256": "3758e66c4509c8c43fd7c4356396b661ae64859324b425ccc395ff533164bfe8"
+    },
+    {
+      "path": "14_qa/pdf_contact_sheets/qet-baseline-contact-02.png",
+      "bytes": 263596,
+      "sha256": "b51c4b0c5966a44220508a0e9bf359ab825072be7a6edaa9a93dbfb4c6b43da5"
+    },
+    {
+      "path": "14_qa/pdf_contact_sheets/qet-baseline-contact-03.png",
+      "bytes": 260160,
+      "sha256": "726ca100211df983b356606fdd5fa9437c9e0f1786e93201d5d9d0e0b6e9a64f"
+    },
+    {
+      "path": "14_qa/pdf_contact_sheets/qet-baseline-contact-04.png",
+      "bytes": 240436,
+      "sha256": "447094722cb141c94d595fe43623483494e5932a29388aaa540835c5a396aa12"
+    },
+    {
+      "path": "14_qa/pdf_contact_sheets/release-evidence-contact-01.png",
+      "bytes": 253676,
+      "sha256": "4a84f54edde7dbdbaec3d796870f79c2410c5b218000aa57d3794ccd977062d3"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-01.png",
+      "bytes": 54242,
+      "sha256": "7b65dc3751e0cca0a2354d4036e99fbbd12509412b5aa42f59f01f8a5e7fa4ba"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-02.png",
+      "bytes": 65350,
+      "sha256": "904b86a86f773f8554749a8c29cef3c455c73480dc28c60a0a48a39b6e028838"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-03.png",
+      "bytes": 62493,
+      "sha256": "ed6674ba24483fad9816af4315c70feb8787ca4a397650368ae03caf41dca5f2"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-04.png",
+      "bytes": 46490,
+      "sha256": "fc4fd48d82782d42936d3cc70708ea4fd34e9b8827c1f27f2043969322f1156c"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-05.png",
+      "bytes": 34306,
+      "sha256": "63726a5b6975a1254e3a74cac4fb2c9fc33f8f02009b105cde6a7e636d129e32"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-06.png",
+      "bytes": 40791,
+      "sha256": "f2920ccb3a8a7d8e1fb14c9e4d432e2d710590ee9083c1ef185e1a2d0bbc3357"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-07.png",
+      "bytes": 41379,
+      "sha256": "c1e546e25d6efd55f6a551845ded6bbcf18c46222fcaa36e449ca6ecbb541d1b"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-08.png",
+      "bytes": 46640,
+      "sha256": "f02629a50b7f1577b832840f3bdc3f4aca03d6ea7f9dbfed389c15857c034ebc"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-09.png",
+      "bytes": 31634,
+      "sha256": "967ed783be6be97bd881cea19246ce618a5c80fd4b57ae163bba95ebff3816a2"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-10.png",
+      "bytes": 75769,
+      "sha256": "71c526d0604b7ed3e7d4ce68aa6d90d9e4a9d7546e2eefc95a94b9caf148bce6"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-11.png",
+      "bytes": 72069,
+      "sha256": "07da15ce3eaadbac8661eb7bf1fdf1b746432b339640a33611c1a9d6257404b0"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-12.png",
+      "bytes": 77277,
+      "sha256": "848d750c720f91e86a992637bfbcc39c18971233168f9501b461eb13ac747d53"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-13.png",
+      "bytes": 62396,
+      "sha256": "c5e77f797594b73db46f929939f7d763164420a24587707a0ebb6e9d1b4334f5"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-14.png",
+      "bytes": 64651,
+      "sha256": "7df1a5e48062800cc4555c9cc560e81b5673d7f97207383a9d64fb158b46ed3a"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-15.png",
+      "bytes": 66194,
+      "sha256": "1f3808012250b64e2b1099a520244fdc3edefe53087c025fdfd1b98dff800b8b"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-16.png",
+      "bytes": 41427,
+      "sha256": "c7852a5dc0955cd895c49ee64746a5a3f1cde89b85b846f079230afc45a562a8"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-17.png",
+      "bytes": 35711,
+      "sha256": "91c2414841ebd17f50b3e70fde9ecdb0cee675b0ed757d0acf9079749c5314e7"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-18.png",
+      "bytes": 41923,
+      "sha256": "a1ec34e96ae391ef47681342b690ea52a0ad70ba212a0ffb1b62297c67709729"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-19.png",
+      "bytes": 42543,
+      "sha256": "f7d9310b386c4359272b1d97ce78dfd37c2b5c92e8b1e91c5a200142582139a3"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-20.png",
+      "bytes": 37165,
+      "sha256": "f32da8899e311da11d5695d82b32a023f3dd1dd710590c283d4b2bc46efd0a66"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-21.png",
+      "bytes": 34795,
+      "sha256": "745df1601f3094ba774613da07830f304502770d8b227b9bb75f273502b66bae"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-22.png",
+      "bytes": 36567,
+      "sha256": "296b8a06378491c95754b87a20baa45f124e51728a89c30488dff889df2f4478"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-23.png",
+      "bytes": 37081,
+      "sha256": "0821c9aa70e6a715d7e9b397dd546ef829e6414cec580324274a7e51ac587005"
+    },
+    {
+      "path": "14_qa/pdf_renders/qet_baseline/page-24.png",
+      "bytes": 59038,
+      "sha256": "34cc383f004e3a5922182a546e13cbcdd6c6b0fe15c0e4b9746f6767d52f5dfc"
+    },
+    {
+      "path": "14_qa/pdf_renders/release/page-1.png",
+      "bytes": 102018,
+      "sha256": "fd4c6f4d896c29b2623143799dbb911bb2c6f7fa3b4fef2a7eaca34193819066"
+    },
+    {
+      "path": "14_qa/pdf_renders/release/page-2.png",
+      "bytes": 112670,
+      "sha256": "498847ae1bbcc9277c1f8cfc96fc0339dd1c5b284b5551bbfc8e705eb76a92dc"
+    },
+    {
+      "path": "14_qa/pdf_renders/release/page-3.png",
+      "bytes": 106987,
+      "sha256": "88a9e68140880611f5dd2086dc6acf2f4b5af670c12ef5389b9e24f04d3ce6a7"
+    },
+    {
+      "path": "14_qa/pdf_renders/release/page-4.png",
+      "bytes": 99338,
+      "sha256": "cfe6fa426521c4956be3216078f701724cc8d1f1e27572f026b60ef7e54bf9a5"
+    },
+    {
+      "path": "14_qa/pdf_renders/release/page-5.png",
+      "bytes": 108223,
+      "sha256": "7f5fadf746cf08f04677a75f7422daedabed5ec04edc3a5e507e49547e439b8d"
+    },
+    {
+      "path": "14_qa/source_audit_report.md",
+      "bytes": 2737,
+      "sha256": "e83bb682e4943b73ccb7f2aea7392791e380b19024cf2b1f8caae673c44369bb"
+    },
+    {
+      "path": "14_qa/toolchain_audit.md",
+      "bytes": 2147,
+      "sha256": "cc774b25d82482d38d3ae946bdecee1c2cefb434767da1a573bab0d1b15e9269"
+    },
+    {
+      "path": "14_qa/validation_matrix.md",
+      "bytes": 1338,
+      "sha256": "f44e016edccaa075698a137294027b2c3f4dd8dcbade4358a29f16925eac756a"
+    },
+    {
+      "path": "14_qa/visual_review_report.md",
+      "bytes": 1906,
+      "sha256": "a4d1661eb1d43aa01918107f26e7fc0635e01ed1c47e48f9fb7a9e0d85f10cea"
+    },
+    {
+      "path": "14_qa/workbook_contact_sheets/workbook-contact-01.png",
+      "bytes": 585365,
+      "sha256": "0a2baa20cfde16ae9597888971de503adf0ca070eb8fa55a836de59004be559f"
+    },
+    {
+      "path": "14_qa/workbook_contact_sheets/workbook-contact-02.png",
+      "bytes": 312803,
+      "sha256": "a1941d5e89663f8212b28b6339e9b1a639afdd32f2b402e9faf4e5be23182f09"
+    },
+    {
+      "path": "14_qa/workbook_contact_sheets/workbook-contact-03.png",
+      "bytes": 545392,
+      "sha256": "1c2eff0d3db5fac3cde352005235b8f7d495e818465ec18a5821db292beb092b"
+    },
+    {
+      "path": "14_qa/workbook_contact_sheets/workbook-contact-04.png",
+      "bytes": 405119,
+      "sha256": "5424e39def650f2b2cb522c878753907fe37d01bb586c084268a22c15ed9a7e0"
+    },
+    {
+      "path": "14_qa/workbook_renders/alarms.png",
+      "bytes": 158437,
+      "sha256": "e4a158dcb4bbc30622efb2677f0c060c1e02f0d9af5237fcfa30665b390a2aa7"
+    },
+    {
+      "path": "14_qa/workbook_renders/bom.png",
+      "bytes": 71709,
+      "sha256": "5569b35fcb7b89559ce6221b4de0d619def444788d787bbe790e2b1cb6b373a2"
+    },
+    {
+      "path": "14_qa/workbook_renders/cable-schedule.png",
+      "bytes": 95449,
+      "sha256": "5667a07cbe640f38da6190b2848ca7ced0a66e790ea9d61839615a31c334521a"
+    },
+    {
+      "path": "14_qa/workbook_renders/hmi-tags.png",
+      "bytes": 533440,
+      "sha256": "129058d570e81f2da775f8d883efa1367e8e96683c5a8bd45544cf5ca930c612"
+    },
+    {
+      "path": "14_qa/workbook_renders/load-budget.png",
+      "bytes": 40501,
+      "sha256": "05b51b5b745071af3ffca31c5d9c98cf06b8ac9e27941b897ad6cb24d9e46a7c"
+    },
+    {
+      "path": "14_qa/workbook_renders/network-nodes.png",
+      "bytes": 28853,
+      "sha256": "d15a10b06d36d4a396e5b10442c42aa7581c782d5cec5566b0e50d5ddb99244b"
+    },
+    {
+      "path": "14_qa/workbook_renders/nvidia-interface.png",
+      "bytes": 125943,
+      "sha256": "65b3a4137738af71c79bd1f6aee3411b2137ba8b8ed420bdbf439b3221779b70"
+    },
+    {
+      "path": "14_qa/workbook_renders/panel-placement.png",
+      "bytes": 62513,
+      "sha256": "fee8f15c7d5afe5a5422490cb9b16a8d4fc83951ea87beebe52197eb95884290"
+    },
+    {
+      "path": "14_qa/workbook_renders/plc-i-o.png",
+      "bytes": 410129,
+      "sha256": "f2ad3644666b1d7261d225dbe95affba15426312cfefa46342646e81bb4eecca"
+    },
+    {
+      "path": "14_qa/workbook_renders/release-summary.png",
+      "bytes": 49873,
+      "sha256": "1420fa32380559a1a2e9824f45cceb2679b93008ea35fca5991ae4c0e69b9dfb"
+    },
+    {
+      "path": "14_qa/workbook_renders/requirements-trace.png",
+      "bytes": 223895,
+      "sha256": "d3fac1ff242dd0ef3848d7254cbd5f376fb5151a51f0d622f39fb04dc11b57d8"
+    },
+    {
+      "path": "14_qa/workbook_renders/siemens-hardware.png",
+      "bytes": 103421,
+      "sha256": "f3a6622947d8f219dffa57eb264c2061862e77b3b40304720b79354411b4454f"
+    },
+    {
+      "path": "14_qa/workbook_renders/terminal-plan.png",
+      "bytes": 491756,
+      "sha256": "5e6358a6694f88507c2f4ca5591cf4bba304b098fc0869adc31746341679d7e5"
+    },
+    {
+      "path": "14_qa/workbook_renders/test-coverage.png",
+      "bytes": 274927,
+      "sha256": "14724229da6c64bcd67f94d3e128d8ed926ca105060ebcc608a7e992a86e12a3"
+    },
+    {
+      "path": "14_qa/workbook_renders/vfd-parameters.png",
+      "bytes": 26863,
+      "sha256": "3f987c7bde163bdfae30e97450a9e703328a8bc20b7fa3fc16a3a5defce6527c"
+    },
+    {
+      "path": "14_qa/workbook_renders/wire-list.png",
+      "bytes": 284737,
+      "sha256": "af83be95a0c27408a4ce145d6f1a00425558cacd05c85895072847b2ac64393c"
+    },
+    {
+      "path": "AGENTS.md",
+      "bytes": 2999,
+      "sha256": "c10b41ed2626f68cc43c041d9b2319282968f6f524cc04b8872e9f774347563a"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1450,
+      "sha256": "6645713004530e324c0290a654429c9efa839e3247b80944a557de3ecba9d7c5"
+    },
+    {
+      "path": "release/FC01_release_evidence.pdf",
+      "bytes": 83183,
+      "sha256": "a797a2b5908491fba2bbc645aeb5534180e02ad5a14e7f71c8d41363bc5a86b8"
+    },
+    {
+      "path": "release/RELEASE_NOTES.md",
+      "bytes": 1005,
+      "sha256": "0e955203b4d2a015d689fea63a35fe20051ecf01df4383f15deecda2e292ccb9"
+    },
+    {
+      "path": "scripts/build_contact_sheets.py",
+      "bytes": 1017,
+      "sha256": "6c816c0b16d600897436ab0f2ab26b3727f66ae836c84bf4a390e7e99ba9889a"
+    },
+    {
+      "path": "scripts/build_pdf_contact_sheets.py",
+      "bytes": 1317,
+      "sha256": "04c5e96e3bf372409cc3c3af9bf5905817cb09a4715736e2a9c7a11c0190111f"
+    },
+    {
+      "path": "scripts/build_project.py",
+      "bytes": 76111,
+      "sha256": "1566d9fcb1a81bccde7f8e6037e05b373c69fad9aaab24feb573c4aa99de3510"
+    },
+    {
+      "path": "scripts/build_release_pdf.py",
+      "bytes": 10686,
+      "sha256": "25777c00cd0441a4d52cb8a735e059d2b4483401ad272932892a9d67c5fbd59b"
+    },
+    {
+      "path": "scripts/build_workbook.mjs",
+      "bytes": 6786,
+      "sha256": "1ae17882eda3f142c03243605d452953ec35942c48eb43ac3e634fd8cea7c808"
+    },
+    {
+      "path": "scripts/reproduce_validation.ps1",
+      "bytes": 1632,
+      "sha256": "a4aad8f15d3d4e0f82b588b48fb485325eacfd5ed2a458f3246512e1dae51947"
+    },
+    {
+      "path": "scripts/validate_project.py",
+      "bytes": 8916,
+      "sha256": "e68c1d32a75b24cc953efbc351106c0f4bce6912844510f316e8cb591affeca0"
+    }
+  ]
+}

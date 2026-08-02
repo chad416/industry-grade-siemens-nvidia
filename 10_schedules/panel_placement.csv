@@ -1,0 +1,11 @@
+tag,x_mm,y_mm,width_mm,height_mm,depth_mm,zone,model_status
+-A100,80,80,110,150,170,Controls,Envelope only; native CAD baseline predates selection
+-A101,210,80,110,150,170,Controls,Envelope only; native CAD baseline predates selection
+-A102,340,80,110,150,170,Controls,Envelope only; native CAD baseline predates selection
+-A103,470,80,110,150,170,Controls,Envelope only; native CAD baseline predates selection
+-A104,600,80,110,150,170,Controls,Envelope only; native CAD baseline predates selection
+-H100,80,260,110,150,170,Controls,Envelope only; native CAD baseline predates selection
+-U100,210,260,110,150,170,Drives/vision,Envelope only; native CAD baseline predates selection
+-U101,340,260,110,150,170,Drives/vision,Envelope only; native CAD baseline predates selection
+-PC200,470,260,110,150,170,Drives/vision,Envelope only; native CAD baseline predates selection
+-SW100,600,260,110,150,170,Drives/vision,Envelope only; native CAD baseline predates selection

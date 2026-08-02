@@ -1,0 +1,75 @@
+terminal,symbol,plc_address,device,potential,status
+X100:1,SAFETY_OK,I0.0,Safety relay mirror,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:2,GUARD_CLOSED_STATUS,I0.1,Guard circuit mirror,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:3,AIR_PRESSURE_OK,I0.2,-B100,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:4,PRODUCT_SUPPLY_OK,I0.3,-B101,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:5,CONVEYOR_READY,I0.4,-U100,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:6,CONVEYOR_RUNNING,I0.5,-U100,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:7,CONVEYOR_FAULT,I0.6,-U100,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:8,PUMP_READY,I0.7,-U101,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:9,PUMP_RUNNING,I1.0,-U101,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:10,PUMP_FAULT,I1.1,-U101,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:11,BOTTLE_AT_NEST_1,I1.2,-B110,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:12,BOTTLE_AT_NEST_2,I1.3,-B111,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:13,GATE_OPEN_FB,I1.4,-B120,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:14,GATE_CLOSED_FB,I1.5,-B121,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:15,CLAMP_RELEASED_FB,I1.6,-B122,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:16,CLAMP_ENGAGED_FB,I1.7,-B123,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:17,FILL_VALVE_1_CLOSED_FB,I2.0,-B130,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:18,FILL_VALVE_2_CLOSED_FB,I2.1,-B131,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:19,CAPPER_READY,I2.2,-IF140,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:20,CAPPER_BUSY,I2.3,-IF140,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:21,CAPPER_COMPLETE,I2.4,-IF140,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:22,CAPPER_FAULT,I2.5,-IF140,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:23,LOCAL_RESET_PB,I2.6,-S100,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X100:24,LOCAL_STOP_PB,I2.7,-S101,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:1,DI_SPARE_01,I3.0,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:2,DI_SPARE_02,I3.1,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:3,DI_SPARE_03,I3.2,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:4,DI_SPARE_04,I3.3,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:5,DI_SPARE_05,I3.4,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:6,DI_SPARE_06,I3.5,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:7,DI_SPARE_07,I3.6,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:8,DI_SPARE_08,I3.7,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:9,CONVEYOR_RUN_CMD,Q0.0,-K200,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:10,PUMP_RUN_CMD,Q0.1,-K201,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:11,FILL_VALVE_1_OPEN_CMD,Q0.2,-K202,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:12,FILL_VALVE_2_OPEN_CMD,Q0.3,-K203,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:13,GATE_OPEN_CMD,Q0.4,-K204,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:14,GATE_CLOSE_CMD,Q0.5,-K205,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:15,CLAMP_ENGAGE_CMD,Q0.6,-K206,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:16,CLAMP_RELEASE_CMD,Q0.7,-K207,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:17,CAPPER_REQUEST,Q1.0,-K208,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:18,STACK_GREEN,Q1.1,-K209,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:19,STACK_AMBER,Q1.2,-K210,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:20,STACK_RED,Q1.3,-K211,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:21,AUDIBLE_ALARM,Q1.4,-K212,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:22,CAMERA_LIGHT_ENABLE,Q1.5,-K213,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:23,DO_SPARE_01,Q1.6,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X101:24,DO_SPARE_02,Q1.7,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:1,DO_SPARE_03,Q2.0,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:2,DO_SPARE_04,Q2.1,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:3,DO_SPARE_05,Q2.2,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:4,DO_SPARE_06,Q2.3,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:5,DO_SPARE_07,Q2.4,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:6,DO_SPARE_08,Q2.5,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:7,DO_SPARE_09,Q2.6,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:8,DO_SPARE_10,Q2.7,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:9,DO_SPARE_11,Q3.0,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:10,DO_SPARE_12,Q3.1,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:11,DO_SPARE_13,Q3.2,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:12,DO_SPARE_14,Q3.3,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:13,DO_SPARE_15,Q3.4,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:14,DO_SPARE_16,Q3.5,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:15,DO_SPARE_17,Q3.6,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:16,DO_SPARE_18,Q3.7,SPARE,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X102:17,FLOW_1_MA_RAW,IW64,-FT100,4-20mA isolated loop,Inherited concept; final QET Siemens upgrade open
+X102:18,FLOW_2_MA_RAW,IW66,-FT101,4-20mA isolated loop,Inherited concept; final QET Siemens upgrade open
+X102:19,AI_SPARE_01,IW68,SPARE,4-20mA isolated loop,Inherited concept; final QET Siemens upgrade open
+X102:20,AI_SPARE_02,IW70,SPARE,4-20mA isolated loop,Inherited concept; final QET Siemens upgrade open
+X102:21,AI_SPARE_03,IW72,SPARE,4-20mA isolated loop,Inherited concept; final QET Siemens upgrade open
+X102:22,AI_SPARE_04,IW74,SPARE,4-20mA isolated loop,Inherited concept; final QET Siemens upgrade open
+X102:23,AI_SPARE_05,IW76,SPARE,4-20mA isolated loop,Inherited concept; final QET Siemens upgrade open
+X102:24,AI_SPARE_06,IW78,SPARE,4-20mA isolated loop,Inherited concept; final QET Siemens upgrade open
+X103:1,FLOW_1_PULSE,TM1.CH0.A,-FT100,24VDC/0V,Inherited concept; final QET Siemens upgrade open
+X103:2,FLOW_2_PULSE,TM1.CH1.A,-FT101,24VDC/0V,Inherited concept; final QET Siemens upgrade open

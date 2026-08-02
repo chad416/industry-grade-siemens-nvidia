@@ -1,0 +1,8 @@
+load,voltage,nominal_w,demand_factor,demand_w,basis
+PLC CPU and I/O,24 VDC,55,1.0,55,Preliminary allowance; verify Siemens configuration
+HMI,24 VDC,24,1.0,24,Maximum current allowance from product data
+"Relays, sensors and solenoids",24 VDC,150,0.8,120,Duty-cycle allowance; inrush not finalized
+Vision edge + camera + lighting,24 VDC,100,1.0,100,Placeholder engineering allowance pending carrier/camera selection
+24 VDC subtotal,24 VDC,329,1.0,299,12.46 A demand; retain >=25% margin; select 20 A PSU after inrush check
+Conveyor drive,400 VAC,750,1.0,750,Motor nameplate not supplied
+Pump drive,400 VAC,750,1.0,750,Pump curve/motor nameplate not supplied

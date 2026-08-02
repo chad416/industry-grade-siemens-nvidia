@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+node_modules/
+*.inspect.ndjson
+*.tmp
+Thumbs.db
+.DS_Store

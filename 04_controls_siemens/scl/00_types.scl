@@ -1,0 +1,25 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+TYPE "UDT_Recipe"
+VERSION : 0.1
+   STRUCT
+      RecipeId : UInt;
+      TargetPulsesCh1 : UDInt;
+      TargetPulsesCh2 : UDInt;
+      PulsesPerLitreCh1 : Real;
+      PulsesPerLitreCh2 : Real;
+      NoFlowTimeout : Time;
+      FillTimeout : Time;
+      DripSettleTime : Time;
+      VisionTimeout : Time;
+      TargetFillLevel : Real;
+   END_STRUCT;
+END_TYPE
+
+TYPE "UDT_VisionResult"
+VERSION : 0.1
+   STRUCT
+      ResultValid : Bool; ResultId : UDInt; Bottle1Pass : Bool; Bottle2Pass : Bool;
+      Fill1Status : USInt; Fill2Status : USInt; LeakOrSpill : Bool; LowConfidence : Bool;
+      Warning : Bool; Fault : Bool; InferenceTimeMs : UDInt;
+   END_STRUCT;
+END_TYPE

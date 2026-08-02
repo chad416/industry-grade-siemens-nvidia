@@ -1,0 +1,26 @@
+# FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+# DeepStream 9.1 design configuration; syntax/runtime validation blocked because DeepStream is not installed.
+[application]
+enable-perf-measurement=1
+perf-measurement-interval-sec=5
+[source0]
+enable=1
+type=1
+camera-width=1920
+camera-height=1200
+camera-fps-n=30
+camera-fps-d=1
+[streammux]
+batch-size=1
+width=1920
+height=1200
+batched-push-timeout=40000
+[primary-gie]
+enable=1
+model-engine-file=MODEL_NOT_DELIVERED.engine
+config-file=config_infer_primary.txt
+batch-size=1
+[sink0]
+enable=1
+type=1
+sync=0

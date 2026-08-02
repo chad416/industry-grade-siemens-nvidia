@@ -1,0 +1,21 @@
+flowchart LR
+  R["Requirements + design basis"] --> C["Canonical model"]
+  C --> E["Electrical / I-O"]
+  C --> S["Siemens sources"]
+  C --> V["Vision ICD"]
+  C --> H["HMI / drives"]
+  E --> TIA["TIA V20 native build"]
+  S --> TIA
+  H --> TIA
+  V --> AI["Dataset + NVIDIA runtime"]
+  V --> SIM["Deterministic simulator"]
+  S --> SIM
+  TIA --> PLC["PLCSIM evidence"]
+  AI --> DS["DeepStream deployment evidence"]
+  E --> QET["Revision-B QET"]
+  E --> CAD["Revision-B panel CAD"]
+  PLC --> REL["Integrated release gate"]
+  DS --> REL
+  QET --> REL
+  CAD --> REL
+  SIM --> REL

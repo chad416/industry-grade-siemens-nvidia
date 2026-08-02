@@ -1,0 +1,14 @@
+# FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+# Reference-only inference settings. The named engine intentionally does not exist; deployment gate is blocked.
+[property]
+gpu-id=0
+batch-size=1
+network-type=2
+process-mode=1
+gie-unique-id=1
+network-mode=2
+model-engine-file=MODEL_NOT_DELIVERED.engine
+labelfile-path=labels.txt
+interval=0
+[class-attrs-all]
+pre-cluster-threshold=0.50

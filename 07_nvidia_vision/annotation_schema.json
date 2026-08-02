@@ -1,0 +1,8 @@
+{
+  "schema_version": "1.0-draft",
+  "status": "NO DATASET - SCHEMA ONLY",
+  "classes": ["bottle", "bottle_misaligned", "bottle_damage_visible", "liquid_region", "foam", "drip", "spill"],
+  "image_attributes": ["synthetic_or_real", "production_lot", "recipe_id", "bottle_sku", "camera_id", "lens_id", "exposure_us", "light_setting", "true_fill_reference", "glare", "occlusion", "reviewer"],
+  "geometry": {"instances": ["bbox", "polygon"], "fill_line": "two calibrated endpoints per bottle ROI"},
+  "quality": {"double_review_required": true, "disagreement_resolution": "qualified adjudicator", "unknown_label_allowed": true}
+}

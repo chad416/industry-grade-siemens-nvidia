@@ -1,0 +1,18 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+FUNCTION_BLOCK "FB_FillChannel"
+VAR_INPUT Enable : Bool; StartEdge : Bool; Abort : Bool; ResetEdge : Bool; PulseTotal : UDInt; TargetPulses : UDInt; Flow_mA : Real; ValveClosedFb : Bool; NoFlowTimeout : Time; FillTimeout : Time; END_VAR
+VAR_OUTPUT ValveOpenCmd : Bool; Done : Bool; Fault : Bool; Underfill : Bool; Overfill : Bool; DiagCode : UInt; END_VAR
+VAR tNoFlow : TON; tFill : TON; startCount : UDInt; active : Bool; lastCount : UDInt; END_VAR
+BEGIN
+  IF #StartEdge AND #Enable AND #ValveClosedFb AND (#TargetPulses > 0) THEN #active := TRUE; #Done := FALSE; #startCount := #PulseTotal; #lastCount := #PulseTotal; END_IF;
+  #ValveOpenCmd := #active AND NOT #Abort AND NOT #Fault AND ((#PulseTotal - #startCount) < #TargetPulses);
+  #tNoFlow(IN := #ValveOpenCmd AND (#PulseTotal = #lastCount) AND (#Flow_mA < 4.2), PT := #NoFlowTimeout);
+  #tFill(IN := #active, PT := #FillTimeout);
+  IF #tNoFlow.Q THEN #Fault := TRUE; #DiagCode := 16#1301; END_IF;
+  IF #tFill.Q THEN #Fault := TRUE; #DiagCode := 16#1302; END_IF;
+  IF #active AND ((#PulseTotal - #startCount) >= #TargetPulses) THEN #active := FALSE; #Done := TRUE; END_IF;
+  IF #Abort OR #Fault THEN #active := FALSE; #ValveOpenCmd := FALSE; END_IF;
+  IF NOT #ValveOpenCmd AND NOT #ValveClosedFb AND (#Done OR #Abort) THEN #Fault := TRUE; #DiagCode := 16#1306; END_IF;
+  IF #ResetEdge AND NOT #active THEN #Fault := FALSE; #Done := FALSE; #Underfill := FALSE; #Overfill := FALSE; #DiagCode := 0; END_IF;
+  #lastCount := #PulseTotal;
+END_FUNCTION_BLOCK

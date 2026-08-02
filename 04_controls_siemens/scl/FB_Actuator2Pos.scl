@@ -1,0 +1,16 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+FUNCTION_BLOCK "FB_Actuator2Pos"
+VAR_INPUT Enable : Bool; CmdToA : Bool; CmdToB : Bool; AtA : Bool; AtB : Bool; ResetEdge : Bool; TravelTime : Time; END_VAR
+VAR_OUTPUT OutToA : Bool; OutToB : Bool; InPosition : Bool; Fault : Bool; DiagCode : UInt; END_VAR
+VAR tTravel : TON; motion : Bool; END_VAR
+BEGIN
+  IF #AtA AND #AtB THEN #Fault := TRUE; #DiagCode := 16#1201; END_IF;
+  #OutToA := #Enable AND #CmdToA AND NOT #CmdToB AND NOT #Fault;
+  #OutToB := #Enable AND #CmdToB AND NOT #CmdToA AND NOT #Fault;
+  IF #CmdToA AND #CmdToB THEN #Fault := TRUE; #DiagCode := 16#1202; END_IF;
+  #motion := (#OutToA AND NOT #AtA) OR (#OutToB AND NOT #AtB);
+  #tTravel(IN := #motion, PT := #TravelTime);
+  IF #tTravel.Q THEN #Fault := TRUE; #DiagCode := 16#1203; END_IF;
+  #InPosition := (#CmdToA AND #AtA AND NOT #AtB) OR (#CmdToB AND #AtB AND NOT #AtA);
+  IF #ResetEdge AND NOT (#AtA AND #AtB) AND NOT (#CmdToA OR #CmdToB) THEN #Fault := FALSE; #DiagCode := 0; END_IF;
+END_FUNCTION_BLOCK

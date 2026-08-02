@@ -1,0 +1,6 @@
+drive,parameter,value,status
+-U100,Control source,PROFINET telegram,Startdrive entry pending native project
+-U100,Rated power,0.75 kW provisional,Verify motor nameplate
+-U101,Control source,PROFINET telegram,Startdrive entry pending native project
+-U101,Rated power,0.75 kW provisional,Verify motor/pump data
+Both,STO,External conceptual safety interface only,No safety claim; qualified design required

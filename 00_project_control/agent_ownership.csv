@@ -1,0 +1,7 @@
+role,paths,review_authority,exclusive
+Chief systems engineer,"00,01,02,release",Integration and release,Yes
+Siemens automation engineer,"04,05,06",No self-approval,Yes
+Electrical/panel engineer,"03,09,10 electrical fields",No self-approval,Yes
+NVIDIA vision engineer,07,No self-approval,Yes
+Simulation engineer,"08,11",No self-approval,Yes
+Independent V&V engineer,"12,14",Acceptance evidence,Yes

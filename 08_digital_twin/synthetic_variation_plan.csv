@@ -1,0 +1,9 @@
+parameter,range,distribution,annotation
+bottle_position_mm,-8..8,uniform,pose
+fill_level_fraction,0.60..0.95,stratified,fill_reference
+product_transmission,0.1..0.95,stratified,material
+lighting_intensity,0.6..1.4,uniform,light_setting
+camera_angle_deg,-5..5,uniform,camera_pose
+glare,none/moderate/severe,categorical,challenge
+foam_fraction,0..0.25,stratified,foam_mask
+occlusion_fraction,0..0.20,stratified,occlusion

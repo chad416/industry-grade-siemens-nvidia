@@ -1,0 +1,7 @@
+bottle
+bottle_misaligned
+bottle_damage_visible
+liquid_region
+foam
+drip
+spill

@@ -1,0 +1,11 @@
+tag,role,manufacturer,model,order_no,qty,status,basis
+-A100,PLC CPU,Siemens,SIMATIC S7-1500 CPU 1511-1 PN,6ES7511-1AL03-0AB0,1,Selected; official lifecycle page checked,"Current standard CPU, PROFINET IRT, diagnostic capacity; native TIA compatibility gate open"
+-A101,High-speed counter,Siemens,TM Count 2x24V,6ES7550-1AA01-0AB0,1,Selected; official lifecycle page checked,Two independent 24 V pulse channels with channel diagnostics
+-A102,Digital input,Siemens,DI 32x24V DC HF,6ES7521-1BL00-0AB0,1,Selected; official product page checked,"32 PNP inputs, diagnostics and spare capacity"
+-A103,Digital output,Siemens,DQ 32x24V DC/0.5A HF,6ES7522-1BL01-0AB0,1,Selected; official product page checked,32 diagnostic outputs; field loads through interposing relays
+-A104,Analog input,Siemens,AI 8xU/I HF,6ES7531-7NF00-0AB0,1,Selected; official product page checked,Individually grouped high-resolution 4–20 mA inputs and diagnostics
+-H100,Operator panel,Siemens,MTP700 Unified Comfort,6AV2128-3GB06-0AX1,1,Selected; official active product page checked,7-inch Unified panel; requires WinCC Unified Comfort V16 or later
+-U100,Conveyor drive,Siemens,SINAMICS G120C PN 0.75 kW unfiltered,6SL3210-1KE12-3UF2,1,Selected; motor/site validation required,PROFINET diagnostics; rating provisional until motor nameplate and EMC design
+-U101,Pump drive,Siemens,SINAMICS G120C PN 0.75 kW unfiltered,6SL3210-1KE12-3UF2,1,Selected; motor/site validation required,PROFINET diagnostics; rating provisional until pump/motor data
+-PC200,Vision edge compute,NVIDIA,Jetson Orin NX 16GB module on industrial carrier,Carrier/integration SKU TBD,1,Architecture selection; procurement decision open,"DeepStream-supported Jetson Orin; carrier, thermal, EMC and lifecycle require supplier confirmation"
+-SW100,Industrial Ethernet switch,Siemens,SCALANCE XB208 unmanaged,6GK5008-0BA10-1AB2,1,Preliminary; official compatibility/procurement check open,"Eight ports allow PLC, HMI, two drives, vision and service with spare ports"

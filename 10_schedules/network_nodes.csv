@@ -1,0 +1,7 @@
+node,ip,vlan,owner,role
+PLC-A100,192.168.10.10,10,Controls,PROFINET controller / OPC UA server
+HMI-H100,192.168.10.20,10,Controls,Unified operator panel
+VFD-U100,192.168.10.31,10,Drives,Conveyor G120C PN
+VFD-U101,192.168.10.32,10,Drives,Pump G120C PN
+VISION-PC200,192.168.20.10,20,Vision,OPC UA client + inference
+ENG-SERVICE,DHCP/reserved,99,Engineering,Temporary service access; disabled in production

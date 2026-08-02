@@ -1,0 +1,1715 @@
+{
+  "project": {
+    "id": "FC01",
+    "revision": "B",
+    "date": "2026-08-02",
+    "notice": "FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION",
+    "safety_boundary": "CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.",
+    "status": "PARTIALLY COMPLETE"
+  },
+  "states": [
+    "UNINITIALIZED",
+    "INITIALIZING",
+    "STOPPED",
+    "READY",
+    "AUTOMATIC",
+    "MANUAL_SETUP",
+    "HOLDING",
+    "CONTROLLED_STOPPING",
+    "FAULTED",
+    "RECOVERY_RESET"
+  ],
+  "hardware": [
+    {
+      "tag": "-A100",
+      "role": "PLC CPU",
+      "manufacturer": "Siemens",
+      "model": "SIMATIC S7-1500 CPU 1511-1 PN",
+      "order_no": "6ES7511-1AL03-0AB0",
+      "qty": 1,
+      "status": "Selected; official lifecycle page checked",
+      "basis": "Current standard CPU, PROFINET IRT, diagnostic capacity; native TIA compatibility gate open"
+    },
+    {
+      "tag": "-A101",
+      "role": "High-speed counter",
+      "manufacturer": "Siemens",
+      "model": "TM Count 2x24V",
+      "order_no": "6ES7550-1AA01-0AB0",
+      "qty": 1,
+      "status": "Selected; official lifecycle page checked",
+      "basis": "Two independent 24 V pulse channels with channel diagnostics"
+    },
+    {
+      "tag": "-A102",
+      "role": "Digital input",
+      "manufacturer": "Siemens",
+      "model": "DI 32x24V DC HF",
+      "order_no": "6ES7521-1BL00-0AB0",
+      "qty": 1,
+      "status": "Selected; official product page checked",
+      "basis": "32 PNP inputs, diagnostics and spare capacity"
+    },
+    {
+      "tag": "-A103",
+      "role": "Digital output",
+      "manufacturer": "Siemens",
+      "model": "DQ 32x24V DC/0.5A HF",
+      "order_no": "6ES7522-1BL01-0AB0",
+      "qty": 1,
+      "status": "Selected; official product page checked",
+      "basis": "32 diagnostic outputs; field loads through interposing relays"
+    },
+    {
+      "tag": "-A104",
+      "role": "Analog input",
+      "manufacturer": "Siemens",
+      "model": "AI 8xU/I HF",
+      "order_no": "6ES7531-7NF00-0AB0",
+      "qty": 1,
+      "status": "Selected; official product page checked",
+      "basis": "Individually grouped high-resolution 4–20 mA inputs and diagnostics"
+    },
+    {
+      "tag": "-H100",
+      "role": "Operator panel",
+      "manufacturer": "Siemens",
+      "model": "MTP700 Unified Comfort",
+      "order_no": "6AV2128-3GB06-0AX1",
+      "qty": 1,
+      "status": "Selected; official active product page checked",
+      "basis": "7-inch Unified panel; requires WinCC Unified Comfort V16 or later"
+    },
+    {
+      "tag": "-U100",
+      "role": "Conveyor drive",
+      "manufacturer": "Siemens",
+      "model": "SINAMICS G120C PN 0.75 kW unfiltered",
+      "order_no": "6SL3210-1KE12-3UF2",
+      "qty": 1,
+      "status": "Selected; motor/site validation required",
+      "basis": "PROFINET diagnostics; rating provisional until motor nameplate and EMC design"
+    },
+    {
+      "tag": "-U101",
+      "role": "Pump drive",
+      "manufacturer": "Siemens",
+      "model": "SINAMICS G120C PN 0.75 kW unfiltered",
+      "order_no": "6SL3210-1KE12-3UF2",
+      "qty": 1,
+      "status": "Selected; motor/site validation required",
+      "basis": "PROFINET diagnostics; rating provisional until pump/motor data"
+    },
+    {
+      "tag": "-PC200",
+      "role": "Vision edge compute",
+      "manufacturer": "NVIDIA",
+      "model": "Jetson Orin NX 16GB module on industrial carrier",
+      "order_no": "Carrier/integration SKU TBD",
+      "qty": 1,
+      "status": "Architecture selection; procurement decision open",
+      "basis": "DeepStream-supported Jetson Orin; carrier, thermal, EMC and lifecycle require supplier confirmation"
+    },
+    {
+      "tag": "-SW100",
+      "role": "Industrial Ethernet switch",
+      "manufacturer": "Siemens",
+      "model": "SCALANCE XB208 unmanaged",
+      "order_no": "6GK5008-0BA10-1AB2",
+      "qty": 1,
+      "status": "Preliminary; official compatibility/procurement check open",
+      "basis": "Eight ports allow PLC, HMI, two drives, vision and service with spare ports"
+    }
+  ],
+  "io": [
+    {
+      "symbol": "SAFETY_OK",
+      "direction": "DI",
+      "address": "I0.0",
+      "module": "-A102",
+      "channel": "0",
+      "device": "Safety relay mirror",
+      "description": "External safety chain healthy (monitor only)",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "GUARD_CLOSED_STATUS",
+      "direction": "DI",
+      "address": "I0.1",
+      "module": "-A102",
+      "channel": "1",
+      "device": "Guard circuit mirror",
+      "description": "Guard status monitor only",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "AIR_PRESSURE_OK",
+      "direction": "DI",
+      "address": "I0.2",
+      "module": "-A102",
+      "channel": "2",
+      "device": "-B100",
+      "description": "Pneumatic pressure switch",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "PRODUCT_SUPPLY_OK",
+      "direction": "DI",
+      "address": "I0.3",
+      "module": "-A102",
+      "channel": "3",
+      "device": "-B101",
+      "description": "Product supply permissive",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CONVEYOR_READY",
+      "direction": "DI",
+      "address": "I0.4",
+      "module": "-A102",
+      "channel": "4",
+      "device": "-U100",
+      "description": "Conveyor VFD ready",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CONVEYOR_RUNNING",
+      "direction": "DI",
+      "address": "I0.5",
+      "module": "-A102",
+      "channel": "5",
+      "device": "-U100",
+      "description": "Conveyor VFD running",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CONVEYOR_FAULT",
+      "direction": "DI",
+      "address": "I0.6",
+      "module": "-A102",
+      "channel": "6",
+      "device": "-U100",
+      "description": "Conveyor VFD fault",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "PUMP_READY",
+      "direction": "DI",
+      "address": "I0.7",
+      "module": "-A102",
+      "channel": "7",
+      "device": "-U101",
+      "description": "Pump VFD ready",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "PUMP_RUNNING",
+      "direction": "DI",
+      "address": "I1.0",
+      "module": "-A102",
+      "channel": "8",
+      "device": "-U101",
+      "description": "Pump VFD running",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "PUMP_FAULT",
+      "direction": "DI",
+      "address": "I1.1",
+      "module": "-A102",
+      "channel": "9",
+      "device": "-U101",
+      "description": "Pump VFD fault",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "BOTTLE_AT_NEST_1",
+      "direction": "DI",
+      "address": "I1.2",
+      "module": "-A102",
+      "channel": "10",
+      "device": "-B110",
+      "description": "Bottle 1 position sensor",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "BOTTLE_AT_NEST_2",
+      "direction": "DI",
+      "address": "I1.3",
+      "module": "-A102",
+      "channel": "11",
+      "device": "-B111",
+      "description": "Bottle 2 position sensor",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "GATE_OPEN_FB",
+      "direction": "DI",
+      "address": "I1.4",
+      "module": "-A102",
+      "channel": "12",
+      "device": "-B120",
+      "description": "Gate open feedback",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "GATE_CLOSED_FB",
+      "direction": "DI",
+      "address": "I1.5",
+      "module": "-A102",
+      "channel": "13",
+      "device": "-B121",
+      "description": "Gate closed feedback",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CLAMP_RELEASED_FB",
+      "direction": "DI",
+      "address": "I1.6",
+      "module": "-A102",
+      "channel": "14",
+      "device": "-B122",
+      "description": "Clamp released feedback",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CLAMP_ENGAGED_FB",
+      "direction": "DI",
+      "address": "I1.7",
+      "module": "-A102",
+      "channel": "15",
+      "device": "-B123",
+      "description": "Clamp engaged feedback",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "FILL_VALVE_1_CLOSED_FB",
+      "direction": "DI",
+      "address": "I2.0",
+      "module": "-A102",
+      "channel": "16",
+      "device": "-B130",
+      "description": "Valve 1 closed proof",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "FILL_VALVE_2_CLOSED_FB",
+      "direction": "DI",
+      "address": "I2.1",
+      "module": "-A102",
+      "channel": "17",
+      "device": "-B131",
+      "description": "Valve 2 closed proof",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CAPPER_READY",
+      "direction": "DI",
+      "address": "I2.2",
+      "module": "-A102",
+      "channel": "18",
+      "device": "-IF140",
+      "description": "Capping station ready",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CAPPER_BUSY",
+      "direction": "DI",
+      "address": "I2.3",
+      "module": "-A102",
+      "channel": "19",
+      "device": "-IF140",
+      "description": "Capping station busy",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CAPPER_COMPLETE",
+      "direction": "DI",
+      "address": "I2.4",
+      "module": "-A102",
+      "channel": "20",
+      "device": "-IF140",
+      "description": "Capping complete acknowledgement",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CAPPER_FAULT",
+      "direction": "DI",
+      "address": "I2.5",
+      "module": "-A102",
+      "channel": "21",
+      "device": "-IF140",
+      "description": "Capping fault",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "LOCAL_RESET_PB",
+      "direction": "DI",
+      "address": "I2.6",
+      "module": "-A102",
+      "channel": "22",
+      "device": "-S100",
+      "description": "Local reset pushbutton",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "LOCAL_STOP_PB",
+      "direction": "DI",
+      "address": "I2.7",
+      "module": "-A102",
+      "channel": "23",
+      "device": "-S101",
+      "description": "Local controlled-stop pushbutton",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DI_SPARE_01",
+      "direction": "DI",
+      "address": "I3.0",
+      "module": "-A102",
+      "channel": "24",
+      "device": "SPARE",
+      "description": "Allocated spare input",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DI_SPARE_02",
+      "direction": "DI",
+      "address": "I3.1",
+      "module": "-A102",
+      "channel": "25",
+      "device": "SPARE",
+      "description": "Allocated spare input",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DI_SPARE_03",
+      "direction": "DI",
+      "address": "I3.2",
+      "module": "-A102",
+      "channel": "26",
+      "device": "SPARE",
+      "description": "Allocated spare input",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DI_SPARE_04",
+      "direction": "DI",
+      "address": "I3.3",
+      "module": "-A102",
+      "channel": "27",
+      "device": "SPARE",
+      "description": "Allocated spare input",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DI_SPARE_05",
+      "direction": "DI",
+      "address": "I3.4",
+      "module": "-A102",
+      "channel": "28",
+      "device": "SPARE",
+      "description": "Allocated spare input",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DI_SPARE_06",
+      "direction": "DI",
+      "address": "I3.5",
+      "module": "-A102",
+      "channel": "29",
+      "device": "SPARE",
+      "description": "Allocated spare input",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DI_SPARE_07",
+      "direction": "DI",
+      "address": "I3.6",
+      "module": "-A102",
+      "channel": "30",
+      "device": "SPARE",
+      "description": "Allocated spare input",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DI_SPARE_08",
+      "direction": "DI",
+      "address": "I3.7",
+      "module": "-A102",
+      "channel": "31",
+      "device": "SPARE",
+      "description": "Allocated spare input",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CONVEYOR_RUN_CMD",
+      "direction": "DO",
+      "address": "Q0.0",
+      "module": "-A103",
+      "channel": "0",
+      "device": "-K200",
+      "description": "Conveyor run relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "PUMP_RUN_CMD",
+      "direction": "DO",
+      "address": "Q0.1",
+      "module": "-A103",
+      "channel": "1",
+      "device": "-K201",
+      "description": "Pump run relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "FILL_VALVE_1_OPEN_CMD",
+      "direction": "DO",
+      "address": "Q0.2",
+      "module": "-A103",
+      "channel": "2",
+      "device": "-K202",
+      "description": "Valve 1 interposing relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "FILL_VALVE_2_OPEN_CMD",
+      "direction": "DO",
+      "address": "Q0.3",
+      "module": "-A103",
+      "channel": "3",
+      "device": "-K203",
+      "description": "Valve 2 interposing relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "GATE_OPEN_CMD",
+      "direction": "DO",
+      "address": "Q0.4",
+      "module": "-A103",
+      "channel": "4",
+      "device": "-K204",
+      "description": "Gate open relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "GATE_CLOSE_CMD",
+      "direction": "DO",
+      "address": "Q0.5",
+      "module": "-A103",
+      "channel": "5",
+      "device": "-K205",
+      "description": "Gate close relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CLAMP_ENGAGE_CMD",
+      "direction": "DO",
+      "address": "Q0.6",
+      "module": "-A103",
+      "channel": "6",
+      "device": "-K206",
+      "description": "Clamp engage relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CLAMP_RELEASE_CMD",
+      "direction": "DO",
+      "address": "Q0.7",
+      "module": "-A103",
+      "channel": "7",
+      "device": "-K207",
+      "description": "Clamp release relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CAPPER_REQUEST",
+      "direction": "DO",
+      "address": "Q1.0",
+      "module": "-A103",
+      "channel": "8",
+      "device": "-K208",
+      "description": "Capping request relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "STACK_GREEN",
+      "direction": "DO",
+      "address": "Q1.1",
+      "module": "-A103",
+      "channel": "9",
+      "device": "-K209",
+      "description": "Green beacon relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "STACK_AMBER",
+      "direction": "DO",
+      "address": "Q1.2",
+      "module": "-A103",
+      "channel": "10",
+      "device": "-K210",
+      "description": "Amber beacon relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "STACK_RED",
+      "direction": "DO",
+      "address": "Q1.3",
+      "module": "-A103",
+      "channel": "11",
+      "device": "-K211",
+      "description": "Red beacon relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "AUDIBLE_ALARM",
+      "direction": "DO",
+      "address": "Q1.4",
+      "module": "-A103",
+      "channel": "12",
+      "device": "-K212",
+      "description": "Sounder relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "CAMERA_LIGHT_ENABLE",
+      "direction": "DO",
+      "address": "Q1.5",
+      "module": "-A103",
+      "channel": "13",
+      "device": "-K213",
+      "description": "Vision lighting relay",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_01",
+      "direction": "DO",
+      "address": "Q1.6",
+      "module": "-A103",
+      "channel": "14",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_02",
+      "direction": "DO",
+      "address": "Q1.7",
+      "module": "-A103",
+      "channel": "15",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_03",
+      "direction": "DO",
+      "address": "Q2.0",
+      "module": "-A103",
+      "channel": "16",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_04",
+      "direction": "DO",
+      "address": "Q2.1",
+      "module": "-A103",
+      "channel": "17",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_05",
+      "direction": "DO",
+      "address": "Q2.2",
+      "module": "-A103",
+      "channel": "18",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_06",
+      "direction": "DO",
+      "address": "Q2.3",
+      "module": "-A103",
+      "channel": "19",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_07",
+      "direction": "DO",
+      "address": "Q2.4",
+      "module": "-A103",
+      "channel": "20",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_08",
+      "direction": "DO",
+      "address": "Q2.5",
+      "module": "-A103",
+      "channel": "21",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_09",
+      "direction": "DO",
+      "address": "Q2.6",
+      "module": "-A103",
+      "channel": "22",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_10",
+      "direction": "DO",
+      "address": "Q2.7",
+      "module": "-A103",
+      "channel": "23",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_11",
+      "direction": "DO",
+      "address": "Q3.0",
+      "module": "-A103",
+      "channel": "24",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_12",
+      "direction": "DO",
+      "address": "Q3.1",
+      "module": "-A103",
+      "channel": "25",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_13",
+      "direction": "DO",
+      "address": "Q3.2",
+      "module": "-A103",
+      "channel": "26",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_14",
+      "direction": "DO",
+      "address": "Q3.3",
+      "module": "-A103",
+      "channel": "27",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_15",
+      "direction": "DO",
+      "address": "Q3.4",
+      "module": "-A103",
+      "channel": "28",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_16",
+      "direction": "DO",
+      "address": "Q3.5",
+      "module": "-A103",
+      "channel": "29",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_17",
+      "direction": "DO",
+      "address": "Q3.6",
+      "module": "-A103",
+      "channel": "30",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "DO_SPARE_18",
+      "direction": "DO",
+      "address": "Q3.7",
+      "module": "-A103",
+      "channel": "31",
+      "device": "SPARE",
+      "description": "Allocated spare output",
+      "safe_default": "FALSE",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "FLOW_1_MA_RAW",
+      "direction": "AI",
+      "address": "IW64",
+      "module": "-A104",
+      "channel": "0",
+      "device": "-FT100",
+      "description": "Flow channel 1 instantaneous 4–20 mA",
+      "safe_default": "0",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "FLOW_2_MA_RAW",
+      "direction": "AI",
+      "address": "IW66",
+      "module": "-A104",
+      "channel": "1",
+      "device": "-FT101",
+      "description": "Flow channel 2 instantaneous 4–20 mA",
+      "safe_default": "0",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "AI_SPARE_01",
+      "direction": "AI",
+      "address": "IW68",
+      "module": "-A104",
+      "channel": "2",
+      "device": "SPARE",
+      "description": "Allocated spare analog input",
+      "safe_default": "0",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "AI_SPARE_02",
+      "direction": "AI",
+      "address": "IW70",
+      "module": "-A104",
+      "channel": "3",
+      "device": "SPARE",
+      "description": "Allocated spare analog input",
+      "safe_default": "0",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "AI_SPARE_03",
+      "direction": "AI",
+      "address": "IW72",
+      "module": "-A104",
+      "channel": "4",
+      "device": "SPARE",
+      "description": "Allocated spare analog input",
+      "safe_default": "0",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "AI_SPARE_04",
+      "direction": "AI",
+      "address": "IW74",
+      "module": "-A104",
+      "channel": "5",
+      "device": "SPARE",
+      "description": "Allocated spare analog input",
+      "safe_default": "0",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "AI_SPARE_05",
+      "direction": "AI",
+      "address": "IW76",
+      "module": "-A104",
+      "channel": "6",
+      "device": "SPARE",
+      "description": "Allocated spare analog input",
+      "safe_default": "0",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "AI_SPARE_06",
+      "direction": "AI",
+      "address": "IW78",
+      "module": "-A104",
+      "channel": "7",
+      "device": "SPARE",
+      "description": "Allocated spare analog input",
+      "safe_default": "0",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "FLOW_1_PULSE",
+      "direction": "HSC",
+      "address": "TM1.CH0.A",
+      "module": "-A101",
+      "channel": "CH0 A",
+      "device": "-FT100",
+      "description": "24 V pulse input channel 1",
+      "safe_default": "0",
+      "classification": "Standard control"
+    },
+    {
+      "symbol": "FLOW_2_PULSE",
+      "direction": "HSC",
+      "address": "TM1.CH1.A",
+      "module": "-A101",
+      "channel": "CH1 A",
+      "device": "-FT101",
+      "description": "24 V pulse input channel 2",
+      "safe_default": "0",
+      "classification": "Standard control"
+    }
+  ],
+  "vision_interface": [
+    {
+      "signal": "VISION_ENABLE",
+      "data_type": "BOOL",
+      "owner": "PLC",
+      "meaning": "Enable inspection service",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "INSPECTION_TRIGGER",
+      "data_type": "BOOL",
+      "owner": "PLC",
+      "meaning": "One-shot request",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "INSPECTION_ID",
+      "data_type": "UDINT",
+      "owner": "PLC",
+      "meaning": "Monotonic correlation identifier",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "RECIPE_ID",
+      "data_type": "UINT",
+      "owner": "PLC",
+      "meaning": "Active recipe identifier",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "EXPECTED_BOTTLES",
+      "data_type": "USINT",
+      "owner": "PLC",
+      "meaning": "Expected count; fixed at 2 for production",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "TARGET_FILL_LEVEL",
+      "data_type": "REAL",
+      "owner": "PLC",
+      "meaning": "Normalized visible target",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "PLC_HEARTBEAT",
+      "data_type": "UDINT",
+      "owner": "PLC",
+      "meaning": "Monotonic heartbeat counter",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "VISION_READY",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Pipeline and model ready",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "VISION_BUSY",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Request in progress",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "RESULT_VALID",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Result payload is complete",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 1000
+    },
+    {
+      "signal": "RESULT_ID",
+      "data_type": "UDINT",
+      "owner": "NVIDIA",
+      "meaning": "Echoed correlation identifier",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "BOTTLE_1_PASS",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Bottle 1 quality decision",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "BOTTLE_2_PASS",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Bottle 2 quality decision",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "FILL_1_STATUS",
+      "data_type": "USINT",
+      "owner": "NVIDIA",
+      "meaning": "0 unknown, 1 under, 2 in-range, 3 over",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "FILL_2_STATUS",
+      "data_type": "USINT",
+      "owner": "NVIDIA",
+      "meaning": "0 unknown, 1 under, 2 in-range, 3 over",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "LEAK_OR_SPILL_DETECTED",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Visible leak/spill indication",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "LOW_CONFIDENCE",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Confidence below validated threshold",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "VISION_WARNING",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Degraded but communicating",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "VISION_FAULT",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Blocking internal fault",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "INFERENCE_TIME",
+      "data_type": "UDINT",
+      "owner": "NVIDIA",
+      "meaning": "Measured pipeline time in milliseconds",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 0
+    },
+    {
+      "signal": "VISION_HEARTBEAT",
+      "data_type": "UDINT",
+      "owner": "NVIDIA",
+      "meaning": "Monotonic heartbeat counter",
+      "transport": "OPC UA subscribed/published node",
+      "timeout_ms": 1000
+    }
+  ],
+  "alarms": [
+    {
+      "alarm_id": 1001,
+      "message": "Emergency/safety chain not healthy",
+      "class": "Fault",
+      "response": "Controlled stop; outputs de-energized; manual reset after external safety restored",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1002,
+      "message": "Air pressure lost",
+      "class": "Fault",
+      "response": "Abort fill; close valves; stop pump; hold bottles",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1003,
+      "message": "Product supply lost",
+      "class": "Fault",
+      "response": "Abort fill and hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1101,
+      "message": "Conveyor VFD fault",
+      "class": "Fault",
+      "response": "Stop cycle and hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1102,
+      "message": "Pump VFD fault",
+      "class": "Fault",
+      "response": "Close valves immediately; stop request; hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1201,
+      "message": "Gate motion timeout or contradictory feedback",
+      "class": "Fault",
+      "response": "Stop conveyor; hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1202,
+      "message": "Clamp motion timeout or contradictory feedback",
+      "class": "Fault",
+      "response": "Stop pump; close valves; hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1301,
+      "message": "Fill channel 1 no flow",
+      "class": "Fault",
+      "response": "Close valve 1; stop pump when both closed; hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1302,
+      "message": "Fill channel 2 no flow",
+      "class": "Fault",
+      "response": "Close valve 2; stop pump when both closed; hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1303,
+      "message": "Flow pulse/analog disagreement",
+      "class": "Fault",
+      "response": "Close affected valve; quality hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1304,
+      "message": "Underfill detected",
+      "class": "Fault",
+      "response": "Quality hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1305,
+      "message": "Overfill detected",
+      "class": "Fault",
+      "response": "Close affected valve; quality hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1306,
+      "message": "Valve fails to close",
+      "class": "Fault",
+      "response": "Stop pump; close both command paths; quality hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1401,
+      "message": "Capping station unavailable or timeout",
+      "class": "Fault",
+      "response": "Keep pair controlled; operator disposition",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1402,
+      "message": "Capping station fault",
+      "class": "Fault",
+      "response": "Keep pair controlled",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1501,
+      "message": "Vision not ready",
+      "class": "Fault",
+      "response": "Do not transfer; quality hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1502,
+      "message": "Vision result timeout",
+      "class": "Fault",
+      "response": "Do not transfer; quality hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1503,
+      "message": "Vision result ID stale or contradictory",
+      "class": "Fault",
+      "response": "Discard result; quality hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1504,
+      "message": "Vision low confidence",
+      "class": "Warning",
+      "response": "Quality hold; operator inspection required",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1505,
+      "message": "Vision heartbeat lost",
+      "class": "Fault",
+      "response": "Quality hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1506,
+      "message": "Vision reports one or both bottles failed",
+      "class": "Fault",
+      "response": "Quality hold",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    },
+    {
+      "alarm_id": 1601,
+      "message": "HMI communications lost",
+      "class": "Warning",
+      "response": "Continue only autonomous safe state; no new HMI command accepted",
+      "ack_required": "Yes",
+      "reset_condition": "Cause cleared and explicit reset; never automatic restart"
+    }
+  ],
+  "requirements": [
+    {
+      "requirement_id": "SYS-001",
+      "requirement": "Receive and index exactly two bottles",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-002",
+      "requirement": "Confirm both bottle positions before filling",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-003",
+      "requirement": "Stop conveyor before clamp engagement",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-004",
+      "requirement": "Confirm gate and clamp feedback without contradiction",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-005",
+      "requirement": "Zero and accumulate two independent high-speed pulse totals",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-006",
+      "requirement": "Start common pump only with both fill paths permissive",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-007",
+      "requirement": "Close each fail-closed valve independently at target",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-008",
+      "requirement": "Scale and diagnose two 4–20 mA flow channels",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-009",
+      "requirement": "Detect no-flow, leakage, overfill, underfill and channel disagreement",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-010",
+      "requirement": "Apply configurable drip-settle time",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-011",
+      "requirement": "Trigger vision using a monotonic inspection ID",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-012",
+      "requirement": "Correlate result ID and reject stale or contradictory results",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-013",
+      "requirement": "Hold product on missing, uncertain, failed or low-confidence vision result",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-014",
+      "requirement": "Transfer only when process and quality acceptance are both true",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-015",
+      "requirement": "Exchange ready, busy, request, complete and fault with capper",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-016",
+      "requirement": "Prevent unintended restart following power or control recovery",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-017",
+      "requirement": "Provide Auto, Manual/Setup, Holding, Controlled Stop, Fault and Recovery states",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-018",
+      "requirement": "Separate commands, feedbacks, permissives, interlocks, faults, warnings and diagnostics",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-019",
+      "requirement": "Monitor external safety status only; standard PLC and AI are not safety functions",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-020",
+      "requirement": "Provide first-out fault capture and separate alarm acknowledgement from reset",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-021",
+      "requirement": "Provide permission-controlled HMI commands with feedback and disabled reason",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-022",
+      "requirement": "Provide deterministic simulator and fault-injection regression suite",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-023",
+      "requirement": "Maintain canonical tags across I/O, HMI, electrical, AI and tests",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-024",
+      "requirement": "Provide backup, restore and release-manifest procedure",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    },
+    {
+      "requirement_id": "SYS-025",
+      "requirement": "No physical reject device is included; operator disposition is required",
+      "verification": "Review + deterministic simulation where applicable",
+      "status": "Implemented in reviewable sources; native Siemens verification blocked"
+    }
+  ],
+  "tests": [
+    {
+      "test_id": "TC-001",
+      "scenario": "normal_two_bottle_cycle",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-002",
+      "scenario": "single_missing_bottle",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-003",
+      "scenario": "both_bottles_missing",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-004",
+      "scenario": "bottle_sensor_stuck_on",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-005",
+      "scenario": "bottle_sensor_stuck_off",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-006",
+      "scenario": "gate_timeout",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-007",
+      "scenario": "clamp_timeout",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-008",
+      "scenario": "contradictory_actuator_feedback",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-009",
+      "scenario": "flow_channel_no_pulse",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-010",
+      "scenario": "flow_analog_pulse_disagreement",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-011",
+      "scenario": "underfill",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-012",
+      "scenario": "overfill",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-013",
+      "scenario": "valve_fails_to_close",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-014",
+      "scenario": "pump_vfd_fault",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-015",
+      "scenario": "conveyor_vfd_fault",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-016",
+      "scenario": "air_pressure_loss",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-017",
+      "scenario": "product_supply_loss",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-018",
+      "scenario": "capper_not_ready",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-019",
+      "scenario": "capper_busy_timeout",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-020",
+      "scenario": "capper_fault",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-021",
+      "scenario": "hmi_communications_loss",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-022",
+      "scenario": "vision_not_ready",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-023",
+      "scenario": "vision_result_timeout",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-024",
+      "scenario": "stale_inspection_id",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-025",
+      "scenario": "low_confidence_inspection",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-026",
+      "scenario": "one_bottle_fails",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-027",
+      "scenario": "vision_heartbeat_loss",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-028",
+      "scenario": "plc_heartbeat_loss",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-029",
+      "scenario": "power_loss_during_filling",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-030",
+      "scenario": "power_restoration",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-031",
+      "scenario": "reset_no_restart",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    },
+    {
+      "test_id": "TC-032",
+      "scenario": "manual_mode_interlocks",
+      "method": "Deterministic Python simulation",
+      "expected": "Normal cycle releases only for normal scenario; every injected blocking condition enters HOLD or FAULT with pump/valves off",
+      "native_plcsim": "NOT RUN"
+    }
+  ],
+  "network": [
+    {
+      "node": "PLC-A100",
+      "ip": "192.168.10.10",
+      "vlan": "10",
+      "owner": "Controls",
+      "role": "PROFINET controller / OPC UA server"
+    },
+    {
+      "node": "HMI-H100",
+      "ip": "192.168.10.20",
+      "vlan": "10",
+      "owner": "Controls",
+      "role": "Unified operator panel"
+    },
+    {
+      "node": "VFD-U100",
+      "ip": "192.168.10.31",
+      "vlan": "10",
+      "owner": "Drives",
+      "role": "Conveyor G120C PN"
+    },
+    {
+      "node": "VFD-U101",
+      "ip": "192.168.10.32",
+      "vlan": "10",
+      "owner": "Drives",
+      "role": "Pump G120C PN"
+    },
+    {
+      "node": "VISION-PC200",
+      "ip": "192.168.20.10",
+      "vlan": "20",
+      "owner": "Vision",
+      "role": "OPC UA client + inference"
+    },
+    {
+      "node": "ENG-SERVICE",
+      "ip": "DHCP/reserved",
+      "vlan": "99",
+      "owner": "Engineering",
+      "role": "Temporary service access; disabled in production"
+    }
+  ],
+  "controlled_rules": {
+    "tag": "=FC01+<location>-<class><nnn>",
+    "legacy_mapping": "Primary IEC/ISO designation retained; secondary semantic names become PLC symbols",
+    "alarm_ranges": "1000 safety/utilities, 1100 drives, 1200 motion, 1300 filling, 1400 capper, 1500 vision, 1600 communications"
+  }
+}

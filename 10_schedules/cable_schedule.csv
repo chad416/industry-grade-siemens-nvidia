@@ -1,0 +1,17 @@
+cable_id,device,cores,type,termination,status
+W201,-B100,4,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W202,-B101,4,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W203,-B110,4,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W204,-B111,4,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W205,-B120,4,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W206,-B121,4,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W207,-B122,4,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W208,-B123,4,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W209,-B130,4,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W210,-B131,4,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W211,-FT100,8,Shielded instrumentation,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W212,-FT101,8,Shielded instrumentation,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W213,-IF140,8,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W214,-PC200,8,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W215,-CAM200,8,Shielded instrumentation,Both ends identified; analog shield at panel PE/shield clamp,Preliminary
+W216,-LT200,8,Industrial control,Both ends identified; analog shield at panel PE/shield clamp,Preliminary

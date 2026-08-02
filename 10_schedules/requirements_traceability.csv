@@ -1,0 +1,26 @@
+requirement_id,requirement,verification,status
+SYS-001,Receive and index exactly two bottles,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-002,Confirm both bottle positions before filling,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-003,Stop conveyor before clamp engagement,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-004,Confirm gate and clamp feedback without contradiction,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-005,Zero and accumulate two independent high-speed pulse totals,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-006,Start common pump only with both fill paths permissive,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-007,Close each fail-closed valve independently at target,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-008,Scale and diagnose two 4–20 mA flow channels,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-009,"Detect no-flow, leakage, overfill, underfill and channel disagreement",Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-010,Apply configurable drip-settle time,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-011,Trigger vision using a monotonic inspection ID,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-012,Correlate result ID and reject stale or contradictory results,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-013,"Hold product on missing, uncertain, failed or low-confidence vision result",Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-014,Transfer only when process and quality acceptance are both true,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-015,"Exchange ready, busy, request, complete and fault with capper",Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-016,Prevent unintended restart following power or control recovery,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-017,"Provide Auto, Manual/Setup, Holding, Controlled Stop, Fault and Recovery states",Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-018,"Separate commands, feedbacks, permissives, interlocks, faults, warnings and diagnostics",Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-019,Monitor external safety status only; standard PLC and AI are not safety functions,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-020,Provide first-out fault capture and separate alarm acknowledgement from reset,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-021,Provide permission-controlled HMI commands with feedback and disabled reason,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-022,Provide deterministic simulator and fault-injection regression suite,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-023,"Maintain canonical tags across I/O, HMI, electrical, AI and tests",Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-024,"Provide backup, restore and release-manifest procedure",Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked
+SYS-025,No physical reject device is included; operator disposition is required,Review + deterministic simulation where applicable,Implemented in reviewable sources; native Siemens verification blocked

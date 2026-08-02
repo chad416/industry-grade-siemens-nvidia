@@ -1,0 +1,13 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+// REVIEWABLE CALL STRUCTURE ONLY. Hardware IDs, instance DB names and actual tag bindings must be created and compiled in TIA.
+ORGANIZATION_BLOCK "Main"
+VAR_TEMP FirstScan : Bool; END_VAR
+BEGIN
++  // 1) Read/normalize physical I/O and technology-object counters.
++  // 2) Call FB_VFD instances for conveyor and pump.
++  // 3) Call FB_Actuator2Pos instances for gate and clamp.
++  // 4) Call two FB_FillChannel instances with independent pulse totals.
++  // 5) Call FB_VisionInterface, FB_RecipeManager and capping handshake module.
++  // 6) Call FB_MachineCoordinator and FB_AlarmManager.
++  // 7) Map commands to outputs through final permissive/interlock layer; release build forces all simulation hooks FALSE.
++END_ORGANIZATION_BLOCK

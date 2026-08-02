@@ -1,0 +1,20 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+FUNCTION_BLOCK "FB_VisionInterface"
+VAR_INPUT Enable : Bool; TriggerEdge : Bool; InspectionId : UDInt; Ready : Bool; Busy : Bool; Result : "UDT_VisionResult"; Heartbeat : UDInt; Timeout : Time; ResetEdge : Bool; END_VAR
+VAR_OUTPUT Trigger : Bool; Accepted : Bool; QualityPass : Bool; HoldRequired : Bool; Fault : Bool; DiagCode : UInt; END_VAR
+VAR tResult : TON; pending : Bool; latchedId : UDInt; lastHeartbeat : UDInt; tHeartbeat : TON; END_VAR
+BEGIN
+  #Trigger := FALSE; #Accepted := FALSE;
+  IF #TriggerEdge AND #Enable AND #Ready AND NOT #Busy AND NOT #pending THEN #pending := TRUE; #latchedId := #InspectionId; #Trigger := TRUE; END_IF;
+  #tResult(IN := #pending, PT := #Timeout);
+  #tHeartbeat(IN := (#Heartbeat = #lastHeartbeat), PT := T#1500ms);
+  IF #pending AND #Result.ResultValid THEN
+    IF #Result.ResultId <> #latchedId THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagCode := 16#1503;
+    ELSIF #Result.Fault OR #Result.LowConfidence OR #Result.LeakOrSpill OR NOT (#Result.Bottle1Pass AND #Result.Bottle2Pass) OR (#Result.Fill1Status <> 2) OR (#Result.Fill2Status <> 2) THEN
+      #Accepted := TRUE; #QualityPass := FALSE; #HoldRequired := TRUE; #pending := FALSE; #DiagCode := 16#1504;
+    ELSE #Accepted := TRUE; #QualityPass := TRUE; #HoldRequired := FALSE; #pending := FALSE; #DiagCode := 0; END_IF;
+  END_IF;
+  IF #tResult.Q OR #tHeartbeat.Q OR NOT #Ready THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; IF #tResult.Q THEN #DiagCode := 16#1502; ELSE #DiagCode := 16#1505; END_IF; END_IF;
+  IF #ResetEdge AND NOT #pending AND #Ready THEN #Fault := FALSE; #QualityPass := FALSE; #HoldRequired := FALSE; #DiagCode := 0; END_IF;
+  #lastHeartbeat := #Heartbeat;
+END_FUNCTION_BLOCK

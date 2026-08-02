@@ -1,0 +1,33 @@
+scenario,final_state,released,pump_cmd,valve_1_cmd,valve_2_cmd,automatic_restart,evidence
+normal_two_bottle_cycle,READY,True,False,False,False,False,fresh matched vision ID; both pass; capper complete
+single_missing_bottle,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+both_bottles_missing,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+bottle_sensor_stuck_on,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+bottle_sensor_stuck_off,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+gate_timeout,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+clamp_timeout,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+contradictory_actuator_feedback,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+flow_channel_no_pulse,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+flow_analog_pulse_disagreement,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+underfill,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+overfill,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+valve_fails_to_close,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+pump_vfd_fault,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+conveyor_vfd_fault,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+air_pressure_loss,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+product_supply_loss,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+capper_not_ready,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+capper_busy_timeout,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+capper_fault,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+hmi_communications_loss,CONTROLLED_STOPPING,False,False,False,False,False,no new HMI command accepted
+vision_not_ready,HOLDING,False,False,False,False,False,blocking injection caused controlled hold/fault
+vision_result_timeout,HOLDING,False,False,False,False,False,blocking injection caused controlled hold/fault
+stale_inspection_id,HOLDING,False,False,False,False,False,blocking injection caused controlled hold/fault
+low_confidence_inspection,HOLDING,False,False,False,False,False,blocking injection caused controlled hold/fault
+one_bottle_fails,HOLDING,False,False,False,False,False,blocking injection caused controlled hold/fault
+vision_heartbeat_loss,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+plc_heartbeat_loss,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+power_loss_during_filling,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault
+power_restoration,STOPPED,False,False,False,False,False,reset and new start required
+reset_no_restart,STOPPED,False,False,False,False,False,reset clears eligible latch only
+manual_mode_interlocks,FAULTED,False,False,False,False,False,blocking injection caused controlled hold/fault

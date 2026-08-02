@@ -1,0 +1,90 @@
+# Automated validation report
+
+Result: **PASS**
+
+## Passed checks
+
+- required directory 00_project_control
+- required directory 01_requirements
+- required directory 02_system_architecture
+- required directory 03_electrical
+- required directory 04_controls_siemens
+- required directory 05_hmi
+- required directory 06_drives
+- required directory 07_nvidia_vision
+- required directory 08_digital_twin
+- required directory 09_panel_cad
+- required directory 10_schedules
+- required directory 11_simulation
+- required directory 12_testing
+- required directory 13_documentation
+- required directory 14_qa
+- required directory release
+- PLC symbols unique
+- PLC addresses/module channels unique
+- 32 DI channels allocated
+- 32 DO channels allocated
+- 8 AI channels allocated
+- two independent HSC channels allocated
+- required two-bottle/fill/capper I/O present
+- PLC-AI contract has exact required signal set
+- alarm numbers unique
+- all 32 required regression scenarios controlled
+- all ten required operating states controlled
+- DeepStream design configuration parses with required sections
+- DeepStream inference design configuration parses
+- annotation schema is explicit, parseable and untrained
+- CSV parses and has header: 00_project_control\agent_ownership.csv
+- CSV parses and has header: 00_project_control\open_issues.csv
+- CSV parses and has header: 00_project_control\revision_history.csv
+- CSV parses and has header: 07_nvidia_vision\dataset_manifest.csv
+- CSV parses and has header: 07_nvidia_vision\plc_ai_node_map.csv
+- CSV parses and has header: 08_digital_twin\synthetic_variation_plan.csv
+- CSV parses and has header: 10_schedules\alarms.csv
+- CSV parses and has header: 10_schedules\bom.csv
+- CSV parses and has header: 10_schedules\cable_schedule.csv
+- CSV parses and has header: 10_schedules\hmi_tags.csv
+- CSV parses and has header: 10_schedules\load_budget.csv
+- CSV parses and has header: 10_schedules\network_nodes.csv
+- CSV parses and has header: 10_schedules\nvidia_interface_tags.csv
+- CSV parses and has header: 10_schedules\panel_placement.csv
+- CSV parses and has header: 10_schedules\plc_io.csv
+- CSV parses and has header: 10_schedules\requirements_traceability.csv
+- CSV parses and has header: 10_schedules\siemens_hardware.csv
+- CSV parses and has header: 10_schedules\terminal_plan.csv
+- CSV parses and has header: 10_schedules\test_coverage.csv
+- CSV parses and has header: 10_schedules\vfd_parameters.csv
+- CSV parses and has header: 10_schedules\wire_list.csv
+- CSV parses and has header: 11_simulation\outputs\scenario_results.csv
+- CSV parses and has header: 12_testing\io_checkout.csv
+- CSV parses and has header: release\manifest.csv
+- notice present: README.md
+- safety boundary present: README.md
+- notice present: AGENTS.md
+- safety boundary present: AGENTS.md
+- notice present: 00_project_control\design_basis.md
+- safety boundary present: 00_project_control\design_basis.md
+- notice present: 14_qa\acceptance_gate_status.md
+- safety boundary present: 14_qa\acceptance_gate_status.md
+- notice present: release\RELEASE_NOTES.md
+- safety boundary present: release\RELEASE_NOTES.md
+- modular Siemens SCL source set present
+- no pseudocode claim: 00_types.scl
+- no pseudocode claim: FB_Actuator2Pos.scl
+- no pseudocode claim: FB_AlarmManager.scl
+- no pseudocode claim: FB_FillChannel.scl
+- no pseudocode claim: FB_MachineCoordinator.scl
+- no pseudocode claim: FB_RecipeManager.scl
+- no pseudocode claim: FB_VFD.scl
+- no pseudocode claim: FB_VisionInterface.scl
+- no pseudocode claim: OB1_Call_Structure.scl
+- audited baseline hash retained: 03_electrical/native_baseline/filling_cell.qet
+- audited baseline hash retained: 09_panel_cad/native_baseline/filling_cell_panel.FCStd
+- audited baseline hash retained: 09_panel_cad/native_baseline/filling_cell_panel.step
+- audited baseline hash retained: 09_panel_cad/native_baseline/filling_cell_panel.iges
+- audited baseline hash retained: 09_panel_cad/native_baseline/mounting_plate.dxf
+- QET baseline is well-formed XML
+- FCStd baseline ZIP has audited 76 entries
+- STEP exchange header valid
+- no fabricated TIA/model/engine/USD native file delivered
+- PLC I/O schedule exactly derives from canonical model

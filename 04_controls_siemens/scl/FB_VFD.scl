@@ -1,0 +1,13 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+FUNCTION_BLOCK "FB_VFD"
+VAR_INPUT Enable : Bool; RunRequest : Bool; Ready : Bool; Running : Bool; FaultIn : Bool; ResetEdge : Bool; StartTimeout : Time; END_VAR
+VAR_OUTPUT RunCmd : Bool; Permissive : Bool; Fault : Bool; DiagCode : UInt; END_VAR
+VAR tStart : TON; END_VAR
+BEGIN
+  #Permissive := #Enable AND #Ready AND NOT #FaultIn;
+  #RunCmd := #RunRequest AND #Permissive AND NOT #Fault;
+  #tStart(IN := #RunCmd AND NOT #Running, PT := #StartTimeout);
+  IF #FaultIn THEN #Fault := TRUE; #DiagCode := 16#1101; END_IF;
+  IF #tStart.Q THEN #Fault := TRUE; #DiagCode := 16#1102; END_IF;
+  IF #ResetEdge AND NOT #FaultIn AND NOT #RunRequest THEN #Fault := FALSE; #DiagCode := 0; END_IF;
+END_FUNCTION_BLOCK
