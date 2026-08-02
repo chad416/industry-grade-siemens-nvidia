@@ -16,7 +16,7 @@ The machine indexes exactly two bottles, proves conveyor stopped, closes the gat
 | Secure | Conveyor stopped | Gate close, clamp engage | Both feedbacks true | Equipment timeout fault |
 | Fill | Secured pair and valid recipe | Pump, two independent valves | Both close-confirmed in tolerance | Close valves, stop pump, hold |
 | Drip | Both channels complete | Pump/valves off | Recipe timer expires | Controlled stop on blocking fault |
-| Inspect | Fresh monotonic ID | Camera light and trigger | Matched, valid, high-confidence result | HOLDING on late/stale/uncertain/fail |
+| Inspect | Fresh monotonic ID | Camera light and trigger | Matched, valid, high-confidence result | HOLDING for a coherent quality rejection; FAULTED with product/output hold for timeout, stale/session/model mismatch, heartbeat loss or interface contradiction |
 | Transfer | Process and quality accepted | Capper request | Busy then complete | HOLDING/FAULTED on order/timeout/fault |
 | Release | Capper complete | Gate open, clamp release | Pair absent and actuators released | No new cycle until confirmed |
 

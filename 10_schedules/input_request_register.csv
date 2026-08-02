@@ -17,5 +17,12 @@ IR-015,"Site network, certificate, identity and cybersecurity policy",OT securit
 IR-016,Usable licensed TIA Portal V20 / WinCC Unified access,Controls owner,Native PLC/HMI project and compile,OPEN,2026-08-02,Approved source document or native evidence
 IR-017,Startdrive installation and licensed access,Controls owner,Drive native configuration,OPEN,2026-08-02,Approved source document or native evidence
 IR-018,PLCSIM or PLCSIM Advanced installation,Controls owner,Native software-in-loop traces,OPEN,2026-08-02,Approved source document or native evidence
-IR-019,FreeCAD installation and qualified panel-CAD reviewer,Electrical owner,Revision-C FCStd/exchange validation,OPEN,2026-08-02,Approved source document or native evidence
+IR-019,FreeCAD installation and qualified panel-CAD reviewer,Electrical owner,Revision-D FCStd/exchange validation,OPEN,2026-08-02,Approved source document or native evidence
 IR-020,Qualified machinery-safety engineer risk assessment and validation plan,Project authority,External safety architecture,OPEN,2026-08-02,Approved source document or native evidence
+IR-021,Usable QElectroTech installation and qualified electrical schematic reviewer,Electrical owner,"Revision-D schematic authoring, reopen, export and review",OPEN,2026-08-02,Approved source document or native evidence
+IR-022,"Field cable route lengths, installation method, grouping, ambient and approved cable families",Site electrical engineer,"Conductor loading, voltage drop, fill and cable release",OPEN,2026-08-02,Approved source document or native evidence
+IR-023,"24 V branch load currents, inrush profiles and selected protection-device data",Electrical/vendor,PSU transient margin and branch protection coordination,OPEN,2026-08-02,Approved source document or native evidence
+IR-024,"Enclosure material/size/IP, ambient/altitude/solar exposure and verified device loss data",Site/mechanical/vendor,Panel thermal assessment and fan/filter selection,OPEN,2026-08-02,Approved source document or native evidence
+IR-025,"Approved terminal family, jumpers, test/disconnect, PE and spare-position policy",Electrical owner,"Terminal quantity, width, bridges and placement release",OPEN,2026-08-02,Approved source document or native evidence
+IR-026,Approved PE/FE/0 V/MANA bonding and EMC-zone/shield termination policy,Site electrical/EMC authority,Bonding topology and shield/return release,OPEN,2026-08-02,Approved source document or native evidence
+IR-027,Source transformer/impedance and component interrupt/SCCR data,Site electrical engineer,Prospective fault current and assembly SCCR assessment,OPEN,2026-08-02,Approved source document or native evidence

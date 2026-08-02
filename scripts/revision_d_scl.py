@@ -17,8 +17,13 @@ VERSION : 0.1
 END_TYPE
 
 TYPE "E_FillDiag"
-VERSION : 0.1
-   (FILL_OK := 0, INVALID_CONFIG := 1, ANALOG_BROKEN_WIRE := 2, NO_FLOW := 3, PULSE_ANALOG_DISAGREE := 4, FILL_TIMEOUT := 5, UNDERFILL := 6, OVERFILL := 7, VALVE_OPEN_MISMATCH := 8, VALVE_CLOSE_MISMATCH := 9, CONTINUED_FLOW := 10, ABORTED := 11);
+VERSION : 0.2
+   (FILL_OK := 0, INVALID_CONFIG := 1, ANALOG_BROKEN_WIRE := 2, NO_FLOW := 3, PULSE_ANALOG_DISAGREE := 4, FILL_TIMEOUT := 5, UNDERFILL := 6, OVERFILL := 7, VALVE_OPEN_MISMATCH := 8, VALVE_CLOSE_MISMATCH := 9, CONTINUED_FLOW := 10, ABORTED := 11, PULSE_MISSING := 12, ANALOG_NO_FLOW := 13, PULSE_COUNTER_DISCONTINUITY := 14);
+END_TYPE
+
+TYPE "E_VisionDiag"
+VERSION : 0.3
+   (VISION_OK := 0, READY_TIMEOUT := 1, RESULT_TIMEOUT := 2, RESULT_ID_MISMATCH := 3, QUALITY_BLOCK := 4, HEARTBEAT_LOSS := 5, INTERFACE_CONTRADICTION := 6, RESULT_STUCK_VALID := 7, NON_MONOTONIC_REQUEST := 8, SESSION_MISMATCH := 9, MODEL_MISMATCH := 10);
 END_TYPE
 
 TYPE "UDT_Recipe"
@@ -44,10 +49,11 @@ VERSION : 0.2
 END_TYPE
 
 TYPE "UDT_VisionResult"
-VERSION : 0.2
+VERSION : 0.3
    STRUCT
       ResultValid : Bool;
       ResultId : UDInt;
+      SessionEpoch : UDInt;
       Bottle1Pass : Bool;
       Bottle2Pass : Bool;
       Fill1Status : USInt;
@@ -116,6 +122,8 @@ VERSION : 0.1
       Flow2Raw : Int;
       Flow1ChannelFault : Bool;
       Flow2ChannelFault : Bool;
+      Flow1PulseChannelFault : Bool;
+      Flow2PulseChannelFault : Bool;
       PulseTotal1 : UDInt;
       PulseTotal2 : UDInt;
       ConveyorPnHealthy : Bool;
@@ -132,6 +140,8 @@ VERSION : 0.1
       Flow2PulseTotal : UDInt;
       Flow1ChannelFault : Bool;
       Flow2ChannelFault : Bool;
+      Flow1PulseChannelFault : Bool;
+      Flow2PulseChannelFault : Bool;
    END_STRUCT;
 END_TYPE
 
@@ -224,8 +234,13 @@ VERSION : 0.1
       ExpectedBottles : USInt;
       TargetFillLevel : Real;
       PlcHeartbeat : UDInt;
+      SessionEpoch : UDInt;
+      ExpectedModelId : String[32];
+      ExpectedModelHash : String[64];
       Ready : Bool;
       Busy : Bool;
+      ResultAckId : UDInt;
+      DiagReason : "E_VisionDiag";
       Result : "UDT_VisionResult";
    END_VAR
 BEGIN
@@ -398,96 +413,235 @@ END_FUNCTION_BLOCK''',
 
         "FB_VisionInterface.scl": f'''// {NOTICE}
 FUNCTION_BLOCK "FB_VisionInterface"
-VAR_INPUT Enable : Bool; TriggerEdge : Bool; InspectionId : UDInt; Ready : Bool; Busy : Bool; Result : "UDT_VisionResult"; Heartbeat : UDInt; Timeout : Time; HeartbeatTimeout : Time; ResetEdge : Bool; END_VAR
-VAR_OUTPUT Trigger : Bool; Accepted : Bool; QualityPass : Bool; HoldRequired : Bool; Fault : Bool; DiagReason : UInt; END_VAR
-VAR tReady : TON; tResult : TON; tHeartbeat : TON; pending : Bool; triggered : Bool; latchedId : UDInt; lastHeartbeat : UDInt; END_VAR
+VAR_INPUT Enable : Bool; TriggerEdge : Bool; InspectionId : UDInt; SessionEpoch : UDInt; ExpectedModelId : String[32]; ExpectedModelHash : String[64]; Ready : Bool; Busy : Bool; Result : "UDT_VisionResult"; Heartbeat : UDInt; Timeout : Time; HeartbeatTimeout : Time; ResetEdge : Bool; END_VAR
+VAR_OUTPUT Trigger : Bool; Accepted : Bool; PublicationAck : Bool; QualityPass : Bool; HoldRequired : Bool; Fault : Bool; HeartbeatHealthy : Bool; ResultStuckHigh : Bool; DiagReason : "E_VisionDiag"; END_VAR
+VAR
+   tReady : TON; tResult : TON; tHeartbeat : TON; tResultClear : TON;
+   pending : Bool; triggered : Bool; issuedOnce : Bool; heartbeatInitialized : Bool; resultMustClear : Bool; publicationWasAwaitingClear : Bool; heartbeatChanged : Bool; heartbeatRegressed : Bool;
+   latchedId : UDInt; latchedSessionEpoch : UDInt; currentSessionEpoch : UDInt; lastIssuedId : UDInt; lastHeartbeat : UDInt;
+END_VAR
 BEGIN
-   #Trigger := FALSE; #Accepted := FALSE;
-   IF #TriggerEdge AND #Enable AND NOT #pending THEN #pending := TRUE; #triggered := FALSE; #latchedId := #InspectionId; #QualityPass := FALSE; END_IF;
-   #tReady(IN := #pending AND NOT #triggered AND (NOT #Ready OR #Busy), PT := #Timeout);
-   IF #pending AND NOT #triggered AND #Ready AND NOT #Busy THEN #Trigger := TRUE; #triggered := TRUE; END_IF;
-   #tResult(IN := #pending AND #triggered, PT := #Timeout);
-   #tHeartbeat(IN := (#Heartbeat = #lastHeartbeat), PT := #HeartbeatTimeout);
-   IF #pending AND #triggered AND #Result.ResultValid THEN
-      IF #Result.ResultId <> #latchedId THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 3;
-      ELSIF #Result.Fault OR #Result.LowConfidence OR #Result.LeakOrSpill OR NOT (#Result.Bottle1Pass AND #Result.Bottle2Pass) OR (#Result.Fill1Status <> 2) OR (#Result.Fill2Status <> 2) THEN
-         #Accepted := TRUE; #QualityPass := FALSE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := 4;
-      ELSE #Accepted := TRUE; #QualityPass := TRUE; #HoldRequired := FALSE; #pending := FALSE; #triggered := FALSE; #DiagReason := 0; END_IF;
+   // Trigger and Accepted are one-scan pulses. Reset never synthesizes either edge.
+   #Trigger := FALSE;
+   #Accepted := FALSE;
+   #PublicationAck := FALSE;
+
+   // Transport ownership is independent of enable, transaction and quality.  The
+   // exact publication ID is level-acknowledged until the edge deasserts VALID.
+   #publicationWasAwaitingClear := #resultMustClear;
+   IF #Result.ResultValid THEN #PublicationAck := TRUE; #resultMustClear := TRUE; END_IF;
+
+   // Inspection IDs are strictly monotonic within one nonzero PLC session.
+   // A session change resets the ID space only after pending/old publication clears.
+   IF #SessionEpoch <> #currentSessionEpoch THEN
+      IF #pending OR #Result.ResultValid THEN
+         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".SESSION_MISMATCH;
+      ELSE
+         #currentSessionEpoch := #SessionEpoch; #issuedOnce := FALSE; #lastIssuedId := UDINT#0; #resultMustClear := FALSE;
+      END_IF;
    END_IF;
-   IF #tReady.Q THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #DiagReason := 1;
-   ELSIF #tResult.Q THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #DiagReason := 2;
-   ELSIF #tHeartbeat.Q THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #DiagReason := 5; END_IF;
+
+   // Heartbeat supervision is intentionally suppressed while disabled. On re-enable,
+   // the current value becomes the baseline and must advance within HeartbeatTimeout.
+   IF NOT #Enable THEN
+      #heartbeatInitialized := FALSE; #heartbeatChanged := FALSE; #heartbeatRegressed := FALSE;
+      #lastHeartbeat := #Heartbeat;
+   ELSIF NOT #heartbeatInitialized THEN
+      #heartbeatInitialized := TRUE; #heartbeatChanged := FALSE; #heartbeatRegressed := FALSE;
+      #lastHeartbeat := #Heartbeat;
+   ELSE
+      #heartbeatChanged := #Heartbeat <> #lastHeartbeat;
+      IF #heartbeatChanged THEN
+         IF (#Heartbeat < #lastHeartbeat) AND NOT ((#lastHeartbeat > UDINT#4294967040) AND (#Heartbeat < UDINT#256)) THEN
+            #heartbeatRegressed := TRUE;
+         ELSIF NOT #heartbeatRegressed THEN
+            #lastHeartbeat := #Heartbeat;
+         END_IF;
+      END_IF;
+   END_IF;
+   #tHeartbeat(IN := #Enable AND #heartbeatInitialized AND NOT #heartbeatChanged, PT := #HeartbeatTimeout);
+   #HeartbeatHealthy := NOT #Enable OR (NOT #tHeartbeat.Q AND NOT #heartbeatRegressed);
+
+   // A consumed or rejected publication must deassert before another request can arm.
+   #tResultClear(IN := #resultMustClear AND #Result.ResultValid, PT := #Timeout);
+   IF #resultMustClear AND NOT #Result.ResultValid THEN #resultMustClear := FALSE; END_IF;
+
+   // Any publication while idle is orphaned, delayed or stuck and is never consumed.
+   IF #Enable AND #Result.ResultValid AND NOT #pending AND NOT #publicationWasAwaitingClear THEN
+      #ResultStuckHigh := TRUE; #Fault := TRUE; #HoldRequired := TRUE;
+      IF #DiagReason = "E_VisionDiag".VISION_OK THEN #DiagReason := "E_VisionDiag".RESULT_STUCK_VALID; END_IF;
+   END_IF;
+
+   // READY=1/BUSY=1 means processing. BUSY without READY, or publication while
+   // BUSY, is contradictory and fail-closed.
+   IF #Enable AND ((#Busy AND NOT #Ready) OR (#Busy AND #Result.ResultValid)) AND NOT #Fault THEN
+      #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".INTERFACE_CONTRADICTION;
+   END_IF;
+
+   IF #TriggerEdge AND #Enable AND NOT #Result.ResultValid AND NOT #pending AND NOT #Fault AND NOT #HoldRequired AND NOT #resultMustClear THEN
+      IF #SessionEpoch = UDINT#0 THEN
+         #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := "E_VisionDiag".SESSION_MISMATCH;
+      ELSIF (#InspectionId = UDINT#0) OR (#issuedOnce AND ((#lastIssuedId = UDINT#4294967295) OR (#InspectionId <= #lastIssuedId))) THEN
+         #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := "E_VisionDiag".NON_MONOTONIC_REQUEST;
+      ELSE
+         #pending := TRUE; #triggered := FALSE; #latchedId := #InspectionId; #latchedSessionEpoch := #SessionEpoch; #lastIssuedId := #InspectionId; #issuedOnce := TRUE; #QualityPass := FALSE;
+      END_IF;
+   END_IF;
+
+   #tReady(IN := #pending AND NOT #triggered AND (NOT #Ready OR #Busy), PT := #Timeout);
+   IF #pending AND NOT #triggered AND #Ready AND NOT #Busy AND NOT #Fault THEN #Trigger := TRUE; #triggered := TRUE; END_IF;
+   #tResult(IN := #pending AND #triggered, PT := #Timeout);
+
+   IF #pending AND #triggered AND #Result.ResultValid AND NOT #Fault THEN
+      // Acknowledge transport ownership for every complete publication, including
+      // rejected data. PublicationAck never means product acceptance.
+      #PublicationAck := TRUE; #resultMustClear := TRUE;
+      IF #Result.SessionEpoch <> #latchedSessionEpoch THEN
+         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".SESSION_MISMATCH;
+      ELSIF #Result.ResultId <> #latchedId THEN
+         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".RESULT_ID_MISMATCH;
+      ELSIF (#ExpectedModelId = '') OR (#ExpectedModelHash = '') OR (#Result.ModelId <> #ExpectedModelId) OR (#Result.ModelHash <> #ExpectedModelHash) THEN
+         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".MODEL_MISMATCH;
+      ELSIF #Result.Fault OR #Result.Warning OR #Result.LowConfidence OR #Result.LeakOrSpill OR NOT (#Result.Bottle1Pass AND #Result.Bottle2Pass) OR (#Result.Fill1Status <> 2) OR (#Result.Fill2Status <> 2) THEN
+         #Accepted := TRUE; #QualityPass := FALSE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".QUALITY_BLOCK;
+      ELSE
+         #Accepted := TRUE; #QualityPass := TRUE; #HoldRequired := FALSE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".VISION_OK;
+      END_IF;
+   END_IF;
+
+   // First-out diagnostic is preserved once Fault is latched.
+   IF NOT #Fault THEN
+      IF #tReady.Q AND #pending AND NOT #triggered THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".READY_TIMEOUT;
+      ELSIF #tResult.Q AND #pending AND #triggered AND NOT #Result.ResultValid THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #resultMustClear := TRUE; #DiagReason := "E_VisionDiag".RESULT_TIMEOUT;
+      ELSIF NOT #HeartbeatHealthy THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".HEARTBEAT_LOSS;
+      ELSIF #tResultClear.Q THEN #ResultStuckHigh := TRUE; #Fault := TRUE; #HoldRequired := TRUE; IF #DiagReason = "E_VisionDiag".VISION_OK THEN #DiagReason := "E_VisionDiag".RESULT_STUCK_VALID; END_IF;
+      END_IF;
+   END_IF;
+
+   IF NOT #Enable AND #pending THEN
+      IF NOT #Fault THEN #DiagReason := "E_VisionDiag".INTERFACE_CONTRADICTION; END_IF;
+      #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE;
+   END_IF;
    IF #Fault THEN #Trigger := FALSE; #triggered := FALSE; END_IF;
-   IF #ResetEdge AND NOT #pending AND #Ready AND NOT #tHeartbeat.Q THEN #Fault := FALSE; #QualityPass := FALSE; #HoldRequired := FALSE; #DiagReason := 0; END_IF;
-   #lastHeartbeat := #Heartbeat;
+
+   // Cause-cleared reset: publication low, interface coherent, heartbeat healthy,
+   // request edge absent. The next request must carry an ID greater than lastIssuedId.
+   IF #ResetEdge AND NOT #pending AND NOT #Busy AND NOT #Result.ResultValid AND NOT #TriggerEdge AND ((#Enable AND #Ready AND #HeartbeatHealthy) OR NOT #Enable) THEN
+      #Fault := FALSE; #QualityPass := FALSE; #HoldRequired := FALSE; #ResultStuckHigh := FALSE; #resultMustClear := FALSE; #heartbeatRegressed := FALSE; #DiagReason := "E_VisionDiag".VISION_OK;
+   END_IF;
 END_FUNCTION_BLOCK''',
 
         "FB_FillChannel.scl": f'''// {NOTICE}
 FUNCTION_BLOCK "FB_FillChannel"
 VAR_INPUT
    Enable : Bool; PumpRunning : Bool; StartEdge : Bool; Abort : Bool; ResetEdge : Bool;
-   PulseTotal : UDInt; FlowRaw : Int; AnalogChannelFault : Bool; ValveClosedFb : Bool;
+   PulseTotal : UDInt; FlowRaw : Int; PulseChannelFault : Bool; AnalogChannelFault : Bool; ValveClosedFb : Bool;
    TargetMl : Real; PulsesPerLitre : Real; UnderToleranceMl : Real; OverToleranceMl : Real;
    FlowMaxLMin : Real; NoFlowMinLMin : Real; PlausibilityPct : Real; PulseWindowTimeS : Real;
    NoFlowTimeout : Time; FillTimeout : Time; ValveOpenTimeout : Time; ValveCloseTimeout : Time; PlausibilityTime : Time;
 END_VAR
 VAR_OUTPUT
-   ValveOpenCmd : Bool; Busy : Bool; Done : Bool; Fault : Bool; Underfill : Bool; Overfill : Bool;
-   NoFlow : Bool; ContinuedFlow : Bool; PulseAnalogDisagreement : Bool; AnalogBrokenWire : Bool;
+   ValveOpenCmd : Bool; PumpRequest : Bool; Busy : Bool; Done : Bool; Fault : Bool; Underfill : Bool; Overfill : Bool;
+   NoFlow : Bool; PulseMissing : Bool; AnalogNoFlow : Bool; ContinuedFlow : Bool; PulseAnalogDisagreement : Bool; AnalogBrokenWire : Bool;
+   MeasurementWindowValid : Bool; CounterRolloverObserved : Bool; CounterDiscontinuity : Bool;
    DeliveredMl : Real; FlowLMin : Real; PulseFlowLMin : Real; DiagReason : "E_FillDiag";
 END_VAR
 VAR
-   active : Bool; closing : Bool; initialized : Bool; configValid : Bool;
-   lastPulseTotal : UDInt; scanDelta : UDInt; accumulated : UDInt; targetPulses : UDInt; windowPulses : UDInt;
-   tWindow : TON; tPlausibility : TON; tNoFlow : TON; tFill : TON; tValveOpen : TON; tValveClose : TON; tContinuedFlow : TON; tFlowStopped : TON;
+   active : Bool; closing : Bool; initialized : Bool; configValid : Bool; comparisonArmed : Bool;
+   pulsePresent : Bool; analogPresent : Bool; bothNoFlowCondition : Bool; pulseMissingCondition : Bool; analogNoFlowCondition : Bool; disagreementCondition : Bool;
+   lastPulseTotal : UDInt; scanDelta : UDInt; accumulated : UDInt; targetPulses : UDInt; windowPulses : UDInt; windowCount : UInt;
+   tWindow : TON; tPulseMissing : TON; tAnalogNoFlow : TON; tPlausibility : TON; tNoFlow : TON; tFill : TON; tValveOpen : TON; tValveClose : TON; tContinuedFlow : TON; tFlowStopped : TON;
 END_VAR
 BEGIN
-   IF NOT #initialized THEN #lastPulseTotal := #PulseTotal; #initialized := TRUE; #scanDelta := 0;
-   ELSIF #PulseTotal >= #lastPulseTotal THEN #scanDelta := #PulseTotal - #lastPulseTotal;
-   ELSE #scanDelta := (UDINT#4294967295 - #lastPulseTotal) + #PulseTotal + UDINT#1; END_IF;
+   #MeasurementWindowValid := FALSE;
+   IF NOT #initialized THEN
+      #lastPulseTotal := #PulseTotal; #initialized := TRUE; #scanDelta := 0;
+   ELSIF #PulseTotal >= #lastPulseTotal THEN
+      #scanDelta := #PulseTotal - #lastPulseTotal;
+   ELSIF (#lastPulseTotal > UDINT#4294967040) AND (#PulseTotal < UDINT#256) THEN
+      // A high-to-low wrap is accepted as unsigned counter rollover.
+      #scanDelta := (UDINT#4294967295 - #lastPulseTotal) + #PulseTotal + UDINT#1; #CounterRolloverObserved := TRUE;
+   ELSE
+      // Any other regression is a counter reset/discontinuity, not a rollover.
+      #scanDelta := 0; #CounterDiscontinuity := TRUE;
+   END_IF;
    #lastPulseTotal := #PulseTotal;
    #configValid := (#TargetMl > 0.0) AND (#PulsesPerLitre > 0.0) AND (#PulseWindowTimeS >= 0.1) AND (#FillTimeout > #NoFlowTimeout) AND (#OverToleranceMl >= 0.0) AND (#UnderToleranceMl >= 0.0);
    #AnalogBrokenWire := #AnalogChannelFault OR (#FlowRaw < 5000) OR (#FlowRaw > 29000);
    #FlowLMin := LIMIT(MN := 0.0, IN := INT_TO_REAL(#FlowRaw - 5530) * #FlowMaxLMin / 22118.0, MX := #FlowMaxLMin * 1.05);
+
    IF #StartEdge AND #Enable AND #ValveClosedFb AND NOT #Fault AND NOT #Busy THEN
       IF NOT #configValid THEN #Fault := TRUE; #DiagReason := "E_FillDiag".INVALID_CONFIG;
       ELSIF #AnalogBrokenWire THEN #Fault := TRUE; #DiagReason := "E_FillDiag".ANALOG_BROKEN_WIRE;
       ELSE
-         #targetPulses := REAL_TO_UDINT(#TargetMl * #PulsesPerLitre / 1000.0); #accumulated := 0; #windowPulses := 0; #scanDelta := 0; #lastPulseTotal := #PulseTotal;
-         #active := TRUE; #closing := FALSE; #Done := FALSE; #Underfill := FALSE; #Overfill := FALSE; #NoFlow := FALSE;
-         #ContinuedFlow := FALSE; #PulseAnalogDisagreement := FALSE; #DiagReason := "E_FillDiag".FILL_OK;
+         #targetPulses := REAL_TO_UDINT(#TargetMl * #PulsesPerLitre / 1000.0); #accumulated := 0; #windowPulses := 0; #windowCount := 0; #scanDelta := 0; #lastPulseTotal := #PulseTotal;
+         #active := TRUE; #closing := FALSE; #comparisonArmed := FALSE; #Done := FALSE; #Underfill := FALSE; #Overfill := FALSE; #NoFlow := FALSE;
+         #PulseMissing := FALSE; #AnalogNoFlow := FALSE; #ContinuedFlow := FALSE; #PulseAnalogDisagreement := FALSE; #CounterRolloverObserved := FALSE; #CounterDiscontinuity := FALSE;
+         #bothNoFlowCondition := FALSE; #pulseMissingCondition := FALSE; #analogNoFlowCondition := FALSE; #disagreementCondition := FALSE; #DiagReason := "E_FillDiag".FILL_OK;
       END_IF;
    END_IF;
+
    IF #active THEN #accumulated := #accumulated + #scanDelta; #windowPulses := #windowPulses + #scanDelta; END_IF;
    #DeliveredMl := UDINT_TO_REAL(#accumulated) * 1000.0 / MAX(IN1 := #PulsesPerLitre, IN2 := 1.0);
-   #ValveOpenCmd := #active AND #Enable AND #PumpRunning AND NOT #Abort AND NOT #Fault AND (#accumulated < #targetPulses) AND NOT #Overfill;
+   #PumpRequest := #active AND #Enable AND NOT #Abort AND NOT #Fault AND (#accumulated < #targetPulses) AND NOT #Overfill;
+   #ValveOpenCmd := #PumpRequest AND #PumpRunning;
    #Busy := #active OR #closing;
+
+   // A complete measurement window is explicit. The first complete window is a
+   // startup/acceleration settling window; comparisons arm from window two.
    #tWindow(IN := #ValveOpenCmd AND NOT #tWindow.Q, PT := REAL_TO_TIME(#PulseWindowTimeS * 1000.0));
-   IF #tWindow.Q THEN #PulseFlowLMin := UDINT_TO_REAL(#windowPulses) * 60.0 / (#PulsesPerLitre * #PulseWindowTimeS); #windowPulses := 0; END_IF;
-   #tPlausibility(IN := #ValveOpenCmd AND (#PulseFlowLMin > 0.0) AND ((ABS(#PulseFlowLMin - #FlowLMin) * 100.0) > (#PlausibilityPct * MAX(IN1 := #FlowLMin, IN2 := 0.1))), PT := #PlausibilityTime);
-   #PulseAnalogDisagreement := #tPlausibility.Q;
-   #tNoFlow(IN := #ValveOpenCmd AND (#PulseFlowLMin < #NoFlowMinLMin) AND (#FlowLMin < #NoFlowMinLMin), PT := #NoFlowTimeout);
-   #tFill(IN := #active, PT := #FillTimeout); #tValveOpen(IN := #ValveOpenCmd AND #ValveClosedFb, PT := #ValveOpenTimeout);
+   IF #tWindow.Q THEN
+      #MeasurementWindowValid := TRUE;
+      #PulseFlowLMin := UDINT_TO_REAL(#windowPulses) * 60.0 / (#PulsesPerLitre * #PulseWindowTimeS);
+      #windowPulses := 0;
+      IF #windowCount < UINT#65535 THEN #windowCount := #windowCount + UINT#1; END_IF;
+      #comparisonArmed := #windowCount >= UINT#2;
+      IF #comparisonArmed THEN
+         #pulsePresent := #PulseFlowLMin >= #NoFlowMinLMin;
+         #analogPresent := #FlowLMin >= #NoFlowMinLMin;
+         #bothNoFlowCondition := NOT #pulsePresent AND NOT #analogPresent;
+         #pulseMissingCondition := NOT #pulsePresent AND #analogPresent;
+         #analogNoFlowCondition := #pulsePresent AND NOT #analogPresent;
+         #disagreementCondition := #pulsePresent AND #analogPresent AND ((ABS(#PulseFlowLMin - #FlowLMin) * 100.0) > (#PlausibilityPct * MAX(IN1 := #FlowLMin, IN2 := 0.1)));
+      END_IF;
+   END_IF;
+
+   #tNoFlow(IN := #ValveOpenCmd AND #comparisonArmed AND #bothNoFlowCondition, PT := #NoFlowTimeout);
+   #tPulseMissing(IN := #ValveOpenCmd AND #comparisonArmed AND #pulseMissingCondition, PT := #PlausibilityTime);
+   #tAnalogNoFlow(IN := #ValveOpenCmd AND #comparisonArmed AND #analogNoFlowCondition, PT := #PlausibilityTime);
+   #tPlausibility(IN := #ValveOpenCmd AND #comparisonArmed AND #disagreementCondition, PT := #PlausibilityTime);
+   // Target attainment on the discrete deadline scan wins over fill timeout.
+   #tFill(IN := #active AND (#accumulated < #targetPulses), PT := #FillTimeout); #tValveOpen(IN := #ValveOpenCmd AND #ValveClosedFb, PT := #ValveOpenTimeout);
    #tValveClose(IN := #closing AND NOT #ValveClosedFb, PT := #ValveCloseTimeout);
    #tContinuedFlow(IN := #closing AND ((#scanDelta > 0) OR (#FlowLMin > #NoFlowMinLMin)), PT := #NoFlowTimeout);
    #tFlowStopped(IN := #closing AND #ValveClosedFb AND (#scanDelta = 0) AND (#FlowLMin <= #NoFlowMinLMin), PT := #NoFlowTimeout);
-   IF #AnalogBrokenWire THEN #Fault := TRUE; #DiagReason := "E_FillDiag".ANALOG_BROKEN_WIRE;
-   ELSIF #tNoFlow.Q THEN #NoFlow := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".NO_FLOW;
-   ELSIF #tPlausibility.Q THEN #Fault := TRUE; #DiagReason := "E_FillDiag".PULSE_ANALOG_DISAGREE;
-   ELSIF #tValveOpen.Q THEN #Fault := TRUE; #DiagReason := "E_FillDiag".VALVE_OPEN_MISMATCH;
-   ELSIF #tFill.Q THEN #Fault := TRUE; #DiagReason := "E_FillDiag".FILL_TIMEOUT; END_IF;
-   IF #Busy AND (#DeliveredMl > (#TargetMl + #OverToleranceMl)) THEN #Overfill := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".OVERFILL; END_IF;
+
+   // First-out priority is channel health, missing pulse, missing analog, both-no-flow,
+   // cross-channel disagreement, feedback mismatch, then general timeout.
+   IF NOT #Fault THEN
+      IF #PulseChannelFault OR #CounterDiscontinuity THEN #Fault := TRUE; #DiagReason := "E_FillDiag".PULSE_COUNTER_DISCONTINUITY;
+      ELSIF #AnalogBrokenWire THEN #Fault := TRUE; #DiagReason := "E_FillDiag".ANALOG_BROKEN_WIRE;
+      ELSIF #tPulseMissing.Q THEN #PulseMissing := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".PULSE_MISSING;
+      ELSIF #tAnalogNoFlow.Q THEN #AnalogNoFlow := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".ANALOG_NO_FLOW;
+      ELSIF #tNoFlow.Q THEN #NoFlow := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".NO_FLOW;
+      ELSIF #tPlausibility.Q THEN #PulseAnalogDisagreement := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".PULSE_ANALOG_DISAGREE;
+      ELSIF #tValveOpen.Q THEN #Fault := TRUE; #DiagReason := "E_FillDiag".VALVE_OPEN_MISMATCH;
+      ELSIF #tFill.Q THEN #Fault := TRUE; #DiagReason := "E_FillDiag".FILL_TIMEOUT;
+      END_IF;
+   END_IF;
+   IF NOT #Fault AND #Busy AND (#DeliveredMl > (#TargetMl + #OverToleranceMl)) THEN #Overfill := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".OVERFILL; END_IF;
    IF #active AND ((#accumulated >= #targetPulses) OR #Abort OR #Fault OR NOT #Enable) THEN #active := FALSE; #closing := TRUE; END_IF;
-   IF #tContinuedFlow.Q THEN #ContinuedFlow := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".CONTINUED_FLOW; END_IF;
-   IF #tValveClose.Q THEN #Fault := TRUE; #DiagReason := "E_FillDiag".VALVE_CLOSE_MISMATCH; END_IF;
-   IF #Abort AND #Busy THEN #Fault := TRUE; #DiagReason := "E_FillDiag".ABORTED; END_IF;
+   IF NOT #Fault AND #tContinuedFlow.Q THEN #ContinuedFlow := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".CONTINUED_FLOW; END_IF;
+   IF NOT #Fault AND #tValveClose.Q THEN #Fault := TRUE; #DiagReason := "E_FillDiag".VALVE_CLOSE_MISMATCH; END_IF;
+   IF NOT #Fault AND #Abort AND #Busy THEN #Fault := TRUE; #DiagReason := "E_FillDiag".ABORTED; END_IF;
    IF #tFlowStopped.Q AND NOT #tContinuedFlow.Q THEN
       #closing := FALSE; #Underfill := #DeliveredMl < (#TargetMl - #UnderToleranceMl); #Overfill := #DeliveredMl > (#TargetMl + #OverToleranceMl);
-      #Done := NOT (#Underfill OR #Overfill OR #Fault); IF #Underfill THEN #Fault := TRUE; #DiagReason := "E_FillDiag".UNDERFILL; END_IF;
+      #Done := NOT (#Underfill OR #Overfill OR #Fault); IF #Underfill AND NOT #Fault THEN #Fault := TRUE; #DiagReason := "E_FillDiag".UNDERFILL; END_IF;
    END_IF;
-   IF #ResetEdge AND NOT #active AND NOT #closing AND #ValveClosedFb AND NOT #AnalogBrokenWire AND (#FlowLMin <= #NoFlowMinLMin) AND (#scanDelta = 0) AND #configValid THEN
-      #Fault := FALSE; #Done := FALSE; #Underfill := FALSE; #Overfill := FALSE; #NoFlow := FALSE; #ContinuedFlow := FALSE;
-      #PulseAnalogDisagreement := FALSE; #closing := FALSE; #accumulated := 0; #windowPulses := 0; #DeliveredMl := 0.0; #DiagReason := "E_FillDiag".FILL_OK;
+   IF #ResetEdge AND NOT #StartEdge AND NOT #active AND NOT #closing AND #ValveClosedFb AND NOT #PulseChannelFault AND NOT #AnalogBrokenWire AND (#FlowLMin <= #NoFlowMinLMin) AND (#scanDelta = 0) AND #configValid THEN
+      #Fault := FALSE; #Done := FALSE; #Underfill := FALSE; #Overfill := FALSE; #NoFlow := FALSE; #PulseMissing := FALSE; #AnalogNoFlow := FALSE; #ContinuedFlow := FALSE;
+      #PulseAnalogDisagreement := FALSE; #comparisonArmed := FALSE; #bothNoFlowCondition := FALSE; #pulseMissingCondition := FALSE; #analogNoFlowCondition := FALSE; #disagreementCondition := FALSE;
+      #closing := FALSE; #CounterDiscontinuity := FALSE; #accumulated := 0; #windowPulses := 0; #windowCount := 0; #DeliveredMl := 0.0; #DiagReason := "E_FillDiag".FILL_OK;
    END_IF;
 END_FUNCTION_BLOCK''',
 
@@ -566,6 +720,7 @@ VAR
    DripTimer : TON;
    PlcHeartbeatTimer : TON;
    blockingFault : Bool;
+   outputInterlock : Bool;
    preBlockingFault : Bool;
    immediateStop : Bool;
    processPermissive : Bool;
@@ -607,6 +762,8 @@ BEGIN
    "DB_IO".Inputs.PulseTotal2 := "DB_NativeBindings".Inputs.Flow2PulseTotal;
    "DB_IO".Inputs.Flow1ChannelFault := "DB_NativeBindings".Inputs.Flow1ChannelFault;
    "DB_IO".Inputs.Flow2ChannelFault := "DB_NativeBindings".Inputs.Flow2ChannelFault;
+   "DB_IO".Inputs.Flow1PulseChannelFault := "DB_NativeBindings".Inputs.Flow1PulseChannelFault;
+   "DB_IO".Inputs.Flow2PulseChannelFault := "DB_NativeBindings".Inputs.Flow2PulseChannelFault;
    "DB_Drives".Conveyor.StatusWord1 := %IW256;
    "DB_Drives".Conveyor.ActualSpeedPzd := %IW258;
    "DB_Drives".Pump.StatusWord1 := %IW260;
@@ -614,7 +771,7 @@ BEGIN
 
    #immediateStop := NOT "DB_IO".Inputs.SafetyOk OR NOT "DB_IO".Inputs.GuardClosed OR NOT "DB_IO".Inputs.AirPressureOk OR NOT "DB_IO".Inputs.ProductSupplyOk;
    #processPermissive := NOT #immediateStop AND NOT "DB_IO".PowerRecoveryRequired;
-   #preBlockingFault := #immediateStop OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #FillCh2.Fault OR #Vision.Fault OR #Capper.Fault OR NOT #HmiCommands.CommunicationsHealthy;
+   #preBlockingFault := #immediateStop OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #FillCh2.Fault OR #Vision.Fault OR NOT "DB_VisionComms".Ready OR #Capper.Fault OR NOT #HmiCommands.CommunicationsHealthy;
    #HmiCommands(StartRequest := "DB_HMI".Start.Request, StartSeq := "DB_HMI".Start.RequestSeq, StopRequest := "DB_HMI".ControlledStop.Request, StopSeq := "DB_HMI".ControlledStop.RequestSeq, ResetRequest := "DB_HMI".Reset.Request, ResetSeq := "DB_HMI".Reset.RequestSeq, AckRequest := "DB_HMI".AlarmAck.Request, AckSeq := "DB_HMI".AlarmAck.RequestSeq, AutoRequest := "DB_HMI".AutoMode.Request, AutoSeq := "DB_HMI".AutoMode.RequestSeq, ManualRequest := "DB_HMI".ManualMode.Request, ManualSeq := "DB_HMI".ManualMode.RequestSeq, DispositionRequest := "DB_HMI".DispositionRemoved.Request, DispositionSeq := "DB_HMI".DispositionRemoved.RequestSeq, ManualConveyorRequest := "DB_HMI".ManualConveyorJog.Request, ManualPumpRequest := "DB_HMI".ManualPumpJog.Request, ManualValve1Request := "DB_HMI".ManualValve1.Request, ManualValve2Request := "DB_HMI".ManualValve2.Request, ManualSecureRequest := "DB_HMI".ManualSecure.Request, ManualHoldAllowed := (#Coordinator.State = "E_MachineState".MANUAL_SETUP) AND #processPermissive, LocalStop := "DB_IO".Inputs.LocalStop, LocalReset := "DB_IO".Inputs.LocalReset, CommandHeartbeat := "DB_HMI".CommandHeartbeat, StartAllowed := (#Coordinator.State = "E_MachineState".READY) AND #processPermissive, ResetAllowed := NOT #immediateStop, AutoAllowed := (#Coordinator.State = "E_MachineState".MANUAL_SETUP), ManualAllowed := (#Coordinator.State = "E_MachineState".READY), DispositionAllowed := (#Coordinator.State = "E_MachineState".HOLDING));
    "DB_HMI".Start.AcceptedSeq := #HmiCommands.StartAcceptedSeq; "DB_HMI".Start.RejectedSeq := #HmiCommands.StartRejectedSeq;
    "DB_HMI".ControlledStop.AcceptedSeq := #HmiCommands.StopAcceptedSeq;
@@ -649,20 +806,28 @@ BEGIN
 
    "DB_Drives".Conveyor.CommsHealthy := "DB_IO".Inputs.ConveyorPnHealthy; "DB_Drives".Pump.CommsHealthy := "DB_IO".Inputs.PumpPnHealthy;
    #ConveyorVfd(Enable := "DB_IO".Inputs.SafetyOk AND "DB_IO".Inputs.GuardClosed, RunRequest := (#Coordinator.IndexRequest OR #manualConveyorInterlocked) AND NOT #immediateStop, ResetEdge := #HmiCommands.ResetPulse, CommsHealthy := "DB_Drives".Conveyor.CommsHealthy, StatusWord1 := "DB_Drives".Conveyor.StatusWord1, ActualSpeedPzd := "DB_Drives".Conveyor.ActualSpeedPzd, SpeedReferencePct := 35.0, StartTimeout := T#3s, StopTimeout := T#3s);
-   #PumpVfd(Enable := #processPermissive, RunRequest := ((#FillCh1.Busy OR #FillCh2.Busy) OR #manualPumpInterlocked) AND #processPermissive, ResetEdge := #HmiCommands.ResetPulse, CommsHealthy := "DB_Drives".Pump.CommsHealthy, StatusWord1 := "DB_Drives".Pump.StatusWord1, ActualSpeedPzd := "DB_Drives".Pump.ActualSpeedPzd, SpeedReferencePct := 60.0, StartTimeout := T#3s, StopTimeout := T#3s);
+   #PumpVfd(Enable := #processPermissive, RunRequest := ((#FillCh1.PumpRequest OR #FillCh2.PumpRequest) OR #manualPumpInterlocked) AND #processPermissive, ResetEdge := #HmiCommands.ResetPulse, CommsHealthy := "DB_Drives".Pump.CommsHealthy, StatusWord1 := "DB_Drives".Pump.StatusWord1, ActualSpeedPzd := "DB_Drives".Pump.ActualSpeedPzd, SpeedReferencePct := 60.0, StartTimeout := T#3s, StopTimeout := T#3s);
    "DB_Drives".Conveyor.Ready := #ConveyorVfd.Ready; "DB_Drives".Conveyor.Running := #ConveyorVfd.Running; "DB_Drives".Conveyor.Fault := #ConveyorVfd.Fault; "DB_Drives".Conveyor.ActualSpeedPct := #ConveyorVfd.ActualSpeedPct;
    "DB_Drives".Pump.Ready := #PumpVfd.Ready; "DB_Drives".Pump.Running := #PumpVfd.Running; "DB_Drives".Pump.Fault := #PumpVfd.Fault; "DB_Drives".Pump.ActualSpeedPct := #PumpVfd.ActualSpeedPct;
    #Gate(Enable := NOT #immediateStop, CmdToA := NOT (#Coordinator.GateCloseRequest OR #manualSecureInterlocked), CmdToB := #Coordinator.GateCloseRequest OR #manualSecureInterlocked, AtA := "DB_IO".Inputs.GateOpen, AtB := "DB_IO".Inputs.GateClosed, ResetEdge := #HmiCommands.ResetPulse, TravelTime := T#2s);
    #Clamp(Enable := NOT #immediateStop, CmdToA := NOT (#Coordinator.ClampRequest OR #manualSecureInterlocked), CmdToB := #Coordinator.ClampRequest OR #manualSecureInterlocked, AtA := "DB_IO".Inputs.ClampReleased, AtB := "DB_IO".Inputs.ClampEngaged, ResetEdge := #HmiCommands.ResetPulse, TravelTime := T#2s);
-   #FillCh1(Enable := #processPermissive, PumpRunning := #PumpVfd.Running, StartEdge := #Coordinator.FillStartPulse, Abort := #preBlockingFault OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #HmiCommands.StopPulse, ResetEdge := #HmiCommands.ResetPulse, PulseTotal := "DB_IO".Inputs.PulseTotal1, FlowRaw := "DB_IO".Inputs.Flow1Raw, AnalogChannelFault := "DB_IO".Inputs.Flow1ChannelFault, ValveClosedFb := "DB_IO".Inputs.Valve1Closed, TargetMl := "DB_Recipe".Active.TargetMlCh1, PulsesPerLitre := "DB_Recipe".Active.PulsesPerLitreCh1, UnderToleranceMl := "DB_Recipe".Active.UnderToleranceMl, OverToleranceMl := "DB_Recipe".Active.OverToleranceMl, FlowMaxLMin := 20.0, NoFlowMinLMin := 0.2, PlausibilityPct := 25.0, PulseWindowTimeS := "DB_Recipe".Active.PulseWindowTimeS, NoFlowTimeout := "DB_Recipe".Active.NoFlowTimeout, FillTimeout := "DB_Recipe".Active.FillTimeout, ValveOpenTimeout := "DB_Recipe".Active.ValveOpenTimeout, ValveCloseTimeout := "DB_Recipe".Active.ValveCloseTimeout, PlausibilityTime := "DB_Recipe".Active.PlausibilityTime);
-   #FillCh2(Enable := #processPermissive, PumpRunning := #PumpVfd.Running, StartEdge := #Coordinator.FillStartPulse, Abort := #preBlockingFault OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #HmiCommands.StopPulse, ResetEdge := #HmiCommands.ResetPulse, PulseTotal := "DB_IO".Inputs.PulseTotal2, FlowRaw := "DB_IO".Inputs.Flow2Raw, AnalogChannelFault := "DB_IO".Inputs.Flow2ChannelFault, ValveClosedFb := "DB_IO".Inputs.Valve2Closed, TargetMl := "DB_Recipe".Active.TargetMlCh2, PulsesPerLitre := "DB_Recipe".Active.PulsesPerLitreCh2, UnderToleranceMl := "DB_Recipe".Active.UnderToleranceMl, OverToleranceMl := "DB_Recipe".Active.OverToleranceMl, FlowMaxLMin := 20.0, NoFlowMinLMin := 0.2, PlausibilityPct := 25.0, PulseWindowTimeS := "DB_Recipe".Active.PulseWindowTimeS, NoFlowTimeout := "DB_Recipe".Active.NoFlowTimeout, FillTimeout := "DB_Recipe".Active.FillTimeout, ValveOpenTimeout := "DB_Recipe".Active.ValveOpenTimeout, ValveCloseTimeout := "DB_Recipe".Active.ValveCloseTimeout, PlausibilityTime := "DB_Recipe".Active.PlausibilityTime);
+   #FillCh1(Enable := #processPermissive, PumpRunning := #PumpVfd.Running, StartEdge := #Coordinator.FillStartPulse, Abort := #preBlockingFault OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #HmiCommands.StopPulse, ResetEdge := #HmiCommands.ResetPulse, PulseTotal := "DB_IO".Inputs.PulseTotal1, FlowRaw := "DB_IO".Inputs.Flow1Raw, PulseChannelFault := "DB_IO".Inputs.Flow1PulseChannelFault, AnalogChannelFault := "DB_IO".Inputs.Flow1ChannelFault, ValveClosedFb := "DB_IO".Inputs.Valve1Closed, TargetMl := "DB_Recipe".Active.TargetMlCh1, PulsesPerLitre := "DB_Recipe".Active.PulsesPerLitreCh1, UnderToleranceMl := "DB_Recipe".Active.UnderToleranceMl, OverToleranceMl := "DB_Recipe".Active.OverToleranceMl, FlowMaxLMin := 20.0, NoFlowMinLMin := 0.2, PlausibilityPct := 25.0, PulseWindowTimeS := "DB_Recipe".Active.PulseWindowTimeS, NoFlowTimeout := "DB_Recipe".Active.NoFlowTimeout, FillTimeout := "DB_Recipe".Active.FillTimeout, ValveOpenTimeout := "DB_Recipe".Active.ValveOpenTimeout, ValveCloseTimeout := "DB_Recipe".Active.ValveCloseTimeout, PlausibilityTime := "DB_Recipe".Active.PlausibilityTime);
+   #FillCh2(Enable := #processPermissive, PumpRunning := #PumpVfd.Running, StartEdge := #Coordinator.FillStartPulse, Abort := #preBlockingFault OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #HmiCommands.StopPulse, ResetEdge := #HmiCommands.ResetPulse, PulseTotal := "DB_IO".Inputs.PulseTotal2, FlowRaw := "DB_IO".Inputs.Flow2Raw, PulseChannelFault := "DB_IO".Inputs.Flow2PulseChannelFault, AnalogChannelFault := "DB_IO".Inputs.Flow2ChannelFault, ValveClosedFb := "DB_IO".Inputs.Valve2Closed, TargetMl := "DB_Recipe".Active.TargetMlCh2, PulsesPerLitre := "DB_Recipe".Active.PulsesPerLitreCh2, UnderToleranceMl := "DB_Recipe".Active.UnderToleranceMl, OverToleranceMl := "DB_Recipe".Active.OverToleranceMl, FlowMaxLMin := 20.0, NoFlowMinLMin := 0.2, PlausibilityPct := 25.0, PulseWindowTimeS := "DB_Recipe".Active.PulseWindowTimeS, NoFlowTimeout := "DB_Recipe".Active.NoFlowTimeout, FillTimeout := "DB_Recipe".Active.FillTimeout, ValveOpenTimeout := "DB_Recipe".Active.ValveOpenTimeout, ValveCloseTimeout := "DB_Recipe".Active.ValveCloseTimeout, PlausibilityTime := "DB_Recipe".Active.PlausibilityTime);
    #DripTimer(IN := (#Coordinator.AutoStep = "E_AutoStep".DRIP_SETTLE), PT := "DB_Recipe".Active.DripSettleTime);
    #Capper(Enable := NOT #immediateStop, RequestEdge := #Coordinator.CapperRequestPulse, Ready := "DB_IO".Inputs.CapperReady, Busy := "DB_IO".Inputs.CapperBusy, Complete := "DB_IO".Inputs.CapperComplete, FaultIn := "DB_IO".Inputs.CapperFault, ResetEdge := #HmiCommands.ResetPulse, AcceptTimeout := T#2s, CompleteTimeout := T#10s);
-   IF #Coordinator.VisionRequestPulse THEN "DB_VisionComms".InspectionId := "DB_VisionComms".InspectionId + UDINT#1; END_IF;
-   "DB_VisionComms".Enable := #processPermissive; "DB_VisionComms".RecipeId := "DB_Recipe".Active.RecipeId; "DB_VisionComms".ExpectedBottles := 2; "DB_VisionComms".TargetFillLevel := "DB_Recipe".Active.TargetFillLevel;
-   #PlcHeartbeatTimer(IN := NOT #PlcHeartbeatTimer.Q, PT := T#500ms); IF #PlcHeartbeatTimer.Q THEN "DB_VisionComms".PlcHeartbeat := "DB_VisionComms".PlcHeartbeat + UDINT#1; END_IF;
-   #Vision(Enable := "DB_VisionComms".Enable, TriggerEdge := #Coordinator.VisionRequestPulse, InspectionId := "DB_VisionComms".InspectionId, Ready := "DB_VisionComms".Ready, Busy := "DB_VisionComms".Busy, Result := "DB_VisionComms".Result, Heartbeat := "DB_VisionComms".Result.Heartbeat, Timeout := "DB_Recipe".Active.VisionTimeout, HeartbeatTimeout := T#1s, ResetEdge := #HmiCommands.ResetPulse);
+   IF #Coordinator.VisionRequestPulse AND ("DB_VisionComms".InspectionId < UDINT#4294967295) THEN "DB_VisionComms".InspectionId := "DB_VisionComms".InspectionId + UDINT#1; END_IF;
+   // READY low holds VISION_ENABLE low so a cold/restarted edge can atomically
+   // seed the PLC session/ID/ACK/heartbeat snapshot before declaring READY.
+   "DB_VisionComms".Enable := #processPermissive AND "DB_VisionComms".Ready AND NOT #Vision.Fault; "DB_VisionComms".RecipeId := "DB_Recipe".Active.RecipeId; "DB_VisionComms".ExpectedBottles := 2; "DB_VisionComms".TargetFillLevel := "DB_Recipe".Active.TargetFillLevel;
+   #PlcHeartbeatTimer(IN := NOT #PlcHeartbeatTimer.Q, PT := T#500ms);
+   IF #PlcHeartbeatTimer.Q THEN
+      IF "DB_VisionComms".PlcHeartbeat = UDINT#4294967295 THEN "DB_VisionComms".PlcHeartbeat := UDINT#0;
+      ELSE "DB_VisionComms".PlcHeartbeat := "DB_VisionComms".PlcHeartbeat + UDINT#1; END_IF;
+   END_IF;
+   #Vision(Enable := "DB_VisionComms".Enable, TriggerEdge := #Coordinator.VisionRequestPulse, InspectionId := "DB_VisionComms".InspectionId, SessionEpoch := "DB_VisionComms".SessionEpoch, ExpectedModelId := "DB_VisionComms".ExpectedModelId, ExpectedModelHash := "DB_VisionComms".ExpectedModelHash, Ready := "DB_VisionComms".Ready, Busy := "DB_VisionComms".Busy, Result := "DB_VisionComms".Result, Heartbeat := "DB_VisionComms".Result.Heartbeat, Timeout := "DB_Recipe".Active.VisionTimeout, HeartbeatTimeout := T#1s, ResetEdge := #HmiCommands.ResetPulse);
    "DB_VisionComms".Trigger := #Vision.Trigger;
+   "DB_VisionComms".DiagReason := #Vision.DiagReason;
+   IF #Vision.PublicationAck THEN "DB_VisionComms".ResultAckId := "DB_VisionComms".Result.ResultId; END_IF;
    FOR #i := 0 TO 31 DO #activeFaults[#i] := FALSE; #faultCodes[#i] := 0; END_FOR;
    #activeFaults[0] := NOT "DB_IO".Inputs.SafetyOk; #faultCodes[0] := 1001;
    #activeFaults[1] := NOT "DB_IO".Inputs.GuardClosed; #faultCodes[1] := 1004;
@@ -672,19 +837,22 @@ BEGIN
    #activeFaults[5] := #PumpVfd.Fault; #faultCodes[5] := 1102;
    #activeFaults[6] := #Gate.Fault; #faultCodes[6] := 1201;
    #activeFaults[7] := #Clamp.Fault; #faultCodes[7] := 1202;
-   #activeFaults[8] := #FillCh1.Fault; CASE #FillCh1.DiagReason OF "E_FillDiag".ANALOG_BROKEN_WIRE: #faultCodes[8] := 1307; "E_FillDiag".NO_FLOW: #faultCodes[8] := 1301; "E_FillDiag".PULSE_ANALOG_DISAGREE: #faultCodes[8] := 1303; "E_FillDiag".UNDERFILL: #faultCodes[8] := 1304; "E_FillDiag".OVERFILL: #faultCodes[8] := 1305; "E_FillDiag".VALVE_OPEN_MISMATCH: #faultCodes[8] := 1308; "E_FillDiag".VALVE_CLOSE_MISMATCH: #faultCodes[8] := 1306; "E_FillDiag".CONTINUED_FLOW: #faultCodes[8] := 1309; ELSE #faultCodes[8] := 1310; END_CASE;
-   #activeFaults[9] := #FillCh2.Fault; CASE #FillCh2.DiagReason OF "E_FillDiag".ANALOG_BROKEN_WIRE: #faultCodes[9] := 1317; "E_FillDiag".NO_FLOW: #faultCodes[9] := 1311; "E_FillDiag".PULSE_ANALOG_DISAGREE: #faultCodes[9] := 1313; "E_FillDiag".UNDERFILL: #faultCodes[9] := 1314; "E_FillDiag".OVERFILL: #faultCodes[9] := 1315; "E_FillDiag".VALVE_OPEN_MISMATCH: #faultCodes[9] := 1318; "E_FillDiag".VALVE_CLOSE_MISMATCH: #faultCodes[9] := 1316; "E_FillDiag".CONTINUED_FLOW: #faultCodes[9] := 1319; ELSE #faultCodes[9] := 1320; END_CASE;
-   #activeFaults[10] := #Vision.Fault; CASE #Vision.DiagReason OF 1: #faultCodes[10] := 1501; 2: #faultCodes[10] := 1502; 3: #faultCodes[10] := 1503; 4: #faultCodes[10] := 1504; 5: #faultCodes[10] := 1505; ELSE #faultCodes[10] := 1506; END_CASE;
+   #activeFaults[8] := #FillCh1.Fault; CASE #FillCh1.DiagReason OF "E_FillDiag".ANALOG_BROKEN_WIRE: #faultCodes[8] := 1307; "E_FillDiag".NO_FLOW: #faultCodes[8] := 1301; "E_FillDiag".PULSE_MISSING: #faultCodes[8] := 1321; "E_FillDiag".ANALOG_NO_FLOW: #faultCodes[8] := 1322; "E_FillDiag".PULSE_ANALOG_DISAGREE: #faultCodes[8] := 1303; "E_FillDiag".UNDERFILL: #faultCodes[8] := 1304; "E_FillDiag".OVERFILL: #faultCodes[8] := 1305; "E_FillDiag".VALVE_OPEN_MISMATCH: #faultCodes[8] := 1308; "E_FillDiag".VALVE_CLOSE_MISMATCH: #faultCodes[8] := 1306; "E_FillDiag".CONTINUED_FLOW: #faultCodes[8] := 1309; ELSE #faultCodes[8] := 1310; END_CASE;
+   #activeFaults[9] := #FillCh2.Fault; CASE #FillCh2.DiagReason OF "E_FillDiag".ANALOG_BROKEN_WIRE: #faultCodes[9] := 1317; "E_FillDiag".NO_FLOW: #faultCodes[9] := 1311; "E_FillDiag".PULSE_MISSING: #faultCodes[9] := 1323; "E_FillDiag".ANALOG_NO_FLOW: #faultCodes[9] := 1324; "E_FillDiag".PULSE_ANALOG_DISAGREE: #faultCodes[9] := 1313; "E_FillDiag".UNDERFILL: #faultCodes[9] := 1314; "E_FillDiag".OVERFILL: #faultCodes[9] := 1315; "E_FillDiag".VALVE_OPEN_MISMATCH: #faultCodes[9] := 1318; "E_FillDiag".VALVE_CLOSE_MISMATCH: #faultCodes[9] := 1316; "E_FillDiag".CONTINUED_FLOW: #faultCodes[9] := 1319; ELSE #faultCodes[9] := 1320; END_CASE;
+   #activeFaults[10] := #Vision.Fault OR #Vision.HoldRequired; CASE #Vision.DiagReason OF "E_VisionDiag".READY_TIMEOUT: #faultCodes[10] := 1501; "E_VisionDiag".RESULT_TIMEOUT: #faultCodes[10] := 1502; "E_VisionDiag".RESULT_ID_MISMATCH: #faultCodes[10] := 1503; "E_VisionDiag".QUALITY_BLOCK: #faultCodes[10] := 1504; "E_VisionDiag".HEARTBEAT_LOSS: #faultCodes[10] := 1505; ELSE #faultCodes[10] := 1506; END_CASE;
    #activeFaults[11] := #Capper.Fault; IF (#Capper.DiagReason = 1) OR (#Capper.DiagReason = 5) THEN #faultCodes[11] := 1402; ELSE #faultCodes[11] := 1401; END_IF;
    #activeFaults[12] := NOT #HmiCommands.CommunicationsHealthy; #faultCodes[12] := 1601;
-   #blockingFault := FALSE; FOR #i := 0 TO 12 DO #blockingFault := #blockingFault OR #activeFaults[#i]; END_FOR;
+   // Quality holds remain alarmed and output-interlocked but are not equipment
+   // faults; this preserves the coordinator's INSPECT -> HOLDING disposition path.
+   #blockingFault := #immediateStop OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #FillCh2.Fault OR #Vision.Fault OR NOT "DB_VisionComms".Ready OR #Capper.Fault OR NOT #HmiCommands.CommunicationsHealthy;
    IF #HmiCommands.ResetPulse AND NOT #blockingFault THEN "DB_IO".PowerRecoveryRequired := FALSE; #processPermissive := NOT #immediateStop; END_IF;
    #Coordinator(InitDone := TRUE, PermissivesOk := #processPermissive, StartEdge := #HmiCommands.StartPulse, StopEdge := #HmiCommands.StopPulse, ResetEdge := #HmiCommands.ResetPulse, AutoRequest := #HmiCommands.AutoPulse, ManualRequest := #HmiCommands.ManualPulse, DispositionRemoved := #HmiCommands.DispositionPulse, PairPresent := "DB_IO".Inputs.Bottle1Present AND "DB_IO".Inputs.Bottle2Present, PairAbsent := NOT "DB_IO".Inputs.Bottle1Present AND NOT "DB_IO".Inputs.Bottle2Present, ConveyorStopped := #ConveyorVfd.Stopped, GateClosed := "DB_IO".Inputs.GateClosed, GateOpen := "DB_IO".Inputs.GateOpen, ClampEngaged := "DB_IO".Inputs.ClampEngaged, ClampReleased := "DB_IO".Inputs.ClampReleased, Fill1Done := #FillCh1.Done, Fill2Done := #FillCh2.Done, DripDone := #DripTimer.Q, VisionAccepted := #Vision.Accepted, VisionPass := #Vision.QualityPass, CapperReady := "DB_IO".Inputs.CapperReady, CapperComplete := #Capper.CompletePulse, BlockingFault := #blockingFault);
    #Alarm(ActiveFaults := #activeFaults, FaultCodes := #faultCodes, AckEdge := #HmiCommands.AckPulse, ResetEdge := #HmiCommands.ResetPulse);
    "DB_HMI".FirstOutAlarm := #Alarm.FirstOutCode;
 
    // Final physical-output mapping. HMI never writes this structure.
-   "DB_IO".ReleasePermissive := #processPermissive AND NOT #blockingFault;
+   #outputInterlock := #blockingFault OR #Vision.HoldRequired OR #Coordinator.QualityHold;
+   "DB_IO".ReleasePermissive := #processPermissive AND NOT #outputInterlock;
    "DB_IO".Commands.FillValve1 := (#FillCh1.ValveOpenCmd OR #manualValve1Interlocked) AND "DB_IO".ReleasePermissive;
    "DB_IO".Commands.FillValve2 := (#FillCh2.ValveOpenCmd OR #manualValve2Interlocked) AND "DB_IO".ReleasePermissive;
    "DB_IO".Commands.GateOpen := #Gate.OutToA AND "DB_IO".ReleasePermissive;
@@ -693,7 +861,7 @@ BEGIN
    "DB_IO".Commands.ClampEngage := #Clamp.OutToB AND "DB_IO".ReleasePermissive;
    "DB_IO".Commands.CapperRequest := #Capper.Request AND "DB_IO".ReleasePermissive;
    "DB_IO".Commands.CameraLight := (#Coordinator.AutoStep = "E_AutoStep".INSPECT) AND "DB_IO".ReleasePermissive;
-   "DB_IO".Commands.StackGreen := (#Coordinator.State = "E_MachineState".AUTOMATIC) AND NOT #blockingFault;
+   "DB_IO".Commands.StackGreen := (#Coordinator.State = "E_MachineState".AUTOMATIC) AND NOT #outputInterlock;
    "DB_IO".Commands.StackAmber := (#Coordinator.State = "E_MachineState".HOLDING) OR (#Coordinator.State = "E_MachineState".MANUAL_SETUP);
    "DB_IO".Commands.StackRed := #blockingFault; "DB_IO".Commands.Audible := #Alarm.AnyFault AND NOT #Alarm.Acknowledged;
    %Q0.2 := "DB_IO".Commands.FillValve1; %Q0.3 := "DB_IO".Commands.FillValve2;
@@ -729,6 +897,11 @@ BEGIN
    "DB_IO".Commands.CapperRequest := FALSE;
    "DB_IO".ReleasePermissive := FALSE;
    "DB_IO".PowerRecoveryRequired := TRUE;
+   IF "DB_VisionComms".SessionEpoch = UDINT#4294967295 THEN "DB_VisionComms".SessionEpoch := UDINT#1;
+   ELSE "DB_VisionComms".SessionEpoch := "DB_VisionComms".SessionEpoch + UDINT#1; END_IF;
+   "DB_VisionComms".InspectionId := UDINT#0;
+   "DB_VisionComms".Trigger := FALSE;
+   "DB_VisionComms".ResultAckId := UDINT#0;
    "DB_HMI".Start.Request := FALSE;
    "DB_HMI".ControlledStop.Request := FALSE;
 END_ORGANIZATION_BLOCK''',

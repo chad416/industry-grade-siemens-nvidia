@@ -558,7 +558,7 @@ write("release/RELEASE_NOTES.md",doc("Revision C intermediate release note", """
 
 The release is **PARTIALLY COMPLETE**. Native Siemens, final electrical/CAD and trained-model gates are explicitly blocked. The package is suitable for design review and continuation in licensed native tools, not construction, production, conformity assessment or commissioning."""))
 
-from revision_c_generator import apply_revision_c
+from revision_d_generator import apply_revision_d
 
-apply_revision_c(ROOT)
+apply_revision_d(ROOT)
 print(f"Built controlled project sources under {ROOT}")

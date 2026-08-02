@@ -4,6 +4,8 @@ from PIL import Image, ImageDraw, ImageFont
 ROOT = Path(__file__).resolve().parents[1]
 source = ROOT / "14_qa/workbook_renders"
 out = ROOT / "14_qa/workbook_contact_sheets"
+if out.exists():
+    for existing in out.glob("*.png"): existing.unlink()
 out.mkdir(parents=True, exist_ok=True)
 files = sorted(source.glob("*.png"))
 font = ImageFont.load_default()

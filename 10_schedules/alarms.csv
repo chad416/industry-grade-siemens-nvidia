@@ -25,6 +25,10 @@ alarm_id,message,class,response,ack_required,reset_condition
 1318,Fill channel 2 valve open mismatch,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
 1319,Fill channel 2 continued flow after close,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
 1320,Fill channel 2 invalid configuration/fill timeout/abort,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1321,Fill channel 1 pulse channel missing while analog flow is present,Fault,Close affected channel; remove its pump request; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1322,Fill channel 1 analog no-flow while pulse flow is present,Fault,Close affected channel; remove its pump request; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1323,Fill channel 2 pulse channel missing while analog flow is present,Fault,Close affected channel; remove its pump request; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1324,Fill channel 2 analog no-flow while pulse flow is present,Fault,Close affected channel; remove its pump request; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
 1401,"Capper not ready, acceptance timeout or completion timeout",Fault,Keep pair controlled; operator disposition,Yes,Cause cleared and explicit reset; never automatic restart
 1402,Capper reported fault or invalid handshake order,Fault,Keep pair controlled; operator disposition,Yes,Cause cleared and explicit reset; never automatic restart
 1501,Vision not ready,Fault,Do not transfer; quality hold,Yes,Cause cleared and explicit reset; never automatic restart

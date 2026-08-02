@@ -1,5 +1,5 @@
 workstream,author,reviewer,status
-00-02/release,Chief systems integrator,Independent package reviewer,Integrated
-04-06,Chief systems integrator,Independent Siemens reviewer,Source-design APPROVE; native TIA/WinCC/Startdrive/PLCSIM review open
-11 simulation,Simulation/vision workstream,Independent vision reviewer,"20 simulator, 11 edge and 6 interface-harness tests passed; independent of PLC/native runtime"
-03/09/10/13,Chief systems integrator,Independent electrical/package reviewer,Canonical schedule/package APPROVE; native QET/CAD and physical calculations open
+00-02/release,Lead software agent / systems integration task,Independent software-agent review,AI-assisted consistency review only; identified qualified-human approval remains required
+04-06,Lead software agent / controls task,Independent Siemens software-agent audit,Source-design checks only; native TIA/WinCC/Startdrive/PLCSIM and qualified-human review open
+11 simulation/07 edge,Lead software agent / vision task,Independent NVIDIA/repro software-agent audit,Independent Python evidence only; not PLC/native runtime or AI-performance proof
+03/09/10/13,Lead software agent / electrical task,Independent electrical software-agent audit,"Schedule/data checks only; native QET/CAD, calculations and qualified-human review open"

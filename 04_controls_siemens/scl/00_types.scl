@@ -10,8 +10,13 @@ VERSION : 0.1
 END_TYPE
 
 TYPE "E_FillDiag"
-VERSION : 0.1
-   (FILL_OK := 0, INVALID_CONFIG := 1, ANALOG_BROKEN_WIRE := 2, NO_FLOW := 3, PULSE_ANALOG_DISAGREE := 4, FILL_TIMEOUT := 5, UNDERFILL := 6, OVERFILL := 7, VALVE_OPEN_MISMATCH := 8, VALVE_CLOSE_MISMATCH := 9, CONTINUED_FLOW := 10, ABORTED := 11);
+VERSION : 0.2
+   (FILL_OK := 0, INVALID_CONFIG := 1, ANALOG_BROKEN_WIRE := 2, NO_FLOW := 3, PULSE_ANALOG_DISAGREE := 4, FILL_TIMEOUT := 5, UNDERFILL := 6, OVERFILL := 7, VALVE_OPEN_MISMATCH := 8, VALVE_CLOSE_MISMATCH := 9, CONTINUED_FLOW := 10, ABORTED := 11, PULSE_MISSING := 12, ANALOG_NO_FLOW := 13, PULSE_COUNTER_DISCONTINUITY := 14);
+END_TYPE
+
+TYPE "E_VisionDiag"
+VERSION : 0.3
+   (VISION_OK := 0, READY_TIMEOUT := 1, RESULT_TIMEOUT := 2, RESULT_ID_MISMATCH := 3, QUALITY_BLOCK := 4, HEARTBEAT_LOSS := 5, INTERFACE_CONTRADICTION := 6, RESULT_STUCK_VALID := 7, NON_MONOTONIC_REQUEST := 8, SESSION_MISMATCH := 9, MODEL_MISMATCH := 10);
 END_TYPE
 
 TYPE "UDT_Recipe"
@@ -37,10 +42,11 @@ VERSION : 0.2
 END_TYPE
 
 TYPE "UDT_VisionResult"
-VERSION : 0.2
+VERSION : 0.3
    STRUCT
       ResultValid : Bool;
       ResultId : UDInt;
+      SessionEpoch : UDInt;
       Bottle1Pass : Bool;
       Bottle2Pass : Bool;
       Fill1Status : USInt;
@@ -109,6 +115,8 @@ VERSION : 0.1
       Flow2Raw : Int;
       Flow1ChannelFault : Bool;
       Flow2ChannelFault : Bool;
+      Flow1PulseChannelFault : Bool;
+      Flow2PulseChannelFault : Bool;
       PulseTotal1 : UDInt;
       PulseTotal2 : UDInt;
       ConveyorPnHealthy : Bool;
@@ -125,6 +133,8 @@ VERSION : 0.1
       Flow2PulseTotal : UDInt;
       Flow1ChannelFault : Bool;
       Flow2ChannelFault : Bool;
+      Flow1PulseChannelFault : Bool;
+      Flow2PulseChannelFault : Bool;
    END_STRUCT;
 END_TYPE
 

@@ -40,7 +40,7 @@ def footer(canvas, doc):
     canvas.saveState()
     canvas.setFont("ProjectSans", 7)
     canvas.setFillColor(colors.HexColor("#526875"))
-    canvas.drawString(18 * mm, 10 * mm, "FC01 | Revision C | 2026-08-02 | Evidence summary - not a native acceptance certificate")
+    canvas.drawString(18 * mm, 10 * mm, "FC01 | Revision D | 2026-08-02 | Evidence summary - not a native acceptance certificate")
     canvas.drawRightString(279 * mm, 10 * mm, f"Page {doc.page}")
     canvas.restoreState()
 
@@ -62,14 +62,14 @@ def table(data, widths):
     return t
 
 
-doc = SimpleDocTemplate(str(OUT), pagesize=landscape(A4), leftMargin=18*mm, rightMargin=18*mm, topMargin=15*mm, bottomMargin=16*mm, title="FC01 Revision C release evidence")
+doc = SimpleDocTemplate(str(OUT), pagesize=landscape(A4), leftMargin=18*mm, rightMargin=18*mm, topMargin=15*mm, bottomMargin=16*mm, title="FC01 Revision D release evidence", invariant=1, pageCompression=1)
 story = [
     Paragraph("FC01 compact two-nozzle filling cell", styles["PTitle"]),
     Paragraph("Siemens-authoritative controls and bounded NVIDIA quality architecture", styles["PHead"]),
     Spacer(1, 5*mm),
     Paragraph(NOTICE, styles["PWarn"]), Spacer(1, 3*mm), Paragraph(SAFETY, styles["PWarn"]), Spacer(1, 7*mm),
     table([["Release status", "What is implemented", "What remains blocked"],
-           ["PARTIALLY COMPLETE", "Canonical Rev-C model; executable call structure; separated HMI commands; PROFINET PZD design; expanded BOM/point-to-point data; dynamic simulator with 32 timed scenarios; deterministic manifest build/verification.", "Native TIA/WinCC compile/archive; Startdrive; PLCSIM; revision-C QET/CAD; confirmed electrical inputs; real dataset; TAO/DeepStream/TensorRT execution; physical FAT/SAT."]], [45*mm, 105*mm, 105*mm]),
+           ["CONTROLLED ENGINEERING DEVELOPMENT", "Canonical Revision-D model; fail-closed interface recovery; explicit flow windows; separated HMI commands; PROFINET PZD design; expanded rationale/electrical data; 32 timed scenarios; deterministic manifest build/verification.", "Native TIA/WinCC compile/archive; Startdrive; PLCSIM; Revision-D QET/CAD; confirmed electrical inputs; real dataset; TAO/DeepStream/TensorRT execution; physical FAT/SAT."]], [45*mm, 105*mm, 105*mm]),
     Spacer(1, 8*mm),
     Paragraph("This report is an evidence index. It is not proof of construction readiness, functional safety, native compile, FAT, SAT, electrical test, physical commissioning or AI performance.", styles["PBody"]),
     PageBreak(),
@@ -100,17 +100,17 @@ story = [
     Paragraph("PLC-AI acceptance contract", styles["PTitle"]),
     Paragraph("Transport selection: OPC UA across a routed quality zone. The PLC publishes an atomic request and one-shot trigger. Results are accepted only with the current ID, fresh heartbeat, ready state, valid flag and non-contradictory payload.", styles["PBody"]),
     table([["PLC -> NVIDIA", "NVIDIA -> PLC", "Acceptance rule"],
-           ["VISION_ENABLE; INSPECTION_TRIGGER; INSPECTION_ID; RECIPE_ID; EXPECTED_BOTTLES; TARGET_FILL_LEVEL; PLC_HEARTBEAT", "VISION_READY; VISION_BUSY; RESULT_VALID; RESULT_ID; BOTTLE_1_PASS; BOTTLE_2_PASS; FILL_1_STATUS; FILL_2_STATUS; LEAK_OR_SPILL_DETECTED; LOW_CONFIDENCE; VISION_WARNING; VISION_FAULT; INFERENCE_TIME; VISION_HEARTBEAT", "RESULT_ID equals current INSPECTION_ID; heartbeat fresh; both bottle passes; fill statuses in-range; no leak, low confidence or fault. Otherwise HOLDING."]], [75*mm, 112*mm, 68*mm]),
+           ["VISION_ENABLE; INSPECTION_TRIGGER; INSPECTION_ID; SESSION_EPOCH; RECIPE_ID; EXPECTED_BOTTLES; TARGET_FILL_LEVEL; PLC_HEARTBEAT; RESULT_ACK_ID", "VISION_READY; VISION_BUSY; RESULT_VALID; RESULT_ID; bottle/fill semantics; warning/fault; MODEL_ID; MODEL_SHA256; INFERENCE_TIME; VISION_HEARTBEAT", "Payload publishes before RESULT_VALID and remains immutable until matching ACK. ID must be fresh/nonzero; heartbeat fresh; no contradiction/uncertainty. Otherwise HOLDING."]], [75*mm, 112*mm, 68*mm]),
     Spacer(1, 7*mm),
     Paragraph("No model is delivered. No training, ONNX export, TensorRT engine, DeepStream execution, metric, confusion matrix, false-accept/false-reject analysis or latency benchmark is claimed. The available RTX 5060 Laptop GPU does not substitute for the absent CUDA/TAO/DeepStream stack or representative dataset.", styles["PBody"]),
     PageBreak(),
     Paragraph("Validation evidence and release blockers", styles["PTitle"]),
     table([["Gate", "Evidence", "Status"],
-           ["Canonical consistency", "VAL-C-STATIC covers source-generator parity, UDT/DB semantics, schedules, HMI isolation, drive/native-adapter contracts, complete relay paths, baseline hashes and no-fake artifacts", "PASS"],
-           ["Deterministic regression", "20 simulator + 11 edge-service + 6 interface-harness tests; 32 timed scenarios; 7,147 samples; one release; zero invariant violations/restarts", "PASS - not PLCSIM"],
-           ["Workbook", "20 sheets rendered; formula-error scan returned zero matches; contact-sheet and detailed visual review", "PASS"],
-           ["QElectroTech", "Audited inherited hash; well-formed XML; retained native reopen evidence for Rev A", "REVISION-C GATE OPEN"],
-           ["Panel CAD", "Audited inherited FCStd/STEP/IGES/DXF hashes and retained Rev-A reopen/reimport evidence", "REVISION-C GATE OPEN"],
+           ["Canonical consistency", "VAL-D-STATIC covers Revision-D source-generator parity, UDT/DB semantics, schedules, HMI isolation, drive/native-adapter contracts, relay paths, baseline hashes and no-fake artifacts", "PASS"],
+           ["Deterministic regression", "48 simulator/interface-oracle + 35 edge-service + 15 interface-harness tests; 32 timed scenarios; one release; zero invariant violations/restarts", "PASS - not PLCSIM"],
+           ["Workbook", "20 schedule/summary sheets rendered; formula-error scan returned zero matches; contact-sheet and detailed visual review", "PASS"],
+           ["QElectroTech", "Audited inherited hash and structure only; no runnable QET found and no Revision-D reopen/export", "REVISION-D GATE BLOCKED"],
+           ["Panel CAD", "Audited inherited FCStd/STEP/IGES/DXF hashes only; no runnable FreeCAD and no Revision-D reopen/reimport", "REVISION-D GATE BLOCKED"],
            ["TIA / WinCC / drives", "V20 installed; no native project, compile, cross-reference, archive restore or Startdrive evidence", "BLOCKED"],
            ["PLCSIM", "Not installed", "BLOCKED"],
            ["NVIDIA model/runtime", "Hardware detected; runtime stack and dataset absent", "BLOCKED"]], [56*mm, 142*mm, 57*mm]),

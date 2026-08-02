@@ -2,40 +2,47 @@ from __future__ import annotations
 
 import csv
 import hashlib
+import io
 import json
 import sys
+import time
 from pathlib import Path
+from manifest_policy import EXCLUDED_DIRS, EXCLUDED_NAMES, FIELDS, classify, included, reparse_points
 
 ROOT = Path(__file__).resolve().parents[1]
-EXCLUDED_NAMES = {"manifest.json", "manifest.csv", ".DS_Store"}
-EXCLUDED_DIRS = {".git", "__pycache__", "node_modules", ".cache", ".pytest_cache"}
-EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".tmp"}
 
 
-def included(path: Path) -> bool:
-    rel = path.relative_to(ROOT)
-    return (path.is_file() and path.name not in EXCLUDED_NAMES and
-            not any(part in EXCLUDED_DIRS for part in rel.parts) and
-            path.suffix.lower() not in EXCLUDED_SUFFIXES and
-            not path.name.endswith(".inspect.ndjson"))
+def read_stable(path: Path) -> bytes:
+    for attempt in range(20):
+        try:
+            return path.read_bytes()
+        except (OSError, PermissionError):
+            if attempt == 19:
+                raise
+            time.sleep(0.25)
 
 
 errors: list[str] = []
-payload = json.loads((ROOT / "release/manifest.json").read_text(encoding="utf-8"))
-with (ROOT / "release/manifest.csv").open(encoding="utf-8", newline="") as handle:
-    csv_rows = list(csv.DictReader(handle))
+for rel in reparse_points(ROOT): errors.append(f"reparse/symlink path forbidden: {rel}")
+payload = json.loads(read_stable(ROOT / "release/manifest.json").decode("utf-8"))
+csv_rows = list(csv.DictReader(io.StringIO(read_stable(ROOT / "release/manifest.csv").decode("utf-8"), newline="")))
 rows = payload.get("files", [])
 paths = [row["path"] for row in rows]
-actual = {p.relative_to(ROOT).as_posix(): p for p in ROOT.rglob("*") if included(p)}
+actual = {p.relative_to(ROOT).as_posix(): p for p in ROOT.rglob("*") if included(ROOT, p)}
 listed = set(paths)
 
-if payload.get("revision") != "C": errors.append("manifest revision is not C")
+if payload.get("revision") != "D": errors.append("manifest revision is not D")
 if payload.get("file_count") != len(rows): errors.append(f"metadata count {payload.get('file_count')} != JSON rows {len(rows)}")
 if len(paths) != len(listed): errors.append("duplicate manifest paths")
+if paths != sorted(paths): errors.append("JSON manifest paths are not sorted")
+for rel in paths:
+    pure = Path(rel)
+    if pure.is_absolute() or ".." in pure.parts or "\\" in rel: errors.append(f"unsafe/non-POSIX manifest path: {rel}")
 if len(csv_rows) != len(rows): errors.append(f"CSV rows {len(csv_rows)} != JSON rows {len(rows)}")
-if {row["path"] for row in csv_rows} != listed: errors.append("CSV/JSON path sets differ")
+if [row["path"] for row in csv_rows] != paths: errors.append("CSV/JSON ordered path lists differ")
 csv_by_path = {row["path"]: row for row in csv_rows}
-manifest_fields = ["path","bytes","sha256","category","role","revision","gate_status","blocker"]
+manifest_fields = FIELDS
+if list(csv_rows[0]) != FIELDS if csv_rows else True: errors.append("CSV schema/order mismatch")
 for row in rows:
     csv_row = csv_by_path.get(row["path"])
     if csv_row is None:
@@ -50,10 +57,18 @@ for row in rows:
     if any(part in EXCLUDED_DIRS for part in Path(rel).parts) or Path(rel).name in EXCLUDED_NAMES: errors.append(f"excluded cache/self path listed: {rel}")
     path = actual.get(rel)
     if path is None: continue
-    if int(row["bytes"]) != path.stat().st_size: errors.append(f"size mismatch: {rel}")
-    digest = hashlib.sha256(path.read_bytes()).hexdigest()
+    content = read_stable(path)
+    if int(row["bytes"]) != len(content): errors.append(f"size mismatch: {rel}")
+    digest = hashlib.sha256(content).hexdigest()
     if row["sha256"] != digest: errors.append(f"hash mismatch: {rel}")
-    if row.get("revision") != "C": errors.append(f"row revision mismatch: {rel}")
+    if row.get("revision") != "D": errors.append(f"row revision mismatch: {rel}")
+    expected_category, expected_role, expected_gate, expected_blocker = classify(rel)
+    for field, expected in (
+        ("category", expected_category), ("role", expected_role),
+        ("gate_status", expected_gate), ("blocker", expected_blocker),
+    ):
+        if row.get(field) != expected:
+            errors.append(f"classification {field} mismatch: {rel}")
 
 print(f"manifest_count={len(rows)} actual_count={len(actual)} missing={len(listed-set(actual))} unlisted={len(set(actual)-listed)} mismatches={len(errors)}")
 for error in errors: print(f"ERROR: {error}")

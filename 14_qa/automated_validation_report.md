@@ -1,13 +1,306 @@
-# Automated validation report — Revision C
+# Automated validation report — Revision D
 
 Result: **PASS**
 
-This is static/data/dynamic-source validation. It is not TIA, WinCC, Startdrive, PLCSIM, QET or FreeCAD native proof.
+This is deterministic static/data/independent-model validation. It is not TIA, WinCC, Startdrive, PLCSIM, QET or FreeCAD native proof.
 
 ## Passed checks
 
-- canonical revision C
-- truthful partial release status
+- 0 V/return commons scheduled
+- 2 HSC channels allocated
+- 24 VDC 25-percent demand-margin current is 15.573 A before inrush/derating
+- 24 VDC subtotal reconciles without a false aggregate demand factor
+- 32 DI channels allocated
+- 32 DO channels allocated
+- 32 scenario summaries generated
+- 8 AI channels allocated
+- BOM covers all I/O devices: []
+- CPU/TIA V20 firmware baseline documented
+- FCStd historical baseline container has 76 entries
+- HMI heartbeat rationale describes fail-closed counter supervision
+- HMI is door-mounted
+- HMI never writes physical output symbols
+- K100 safety-interface monitor has explicit supply and signal conductors
+- OB1 executes root cell instance
+- PLC physical addresses unique
+- PLC symbols unique
+- QET historical baseline is well-formed XML
+- RecipeManager owns atomic apply acceptance/rejection
+- S102 guard monitor has explicit dry-contact supply and signal conductors
+- acceptance_gates.csv exactly derives from canonical model
+- alarms.csv exactly derives from canonical model
+- all BOM rows use strict full reference designations
+- all analog returns reference the dedicated MANA common
+- all source alarm mappings exist in canonical alarm schedule: []
+- all standard output commands are assigned: []
+- all writable HMI tags use DB_HMI command requests
+- analog/HSC shields scheduled
+- balanced DATA_BLOCK endings: DB_CellMain.scl
+- balanced DATA_BLOCK endings: DB_Global.scl
+- balanced FUNCTION_BLOCK endings: FB_Actuator2Pos.scl
+- balanced FUNCTION_BLOCK endings: FB_AlarmManager.scl
+- balanced FUNCTION_BLOCK endings: FB_CapperInterface.scl
+- balanced FUNCTION_BLOCK endings: FB_CellMain.scl
+- balanced FUNCTION_BLOCK endings: FB_FillChannel.scl
+- balanced FUNCTION_BLOCK endings: FB_HMICommandManager.scl
+- balanced FUNCTION_BLOCK endings: FB_MachineCoordinator.scl
+- balanced FUNCTION_BLOCK endings: FB_RecipeManager.scl
+- balanced FUNCTION_BLOCK endings: FB_VFD.scl
+- balanced FUNCTION_BLOCK endings: FB_VisionInterface.scl
+- balanced ORGANIZATION_BLOCK endings: OB100_Startup.scl
+- balanced ORGANIZATION_BLOCK endings: OB1_Call_Structure.scl
+- blocking-fault arbitration includes AirPressureOk
+- blocking-fault arbitration includes Capper.Fault
+- blocking-fault arbitration includes Clamp.Fault
+- blocking-fault arbitration includes CommunicationsHealthy
+- blocking-fault arbitration includes Gate.Fault
+- blocking-fault arbitration includes GuardClosed
+- blocking-fault arbitration includes ProductSupplyOk
+- blocking-fault arbitration includes Vision.Fault
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -A100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -A101
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -A102
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -A103
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -A104
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -PE100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -SW100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -WD100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -X100..-X199
+- bom.csv exactly derives from canonical model
+- cable/core allocations unique
+- cable_schedule.csv exactly derives from canonical model
+- canonical cell inputs are normalized and consumed: []
+- canonical revision D
+- capper external/handshake faults map to alarm 1402
+- capper reset requires all diagnosed causes cleared
+- command arbitration separated from output mapper
+- complete relay coil/contact/load path: AUDIBLE_ALARM
+- complete relay coil/contact/load path: CAMERA_LIGHT_ENABLE
+- complete relay coil/contact/load path: CAPPER_REQUEST
+- complete relay coil/contact/load path: CLAMP_ENGAGE_CMD
+- complete relay coil/contact/load path: CLAMP_RELEASE_CMD
+- complete relay coil/contact/load path: FILL_VALVE_1_OPEN_CMD
+- complete relay coil/contact/load path: FILL_VALVE_2_OPEN_CMD
+- complete relay coil/contact/load path: GATE_CLOSE_CMD
+- complete relay coil/contact/load path: GATE_OPEN_CMD
+- complete relay coil/contact/load path: STACK_AMBER
+- complete relay coil/contact/load path: STACK_GREEN
+- complete relay coil/contact/load path: STACK_RED
+- component rationale separates selection status from open evidence/blocker
+- component_rationale.csv exactly derives from canonical model
+- composed PLC/edge test covers rejected delayed publication cleanup and rearm
+- connection mandatory fields populated
+- contradictory hardwired drive run/status I/O removed
+- current equipment faults arbitrate and permissives recompute before one-shot power-recovery reset reaches coordinator
+- direct Revision-D interface test present: test_analog_zero_pulses_positive
+- direct Revision-D interface test present: test_both_measurements_no_flow
+- direct Revision-D interface test present: test_busy_ready_contradiction
+- direct Revision-D interface test present: test_counter_rollover
+- direct Revision-D interface test present: test_duplicate_request_id
+- direct Revision-D interface test present: test_future_id
+- direct Revision-D interface test present: test_pulse_zero_analog_positive
+- direct Revision-D interface test present: test_reset_after_stale
+- direct Revision-D interface test present: test_reset_does_not_restart
+- direct Revision-D interface test present: test_result_valid_stuck_high
+- direct Revision-D interface test present: test_stale_id
+- direct Revision-D interface test present: test_timeout_then_delayed_result
+- direct Revision-D interface test present: test_timer_boundary
+- drive PZD process-image mapping present
+- drive_interfaces.csv exactly derives from canonical model
+- edge config node IDs exactly match generated node map
+- edge config records disabled four-counter anti-replay synchronization
+- edge node map/config exactly track canonical vision signals
+- edge rearm reuses one protected validated identity read
+- edge service enforces monotonic/matched inspection IDs
+- edge service is fail-closed on model identity and timed heartbeat
+- edge tests cover malformed ACK and model-identity ingress
+- every cable is referenced by connection records
+- exact 15-file Siemens type/FB/DB/OB source inventory present
+- exact notice present: 00_project_control/design_basis.md
+- exact notice present: 14_qa/acceptance_gate_status.md
+- exact notice present: AGENTS.md
+- exact notice present: README.md
+- exact notice present: release/RELEASE_NOTES.md
+- exact safety boundary present: 00_project_control/design_basis.md
+- exact safety boundary present: 14_qa/acceptance_gate_status.md
+- exact safety boundary present: AGENTS.md
+- exact safety boundary present: README.md
+- exact safety boundary present: release/RELEASE_NOTES.md
+- expanded panel and field BOM has at least 45 controlled lines
+- explicit TM Count M/reference conductor: FLOW_1_PULSE
+- explicit TM Count M/reference conductor: FLOW_2_PULSE
+- external connection cable/core/terminal fields populated
+- external connections use strict class-number reference designations
+- external panel terminals unique
+- field and relay terminals are not double-landed
+- fill start/reset/post-close contract includes #FlowLMin <= #NoFlowMinLMin
+- fill start/reset/post-close contract includes #scanDelta := 0; #lastPulseTotal := #PulseTotal
+- fill start/reset/post-close contract includes NOT #AnalogBrokenWire
+- fill start/reset/post-close contract includes NOT #closing
+- fill start/reset/post-close contract includes tFlowStopped
+- fill-channel implements ABORTED
+- fill-channel implements ANALOG_NO_FLOW
+- fill-channel implements CounterDiscontinuity
+- fill-channel implements CounterRolloverObserved
+- fill-channel implements MeasurementWindowValid
+- fill-channel implements PULSE_COUNTER_DISCONTINUITY
+- fill-channel implements PULSE_MISSING
+- fill-channel implements PumpRequest
+- fill-channel implements comparisonArmed
+- fill-channel implements tAnalogNoFlow
+- fill-channel implements tPulseMissing
+- fill-channel implements tValveClose
+- generated Siemens source parity: 00_types.scl
+- generated Siemens source parity: DB_CellMain.scl
+- generated Siemens source parity: DB_Global.scl
+- generated Siemens source parity: FB_Actuator2Pos.scl
+- generated Siemens source parity: FB_AlarmManager.scl
+- generated Siemens source parity: FB_CapperInterface.scl
+- generated Siemens source parity: FB_CellMain.scl
+- generated Siemens source parity: FB_FillChannel.scl
+- generated Siemens source parity: FB_HMICommandManager.scl
+- generated Siemens source parity: FB_MachineCoordinator.scl
+- generated Siemens source parity: FB_RecipeManager.scl
+- generated Siemens source parity: FB_VFD.scl
+- generated Siemens source parity: FB_VisionInterface.scl
+- generated Siemens source parity: OB100_Startup.scl
+- generated Siemens source parity: OB1_Call_Structure.scl
+- guard-status mirror maps to controlled S102 dry-contact interface
+- hardware and panel rows use strict full reference designations
+- historical native baseline retained: 03_electrical/native_baseline/filling_cell.qet
+- historical native baseline retained: 09_panel_cad/native_baseline/filling_cell_panel.FCStd
+- hmi_tags.csv exactly derives from canonical model
+- input_request_register.csv exactly derives from canonical model
+- insulated-core allocation/spares reconcile: C001
+- insulated-core allocation/spares reconcile: C002
+- insulated-core allocation/spares reconcile: C003
+- insulated-core allocation/spares reconcile: C004
+- insulated-core allocation/spares reconcile: C005
+- insulated-core allocation/spares reconcile: C006
+- insulated-core allocation/spares reconcile: C007
+- insulated-core allocation/spares reconcile: C008
+- insulated-core allocation/spares reconcile: C009
+- insulated-core allocation/spares reconcile: C010
+- insulated-core allocation/spares reconcile: C011
+- insulated-core allocation/spares reconcile: C012
+- insulated-core allocation/spares reconcile: C013
+- insulated-core allocation/spares reconcile: C014
+- insulated-core allocation/spares reconcile: C015
+- insulated-core allocation/spares reconcile: C016
+- insulated-core allocation/spares reconcile: C017
+- insulated-core allocation/spares reconcile: C018
+- insulated-core allocation/spares reconcile: C019
+- insulated-core allocation/spares reconcile: C020
+- insulated-core allocation/spares reconcile: C021
+- insulated-core allocation/spares reconcile: C022
+- known panel bodies do not overlap: -A100 / -A101
+- known panel bodies do not overlap: -A100 / -A102
+- known panel bodies do not overlap: -A100 / -A103
+- known panel bodies do not overlap: -A100 / -A104
+- known panel bodies do not overlap: -A100 / -PE100
+- known panel bodies do not overlap: -A100 / -SW100
+- known panel bodies do not overlap: -A100 / -WD100
+- known panel bodies do not overlap: -A100 / -X100..-X199
+- known panel bodies do not overlap: -A101 / -A102
+- known panel bodies do not overlap: -A101 / -A103
+- known panel bodies do not overlap: -A101 / -A104
+- known panel bodies do not overlap: -A101 / -PE100
+- known panel bodies do not overlap: -A101 / -SW100
+- known panel bodies do not overlap: -A101 / -WD100
+- known panel bodies do not overlap: -A101 / -X100..-X199
+- known panel bodies do not overlap: -A102 / -A103
+- known panel bodies do not overlap: -A102 / -A104
+- known panel bodies do not overlap: -A102 / -PE100
+- known panel bodies do not overlap: -A102 / -SW100
+- known panel bodies do not overlap: -A102 / -WD100
+- known panel bodies do not overlap: -A102 / -X100..-X199
+- known panel bodies do not overlap: -A103 / -A104
+- known panel bodies do not overlap: -A103 / -PE100
+- known panel bodies do not overlap: -A103 / -SW100
+- known panel bodies do not overlap: -A103 / -WD100
+- known panel bodies do not overlap: -A103 / -X100..-X199
+- known panel bodies do not overlap: -A104 / -PE100
+- known panel bodies do not overlap: -A104 / -SW100
+- known panel bodies do not overlap: -A104 / -WD100
+- known panel bodies do not overlap: -A104 / -X100..-X199
+- known panel bodies do not overlap: -PE100 / -WD100
+- known panel bodies do not overlap: -PE100 / -X100..-X199
+- known panel bodies do not overlap: -SW100 / -PE100
+- known panel bodies do not overlap: -SW100 / -WD100
+- known panel bodies do not overlap: -SW100 / -X100..-X199
+- known panel bodies do not overlap: -X100..-X199 / -WD100
+- load_budget.csv exactly derives from canonical model
+- malformed acknowledgement faults without clearing the current publication
+- manual HMI rationale describes decommanded hold-to-run behavior
+- manual commands are explicit heartbeat-supervised hold-to-run requests
+- manual conveyor and secure motions are mutually exclusive and stop-sequenced
+- manual pump and valve path requires stopped conveyor and secured pair
+- manual secure hold-to-run path includes #manualConveyorInterlocked
+- manual secure hold-to-run path includes #manualPumpInterlocked
+- manual secure hold-to-run path includes #manualSecureInterlocked
+- manual secure hold-to-run path includes ClampRequest OR #manualSecureInterlocked
+- manual secure hold-to-run path includes GateCloseRequest OR #manualSecureInterlocked
+- manual secure hold-to-run path includes ManualSecureRequest
+- mode acceptance permissions match coordinator-consumed states
+- model identity shape is validated before indexing
+- native PN/TM Count adapter consumed: ConveyorPnIoValid
+- native PN/TM Count adapter consumed: Flow1ChannelFault
+- native PN/TM Count adapter consumed: Flow1PulseTotal
+- native PN/TM Count adapter consumed: Flow2ChannelFault
+- native PN/TM Count adapter consumed: Flow2PulseTotal
+- native PN/TM Count adapter consumed: PumpPnIoValid
+- network_nodes.csv exactly derives from canonical model
+- no fabricated native/model artifacts: []
+- no forbidden source placeholder: 00_types.scl
+- no forbidden source placeholder: DB_CellMain.scl
+- no forbidden source placeholder: DB_Global.scl
+- no forbidden source placeholder: FB_Actuator2Pos.scl
+- no forbidden source placeholder: FB_AlarmManager.scl
+- no forbidden source placeholder: FB_CapperInterface.scl
+- no forbidden source placeholder: FB_CellMain.scl
+- no forbidden source placeholder: FB_FillChannel.scl
+- no forbidden source placeholder: FB_HMICommandManager.scl
+- no forbidden source placeholder: FB_MachineCoordinator.scl
+- no forbidden source placeholder: FB_RecipeManager.scl
+- no forbidden source placeholder: FB_VFD.scl
+- no forbidden source placeholder: FB_VisionInterface.scl
+- no forbidden source placeholder: OB100_Startup.scl
+- no forbidden source placeholder: OB1_Call_Structure.scl
+- no leading patch artifact: 00_types.scl
+- no leading patch artifact: DB_CellMain.scl
+- no leading patch artifact: DB_Global.scl
+- no leading patch artifact: FB_Actuator2Pos.scl
+- no leading patch artifact: FB_AlarmManager.scl
+- no leading patch artifact: FB_CapperInterface.scl
+- no leading patch artifact: FB_CellMain.scl
+- no leading patch artifact: FB_FillChannel.scl
+- no leading patch artifact: FB_HMICommandManager.scl
+- no leading patch artifact: FB_MachineCoordinator.scl
+- no leading patch artifact: FB_RecipeManager.scl
+- no leading patch artifact: FB_VFD.scl
+- no leading patch artifact: FB_VisionInterface.scl
+- no leading patch artifact: OB100_Startup.scl
+- no leading patch artifact: OB1_Call_Structure.scl
+- nvidia_interface_tags.csv exactly derives from canonical model
+- only normal scenario releases product
+- overall cable shields are separate from insulated cores and carry no invented size/color
+- panel placement no longer uses identical envelopes
+- panel-scope BOM rows use CP01 location
+- panel_placement.csv exactly derives from canonical model
+- plc_io.csv exactly derives from canonical model
+- point_to_point_connections.csv exactly derives from canonical model
+- power, analog-reference and shield reference terminals are scheduled
+- rationale covers every HMI tag
+- rationale covers every NVIDIA interface signal
+- rationale covers every PLC channel
+- rationale covers every alarm
+- rationale covers every cable
+- rationale covers every terminal/reference
+- rationale has an individual row for each active output relay
+- read-only HMI rationale describes visibility rather than command arbitration
+- recipe manager atomically validates current candidate, timing and nonzero pulse targets
+- recipe manager references only delivered UDT fields: []
+- removed recipe members and hard-coded scan time are absent
 - required directory 00_project_control
 - required directory 01_requirements
 - required directory 02_system_architecture
@@ -24,223 +317,89 @@ This is static/data/dynamic-source validation. It is not TIA, WinCC, Startdrive,
 - required directory 13_documentation
 - required directory 14_qa
 - required directory release
-- PLC symbols unique
-- PLC physical addresses unique
-- 32 DI channels allocated
-- 32 DO channels allocated
-- 8 AI channels allocated
-- 2 HSC channels allocated
-- contradictory hardwired drive run/status I/O removed
-- two Standard Telegram 1 PZD mappings controlled
-- plc_io.csv exactly derives from canonical model
-- siemens_hardware.csv exactly derives from canonical model
-- drive_interfaces.csv exactly derives from canonical model
-- hmi_tags.csv exactly derives from canonical model
-- alarms.csv exactly derives from canonical model
-- nvidia_interface_tags.csv exactly derives from canonical model
-- bom.csv exactly derives from canonical model
-- point_to_point_connections.csv exactly derives from canonical model
-- wire_list.csv exactly derives from canonical model
-- terminal_plan.csv exactly derives from canonical model
-- cable_schedule.csv exactly derives from canonical model
-- panel_placement.csv exactly derives from canonical model
-- network_nodes.csv exactly derives from canonical model
-- load_budget.csv exactly derives from canonical model
-- vfd_parameters.csv exactly derives from canonical model
 - requirements_traceability.csv exactly derives from canonical model
-- test_coverage.csv exactly derives from canonical model
-- input_request_register.csv exactly derives from canonical model
-- acceptance_gates.csv exactly derives from canonical model
-- all writable HMI tags use DB_HMI command requests
-- HMI never writes physical output symbols
-- spares are never HMI writable
-- sequenced HMI commands have request/ack/reject/disabled fields
-- manual commands are explicit heartbeat-supervised hold-to-run requests
-- cable/core allocations unique
-- external panel terminals unique
-- wire numbers unique
-- connection mandatory fields populated
-- external connection cable/core/terminal fields populated
-- field and relay terminals are not double-landed
-- analog/HSC shields scheduled
-- 0 V/return commons scheduled
-- every cable is referenced by connection records
-- complete relay coil/contact/load path: GATE_OPEN_CMD
-- complete relay coil/contact/load path: CLAMP_ENGAGE_CMD
-- complete relay coil/contact/load path: STACK_RED
-- complete relay coil/contact/load path: GATE_CLOSE_CMD
-- complete relay coil/contact/load path: FILL_VALVE_2_OPEN_CMD
-- complete relay coil/contact/load path: FILL_VALVE_1_OPEN_CMD
-- complete relay coil/contact/load path: STACK_AMBER
-- complete relay coil/contact/load path: CAMERA_LIGHT_ENABLE
-- complete relay coil/contact/load path: CAPPER_REQUEST
-- complete relay coil/contact/load path: STACK_GREEN
-- complete relay coil/contact/load path: CLAMP_RELEASE_CMD
-- complete relay coil/contact/load path: AUDIBLE_ALARM
-- power, analog-reference and shield reference terminals are scheduled
-- explicit TM Count M/reference conductor: FLOW_1_PULSE
-- explicit TM Count M/reference conductor: FLOW_2_PULSE
-- external connections use strict class-number reference designations
-- hardware and panel rows use strict full reference designations
-- BOM covers all I/O devices: []
+- revision-D generator owns every authoritative Siemens source
+- root calls Alarm exactly once
+- root calls Capper exactly once
+- root calls Clamp exactly once
+- root calls ConveyorVfd exactly once
+- root calls Coordinator exactly once
+- root calls FillCh1 exactly once
+- root calls FillCh2 exactly once
+- root calls Gate exactly once
+- root calls PumpVfd exactly once
+- root calls Recipe exactly once
+- root calls Vision exactly once
 - safety-status mirror maps to controlled K100 dry-contact interface
-- guard-status mirror maps to controlled S102 dry-contact interface
-- K100 safety-interface monitor has explicit supply and signal conductors
-- S102 guard monitor has explicit dry-contact supply and signal conductors
-- sensor BOM has one non-overlapping line per active sensor
-- all BOM rows use strict full reference designations
-- panel-scope BOM rows use CP01 location
-- expanded panel and field BOM has at least 45 controlled lines
-- panel placement no longer uses identical envelopes
-- HMI is door-mounted
+- scenario summaries report zero invariant violations
+- scheduled clearance envelopes do not overlap: -A100 / -A101
+- scheduled clearance envelopes do not overlap: -A100 / -A102
+- scheduled clearance envelopes do not overlap: -A100 / -A103
+- scheduled clearance envelopes do not overlap: -A100 / -A104
+- scheduled clearance envelopes do not overlap: -A100 / -PE100
+- scheduled clearance envelopes do not overlap: -A100 / -SW100
+- scheduled clearance envelopes do not overlap: -A100 / -WD100
+- scheduled clearance envelopes do not overlap: -A100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -A101 / -A102
+- scheduled clearance envelopes do not overlap: -A101 / -A103
+- scheduled clearance envelopes do not overlap: -A101 / -A104
+- scheduled clearance envelopes do not overlap: -A101 / -PE100
+- scheduled clearance envelopes do not overlap: -A101 / -SW100
+- scheduled clearance envelopes do not overlap: -A101 / -WD100
+- scheduled clearance envelopes do not overlap: -A101 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -A102 / -A103
+- scheduled clearance envelopes do not overlap: -A102 / -A104
+- scheduled clearance envelopes do not overlap: -A102 / -PE100
+- scheduled clearance envelopes do not overlap: -A102 / -SW100
+- scheduled clearance envelopes do not overlap: -A102 / -WD100
+- scheduled clearance envelopes do not overlap: -A102 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -A103 / -A104
+- scheduled clearance envelopes do not overlap: -A103 / -PE100
+- scheduled clearance envelopes do not overlap: -A103 / -SW100
+- scheduled clearance envelopes do not overlap: -A103 / -WD100
+- scheduled clearance envelopes do not overlap: -A103 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -A104 / -PE100
+- scheduled clearance envelopes do not overlap: -A104 / -SW100
+- scheduled clearance envelopes do not overlap: -A104 / -WD100
+- scheduled clearance envelopes do not overlap: -A104 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -PE100 / -WD100
+- scheduled clearance envelopes do not overlap: -PE100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -SW100 / -PE100
+- scheduled clearance envelopes do not overlap: -SW100 / -WD100
+- scheduled clearance envelopes do not overlap: -SW100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -X100..-X199 / -WD100
 - semantic requirement/test trace: SYS-005
 - semantic requirement/test trace: SYS-015
 - semantic requirement/test trace: SYS-018
 - semantic requirement/test trace: SYS-023
 - semantic requirement/test trace: SYS-024
-- exact 15-file Siemens type/FB/DB/OB source inventory present
-- revision-C generator owns every authoritative Siemens source
-- generated Siemens source parity: 00_types.scl
-- generated Siemens source parity: DB_Global.scl
-- generated Siemens source parity: FB_HMICommandManager.scl
-- generated Siemens source parity: FB_VFD.scl
-- generated Siemens source parity: FB_Actuator2Pos.scl
-- generated Siemens source parity: FB_RecipeManager.scl
-- generated Siemens source parity: FB_AlarmManager.scl
-- generated Siemens source parity: FB_VisionInterface.scl
-- generated Siemens source parity: FB_FillChannel.scl
-- generated Siemens source parity: FB_CapperInterface.scl
-- generated Siemens source parity: FB_MachineCoordinator.scl
-- generated Siemens source parity: FB_CellMain.scl
-- generated Siemens source parity: DB_CellMain.scl
-- generated Siemens source parity: OB1_Call_Structure.scl
-- generated Siemens source parity: OB100_Startup.scl
-- no leading patch artifact: 00_types.scl
-- no forbidden source placeholder: 00_types.scl
-- no leading patch artifact: DB_CellMain.scl
-- no forbidden source placeholder: DB_CellMain.scl
-- balanced DATA_BLOCK endings: DB_CellMain.scl
-- no leading patch artifact: DB_Global.scl
-- no forbidden source placeholder: DB_Global.scl
-- balanced DATA_BLOCK endings: DB_Global.scl
-- no leading patch artifact: FB_Actuator2Pos.scl
-- no forbidden source placeholder: FB_Actuator2Pos.scl
-- balanced FUNCTION_BLOCK endings: FB_Actuator2Pos.scl
-- no leading patch artifact: FB_AlarmManager.scl
-- no forbidden source placeholder: FB_AlarmManager.scl
-- balanced FUNCTION_BLOCK endings: FB_AlarmManager.scl
-- no leading patch artifact: FB_CapperInterface.scl
-- no forbidden source placeholder: FB_CapperInterface.scl
-- balanced FUNCTION_BLOCK endings: FB_CapperInterface.scl
-- no leading patch artifact: FB_CellMain.scl
-- no forbidden source placeholder: FB_CellMain.scl
-- balanced FUNCTION_BLOCK endings: FB_CellMain.scl
-- no leading patch artifact: FB_FillChannel.scl
-- no forbidden source placeholder: FB_FillChannel.scl
-- balanced FUNCTION_BLOCK endings: FB_FillChannel.scl
-- no leading patch artifact: FB_HMICommandManager.scl
-- no forbidden source placeholder: FB_HMICommandManager.scl
-- balanced FUNCTION_BLOCK endings: FB_HMICommandManager.scl
-- no leading patch artifact: FB_MachineCoordinator.scl
-- no forbidden source placeholder: FB_MachineCoordinator.scl
-- balanced FUNCTION_BLOCK endings: FB_MachineCoordinator.scl
-- no leading patch artifact: FB_RecipeManager.scl
-- no forbidden source placeholder: FB_RecipeManager.scl
-- balanced FUNCTION_BLOCK endings: FB_RecipeManager.scl
-- no leading patch artifact: FB_VFD.scl
-- no forbidden source placeholder: FB_VFD.scl
-- balanced FUNCTION_BLOCK endings: FB_VFD.scl
-- no leading patch artifact: FB_VisionInterface.scl
-- no forbidden source placeholder: FB_VisionInterface.scl
-- balanced FUNCTION_BLOCK endings: FB_VisionInterface.scl
-- no leading patch artifact: OB100_Startup.scl
-- no forbidden source placeholder: OB100_Startup.scl
-- balanced ORGANIZATION_BLOCK endings: OB100_Startup.scl
-- no leading patch artifact: OB1_Call_Structure.scl
-- no forbidden source placeholder: OB1_Call_Structure.scl
-- balanced ORGANIZATION_BLOCK endings: OB1_Call_Structure.scl
-- OB1 executes root cell instance
-- root calls FillCh1 exactly once
-- root calls FillCh2 exactly once
-- root calls ConveyorVfd exactly once
-- root calls PumpVfd exactly once
-- root calls Gate exactly once
-- root calls Clamp exactly once
-- root calls Vision exactly once
-- root calls Capper exactly once
-- root calls Recipe exactly once
-- root calls Alarm exactly once
-- root calls Coordinator exactly once
-- fill-channel implements UDINT#4294967295
-- fill-channel implements AnalogBrokenWire
-- fill-channel implements NoFlow
-- fill-channel implements ContinuedFlow
-- fill-channel implements PulseAnalogDisagreement
-- fill-channel implements Underfill :=
-- fill-channel implements Overfill :=
-- fill-channel implements tValveClose
-- fill-channel implements ABORTED
-- recipe manager references only delivered UDT fields: []
-- removed recipe members and hard-coded scan time are absent
-- recipe manager atomically validates current candidate, timing and nonzero pulse targets
-- RecipeManager owns atomic apply acceptance/rejection
-- fill start/reset/post-close contract includes #scanDelta := 0; #lastPulseTotal := #PulseTotal
-- fill start/reset/post-close contract includes tFlowStopped
-- fill start/reset/post-close contract includes NOT #AnalogBrokenWire
-- fill start/reset/post-close contract includes NOT #closing
-- fill start/reset/post-close contract includes #FlowLMin <= #NoFlowMinLMin
-- capper reset requires all diagnosed causes cleared
-- capper external/handshake faults map to alarm 1402
-- current equipment faults arbitrate and permissives recompute before one-shot power-recovery reset reaches coordinator
-- mode acceptance permissions match coordinator-consumed states
-- manual secure hold-to-run path includes ManualSecureRequest
-- manual secure hold-to-run path includes #manualConveyorInterlocked
-- manual secure hold-to-run path includes #manualSecureInterlocked
-- manual secure hold-to-run path includes #manualPumpInterlocked
-- manual secure hold-to-run path includes GateCloseRequest OR #manualSecureInterlocked
-- manual secure hold-to-run path includes ClampRequest OR #manualSecureInterlocked
-- manual conveyor and secure motions are mutually exclusive and stop-sequenced
-- manual pump and valve path requires stopped conveyor and secured pair
-- canonical cell inputs are normalized and consumed: []
-- all source alarm mappings exist in canonical alarm schedule: []
-- native PN/TM Count adapter consumed: ConveyorPnIoValid
-- native PN/TM Count adapter consumed: PumpPnIoValid
-- native PN/TM Count adapter consumed: Flow1PulseTotal
-- native PN/TM Count adapter consumed: Flow2PulseTotal
-- native PN/TM Count adapter consumed: Flow1ChannelFault
-- native PN/TM Count adapter consumed: Flow2ChannelFault
-- all standard output commands are assigned: []
-- blocking-fault arbitration includes Gate.Fault
-- blocking-fault arbitration includes Clamp.Fault
-- blocking-fault arbitration includes Vision.Fault
-- blocking-fault arbitration includes Capper.Fault
-- blocking-fault arbitration includes CommunicationsHealthy
-- blocking-fault arbitration includes AirPressureOk
-- blocking-fault arbitration includes ProductSupplyOk
-- blocking-fault arbitration includes GuardClosed
-- drive PZD process-image mapping present
-- command arbitration separated from output mapper
+- sensor BOM has one non-overlapping line per active sensor
+- sequenced HMI commands have request/ack/reject/disabled fields
+- siemens_hardware.csv exactly derives from canonical model
 - simulator is a time-stepped fault-injection model
-- 32 scenario summaries generated
-- only normal scenario releases product
-- scenario summaries report zero invariant violations
-- edge service enforces monotonic/matched inspection IDs
-- edge service is fail-closed on model identity and timed heartbeat
 - single edge protocol owns bounds and exact SHA-256 model identity
-- CPU/TIA V20 firmware baseline documented
+- spares are never HMI writable
+- stale pre-Revision-D PDF render directories are empty
+- standard reproduction compares two normalized XLSX and PDF builds by SHA-256
 - switch misidentification corrected with managed/firewall design
-- exact notice present: README.md
-- exact safety boundary present: README.md
-- exact notice present: AGENTS.md
-- exact safety boundary present: AGENTS.md
-- exact notice present: 00_project_control/design_basis.md
-- exact safety boundary present: 00_project_control/design_basis.md
-- exact notice present: 14_qa/acceptance_gate_status.md
-- exact safety boundary present: 14_qa/acceptance_gate_status.md
-- exact notice present: release/RELEASE_NOTES.md
-- exact safety boundary present: release/RELEASE_NOTES.md
-- historical native baseline retained: 03_electrical/native_baseline/filling_cell.qet
-- historical native baseline retained: 09_panel_cad/native_baseline/filling_cell_panel.FCStd
-- QET historical baseline is well-formed XML
-- FCStd historical baseline container has 76 entries
-- no fabricated native/model artifacts: []
+- terminal_plan.csv exactly derives from canonical model
+- test_coverage.csv exactly derives from canonical model
+- truthful controlled-development maturity status
+- two Standard Telegram 1 PZD mappings controlled
+- vfd_parameters.csv exactly derives from canonical model
+- vision-interface recovery contract includes #pending := FALSE; #triggered := FALSE
+- vision-interface recovery contract includes ExpectedModelHash
+- vision-interface recovery contract includes ExpectedModelId
+- vision-interface recovery contract includes HeartbeatHealthy
+- vision-interface recovery contract includes MODEL_MISMATCH
+- vision-interface recovery contract includes NON_MONOTONIC_REQUEST
+- vision-interface recovery contract includes NOT #Result.ResultValid
+- vision-interface recovery contract includes NOT #TriggerEdge
+- vision-interface recovery contract includes PublicationAck
+- vision-interface recovery contract includes RESULT_STUCK_VALID
+- vision-interface recovery contract includes SessionEpoch
+- vision-interface recovery contract includes Warning
+- vision-interface recovery contract includes lastIssuedId
+- vision-interface recovery contract includes resultMustClear
+- wire numbers unique
+- wire_list.csv exactly derives from canonical model

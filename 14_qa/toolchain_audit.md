@@ -1,11 +1,11 @@
-# Toolchain audit - Revision C
+# Toolchain audit - Revision D
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-TIA Portal V20/STEP 7/WinCC components are installed, but license, TIA Openness group membership and a native revision-C compile are not proven. Startdrive and PLCSIM are absent.
+TIA Portal V20 executable version 2000.0.9501.1, STEP 7/WinCC implementation components, V20 Openness assemblies and the running Automation License Manager service were observed. The `Siemens TIA Openness` local group is empty and the current execution identity is not authorized; a usable STEP 7/WinCC entitlement and native Revision-D compile remain unproven. Startdrive and PLCSIM were not found.
 
-A portable QElectroTech 0.100.1-dev executable and inherited historical native evidence exist, but no revision-C schematic was authored or reopened. FreeCAD is not installed; only historical evidence is retained. Revision-C CAD/reimport gates remain blocked.
+No runnable QElectroTech, FreeCAD or FreeCADCmd executable was found by command, registry or standard-path inspection. Historical Revision-A QET/FCStd/exchange evidence is retained unchanged; no Revision-D native reopen/export/reimport is claimed.
 
-The NVIDIA GPU/driver are observable, while CUDA Toolkit, Docker, TAO, DeepStream, TensorRT and Omniverse/OpenUSD authoring tools are absent. No dataset, trained model or target Jetson evidence exists.
+An NVIDIA GeForce RTX 5060 Laptop GPU and driver 595.95 were observed. `nvidia-smi` reports CUDA compatibility 13.2, which is not CUDA Toolkit evidence. `nvcc`, Docker, TAO, DeepStream, TensorRT tools and OpenUSD tools were not found. No dataset, trained model or target Jetson evidence exists.

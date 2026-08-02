@@ -28,8 +28,8 @@ def csv_rows(name: str) -> list[dict]:
 
 
 model = json.loads((ROOT / "00_project_control/canonical_model.json").read_text(encoding="utf-8"))
-ok(model["project"]["revision"] == "C", "canonical revision C")
-ok(model["project"]["status"].startswith("PARTIALLY COMPLETE"), "truthful partial release status")
+ok(model["project"]["revision"] == "D", "canonical revision D")
+ok(model["project"]["status"].startswith("PROFESSIONAL CONTROLLED ENGINEERING-DEVELOPMENT PACKAGE"), "truthful controlled-development maturity status")
 
 required_dirs = [f"{i:02d}_{name}" for i,name in enumerate(["project_control","requirements","system_architecture","electrical","controls_siemens","hmi","drives","nvidia_vision","digital_twin","panel_cad","schedules","simulation","testing","documentation","qa"])] + ["release"]
 for directory in required_dirs: ok((ROOT / directory).is_dir(), f"required directory {directory}")
@@ -43,7 +43,7 @@ ok(not (hardwired & {r["symbol"] for r in io}), "contradictory hardwired drive r
 ok(len(model["drive_interfaces"]) == 8 and {r["telegram"] for r in model["drive_interfaces"]} == {"Standard Telegram 1"}, "two Standard Telegram 1 PZD mappings controlled")
 
 schedule_map = {
-    "plc_io.csv":"io","siemens_hardware.csv":"hardware","drive_interfaces.csv":"drive_interfaces","hmi_tags.csv":"hmi_tags","alarms.csv":"alarms","nvidia_interface_tags.csv":"vision_interface","bom.csv":"bom","point_to_point_connections.csv":"connections","wire_list.csv":"connections","terminal_plan.csv":"terminals","cable_schedule.csv":"cables","panel_placement.csv":"panel_placement","network_nodes.csv":"network","load_budget.csv":"load_budget","vfd_parameters.csv":"vfd_parameters","requirements_traceability.csv":"requirements","test_coverage.csv":"tests","input_request_register.csv":"input_requests","acceptance_gates.csv":"acceptance_gates"
+    "plc_io.csv":"io","siemens_hardware.csv":"hardware","drive_interfaces.csv":"drive_interfaces","hmi_tags.csv":"hmi_tags","alarms.csv":"alarms","nvidia_interface_tags.csv":"vision_interface","bom.csv":"bom","point_to_point_connections.csv":"connections","wire_list.csv":"connections","terminal_plan.csv":"terminals","cable_schedule.csv":"cables","panel_placement.csv":"panel_placement","network_nodes.csv":"network","load_budget.csv":"load_budget","vfd_parameters.csv":"vfd_parameters","component_rationale.csv":"rationales","requirements_traceability.csv":"requirements","test_coverage.csv":"tests","input_request_register.csv":"input_requests","acceptance_gates.csv":"acceptance_gates"
 }
 for file,key in schedule_map.items():
     expected = [{k:str(v) for k,v in row.items()} for row in model[key]]
@@ -71,13 +71,18 @@ ok(all(r["cable_core"] and r["panel_terminal"] for r in external_connections), "
 ok(len({r["field_terminal"] for r in connections}) == len(connections), "field and relay terminals are not double-landed")
 ok(any(r["shield_termination"] for r in connections), "analog/HSC shields scheduled")
 ok(any(r["return_common"] for r in connections), "0 V/return commons scheduled")
+ok(all(r["return_common"] == "X0:MANA" for r in connections if r["function"] == "Analog signal return"), "all analog returns reference the dedicated MANA common")
+ok(all(r["cable_core"] == "SH" and not r["conductor_mm2"] and not r["color"] for r in connections if r["function"] == "Cable shield"), "overall cable shields are separate from insulated cores and carry no invented size/color")
 used_cables = {r["cable_id"] for r in external_connections}
 ok(used_cables == {r["cable_id"] for r in model["cables"]}, "every cable is referenced by connection records")
-for do_symbol in physical_do:
+for cable in sorted(model["cables"], key=lambda row: row["cable_id"]):
+    insulated = [r for r in external_connections if r["cable_id"] == cable["cable_id"] and r["cable_core"] != "SH"]
+    ok(int(cable["allocated_cores"]) == len(insulated) and int(cable["spare_cores"]) == int(cable["installed_cores"]) - len(insulated), f"insulated-core allocation/spares reconcile: {cable['cable_id']}")
+for do_symbol in sorted(physical_do):
     paths = [r["function"] for r in connections if r["signal"] == do_symbol]
     ok({"PLC output to relay coil","Relay coil return","Relay contact supply","Relay contact 14 to field load","Field load return"}.issubset(paths), f"complete relay coil/contact/load path: {do_symbol}")
 ok({"X24:+24V","X0:0V","X0:MANA","SC100:1"}.issubset({r["terminal"] for r in model["terminals"]}), "power, analog-reference and shield reference terminals are scheduled")
-for hsc_symbol in {r["symbol"] for r in io if r["direction"] == "HSC"}:
+for hsc_symbol in sorted({r["symbol"] for r in io if r["direction"] == "HSC"}):
     ok(any(r["signal"] == hsc_symbol and r["function"] == "Counter reference" and r["destination"].endswith(" M") for r in connections), f"explicit TM Count M/reference conductor: {hsc_symbol}")
 designation_re = re.compile(r"^=FC01\+(CP01|FLD)-[A-Z]+[0-9]+(?:\.\.-[A-Z]+[0-9]+)?$")
 ok(all(designation_re.fullmatch(r["field_designation"]) and r["field_designation"].startswith("=FC01+FLD-") and designation_re.fullmatch(r["module_designation"]) and r["module_designation"].startswith("=FC01+CP01-") for r in external_connections), "external connections use strict class-number reference designations")
@@ -98,8 +103,49 @@ ok(all((r["scope"] not in {"Panel","Panel/field hardware"} or r["full_designatio
 ok(len(model["bom"]) >= 45, "expanded panel and field BOM has at least 45 controlled lines")
 ok(len({str(r["width_mm"]) for r in model["panel_placement"]}) > 4, "panel placement no longer uses identical envelopes")
 ok(any(r["mounting"] == "Door cutout" for r in model["panel_placement"] if r["tag"] == "-H100"), "HMI is door-mounted")
+known_placement = [r for r in model["panel_placement"] if r["mounting"] != "Door cutout" and all(str(r[key]).strip() not in {"","TBD"} for key in ["x_mm","y_mm","width_mm","height_mm","top_clearance_mm","bottom_clearance_mm","side_clearance_mm"])]
+def separated(a: dict, b: dict, clearance: bool) -> bool:
+    sa = float(a["side_clearance_mm"]) if clearance else 0.0; sb = float(b["side_clearance_mm"]) if clearance else 0.0
+    at = float(a["top_clearance_mm"]) if clearance else 0.0; ab = float(a["bottom_clearance_mm"]) if clearance else 0.0
+    bt = float(b["top_clearance_mm"]) if clearance else 0.0; bb = float(b["bottom_clearance_mm"]) if clearance else 0.0
+    ax1=float(a["x_mm"])-sa; ax2=float(a["x_mm"])+float(a["width_mm"])+sa; ay1=float(a["y_mm"])-at; ay2=float(a["y_mm"])+float(a["height_mm"])+ab
+    bx1=float(b["x_mm"])-sb; bx2=float(b["x_mm"])+float(b["width_mm"])+sb; by1=float(b["y_mm"])-bt; by2=float(b["y_mm"])+float(b["height_mm"])+bb
+    return ax2 <= bx1 or bx2 <= ax1 or ay2 <= by1 or by2 <= ay1
+for index,a in enumerate(known_placement):
+    for b in known_placement[index+1:]:
+        ok(separated(a,b,False), f"known panel bodies do not overlap: {a['tag']} / {b['tag']}")
+        ok(separated(a,b,True), f"scheduled clearance envelopes do not overlap: {a['tag']} / {b['tag']}")
+for row in known_placement:
+    left = float(row["x_mm"]) - float(row["side_clearance_mm"])
+    right = float(row["x_mm"]) + float(row["width_mm"]) + float(row["side_clearance_mm"])
+    top = float(row["y_mm"]) - float(row["top_clearance_mm"])
+    bottom = float(row["y_mm"]) + float(row["height_mm"]) + float(row["bottom_clearance_mm"])
+    ok(0 <= left <= right <= 800 and 0 <= top <= bottom <= 800,
+       f"body and scheduled clearances remain inside 800 x 800 panel boundary: {row['tag']}")
+
+load_rows = [r for r in model["load_budget"] if r["voltage"] == "24 VDC" and r["load"] != "24 VDC subtotal"]
+load_subtotal = next(r for r in model["load_budget"] if r["load"] == "24 VDC subtotal")
+load_demand = sum(float(r["demand_w"]) for r in load_rows)
+ok(load_demand == float(load_subtotal["demand_w"]) == 299.0 and load_subtotal["demand_factor"] == "N/A", "24 VDC subtotal reconciles without a false aggregate demand factor")
+ok(abs((load_demand / 24.0 * 1.25) - 15.5729166667) < 1e-6, "24 VDC 25-percent demand-margin current is 15.573 A before inrush/derating")
+
+rationale = model["rationales"]
+by_category = {category:{row["key"] for row in rationale if row["category"] == category} for category in {row["category"] for row in rationale}}
+ok(by_category.get("PLC channel") == {r["symbol"] for r in model["io"]}, "rationale covers every PLC channel")
+ok(by_category.get("Terminal") == {r["terminal"] for r in model["terminals"]}, "rationale covers every terminal/reference")
+ok(by_category.get("Cable") == {r["cable_id"] for r in model["cables"]}, "rationale covers every cable")
+ok(by_category.get("HMI tag") == {r["hmi_tag"] for r in model["hmi_tags"]}, "rationale covers every HMI tag")
+ok(by_category.get("Alarm") == {str(r["alarm_id"]) for r in model["alarms"]}, "rationale covers every alarm")
+ok(by_category.get("NVIDIA interface") == {r["signal"] for r in model["vision_interface"]}, "rationale covers every NVIDIA interface signal")
+ok(by_category.get("Relay") == {r["device"] for r in io if r["direction"] == "DO" and r["device"].startswith("-K2")}, "rationale has an individual row for each active output relay")
+component_rationale = {r["key"]: r for r in rationale if r["category"] == "Component"}
+ok(all(component_rationale[r["tag"]]["selection_or_evidence_basis"] == r["selection_status"] and component_rationale[r["tag"]]["open_verification"] == r["basis_or_blocker"] for r in model["bom"]), "component rationale separates selection status from open evidence/blocker")
+hmi_rationale = {r["key"]: r for r in rationale if r["category"] == "HMI tag"}
+ok(all("visibility" in hmi_rationale[r["hmi_tag"]]["failure_detected_or_controlled"] for r in model["hmi_tags"] if r["access"] == "Read only"), "read-only HMI rationale describes visibility rather than command arbitration")
+ok(all("hold-to-run" in hmi_rationale[r["hmi_tag"]]["failure_detected_or_controlled"] for r in model["hmi_tags"] if r["hmi_tag"].startswith("HOLD_")), "manual HMI rationale describes decommanded hold-to-run behavior")
+ok("stalled counter" in hmi_rationale["HMI_COMMAND_HEARTBEAT"]["failure_detected_or_controlled"], "HMI heartbeat rationale describes fail-closed counter supervision")
 trace_by_id = {r["requirement_id"]: r for r in model["requirements"]}
-semantic_trace = {"SYS-005":{"TC-009","TC-010"},"SYS-015":{"TC-018","TC-019","TC-020"},"SYS-018":{"VAL-C-STATIC"},"SYS-023":{"VAL-C-STATIC"},"SYS-024":{"PROC-RESTORE-OPEN","MANIFEST-VERIFY-001"}}
+semantic_trace = {"SYS-005":{"TC-009","TC-010"},"SYS-015":{"TC-018","TC-019","TC-020"},"SYS-018":{"VAL-D-STATIC"},"SYS-023":{"VAL-D-STATIC"},"SYS-024":{"PROC-RESTORE-OPEN","MANIFEST-VERIFY-001"}}
 for requirement_id, expected_ids in semantic_trace.items():
     actual_ids = {token.strip() for token in trace_by_id[requirement_id]["test_ids"].split(";")}
     ok(actual_ids == expected_ids, f"semantic requirement/test trace: {requirement_id}")
@@ -109,10 +155,10 @@ required_scl = {"00_types.scl","DB_Global.scl","FB_HMICommandManager.scl","FB_VF
 actual_scl = {p.name for p in scl_dir.glob("*.scl")}
 ok(required_scl == actual_scl, "exact 15-file Siemens type/FB/DB/OB source inventory present")
 sys.path.insert(0, str(ROOT / "scripts"))
-from revision_c_scl import sources as generated_scl_sources
+from revision_d_scl import sources as generated_scl_sources
 generated_sources = generated_scl_sources()
-ok(set(generated_sources) == required_scl, "revision-C generator owns every authoritative Siemens source")
-for name, generated in generated_sources.items():
+ok(set(generated_sources) == required_scl, "revision-D generator owns every authoritative Siemens source")
+for name, generated in sorted(generated_sources.items()):
     ok((scl_dir / name).read_text(encoding="utf-8").rstrip() == generated.rstrip(), f"generated Siemens source parity: {name}")
 for path in sorted(scl_dir.glob("*.scl")):
     text = path.read_text(encoding="utf-8")
@@ -127,7 +173,11 @@ types = (scl_dir / "00_types.scl").read_text(encoding="utf-8")
 recipe_manager = (scl_dir / "FB_RecipeManager.scl").read_text(encoding="utf-8")
 ok('"DB_CellMain"();' in ob1, "OB1 executes root cell instance")
 for owner,count in [("FillCh1",1),("FillCh2",1),("ConveyorVfd",1),("PumpVfd",1),("Gate",1),("Clamp",1),("Vision",1),("Capper",1),("Recipe",1),("Alarm",1),("Coordinator",1)]: ok(cell.count(f"#{owner}(") == count, f"root calls {owner} exactly once")
-for feature in ["UDINT#4294967295","AnalogBrokenWire","NoFlow","ContinuedFlow","PulseAnalogDisagreement","Underfill :=","Overfill :=","tValveClose","ABORTED"]: ok(feature in fill, f"fill-channel implements {feature}")
+for feature in ["PULSE_MISSING","ANALOG_NO_FLOW","PULSE_COUNTER_DISCONTINUITY","MeasurementWindowValid","comparisonArmed","CounterRolloverObserved","CounterDiscontinuity","PumpRequest","tPulseMissing","tAnalogNoFlow","tValveClose","ABORTED"]: ok(feature in fill, f"fill-channel implements {feature}")
+vision_scl = (scl_dir / "FB_VisionInterface.scl").read_text(encoding="utf-8")
+for feature in ["lastIssuedId","NON_MONOTONIC_REQUEST","RESULT_STUCK_VALID","resultMustClear","PublicationAck","HeartbeatHealthy","NOT #Result.ResultValid","#pending := FALSE; #triggered := FALSE","NOT #TriggerEdge","SessionEpoch","Warning","ExpectedModelId","ExpectedModelHash","MODEL_MISMATCH"]: ok(feature in vision_scl, f"vision-interface recovery contract includes {feature}")
+revision_d_tests = (ROOT / "11_simulation/tests/test_revision_d_interfaces.py").read_text(encoding="utf-8")
+for test_name in ["test_stale_id","test_future_id","test_duplicate_request_id","test_result_valid_stuck_high","test_busy_ready_contradiction","test_timeout_then_delayed_result","test_reset_after_stale","test_reset_does_not_restart","test_pulse_zero_analog_positive","test_analog_zero_pulses_positive","test_both_measurements_no_flow","test_counter_rollover","test_timer_boundary"]: ok(test_name in revision_d_tests, f"direct Revision-D interface test present: {test_name}")
 recipe_type_match = re.search(r'TYPE "UDT_Recipe".*?STRUCT(.*?)END_STRUCT;', types, re.S)
 recipe_fields = set(re.findall(r"(?m)^\s*([A-Za-z][A-Za-z0-9_]*)\s*:", recipe_type_match.group(1) if recipe_type_match else ""))
 recipe_refs = set(re.findall(r"#Candidate\.([A-Za-z][A-Za-z0-9_]*)", recipe_manager))
@@ -178,9 +228,25 @@ edge_service = (ROOT / "07_nvidia_vision/edge_service/service.py").read_text(enc
 ok("inspection ID is not strictly monotonic" in edge_protocol and "result ID does not match" in edge_protocol, "edge service enforces monotonic/matched inspection IDs")
 ok("service is not ready: controlled model unavailable" in edge_service and "validate_model_identity" in edge_service and "PLC heartbeat timeout" in edge_service, "edge service is fail-closed on model identity and timed heartbeat")
 ok("MAX_TARGET_FILL_LEVEL = 1.0" in edge_protocol and "MODEL_HASH_RE" in edge_protocol and "expected_identity" in edge_protocol, "single edge protocol owns bounds and exact SHA-256 model identity")
+ok("type(identity) is not tuple" in edge_protocol and "len(identity) != 2" in edge_protocol, "model identity shape is validated before indexing")
+ok("RESULT_ACK_RANGE" in edge_service and "type(result_id) is not int" in edge_service and "invalidate_publication=False" in edge_service, "malformed acknowledgement faults without clearing the current publication")
+edge_tests = (ROOT / "07_nvidia_vision/edge_service/tests/test_service.py").read_text(encoding="utf-8")
+harness_tests = (ROOT / "07_nvidia_vision/test_plc_interface_harness.py").read_text(encoding="utf-8")
+ok("test_malformed_ack_never_clears_valid_publication" in edge_tests and "test_malformed_identity_shapes_and_property_failure_stay_not_ready" in edge_tests, "edge tests cover malformed ACK and model-identity ingress")
+ok("test_rearm_uses_single_validated_identity_read_and_catches_transition_failure" in edge_tests and "self._validated_identity" in edge_service, "edge rearm reuses one protected validated identity read")
+ok("test_rejected_delayed_publication_is_acked_cleared_and_rearmed" in harness_tests, "composed PLC/edge test covers rejected delayed publication cleanup and rearm")
+node_map = list(csv.DictReader((ROOT / "07_nvidia_vision/plc_ai_node_map.csv").open(encoding="utf-8-sig", newline="")))
+service_config = json.loads((ROOT / "07_nvidia_vision/edge_service/service_config.json").read_text(encoding="utf-8"))
+vision_signals = [r["signal"] for r in model["vision_interface"]]
+ok([r["signal"] for r in node_map] == vision_signals and service_config["signal_count"] == len(vision_signals), "edge node map/config exactly track canonical vision signals")
+ok(set(service_config["nodes"]) == set(vision_signals) and all(service_config["nodes"][r["signal"]] == r["node_id"] for r in node_map), "edge config node IDs exactly match generated node map")
+ok(all(token in service_config["session_rearm"] for token in ["VISION_SESSION_EPOCH","INSPECTION_ID","RESULT_ACK_ID","PLC_HEARTBEAT","VISION_ENABLE low"]), "edge config records disabled four-counter anti-replay synchronization")
+reproduction = (ROOT / "scripts/reproduce_validation.ps1").read_text(encoding="utf-8")
+ok(reproduction.count("WorkbookHash") >= 4 and reproduction.count("PdfHash") >= 4 and "Get-FileHash -Algorithm SHA256" in reproduction, "standard reproduction compares two normalized XLSX and PDF builds by SHA-256")
+ok(all(not (ROOT / "14_qa/pdf_renders" / stale).exists() or not any((ROOT / "14_qa/pdf_renders" / stale).iterdir()) for stale in ["release","release_c"]), "stale pre-Revision-D PDF render directories are empty")
 ok("FS03 / FW4.0" in (ROOT / "04_controls_siemens/cpu_tia_v20_compatibility.md").read_text(encoding="utf-8"), "CPU/TIA V20 firmware baseline documented")
 network_decision = (ROOT / "02_system_architecture/network_hardware_decision.md").read_text(encoding="utf-8")
-ok("XB008 unmanaged" in network_decision and "XC208 managed" in network_decision and "S615" in network_decision, "switch misidentification corrected with managed/firewall design")
+ok(all(term in network_decision for term in ["XB008","unmanaged","XC208","managed","S615"]), "switch misidentification corrected with managed/firewall design")
 
 notice = "FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION"
 safety = "CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."
@@ -197,12 +263,12 @@ for rel,digest in expected_hashes.items(): ok(hashlib.sha256((ROOT / rel).read_b
 ElementTree.parse(ROOT / "03_electrical/native_baseline/filling_cell.qet"); checks.append("QET historical baseline is well-formed XML")
 with zipfile.ZipFile(ROOT / "09_panel_cad/native_baseline/filling_cell_panel.FCStd") as zf: ok(len(zf.namelist()) == 76, "FCStd historical baseline container has 76 entries")
 banned = {".ap20",".zap20",".onnx",".engine",".plan",".usd",".usda",".usdc"}
-bad = [p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*") if p.is_file() and p.suffix.lower() in banned]
+bad = sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*") if p.is_file() and p.suffix.lower() in banned)
 ok(not bad, f"no fabricated native/model artifacts: {bad}")
 
 report = ROOT / "14_qa/automated_validation_report.md"
-lines = ["# Automated validation report — Revision C","",f"Result: **{'PASS' if not errors else 'FAIL'}**","","This is static/data/dynamic-source validation. It is not TIA, WinCC, Startdrive, PLCSIM, QET or FreeCAD native proof.","","## Passed checks",""] + [f"- {item}" for item in checks]
-if errors: lines += ["","## Errors",""] + [f"- {item}" for item in errors]
+lines = ["# Automated validation report — Revision D","",f"Result: **{'PASS' if not errors else 'FAIL'}**","","This is deterministic static/data/independent-model validation. It is not TIA, WinCC, Startdrive, PLCSIM, QET or FreeCAD native proof.","","## Passed checks",""] + [f"- {item}" for item in sorted(checks)]
+if errors: lines += ["","## Errors",""] + [f"- {item}" for item in sorted(errors)]
 if not OPTIONS.check:
     report.write_text("\n".join(lines) + "\n", encoding="utf-8")
 print(f"PASS={len(checks)} FAIL={len(errors)}")

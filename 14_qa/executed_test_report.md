@@ -1,32 +1,19 @@
-# Executed non-native test report
+# Executed non-native test report - Revision D
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
-Execution date: 2026-08-02. Runtime: bundled Python 3.12.13. These are deterministic design/interface tests, not TIA Portal compile, PLCSIM, FAT, SAT or physical commissioning evidence.
+> CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-## Process simulator
+Execution date: 2026-08-02. Runtime: bundled Python 3.12.13. These are deterministic source/design/interface tests, not TIA Portal compile, PLCSIM, FAT, SAT or physical commissioning evidence.
 
-Command:
+## Process and interface models
 
-```powershell
-& '<bundled-python>' -m unittest discover -s 11_simulation\tests -v
-& '<bundled-python>' 11_simulation\run_scenarios.py
-```
+`python -m unittest discover -s 11_simulation/tests -v` passed 48 tests: the process simulator/property/protocol suite plus direct Revision-D vision/fill interface oracles. `python 11_simulation/run_scenarios.py` regenerated all 32 timed scenarios and their per-scenario traces; exactly one normal scenario releases, invariant violations are zero and reset/power restoration never causes automatic restart.
 
-Result: 20 test methods passed. Property sweeps covered 10/20/40/50 ms time steps and 400/500/700 ml targets. Thirty-two timed scenarios generated 7,147 trace samples. Exactly one scenario releases, invariant violations are zero, and automatic restarts are zero. The model includes conveyor, two bottles, gate, clamp, common pump, two valves, pulse/analog flow, vision, capper, power and communications. Detailed summaries and per-scenario traces are under `11_simulation/outputs`.
+## PLC-NVIDIA edge contract
 
-## PLC-AI protocol oracle
-
-Command:
-
-```powershell
-& '<bundled-python>' -m unittest discover -s 07_nvidia_vision\edge_service\tests -v
-```
-
-Result: 11 edge-service tests and 6 PLC-interface timing-harness tests passed in addition to the protocol cases within the 20-test simulator suite. The service rejects absent/malformed/swapped model identity, duplicate/non-monotonic inspection ID, regressing, timed-out or stale heartbeat, wrong bottle count and invalid target bounds; a controlled test backend proves atomic success behavior without being represented as a trained model. Protocol errors fault the service closed.
+`python -m unittest discover -s 07_nvidia_vision/edge_service/tests -v` passed 35 edge-service tests. `python -m unittest -v test_plc_interface_harness.py` passed 15 interface-harness tests. Coverage includes disabled restart synchronization and PLC counter seeding, immutable accepted/rejected result acknowledgement lifecycle, malformed ACK and model-identity ingress/rearm transitions, monotonic nonzero IDs, stale/future/duplicate IDs, delayed-result cleanup, heartbeat timeout/regression/rollover, PLC model identity, per-channel semantic contradictions, warning-bearing pass rejection and fail-closed behavior without a trained model claim.
 
 ## Automated project validation
 
-Command: `& '<bundled-python>' scripts\validate_project.py`.
-
-Result: 238 static/data/source checks passed and zero failed. The validation result is recorded in `automated_validation_report.md`. Manifest generation and verification are separate commands so a validator run cannot silently rewrite release integrity evidence. Native/tool-dependent blockers remain open regardless of this PASS.
+`python scripts/validate_project.py` passes the current static/data/source check set with zero failures. `scripts/check_determinism.py` independently rebuilds the controlled source/report set twice with zero missing, extra or mismatched files; the release entry point additionally compares two normalized workbook builds and two PDF builds by SHA-256. The workbook renders 20 sheets with zero formula-error matches; the PDF renders five pages. Final manifest verification must report equal listed/actual controlled-file counts and zero missing, unlisted, classification or hash mismatches. Native/tool-dependent blockers remain open regardless of these passes.

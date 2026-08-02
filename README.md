@@ -1,9 +1,11 @@
-# FC01 Siemens/NVIDIA compact filling cell — Revision C
+# FC01 Siemens/NVIDIA compact filling cell — Revision D
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-Revision C corrects the generator-origin SCL patch artifacts, replaces comment-only OB1 with a root instance call and startup OB, implements detailed fill diagnostics, separates HMI command handshakes from physical outputs, reconciles G120C control to PROFINET Standard Telegram 1, replaces the misidentified unmanaged switch with a managed switch/firewall architecture, expands BOM/point-to-point/panel/control documents, and replaces lookup-table simulation with a dynamic fault-injection model.
+Revision D hardens fail-closed PLC/vision recovery, explicit fill-measurement windows and missing-channel diagnostics, edge-contract validation, deterministic reproduction, manifest governance, electrical schedule checks and AI-assisted review terminology.
 
-Run `python scripts/build_project.py`, the workbook/PDF builders, simulation tests, `python scripts/validate_project.py`, `python scripts/build_manifest.py`, then `python scripts/verify_manifest.py`. Native TIA/WinCC/Startdrive/PLCSIM, revision-C QET/FreeCAD, physical electrical calculations, real dataset/model/runtime, FAT/SAT and qualified safety gates remain open exactly as recorded.
+Run `powershell -ExecutionPolicy Bypass -File scripts/reproduce_validation.ps1` for the controlled local workflow. Native TIA/WinCC/Startdrive/PLCSIM, Revision-D QET/FreeCAD, confirmed site-dependent electrical calculations, real dataset/model/target runtime, FAT/SAT and qualified safety gates remain open exactly as recorded.
+
+Maturity: **Professional controlled engineering-development package; construction and deployment release pending the explicitly listed native, physical and qualified acceptance gates.**

@@ -12,11 +12,13 @@ VLAN 10 is cell control (PLC, HMI, two drives), VLAN 20 is quality vision, and V
 
 | Source | Destination | Service | Policy |
 |---|---|---|---|
-| Vision VLAN 20 | PLC VLAN 10 | OPC UA TCP 4840 | Allow only named client certificate and approved namespace |
+| 192.168.20.10 | 192.168.10.10 | TCP/4840 | Stateful allow only for the named vision-client certificate/application URI and approved namespace; return traffic only |
 | HMI/Drives VLAN 10 | PLC VLAN 10 | Native PROFINET/HMI traffic | Allow within control zone |
 | Engineering VLAN 99 | Approved nodes | Native engineering services | Disabled in production; maintenance change window only |
 | Any other | Any | Any | Deny and log |
 
-## Identity and certificates
+## Identity, rights and certificates
 
-Use unique device certificates, site CA trust, encrypted private-key storage, expiry monitoring, revocation/change records and least-privilege OPC UA node rights. Anonymous access and shared engineering accounts are prohibited. Final cipher suites, time source, logging retention and vulnerability response require site OT approval.
+Default deny and log applies at the S615 boundary. Pin PLC-server and vision-client application URIs/certificates to the site trust list; maintain issuance, revocation and expiry records; protect private keys in platform-backed or encrypted storage under named OT ownership. The vision client receives read-only rights to enable/request/recipe/heartbeat/session nodes and write-only rights to ready/busy/result/model/diagnostic nodes; unrestricted browse, anonymous access and shared engineering accounts are prohibited. Result writes are ordered payload first and `RESULT_VALID` last; clear `RESULT_VALID` first after matching `RESULT_ACK_ID`.
+
+NTP, PKI, syslog and engineering-workstation addresses, cipher policy, log retention and vulnerability-response owners remain blocked inputs. Structured logs must correlate session epoch, inspection ID, PLC/vision heartbeat, model ID/hash, diagnostic code and duration without retaining images by default.

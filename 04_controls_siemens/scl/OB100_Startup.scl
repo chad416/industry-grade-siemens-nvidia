@@ -6,6 +6,11 @@ BEGIN
    "DB_IO".Commands.CapperRequest := FALSE;
    "DB_IO".ReleasePermissive := FALSE;
    "DB_IO".PowerRecoveryRequired := TRUE;
+   IF "DB_VisionComms".SessionEpoch = UDINT#4294967295 THEN "DB_VisionComms".SessionEpoch := UDINT#1;
+   ELSE "DB_VisionComms".SessionEpoch := "DB_VisionComms".SessionEpoch + UDINT#1; END_IF;
+   "DB_VisionComms".InspectionId := UDINT#0;
+   "DB_VisionComms".Trigger := FALSE;
+   "DB_VisionComms".ResultAckId := UDINT#0;
    "DB_HMI".Start.Request := FALSE;
    "DB_HMI".ControlledStop.Request := FALSE;
 END_ORGANIZATION_BLOCK
