@@ -1,0 +1,22 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+FUNCTION_BLOCK "FB_CapperInterface"
+VAR_INPUT Enable : Bool; RequestEdge : Bool; Ready : Bool; Busy : Bool; Complete : Bool; FaultIn : Bool; ResetEdge : Bool; AcceptTimeout : Time; CompleteTimeout : Time; END_VAR
+VAR_OUTPUT Request : Bool; Accepted : Bool; CompletePulse : Bool; HoldRequired : Bool; Fault : Bool; DiagReason : UInt; END_VAR
+VAR tReady : TON; tAccept : TON; tComplete : TON; pending : Bool; seenBusy : Bool; END_VAR
+BEGIN
+   #CompletePulse := FALSE;
+   IF #RequestEdge AND #Enable AND NOT #pending THEN #pending := TRUE; #Request := FALSE; #seenBusy := FALSE; END_IF;
+   #tReady(IN := #pending AND NOT #Ready AND NOT #seenBusy, PT := #AcceptTimeout);
+   IF #pending AND #Ready AND NOT #Busy AND NOT #seenBusy THEN #Request := TRUE; END_IF;
+   IF #pending AND #Busy THEN #seenBusy := TRUE; #Accepted := TRUE; END_IF;
+   #tAccept(IN := #pending AND #Ready AND #Request AND NOT #seenBusy, PT := #AcceptTimeout);
+   #tComplete(IN := #pending AND #seenBusy AND NOT #Complete, PT := #CompleteTimeout);
+   IF #pending AND #seenBusy AND #Complete THEN #CompletePulse := TRUE; #Request := FALSE; #pending := FALSE; #Accepted := FALSE; END_IF;
+   IF #FaultIn THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 1;
+   ELSIF #tReady.Q THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 2;
+   ELSIF #tAccept.Q THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 3;
+   ELSIF #tComplete.Q THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 4;
+   ELSIF #Complete AND NOT #seenBusy THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 5; END_IF;
+   IF #Fault THEN #Request := FALSE; #pending := FALSE; END_IF;
+   IF #ResetEdge AND #Ready AND NOT #FaultIn AND NOT #Busy AND NOT #Complete AND NOT #RequestEdge AND NOT #pending THEN #Fault := FALSE; #HoldRequired := FALSE; #DiagReason := 0; END_IF;
+END_FUNCTION_BLOCK

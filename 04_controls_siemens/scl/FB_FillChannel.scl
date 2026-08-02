@@ -1,18 +1,68 @@
 // FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 FUNCTION_BLOCK "FB_FillChannel"
-VAR_INPUT Enable : Bool; StartEdge : Bool; Abort : Bool; ResetEdge : Bool; PulseTotal : UDInt; TargetPulses : UDInt; Flow_mA : Real; ValveClosedFb : Bool; NoFlowTimeout : Time; FillTimeout : Time; END_VAR
-VAR_OUTPUT ValveOpenCmd : Bool; Done : Bool; Fault : Bool; Underfill : Bool; Overfill : Bool; DiagCode : UInt; END_VAR
-VAR tNoFlow : TON; tFill : TON; startCount : UDInt; active : Bool; lastCount : UDInt; END_VAR
+VAR_INPUT
+   Enable : Bool; PumpRunning : Bool; StartEdge : Bool; Abort : Bool; ResetEdge : Bool;
+   PulseTotal : UDInt; FlowRaw : Int; AnalogChannelFault : Bool; ValveClosedFb : Bool;
+   TargetMl : Real; PulsesPerLitre : Real; UnderToleranceMl : Real; OverToleranceMl : Real;
+   FlowMaxLMin : Real; NoFlowMinLMin : Real; PlausibilityPct : Real; PulseWindowTimeS : Real;
+   NoFlowTimeout : Time; FillTimeout : Time; ValveOpenTimeout : Time; ValveCloseTimeout : Time; PlausibilityTime : Time;
+END_VAR
+VAR_OUTPUT
+   ValveOpenCmd : Bool; Busy : Bool; Done : Bool; Fault : Bool; Underfill : Bool; Overfill : Bool;
+   NoFlow : Bool; ContinuedFlow : Bool; PulseAnalogDisagreement : Bool; AnalogBrokenWire : Bool;
+   DeliveredMl : Real; FlowLMin : Real; PulseFlowLMin : Real; DiagReason : "E_FillDiag";
+END_VAR
+VAR
+   active : Bool; closing : Bool; initialized : Bool; configValid : Bool;
+   lastPulseTotal : UDInt; scanDelta : UDInt; accumulated : UDInt; targetPulses : UDInt; windowPulses : UDInt;
+   tWindow : TON; tPlausibility : TON; tNoFlow : TON; tFill : TON; tValveOpen : TON; tValveClose : TON; tContinuedFlow : TON; tFlowStopped : TON;
+END_VAR
 BEGIN
-  IF #StartEdge AND #Enable AND #ValveClosedFb AND (#TargetPulses > 0) THEN #active := TRUE; #Done := FALSE; #startCount := #PulseTotal; #lastCount := #PulseTotal; END_IF;
-  #ValveOpenCmd := #active AND NOT #Abort AND NOT #Fault AND ((#PulseTotal - #startCount) < #TargetPulses);
-  #tNoFlow(IN := #ValveOpenCmd AND (#PulseTotal = #lastCount) AND (#Flow_mA < 4.2), PT := #NoFlowTimeout);
-  #tFill(IN := #active, PT := #FillTimeout);
-  IF #tNoFlow.Q THEN #Fault := TRUE; #DiagCode := 16#1301; END_IF;
-  IF #tFill.Q THEN #Fault := TRUE; #DiagCode := 16#1302; END_IF;
-  IF #active AND ((#PulseTotal - #startCount) >= #TargetPulses) THEN #active := FALSE; #Done := TRUE; END_IF;
-  IF #Abort OR #Fault THEN #active := FALSE; #ValveOpenCmd := FALSE; END_IF;
-  IF NOT #ValveOpenCmd AND NOT #ValveClosedFb AND (#Done OR #Abort) THEN #Fault := TRUE; #DiagCode := 16#1306; END_IF;
-  IF #ResetEdge AND NOT #active THEN #Fault := FALSE; #Done := FALSE; #Underfill := FALSE; #Overfill := FALSE; #DiagCode := 0; END_IF;
-  #lastCount := #PulseTotal;
+   IF NOT #initialized THEN #lastPulseTotal := #PulseTotal; #initialized := TRUE; #scanDelta := 0;
+   ELSIF #PulseTotal >= #lastPulseTotal THEN #scanDelta := #PulseTotal - #lastPulseTotal;
+   ELSE #scanDelta := (UDINT#4294967295 - #lastPulseTotal) + #PulseTotal + UDINT#1; END_IF;
+   #lastPulseTotal := #PulseTotal;
+   #configValid := (#TargetMl > 0.0) AND (#PulsesPerLitre > 0.0) AND (#PulseWindowTimeS >= 0.1) AND (#FillTimeout > #NoFlowTimeout) AND (#OverToleranceMl >= 0.0) AND (#UnderToleranceMl >= 0.0);
+   #AnalogBrokenWire := #AnalogChannelFault OR (#FlowRaw < 5000) OR (#FlowRaw > 29000);
+   #FlowLMin := LIMIT(MN := 0.0, IN := INT_TO_REAL(#FlowRaw - 5530) * #FlowMaxLMin / 22118.0, MX := #FlowMaxLMin * 1.05);
+   IF #StartEdge AND #Enable AND #ValveClosedFb AND NOT #Fault AND NOT #Busy THEN
+      IF NOT #configValid THEN #Fault := TRUE; #DiagReason := "E_FillDiag".INVALID_CONFIG;
+      ELSIF #AnalogBrokenWire THEN #Fault := TRUE; #DiagReason := "E_FillDiag".ANALOG_BROKEN_WIRE;
+      ELSE
+         #targetPulses := REAL_TO_UDINT(#TargetMl * #PulsesPerLitre / 1000.0); #accumulated := 0; #windowPulses := 0; #scanDelta := 0; #lastPulseTotal := #PulseTotal;
+         #active := TRUE; #closing := FALSE; #Done := FALSE; #Underfill := FALSE; #Overfill := FALSE; #NoFlow := FALSE;
+         #ContinuedFlow := FALSE; #PulseAnalogDisagreement := FALSE; #DiagReason := "E_FillDiag".FILL_OK;
+      END_IF;
+   END_IF;
+   IF #active THEN #accumulated := #accumulated + #scanDelta; #windowPulses := #windowPulses + #scanDelta; END_IF;
+   #DeliveredMl := UDINT_TO_REAL(#accumulated) * 1000.0 / MAX(IN1 := #PulsesPerLitre, IN2 := 1.0);
+   #ValveOpenCmd := #active AND #Enable AND #PumpRunning AND NOT #Abort AND NOT #Fault AND (#accumulated < #targetPulses) AND NOT #Overfill;
+   #Busy := #active OR #closing;
+   #tWindow(IN := #ValveOpenCmd AND NOT #tWindow.Q, PT := REAL_TO_TIME(#PulseWindowTimeS * 1000.0));
+   IF #tWindow.Q THEN #PulseFlowLMin := UDINT_TO_REAL(#windowPulses) * 60.0 / (#PulsesPerLitre * #PulseWindowTimeS); #windowPulses := 0; END_IF;
+   #tPlausibility(IN := #ValveOpenCmd AND (#PulseFlowLMin > 0.0) AND ((ABS(#PulseFlowLMin - #FlowLMin) * 100.0) > (#PlausibilityPct * MAX(IN1 := #FlowLMin, IN2 := 0.1))), PT := #PlausibilityTime);
+   #PulseAnalogDisagreement := #tPlausibility.Q;
+   #tNoFlow(IN := #ValveOpenCmd AND (#PulseFlowLMin < #NoFlowMinLMin) AND (#FlowLMin < #NoFlowMinLMin), PT := #NoFlowTimeout);
+   #tFill(IN := #active, PT := #FillTimeout); #tValveOpen(IN := #ValveOpenCmd AND #ValveClosedFb, PT := #ValveOpenTimeout);
+   #tValveClose(IN := #closing AND NOT #ValveClosedFb, PT := #ValveCloseTimeout);
+   #tContinuedFlow(IN := #closing AND ((#scanDelta > 0) OR (#FlowLMin > #NoFlowMinLMin)), PT := #NoFlowTimeout);
+   #tFlowStopped(IN := #closing AND #ValveClosedFb AND (#scanDelta = 0) AND (#FlowLMin <= #NoFlowMinLMin), PT := #NoFlowTimeout);
+   IF #AnalogBrokenWire THEN #Fault := TRUE; #DiagReason := "E_FillDiag".ANALOG_BROKEN_WIRE;
+   ELSIF #tNoFlow.Q THEN #NoFlow := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".NO_FLOW;
+   ELSIF #tPlausibility.Q THEN #Fault := TRUE; #DiagReason := "E_FillDiag".PULSE_ANALOG_DISAGREE;
+   ELSIF #tValveOpen.Q THEN #Fault := TRUE; #DiagReason := "E_FillDiag".VALVE_OPEN_MISMATCH;
+   ELSIF #tFill.Q THEN #Fault := TRUE; #DiagReason := "E_FillDiag".FILL_TIMEOUT; END_IF;
+   IF #Busy AND (#DeliveredMl > (#TargetMl + #OverToleranceMl)) THEN #Overfill := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".OVERFILL; END_IF;
+   IF #active AND ((#accumulated >= #targetPulses) OR #Abort OR #Fault OR NOT #Enable) THEN #active := FALSE; #closing := TRUE; END_IF;
+   IF #tContinuedFlow.Q THEN #ContinuedFlow := TRUE; #Fault := TRUE; #DiagReason := "E_FillDiag".CONTINUED_FLOW; END_IF;
+   IF #tValveClose.Q THEN #Fault := TRUE; #DiagReason := "E_FillDiag".VALVE_CLOSE_MISMATCH; END_IF;
+   IF #Abort AND #Busy THEN #Fault := TRUE; #DiagReason := "E_FillDiag".ABORTED; END_IF;
+   IF #tFlowStopped.Q AND NOT #tContinuedFlow.Q THEN
+      #closing := FALSE; #Underfill := #DeliveredMl < (#TargetMl - #UnderToleranceMl); #Overfill := #DeliveredMl > (#TargetMl + #OverToleranceMl);
+      #Done := NOT (#Underfill OR #Overfill OR #Fault); IF #Underfill THEN #Fault := TRUE; #DiagReason := "E_FillDiag".UNDERFILL; END_IF;
+   END_IF;
+   IF #ResetEdge AND NOT #active AND NOT #closing AND #ValveClosedFb AND NOT #AnalogBrokenWire AND (#FlowLMin <= #NoFlowMinLMin) AND (#scanDelta = 0) AND #configValid THEN
+      #Fault := FALSE; #Done := FALSE; #Underfill := FALSE; #Overfill := FALSE; #NoFlow := FALSE; #ContinuedFlow := FALSE;
+      #PulseAnalogDisagreement := FALSE; #closing := FALSE; #accumulated := 0; #windowPulses := 0; #DeliveredMl := 0.0; #DiagReason := "E_FillDiag".FILL_OK;
+   END_IF;
 END_FUNCTION_BLOCK

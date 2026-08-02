@@ -8,7 +8,7 @@
 
 The primary package is the stronger engineering baseline and contains genuine QElectroTech and FreeCAD native files. Retained evidence identifies QElectroTech 0.100.1-dev with 24 sheets, 305 elements and 160 conductors, plus FreeCAD 1.1.3 with 130 objects/73 physical solids and matching 800 × 800 × 300 mm FCStd/STEP bounds. The inherited hashes are locked by `scripts/validate_project.py`.
 
-It is not accepted as the revision-B electrical deliverable: its QET BOM has 305 rows but none populate label, designation, manufacturer, reference, quantity, location or function; the cross-reference export is empty; 160 conductors repeat only 16 wire numbers; cable/function/section properties are absent; and 911 terminals are reported free. The panel uses generic envelopes and omits the selected Siemens/NVIDIA devices.
+It is not accepted as the revision-C electrical deliverable: its QET BOM has 305 rows but none populate label, designation, manufacturer, reference, quantity, location or function; the cross-reference export is empty; 160 conductors repeat only 16 wire numbers; cable/function/section properties are absent; and 911 terminals are reported free. The panel uses generic envelopes and omits the selected Siemens/NVIDIA devices.
 
 Disposition: quarantine genuine Rev-A native files, retain the IEC 81346-style designation convention and functional two-channel baseline, rebuild native QET/CAD only in the qualified workstream, and keep OI-003/OI-004 blocking.
 
@@ -22,4 +22,4 @@ Disposition: reuse patterns, not implementation; rebuild canonical data, Siemens
 
 ## Integration decision
 
-Revision B uses Siemens as the only executable automation target, retains the primary device-designation scheme, uses uppercase semantic PLC symbols, creates new hardware-bound addresses, removes any automatic reject count/behavior, and holds uncertain product for operator disposition. No legacy source is modified.
+Revision C uses Siemens as the only executable automation target, retains the primary device-designation scheme, uses uppercase semantic PLC symbols, removes any automatic reject behavior, and holds uncertain product for operator disposition. No legacy native source is modified.

@@ -1,0 +1,11 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+ORGANIZATION_BLOCK "Startup"
+BEGIN
+   "DB_IO".Commands.FillValve1 := FALSE;
+   "DB_IO".Commands.FillValve2 := FALSE;
+   "DB_IO".Commands.CapperRequest := FALSE;
+   "DB_IO".ReleasePermissive := FALSE;
+   "DB_IO".PowerRecoveryRequired := TRUE;
+   "DB_HMI".Start.Request := FALSE;
+   "DB_HMI".ControlledStop.Request := FALSE;
+END_ORGANIZATION_BLOCK

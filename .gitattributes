@@ -1,0 +1,3 @@
+# The release manifest verifies exact file bytes. Disable automatic line-ending
+# conversion so a checkout reproduces the committed SHA-256 content on every OS.
+* -text

@@ -1,0 +1,49 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+FUNCTION_BLOCK "FB_HMICommandManager"
+VAR_INPUT
+   StartRequest : Bool; StartSeq : UDInt; StopRequest : Bool; StopSeq : UDInt;
+   ResetRequest : Bool; ResetSeq : UDInt; AckRequest : Bool; AckSeq : UDInt;
+   AutoRequest : Bool; AutoSeq : UDInt; ManualRequest : Bool; ManualSeq : UDInt;
+   DispositionRequest : Bool; DispositionSeq : UDInt;
+   ManualConveyorRequest : Bool; ManualPumpRequest : Bool; ManualValve1Request : Bool; ManualValve2Request : Bool; ManualSecureRequest : Bool; ManualHoldAllowed : Bool;
+   LocalStop : Bool; LocalReset : Bool; CommandHeartbeat : UDInt;
+   StartAllowed : Bool; ResetAllowed : Bool; AutoAllowed : Bool; ManualAllowed : Bool; DispositionAllowed : Bool;
+END_VAR
+VAR_OUTPUT
+   StartPulse : Bool; StopPulse : Bool; ResetPulse : Bool; AckPulse : Bool;
+   AutoPulse : Bool; ManualPulse : Bool; DispositionPulse : Bool; CommunicationsHealthy : Bool;
+   ManualConveyorCmd : Bool; ManualPumpCmd : Bool; ManualValve1Cmd : Bool; ManualValve2Cmd : Bool; ManualSecureCmd : Bool;
+   StartAcceptedSeq : UDInt; StartRejectedSeq : UDInt; StopAcceptedSeq : UDInt;
+   ResetAcceptedSeq : UDInt; ResetRejectedSeq : UDInt; AckAcceptedSeq : UDInt;
+   AutoAcceptedSeq : UDInt; AutoRejectedSeq : UDInt; ManualAcceptedSeq : UDInt; ManualRejectedSeq : UDInt;
+   DispositionAcceptedSeq : UDInt; DispositionRejectedSeq : UDInt;
+END_VAR
+VAR
+   localResetEdge : R_TRIG;
+   lastHeartbeat : UDInt;
+   tHeartbeat : TON;
+END_VAR
+BEGIN
+   #StartPulse := FALSE; #StopPulse := FALSE; #ResetPulse := FALSE; #AckPulse := FALSE;
+   #AutoPulse := FALSE; #ManualPulse := FALSE; #DispositionPulse := FALSE;
+   #localResetEdge(CLK := #LocalReset);
+   #tHeartbeat(IN := (#CommandHeartbeat = #lastHeartbeat), PT := T#2s);
+   #CommunicationsHealthy := NOT #tHeartbeat.Q;
+   #ManualConveyorCmd := #CommunicationsHealthy AND #ManualHoldAllowed AND #ManualConveyorRequest;
+   #ManualPumpCmd := #CommunicationsHealthy AND #ManualHoldAllowed AND #ManualPumpRequest;
+   #ManualValve1Cmd := #CommunicationsHealthy AND #ManualHoldAllowed AND #ManualValve1Request;
+   #ManualValve2Cmd := #CommunicationsHealthy AND #ManualHoldAllowed AND #ManualValve2Request;
+   #ManualSecureCmd := #CommunicationsHealthy AND #ManualHoldAllowed AND #ManualSecureRequest;
+   #lastHeartbeat := #CommandHeartbeat;
+   IF #CommunicationsHealthy AND #StartRequest AND (#StartSeq <> #StartAcceptedSeq) AND (#StartSeq <> #StartRejectedSeq) THEN
+      IF #StartAllowed THEN #StartPulse := TRUE; #StartAcceptedSeq := #StartSeq; ELSE #StartRejectedSeq := #StartSeq; END_IF;
+   END_IF;
+   IF (#CommunicationsHealthy AND #StopRequest AND (#StopSeq <> #StopAcceptedSeq)) OR #LocalStop THEN #StopPulse := TRUE; IF #StopRequest THEN #StopAcceptedSeq := #StopSeq; END_IF; END_IF;
+   IF (#CommunicationsHealthy AND #ResetRequest AND (#ResetSeq <> #ResetAcceptedSeq) AND (#ResetSeq <> #ResetRejectedSeq)) OR #localResetEdge.Q THEN
+      IF #ResetAllowed THEN #ResetPulse := TRUE; IF #ResetRequest THEN #ResetAcceptedSeq := #ResetSeq; END_IF; ELSIF #ResetRequest THEN #ResetRejectedSeq := #ResetSeq; END_IF;
+   END_IF;
+   IF #CommunicationsHealthy AND #AckRequest AND (#AckSeq <> #AckAcceptedSeq) THEN #AckPulse := TRUE; #AckAcceptedSeq := #AckSeq; END_IF;
+   IF #CommunicationsHealthy AND #AutoRequest AND (#AutoSeq <> #AutoAcceptedSeq) AND (#AutoSeq <> #AutoRejectedSeq) THEN IF #AutoAllowed THEN #AutoPulse := TRUE; #AutoAcceptedSeq := #AutoSeq; ELSE #AutoRejectedSeq := #AutoSeq; END_IF; END_IF;
+   IF #CommunicationsHealthy AND #ManualRequest AND (#ManualSeq <> #ManualAcceptedSeq) AND (#ManualSeq <> #ManualRejectedSeq) THEN IF #ManualAllowed THEN #ManualPulse := TRUE; #ManualAcceptedSeq := #ManualSeq; ELSE #ManualRejectedSeq := #ManualSeq; END_IF; END_IF;
+   IF #CommunicationsHealthy AND #DispositionRequest AND (#DispositionSeq <> #DispositionAcceptedSeq) AND (#DispositionSeq <> #DispositionRejectedSeq) THEN IF #DispositionAllowed THEN #DispositionPulse := TRUE; #DispositionAcceptedSeq := #DispositionSeq; ELSE #DispositionRejectedSeq := #DispositionSeq; END_IF; END_IF;
+END_FUNCTION_BLOCK

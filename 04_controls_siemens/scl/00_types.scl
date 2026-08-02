@@ -1,14 +1,35 @@
 // FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
-TYPE "UDT_Recipe"
+TYPE "E_MachineState"
 VERSION : 0.1
+   (UNINITIALIZED := 0, INITIALIZING := 10, STOPPED := 20, READY := 30, AUTOMATIC := 40, MANUAL_SETUP := 50, HOLDING := 60, CONTROLLED_STOPPING := 70, FAULTED := 80, RECOVERY_RESET := 90);
+END_TYPE
+
+TYPE "E_AutoStep"
+VERSION : 0.1
+   (WAIT_PAIR := 0, SECURE_PAIR := 10, FILL_PAIR := 20, DRIP_SETTLE := 30, INSPECT := 40, TRANSFER := 50, RELEASE_PAIR := 60);
+END_TYPE
+
+TYPE "E_FillDiag"
+VERSION : 0.1
+   (FILL_OK := 0, INVALID_CONFIG := 1, ANALOG_BROKEN_WIRE := 2, NO_FLOW := 3, PULSE_ANALOG_DISAGREE := 4, FILL_TIMEOUT := 5, UNDERFILL := 6, OVERFILL := 7, VALVE_OPEN_MISMATCH := 8, VALVE_CLOSE_MISMATCH := 9, CONTINUED_FLOW := 10, ABORTED := 11);
+END_TYPE
+
+TYPE "UDT_Recipe"
+VERSION : 0.2
    STRUCT
       RecipeId : UInt;
-      TargetPulsesCh1 : UDInt;
-      TargetPulsesCh2 : UDInt;
+      TargetMlCh1 : Real;
+      TargetMlCh2 : Real;
       PulsesPerLitreCh1 : Real;
       PulsesPerLitreCh2 : Real;
+      UnderToleranceMl : Real;
+      OverToleranceMl : Real;
       NoFlowTimeout : Time;
       FillTimeout : Time;
+      ValveOpenTimeout : Time;
+      ValveCloseTimeout : Time;
+      PlausibilityTime : Time;
+      PulseWindowTimeS : Real;
       DripSettleTime : Time;
       VisionTimeout : Time;
       TargetFillLevel : Real;
@@ -16,10 +37,111 @@ VERSION : 0.1
 END_TYPE
 
 TYPE "UDT_VisionResult"
+VERSION : 0.2
+   STRUCT
+      ResultValid : Bool;
+      ResultId : UDInt;
+      Bottle1Pass : Bool;
+      Bottle2Pass : Bool;
+      Fill1Status : USInt;
+      Fill2Status : USInt;
+      LeakOrSpill : Bool;
+      LowConfidence : Bool;
+      Warning : Bool;
+      Fault : Bool;
+      InferenceTimeMs : UDInt;
+      Heartbeat : UDInt;
+      ModelId : String[32];
+      ModelHash : String[64];
+   END_STRUCT;
+END_TYPE
+
+TYPE "UDT_HmiCommand"
 VERSION : 0.1
    STRUCT
-      ResultValid : Bool; ResultId : UDInt; Bottle1Pass : Bool; Bottle2Pass : Bool;
-      Fill1Status : USInt; Fill2Status : USInt; LeakOrSpill : Bool; LowConfidence : Bool;
-      Warning : Bool; Fault : Bool; InferenceTimeMs : UDInt;
+      Request : Bool;
+      RequestSeq : UDInt;
+      AcceptedSeq : UDInt;
+      RejectedSeq : UDInt;
+      Busy : Bool;
+      Allowed : Bool;
+      DisabledReason : UInt;
+   END_STRUCT;
+END_TYPE
+
+TYPE "UDT_DrivePzd"
+VERSION : 0.1
+   STRUCT
+      StatusWord1 : Word;
+      ActualSpeedPzd : Int;
+      ControlWord1 : Word;
+      SpeedSetpointPzd : Int;
+      CommsHealthy : Bool;
+      Ready : Bool;
+      Running : Bool;
+      Fault : Bool;
+      ActualSpeedPct : Real;
+   END_STRUCT;
+END_TYPE
+
+TYPE "UDT_CellInputs"
+VERSION : 0.1
+   STRUCT
+      SafetyOk : Bool;
+      GuardClosed : Bool;
+      AirPressureOk : Bool;
+      ProductSupplyOk : Bool;
+      Bottle1Present : Bool;
+      Bottle2Present : Bool;
+      GateOpen : Bool;
+      GateClosed : Bool;
+      ClampReleased : Bool;
+      ClampEngaged : Bool;
+      Valve1Closed : Bool;
+      Valve2Closed : Bool;
+      CapperReady : Bool;
+      CapperBusy : Bool;
+      CapperComplete : Bool;
+      CapperFault : Bool;
+      LocalReset : Bool;
+      LocalStop : Bool;
+      Flow1Raw : Int;
+      Flow2Raw : Int;
+      Flow1ChannelFault : Bool;
+      Flow2ChannelFault : Bool;
+      PulseTotal1 : UDInt;
+      PulseTotal2 : UDInt;
+      ConveyorPnHealthy : Bool;
+      PumpPnHealthy : Bool;
+   END_STRUCT;
+END_TYPE
+
+TYPE "UDT_NativeBindings"
+VERSION : 0.1
+   STRUCT
+      ConveyorPnIoValid : Bool;
+      PumpPnIoValid : Bool;
+      Flow1PulseTotal : UDInt;
+      Flow2PulseTotal : UDInt;
+      Flow1ChannelFault : Bool;
+      Flow2ChannelFault : Bool;
+   END_STRUCT;
+END_TYPE
+
+TYPE "UDT_OutputCommands"
+VERSION : 0.1
+   STRUCT
+      FillValve1 : Bool;
+      FillValve2 : Bool;
+      GateOpen : Bool;
+      GateClose : Bool;
+      ClampEngage : Bool;
+      ClampRelease : Bool;
+      CapperRequest : Bool;
+      CameraLight : Bool;
+      StackGreen : Bool;
+      StackAmber : Bool;
+      StackRed : Bool;
+      Audible : Bool;
    END_STRUCT;
 END_TYPE

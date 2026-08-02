@@ -1,0 +1,5 @@
+workstream,author,reviewer,status
+00-02/release,Chief systems integrator,Independent package reviewer,Integrated
+04-06,Chief systems integrator,Independent Siemens reviewer,Source-design APPROVE; native TIA/WinCC/Startdrive/PLCSIM review open
+11 simulation,Simulation/vision workstream,Independent vision reviewer,"20 simulator, 11 edge and 6 interface-harness tests passed; independent of PLC/native runtime"
+03/09/10/13,Chief systems integrator,Independent electrical/package reviewer,Canonical schedule/package APPROVE; native QET/CAD and physical calculations open

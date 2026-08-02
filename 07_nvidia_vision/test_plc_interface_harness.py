@@ -26,7 +26,7 @@ class ContractTests(unittest.TestCase):
 
     def test_heartbeat_loss(self):
         c = VisionContract(); c.trigger(15, 0, True, False); c.evaluate(1, True, 7, None)
-        self.assertEqual(c.evaluate(1602, True, 7, None), "HOLD_HEALTH")
+        self.assertEqual(c.evaluate(1002, True, 7, None), "HOLD_HEALTH")
 
 
 if __name__ == "__main__": unittest.main()

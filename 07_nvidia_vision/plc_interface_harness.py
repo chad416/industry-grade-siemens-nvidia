@@ -1,4 +1,11 @@
 from dataclasses import dataclass
+import sys
+from pathlib import Path
+
+EDGE_SERVICE_DIR = Path(__file__).resolve().parent / "edge_service"
+if str(EDGE_SERVICE_DIR) not in sys.path:
+    sys.path.insert(0, str(EDGE_SERVICE_DIR))
+from protocol import HEARTBEAT_TIMEOUT_MS
 
 
 @dataclass(frozen=True)
@@ -17,7 +24,7 @@ class VisionResult:
 class VisionContract:
     """Protocol oracle for interface tests; it is not PLC execution or DeepStream runtime."""
 
-    def __init__(self, timeout_ms: int = 1000, heartbeat_timeout_ms: int = 1500):
+    def __init__(self, timeout_ms: int = 1000, heartbeat_timeout_ms: int = HEARTBEAT_TIMEOUT_MS):
         self.timeout_ms = timeout_ms
         self.heartbeat_timeout_ms = heartbeat_timeout_ms
         self.pending_id = None

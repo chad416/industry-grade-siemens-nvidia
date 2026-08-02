@@ -13,21 +13,20 @@ Command:
 & '<bundled-python>' 11_simulation\run_scenarios.py
 ```
 
-Result: 3 unit-test methods passed. The parameterized safety invariant covered all 32 required scenarios. All scenarios end with pump and both valve commands false; only the normal two-bottle cycle releases; power recovery and reset do not restart. Detailed rows are in `11_simulation/outputs/scenario_results.csv`.
+Result: 20 test methods passed. Property sweeps covered 10/20/40/50 ms time steps and 400/500/700 ml targets. Thirty-two timed scenarios generated 7,147 trace samples. Exactly one scenario releases, invariant violations are zero, and automatic restarts are zero. The model includes conveyor, two bottles, gate, clamp, common pump, two valves, pulse/analog flow, vision, capper, power and communications. Detailed summaries and per-scenario traces are under `11_simulation/outputs`.
 
 ## PLC-AI protocol oracle
 
 Command:
 
 ```powershell
-Set-Location 07_nvidia_vision
-& '<bundled-python>' -m unittest -v test_plc_interface_harness.py
+& '<bundled-python>' -m unittest discover -s 07_nvidia_vision\edge_service\tests -v
 ```
 
-Result: 6 tests passed: normal correlated result, timeout, stale ID, low confidence, internal fault/split bottle result, and heartbeat loss. Every negative case returned a quality-hold disposition.
+Result: 11 edge-service tests and 6 PLC-interface timing-harness tests passed in addition to the protocol cases within the 20-test simulator suite. The service rejects absent/malformed/swapped model identity, duplicate/non-monotonic inspection ID, regressing, timed-out or stale heartbeat, wrong bottle count and invalid target bounds; a controlled test backend proves atomic success behavior without being represented as a trained model. Protocol errors fault the service closed.
 
 ## Automated project validation
 
 Command: `& '<bundled-python>' scripts\validate_project.py`.
 
-The final result is recorded in `automated_validation_report.md`; the validator also regenerates SHA-256 manifests. Native/tool-dependent blockers remain open regardless of this PASS.
+Result: 238 static/data/source checks passed and zero failed. The validation result is recorded in `automated_validation_report.md`. Manifest generation and verification are separate commands so a validator run cannot silently rewrite release integrity evidence. Native/tool-dependent blockers remain open regardless of this PASS.

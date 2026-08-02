@@ -26,5 +26,5 @@ def contacts(source: Path, prefix: str, per_page: int, cols: int, rows: int) -> 
 
 
 contacts(ROOT / "14_qa/pdf_renders/qet_baseline", "qet-baseline", 6, 3, 2)
-contacts(ROOT / "14_qa/pdf_renders/release", "release-evidence", 6, 3, 2)
+contacts(ROOT / "14_qa/pdf_renders/release_c", "release-evidence", 6, 3, 2)
 print("Created PDF contact sheets")

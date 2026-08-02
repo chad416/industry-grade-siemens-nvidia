@@ -1,11 +1,63 @@
-tag,description,manufacturer,order_no,qty,procurement_status
--A100,SIMATIC S7-1500 CPU 1511-1 PN,Siemens,6ES7511-1AL03-0AB0,1,Selected; official lifecycle page checked
--A101,TM Count 2x24V,Siemens,6ES7550-1AA01-0AB0,1,Selected; official lifecycle page checked
--A102,DI 32x24V DC HF,Siemens,6ES7521-1BL00-0AB0,1,Selected; official product page checked
--A103,DQ 32x24V DC/0.5A HF,Siemens,6ES7522-1BL01-0AB0,1,Selected; official product page checked
--A104,AI 8xU/I HF,Siemens,6ES7531-7NF00-0AB0,1,Selected; official product page checked
--H100,MTP700 Unified Comfort,Siemens,6AV2128-3GB06-0AX1,1,Selected; official active product page checked
--U100,SINAMICS G120C PN 0.75 kW unfiltered,Siemens,6SL3210-1KE12-3UF2,1,Selected; motor/site validation required
--U101,SINAMICS G120C PN 0.75 kW unfiltered,Siemens,6SL3210-1KE12-3UF2,1,Selected; motor/site validation required
--PC200,Jetson Orin NX 16GB module on industrial carrier,NVIDIA,Carrier/integration SKU TBD,1,Architecture selection; procurement decision open
--SW100,SCALANCE XB208 unmanaged,Siemens,6GK5008-0BA10-1AB2,1,Preliminary; official compatibility/procurement check open
+item,tag,description,manufacturer,order_no,qty,selection_status,scope,basis_or_blocker,full_designation
+BOM-001,-A100,SIMATIC S7-1500 CPU 1511-1 PN,Siemens,6ES7511-1AL03-0AB0,1,Selected baseline,Panel/field hardware,Native catalog/configuration and delivered hardware state not yet verified,=FC01+CP01-A100
+BOM-002,-A101,TM Count 2x24V,Siemens,6ES7550-1AA01-0AB0,1,Selected baseline,Panel/field hardware,Two channels selected; TO configuration and K-factor inputs open,=FC01+CP01-A101
+BOM-003,-A102,DI 32x24V DC HF,Siemens,6ES7521-1BL00-0AB0,1,Selected baseline,Panel/field hardware,Front connector and channel parameters included separately,=FC01+CP01-A102
+BOM-004,-A103,DQ 32x24V DC/0.5A HF,Siemens,6ES7522-1BL01-0AB0,1,Selected baseline,Panel/field hardware,Field loads use interposing relays,=FC01+CP01-A103
+BOM-005,-A104,AI 8xU/I HF,Siemens,6ES7531-7NF00-0AB0,1,Selected baseline,Panel/field hardware,4-20 mA channel diagnostics require native parameterization,=FC01+CP01-A104
+BOM-006,-H100,MTP700 Unified Comfort,Siemens,6AV2128-3GB06-0AX1,1,Selected baseline,Panel/field hardware,Door cutout 198.3 x 142 mm; native HMI project/compile open,=FC01+CP01-H100
+BOM-007,-U100,SINAMICS G120C PN 0.75 kW unfiltered,Siemens,6SL3210-1KE12-3UF2,1,Provisional,Panel/field hardware,"Rating, envelope and clearances blocked by motor/mechanics and native Startdrive",=FC01+CP01-U100
+BOM-008,-U101,SINAMICS G120C PN 0.75 kW unfiltered,Siemens,6SL3210-1KE12-3UF2,1,Provisional,Panel/field hardware,"Rating, envelope and clearances blocked by pump curve and motor data",=FC01+CP01-U101
+BOM-009,-SW100,SCALANCE XC208 managed,Siemens,6GK5208-0BA00-2AC2,1,Selected network baseline,Panel/field hardware,VLAN-capable Layer 2 switch; firewall/router required for inter-zone traffic,=FC01+CP01-SW100
+BOM-010,-FW100,SCALANCE S615 EEC,Siemens,6GK5615-0AA01-2AA2,1,Selected network baseline,Panel/field hardware,Exact width and site policy remain procurement/native gates,=FC01+CP01-FW100
+BOM-011,-PC200,Jetson Orin NX 16GB on industrial carrier,NVIDIA,,1,Architecture only,Panel/field hardware,"Carrier, thermals, power, EMC and lifecycle are open",=FC01+CP01-PC200
+BOM-012,-MC100,SIMATIC memory card; capacity to be selected after compiled project sizing,Siemens,,1,TBD,Panel,Native compiled project size unavailable,=FC01+CP01-MC100
+BOM-013,-RA100,S7-1500 mounting rail and fixing hardware,Siemens,,1,TBD,Panel,Rail length depends on final cabinet layout,=FC01+CP01-RA100
+BOM-014,-FC100,Front connector for DI module,Siemens,,1,TBD,Panel,Exact accessory to be confirmed in TIA Selection Tool,=FC01+CP01-FC100
+BOM-015,-FC101,Front connector for DQ module,Siemens,,1,TBD,Panel,Exact accessory to be confirmed in TIA Selection Tool,=FC01+CP01-FC101
+BOM-016,-FC102,Front connector for AI module,Siemens,,1,TBD,Panel,Exact accessory to be confirmed in TIA Selection Tool,=FC01+CP01-FC102
+BOM-017,-FC103,Front connector for TM Count module,Siemens,,1,TBD,Panel,Exact accessory to be confirmed in TIA Selection Tool,=FC01+CP01-FC103
+BOM-018,-QS100,Main door-coupled isolator,,,1,TBD,Panel,"Supply, fault current and regulatory basis missing",=FC01+CP01-QS100
+BOM-019,-QF100,Main protective device,,,1,TBD,Panel,"Fault level, load and selectivity study missing",=FC01+CP01-QF100
+BOM-020,-PS100,24 VDC 20 A power supply,,,1,Provisional,Panel,Demand estimate includes margin; inrush and derating open,=FC01+CP01-PS100
+BOM-021,-QF110,24 VDC electronic branch protection,,,1,TBD,Panel,Branch currents and discrimination require device data,=FC01+CP01-QF110
+BOM-022,-K100,Main control enable contactor / external safety interface with dry monitoring contact,,,1,TBD,Panel,Qualified safety design external,=FC01+CP01-K100
+BOM-023,-K202..-K213,Interposing relays with bases and status indication,,,12,TBD,Panel,Twelve active output relays; coil/contact/load ratings and approved supplier missing,=FC01+CP01-K202..-K213
+BOM-024,-D202..-D213,Coil suppression modules,,,12,TBD,Panel,One device per active relay; match relay coil technology,=FC01+CP01-D202..-D213
+BOM-025,-X100..-X199,"DIN-rail terminal blocks, disconnect/test where required",,,160,Provisional quantity,Panel,Final QET continuity and terminal-family selection open,=FC01+CP01-X100..-X199
+BOM-026,-PE100,Copper protective-earth bar and bonding hardware,,,1,TBD,Panel,PE sizing requires supply/earthing inputs,=FC01+CP01-PE100
+BOM-027,-SC100,Shield-clamp rail and spring clamps,,,12,Provisional quantity,Panel,Cable OD and final shield count open,=FC01+CP01-SC100
+BOM-028,-ENC100,IP-rated enclosure with mounting plate,,,1,TBD,Panel,"Environment, IP rating and thermal calculation open",=FC01+CP01-ENC100
+BOM-029,-WD100,Slotted wiring duct set,,,1,TBD,Panel,Duct fill pending final conductors,=FC01+CP01-WD100
+BOM-030,-DR100,35 mm DIN rail set,,,1,TBD,Panel,Final layout open,=FC01+CP01-DR100
+BOM-031,-GL100,Cable glands and EMC glands,,,1,TBD,Installation,Cable OD and IP rating open,=FC01+FLD-GL100
+BOM-032,-FAN100,Filter fan / cooling solution,,,1,TBD,Panel,Thermal model and ambient inputs open,=FC01+CP01-FAN100
+BOM-033,-M100,Conveyor motor,,,1,TBD,Field,"Nameplate, duty, cable and mechanical data required",=FC01+FLD-M100
+BOM-034,-M101,Pump motor,,,1,TBD,Field,"Pump curve, nameplate, dead-head and cable data required",=FC01+FLD-M101
+BOM-035,-YV100,Gate valve/cylinder solenoid,,,1,TBD,Field,"Coil current, response and fail state required",=FC01+FLD-YV100
+BOM-036,-YV101,Clamp valve/cylinder solenoid,,,1,TBD,Field,"Coil current, response and fail state required",=FC01+FLD-YV101
+BOM-037,-YV102,"Fill valve channel 1, fail closed",,,1,TBD,Field,"Wetted materials, Kv, coil and closing time required",=FC01+FLD-YV102
+BOM-038,-YV103,"Fill valve channel 2, fail closed",,,1,TBD,Field,"Wetted materials, Kv, coil and closing time required",=FC01+FLD-YV103
+BOM-039,-FT100,Pulse plus 4-20 mA flowmeter channel 1,,,1,TBD,Field,"K-factor, max pulse rate and analog diagnostics required",=FC01+FLD-FT100
+BOM-040,-FT101,Pulse plus 4-20 mA flowmeter channel 2,,,1,TBD,Field,"K-factor, max pulse rate and analog diagnostics required",=FC01+FLD-FT101
+BOM-041,-S100,Local reset pushbutton,,,1,TBD,Field,Operator-station family and IP rating open,=FC01+FLD-S100
+BOM-042,-S101,Local controlled-stop pushbutton,,,1,TBD,Field,Not a safety stop; operator-station family open,=FC01+FLD-S101
+BOM-043,-S102,Guard-status dry-contact monitoring interface,,,1,TBD,Field,Monitoring only; qualified guard-interlocking design remains external,=FC01+FLD-S102
+BOM-044,-H101,Three-color stack light with sounder,,,1,TBD,Field,"Lens, sound level and mounting open",=FC01+FLD-H101
+BOM-045,-IF140,Capper interface terminals/relays,,,1,TBD,Field,Interface specification missing,=FC01+FLD-IF140
+BOM-046,-CAM200,Industrial camera,,,1,TBD,Vision,Vision physical basis and target interface open,=FC01+FLD-CAM200
+BOM-047,-LENS200,C-mount lens,,,1,TBD,Vision,"Sensor, FOV, working distance and DoF open",=FC01+FLD-LENS200
+BOM-048,-LT200,Machine-vision backlight/front-light assembly,,,1,TBD,Vision,Optical trials and exposure limits open,=FC01+FLD-LT200
+BOM-049,-CB200,Industrial Jetson carrier,,,1,TBD,Vision,"Power, lifecycle, thermal and EMC selection open",=FC01+FLD-CB200
+BOM-050,-W900,Industrial Ethernet patch cables/connectors,,,7,Provisional quantity,Installation,Lengths and routing open,=FC01+FLD-W900
+BOM-051,-W901,Shielded VFD motor cables and EMC termination kits,,,2,TBD,Installation,Motor cable lengths and drive EMC design open,=FC01+FLD-W901
+BOM-052,-CONS100,"Markers, ferrules, lugs, ties and installation consumables",,,1,TBD,Installation,Quantity after detailed design,=FC01+FLD-CONS100
+BOM-053,-B100,Pneumatic pressure switch,,,1,TBD,Field,Automatically added from canonical I/O; exact device selection open,=FC01+FLD-B100
+BOM-054,-B101,Product supply permissive,,,1,TBD,Field,Automatically added from canonical I/O; exact device selection open,=FC01+FLD-B101
+BOM-055,-B110,Bottle 1 position sensor,,,1,TBD,Field,Automatically added from canonical I/O; exact device selection open,=FC01+FLD-B110
+BOM-056,-B111,Bottle 2 position sensor,,,1,TBD,Field,Automatically added from canonical I/O; exact device selection open,=FC01+FLD-B111
+BOM-057,-B120,Gate open feedback,,,1,TBD,Field,Automatically added from canonical I/O; exact device selection open,=FC01+FLD-B120
+BOM-058,-B121,Gate closed feedback,,,1,TBD,Field,Automatically added from canonical I/O; exact device selection open,=FC01+FLD-B121
+BOM-059,-B122,Clamp released feedback,,,1,TBD,Field,Automatically added from canonical I/O; exact device selection open,=FC01+FLD-B122
+BOM-060,-B123,Clamp engaged feedback,,,1,TBD,Field,Automatically added from canonical I/O; exact device selection open,=FC01+FLD-B123
+BOM-061,-B130,Valve 1 closed proof,,,1,TBD,Field,Automatically added from canonical I/O; exact device selection open,=FC01+FLD-B130
+BOM-062,-B131,Valve 2 closed proof,,,1,TBD,Field,Automatically added from canonical I/O; exact device selection open,=FC01+FLD-B131

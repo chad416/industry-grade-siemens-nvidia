@@ -6,7 +6,7 @@
 
 ## Physical and logical chain
 
-Field sensor → identified cable/core → numbered terminal → Siemens module/channel → symbolic PLC tag → equipment FB input → coordinator permissive/interlock → HMI diagnostic. The revision-B schedules are machine-generated from the canonical model.
+Field sensor → identified cable/core → numbered terminal → Siemens module/channel → symbolic PLC tag → equipment FB input → coordinator permissive/interlock → HMI diagnostic. The revision-C schedules are machine-generated from the canonical model.
 
 ## PLC–vision contract
 

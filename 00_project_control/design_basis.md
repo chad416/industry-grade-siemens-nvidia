@@ -6,7 +6,7 @@
 
 ## Baseline approval state
 
-The controlled baseline is revision B. It retains the primary package's IEC 81346-style designation system and native QElectroTech/FreeCAD artifacts, replaces the secondary package's informal tags through an explicit migration table, and makes Siemens the sole executable PLC target.
+The controlled baseline is revision C. It retains the primary package's IEC 81346-style designation system and quarantined historical QElectroTech/FreeCAD artifacts; the revision-C overlay corrects and expands the implementation before the generator exits.
 
 ### Machine boundary
 

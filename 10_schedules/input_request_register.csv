@@ -1,0 +1,21 @@
+request_id,required_input,owner,blocks,status,date_requested,evidence_required
+IR-001,Country/market and applicable regulatory basis,Owner / legal authority,"Electrical, documentation, conformity",OPEN,2026-08-02,Approved source document or native evidence
+IR-002,"Site supply voltage/frequency, earthing system and available fault current",Site electrical engineer,"Protection, SCCR, PE, conductor sizing",OPEN,2026-08-02,Approved source document or native evidence
+IR-003,"Ambient temperature, altitude, contamination and required enclosure IP",Site engineering,Panel thermal/enclosure,OPEN,2026-08-02,Approved source document or native evidence
+IR-004,"Conveyor motor nameplate, duty, speed/torque and cable length",Mechanical/vendor,Drive sizing and protection,OPEN,2026-08-02,Approved source document or native evidence
+IR-005,"Pump curve, motor nameplate, duty, dead-head behavior and cable length",Process/vendor,"Drive, process and overpressure design",OPEN,2026-08-02,Approved source document or native evidence
+IR-006,"Valve coil voltage/current, response time and fail state",Valve vendor,Output/relay sizing and timeout values,OPEN,2026-08-02,Approved source document or native evidence
+IR-007,"Sensor types, connectors and electrical characteristics",Machine designer,Point-to-point wiring,OPEN,2026-08-02,Approved source document or native evidence
+IR-008,"Flowmeter model, K-factor, maximum pulse frequency and 4-20 mA diagnostics",Instrument vendor,"TM Count, scaling and diagnostics",OPEN,2026-08-02,Approved source document or native evidence
+IR-009,"Bottle drawings/materials, recipes, fill targets and tolerances",Process owner,"Sequence, recipe and optics",OPEN,2026-08-02,Approved source document or native evidence
+IR-010,Required throughput and cycle-time allocation,Production owner,Performance sizing,OPEN,2026-08-02,Approved source document or native evidence
+IR-011,Capper electrical protocol and timing specification,Capper vendor,Handshake and terminals,OPEN,2026-08-02,Approved source document or native evidence
+IR-012,"Camera working envelope, line constraints and optical trial samples",Machine/process owner,Camera/lens/light selection,OPEN,2026-08-02,Approved source document or native evidence
+IR-013,Representative labeled real dataset with lot/SKU/session provenance,Quality owner,AI training/evaluation,OPEN,2026-08-02,Approved source document or native evidence
+IR-014,Approved Jetson module/carrier and lifecycle policy,IT/OT owner,"Edge hardware, power and thermal",OPEN,2026-08-02,Approved source document or native evidence
+IR-015,"Site network, certificate, identity and cybersecurity policy",OT security,Firewall and OPC UA deployment,OPEN,2026-08-02,Approved source document or native evidence
+IR-016,Usable licensed TIA Portal V20 / WinCC Unified access,Controls owner,Native PLC/HMI project and compile,OPEN,2026-08-02,Approved source document or native evidence
+IR-017,Startdrive installation and licensed access,Controls owner,Drive native configuration,OPEN,2026-08-02,Approved source document or native evidence
+IR-018,PLCSIM or PLCSIM Advanced installation,Controls owner,Native software-in-loop traces,OPEN,2026-08-02,Approved source document or native evidence
+IR-019,FreeCAD installation and qualified panel-CAD reviewer,Electrical owner,Revision-C FCStd/exchange validation,OPEN,2026-08-02,Approved source document or native evidence
+IR-020,Qualified machinery-safety engineer risk assessment and validation plan,Project authority,External safety architecture,OPEN,2026-08-02,Approved source document or native evidence

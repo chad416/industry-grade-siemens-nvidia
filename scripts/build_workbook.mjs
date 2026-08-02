@@ -1,6 +1,6 @@
 import fs from "node:fs/promises";
 import path from "node:path";
-import { SpreadsheetFile, Workbook } from "@oai/artifact-tool";
+import { SpreadsheetFile, Workbook } from "file:///C:/Users/chand/.cache/codex-runtimes/codex-primary-runtime/dependencies/node/node_modules/@oai/artifact-tool/dist/artifact_tool.mjs";
 
 const root = process.cwd();
 const scheduleDir = path.join(root, "10_schedules");
@@ -10,12 +10,14 @@ await fs.mkdir(previewDir, { recursive: true });
 const sheets = [
   ["siemens_hardware.csv", "Siemens Hardware"],
   ["plc_io.csv", "PLC I-O"],
+  ["drive_interfaces.csv", "Drive PZD"],
   ["hmi_tags.csv", "HMI Tags"],
   ["alarms.csv", "Alarms"],
   ["vfd_parameters.csv", "VFD Parameters"],
   ["nvidia_interface_tags.csv", "NVIDIA Interface"],
   ["network_nodes.csv", "Network Nodes"],
   ["terminal_plan.csv", "Terminal Plan"],
+  ["point_to_point_connections.csv", "Point-to-Point"],
   ["cable_schedule.csv", "Cable Schedule"],
   ["wire_list.csv", "Wire List"],
   ["bom.csv", "BOM"],
@@ -23,12 +25,21 @@ const sheets = [
   ["panel_placement.csv", "Panel Placement"],
   ["requirements_traceability.csv", "Requirements Trace"],
   ["test_coverage.csv", "Test Coverage"],
+  ["input_request_register.csv", "Input Requests"],
+  ["acceptance_gates.csv", "Acceptance Gates"],
 ];
 
-const firstCsv = await fs.readFile(path.join(scheduleDir, sheets[0][0]), "utf8");
+// IEC 81346 designations intentionally begin with "=".  Protect those CSV
+// fields from being interpreted as spreadsheet formulas while retaining the
+// visible designation text (the leading apostrophe is an Excel text marker).
+function protectDesignationText(csvText) {
+  return csvText.replace(/(^|,)(=FC01\+)/gm, "$1'$2");
+}
+
+const firstCsv = protectDesignationText(await fs.readFile(path.join(scheduleDir, sheets[0][0]), "utf8"));
 const workbook = await Workbook.fromCSV(firstCsv, { sheetName: sheets[0][1] });
 for (const [file, name] of sheets.slice(1)) {
-  await workbook.fromCSV(await fs.readFile(path.join(scheduleDir, file), "utf8"), { sheetName: name });
+  await workbook.fromCSV(protectDesignationText(await fs.readFile(path.join(scheduleDir, file), "utf8")), { sheetName: name });
 }
 
 function columnName(index) {
@@ -49,6 +60,7 @@ for (const sheet of workbook.worksheets.items) {
   const values = used.values;
   const rowCount = values.length;
   const colCount = values[0].length;
+  if (rowCount > 30 || colCount > 10) sheet.freezePanes.freezeColumns(1);
   const last = columnName(colCount - 1);
   used.format = {
     font: { size: 9, color: "#15232D" },
@@ -86,7 +98,7 @@ summary.getRange("A1:H2").merge();
 summary.getRange("A1").values = [["FC01 — SIEMENS / NVIDIA ENGINEERING SCHEDULES"]];
 summary.getRange("A1:H2").format = { fill: "#12304A", font: { bold: true, color: "#FFFFFF", size: 18 }, verticalAlignment: "center" };
 summary.getRange("A3:H3").merge();
-summary.getRange("A3").values = [["FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION | Revision B | Overall status: PARTIALLY COMPLETE"]];
+summary.getRange("A3").values = [["FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION | Revision C | Overall status: PARTIALLY COMPLETE"]];
 summary.getRange("A3:H3").format = { fill: "#EAF1F5", font: { bold: true, color: "#324B5C", size: 10 }, wrapText: true };
 summary.getRange("A5:B13").values = [
   ["Controlled metric", "Value"],
@@ -97,7 +109,7 @@ summary.getRange("A5:B13").values = [
   ["High-speed counters", null],
   ["Vision contract signals", null],
   ["Controlled tests", null],
-  ["Open native gates", 4],
+  ["Open/blocked gates", null],
 ];
 summary.getRange("B6").formulas = [["=COUNTA('PLC I-O'!A2:A200)"]];
 summary.getRange("B7").formulas = [["=COUNTIF('PLC I-O'!B2:B200,\"DI\")"]];
@@ -114,7 +126,8 @@ summary.getRange("D5:H5").merge();
 summary.getRange("D5").values = [["Release boundary"]];
 summary.getRange("D5:H5").format = { fill: "#C43D3D", font: { bold: true, color: "#FFFFFF" } };
 summary.getRange("D6:H13").merge();
-summary.getRange("D6").values = [["Native TIA/WinCC/Startdrive/PLCSIM, trained NVIDIA model, revision-B QElectroTech upgrade and revision-B panel CAD remain blocked. The inherited native electrical/CAD files are quarantined historical baselines. No construction, safety, compile, FAT, SAT or model-performance claim is made."]];
+summary.getRange("B13").formulas = [["=COUNTIF('Acceptance Gates'!C2:C100,\"BLOCKED\")+COUNTIF('Acceptance Gates'!C2:C100,\"OPEN\")"]];
+summary.getRange("D6").values = [["Native TIA/WinCC/Startdrive/PLCSIM, trained NVIDIA model, revision-C QElectroTech upgrade and revision-C panel CAD remain blocked. Historical native electrical/CAD files are quarantined baselines. No construction, safety, native compile, FAT, SAT or model-performance claim is made."]];
 summary.getRange("D6:H13").format = { fill: "#FFF1F1", font: { color: "#642F36", size: 10 }, wrapText: true, verticalAlignment: "center" };
 for (const col of ["D", "E", "F", "G", "H"]) summary.getRange(`${col}5:${col}13`).format.columnWidthPx = 110;
 
@@ -122,6 +135,9 @@ const sheetInfo = await workbook.inspect({ kind: "sheet", include: "id,name", ma
 console.log(sheetInfo.ndjson);
 const formulaErrors = await workbook.inspect({ kind: "match", searchTerm: "#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A", options: { useRegex: true, maxResults: 100 }, summary: "formula error scan" });
 console.log(formulaErrors.ndjson);
+if (formulaErrors.ndjson.includes('"kind":"match"')) {
+  throw new Error("Workbook formula-error scan found one or more invalid cells");
+}
 
 for (const sheet of workbook.worksheets.items) {
   const preview = await workbook.render({ sheetName: sheet.name, autoCrop: "all", scale: 1, format: "png" });

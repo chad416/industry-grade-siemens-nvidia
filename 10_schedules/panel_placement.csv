@@ -1,11 +1,15 @@
-tag,x_mm,y_mm,width_mm,height_mm,depth_mm,zone,model_status
--A100,80,80,110,150,170,Controls,Envelope only; native CAD baseline predates selection
--A101,210,80,110,150,170,Controls,Envelope only; native CAD baseline predates selection
--A102,340,80,110,150,170,Controls,Envelope only; native CAD baseline predates selection
--A103,470,80,110,150,170,Controls,Envelope only; native CAD baseline predates selection
--A104,600,80,110,150,170,Controls,Envelope only; native CAD baseline predates selection
--H100,80,260,110,150,170,Controls,Envelope only; native CAD baseline predates selection
--U100,210,260,110,150,170,Drives/vision,Envelope only; native CAD baseline predates selection
--U101,340,260,110,150,170,Drives/vision,Envelope only; native CAD baseline predates selection
--PC200,470,260,110,150,170,Drives/vision,Envelope only; native CAD baseline predates selection
--SW100,600,260,110,150,170,Drives/vision,Envelope only; native CAD baseline predates selection
+tag,x_mm,y_mm,width_mm,height_mm,depth_mm,mounting,orientation,zone,top_clearance_mm,bottom_clearance_mm,side_clearance_mm,heat_w,dimension_basis,placement_status,full_designation
+-A100,90,90,35,147,129,DIN rail R1,Vertical unless manufacturer requires otherwise,Controls,25,25,15,Manufacturer data required,Official Siemens data sheet,Coordinate reserved; native CAD and clearance verification open,=FC01+CP01-A100
+-A101,130,90,35,147,129,DIN rail R1,Vertical unless manufacturer requires otherwise,Controls,25,25,15,Manufacturer data required,Official Siemens data sheet,Coordinate reserved; native CAD and clearance verification open,=FC01+CP01-A101
+-A102,170,90,35,147,129,DIN rail R1,Vertical unless manufacturer requires otherwise,Controls,25,25,15,Manufacturer data required,Official Siemens data sheet,Coordinate reserved; native CAD and clearance verification open,=FC01+CP01-A102
+-A103,210,90,35,147,129,DIN rail R1,Vertical unless manufacturer requires otherwise,Controls,25,25,15,Manufacturer data required,Official Siemens data sheet,Coordinate reserved; native CAD and clearance verification open,=FC01+CP01-A103
+-A104,250,90,35,147,129,DIN rail R1,Vertical unless manufacturer requires otherwise,Analog,25,25,15,Manufacturer data required,Official Siemens data sheet,Coordinate reserved; native CAD and clearance verification open,=FC01+CP01-A104
+-H100,290,200,214,158,63.6,Door cutout,Vertical unless manufacturer requires otherwise,HMI,25,25,15,Manufacturer data required,Official Siemens data sheet,Coordinate reserved; native CAD and clearance verification open,=FC01+CP01-H100
+-U100,90,430,,,,Mounting plate,Vertical unless manufacturer requires otherwise,VFD heat zone,100,100,50,TBD,OPEN - exact selected-device envelope unavailable,Coordinate reserved; native CAD and clearance verification open,=FC01+CP01-U100
+-U101,340,430,,,,Mounting plate,Vertical unless manufacturer requires otherwise,VFD heat zone,100,100,50,TBD,OPEN - exact selected-device envelope unavailable,Coordinate reserved; native CAD and clearance verification open,=FC01+CP01-U101
+-SW100,330,90,60,147,125,DIN rail R1,Vertical unless manufacturer requires otherwise,Network,25,25,15,Manufacturer data required,Official Siemens data sheet,Coordinate reserved; native CAD and clearance verification open,=FC01+CP01-SW100
+-FW100,400,90,,147,127,DIN rail R1,Vertical unless manufacturer requires otherwise,Network,25,25,15,Manufacturer data required,OPEN - exact selected-device envelope unavailable,Coordinate reserved; native CAD and clearance verification open,=FC01+CP01-FW100
+-PC200,560,250,,,,DIN rail / shelf,Vertical unless manufacturer requires otherwise,Vision,25,25,15,TBD,OPEN - exact selected-device envelope unavailable,Coordinate reserved; native CAD and clearance verification open,=FC01+CP01-PC200
+-PE100,70,730,650,25,25,Mounting plate,Horizontal,PE,20,20,20,0,Provisional bar envelope,Final PE sizing open,=FC01+CP01-PE100
+-X100..-X199,70,650,680,50,70,DIN rail R4,Horizontal terminal row,Field termination,40,40,20,0,Reserved terminal-row envelope,Terminal family and count open,=FC01+CP01-X100..-X199
+-WD100,50,50,40,650,60,Mounting plate,Vertical duct,24 VDC routing,0,0,15,0,Provisional routing reserve,Duct fill calculation open,=FC01+CP01-WD100

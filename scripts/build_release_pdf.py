@@ -11,8 +11,8 @@ from reportlab.platypus import PageBreak, Paragraph, SimpleDocTemplate, Spacer, 
 
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "release/FC01_release_evidence.pdf"
-NOTICE = "FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION"
-SAFETY = ("CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, "
+NOTICE = "FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION"
+SAFETY = ("CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, "
           "VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, "
           "SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.")
 
@@ -40,7 +40,7 @@ def footer(canvas, doc):
     canvas.saveState()
     canvas.setFont("ProjectSans", 7)
     canvas.setFillColor(colors.HexColor("#526875"))
-    canvas.drawString(18 * mm, 10 * mm, "FC01 | Revision B | 2026-08-02 | Evidence summary - not a native acceptance certificate")
+    canvas.drawString(18 * mm, 10 * mm, "FC01 | Revision C | 2026-08-02 | Evidence summary - not a native acceptance certificate")
     canvas.drawRightString(279 * mm, 10 * mm, f"Page {doc.page}")
     canvas.restoreState()
 
@@ -62,14 +62,14 @@ def table(data, widths):
     return t
 
 
-doc = SimpleDocTemplate(str(OUT), pagesize=landscape(A4), leftMargin=18*mm, rightMargin=18*mm, topMargin=15*mm, bottomMargin=16*mm, title="FC01 Revision B release evidence")
+doc = SimpleDocTemplate(str(OUT), pagesize=landscape(A4), leftMargin=18*mm, rightMargin=18*mm, topMargin=15*mm, bottomMargin=16*mm, title="FC01 Revision C release evidence")
 story = [
     Paragraph("FC01 compact two-nozzle filling cell", styles["PTitle"]),
     Paragraph("Siemens-authoritative controls and bounded NVIDIA quality architecture", styles["PHead"]),
     Spacer(1, 5*mm),
     Paragraph(NOTICE, styles["PWarn"]), Spacer(1, 3*mm), Paragraph(SAFETY, styles["PWarn"]), Spacer(1, 7*mm),
     table([["Release status", "What is implemented", "What remains blocked"],
-           ["PARTIALLY COMPLETE", "Canonical engineering model; selected hardware; modular Siemens-oriented SCL; HMI and drive specifications; OPC UA PLC-AI contract; deterministic two-channel simulator; 32 scenarios; schedules and manifest.", "Native TIA/WinCC compile and archive; Startdrive; PLCSIM; revision-B QET and CAD; real dataset; TAO/DeepStream/TensorRT execution; model metrics and latency."]], [45*mm, 105*mm, 105*mm]),
+           ["PARTIALLY COMPLETE", "Canonical Rev-C model; executable call structure; separated HMI commands; PROFINET PZD design; expanded BOM/point-to-point data; dynamic simulator with 32 timed scenarios; deterministic manifest build/verification.", "Native TIA/WinCC compile/archive; Startdrive; PLCSIM; revision-C QET/CAD; confirmed electrical inputs; real dataset; TAO/DeepStream/TensorRT execution; physical FAT/SAT."]], [45*mm, 105*mm, 105*mm]),
     Spacer(1, 8*mm),
     Paragraph("This report is an evidence index. It is not proof of construction readiness, functional safety, native compile, FAT, SAT, electrical test, physical commissioning or AI performance.", styles["PBody"]),
     PageBreak(),
@@ -92,6 +92,7 @@ story = [
            ["DI / DO / AI", "DI 32 HF; DQ 32 HF; AI 8xU/I HF", "6ES7521-1BL00-0AB0; 6ES7522-1BL01-0AB0; 6ES7531-7NF00-0AB0", "Front connectors, wiring and catalog compatibility open"],
            ["HMI", "MTP700 Unified Comfort", "6AV2128-3GB06-0AX1", "WinCC V20 compile/licence open"],
            ["Drives", "Two SINAMICS G120C PN 0.75 kW", "6SL3210-1KE12-3UF2", "Ratings provisional; Startdrive absent"],
+           ["Network", "SCALANCE XC208 managed plus S615 firewall", "6GK5208-0BA00-2AC2; 6GK5615-0AA01-2AA2", "VLAN/firewall architecture selected; native policy and site approval open"],
            ["Vision", "Jetson Orin NX 16GB on industrial carrier", "Carrier/integration SKU TBD", "Carrier, thermals, EMC, camera and real dataset open"]], [38*mm, 68*mm, 82*mm, 67*mm]),
     Spacer(1, 6*mm),
     Paragraph("Authoritative engineering target: TIA Portal V20, executable/product version 2000.0.9501.1. Installed STEP 7 and WinCC V20 components do not prove usable licence entitlement. Current identity is not authorized for TIA Openness. Startdrive and PLCSIM are absent.", styles["PBody"]),
@@ -105,11 +106,11 @@ story = [
     PageBreak(),
     Paragraph("Validation evidence and release blockers", styles["PTitle"]),
     table([["Gate", "Evidence", "Status"],
-           ["Canonical consistency", "Automated checks cover required structure, unique addresses/symbols, exact AI interface, CSV parse, derivation and native baseline hashes", "PASS"],
-           ["Deterministic regression", "32 required scenarios; all blocking cases keep pump and both valves off; only normal cycle releases; no automatic restart", "PASS - not PLCSIM"],
-           ["Workbook", "16 sheets rendered; formula-error scan returned zero matches; contact-sheet and detailed visual review", "PASS"],
-           ["QElectroTech", "Audited inherited hash; well-formed XML; retained native reopen evidence for Rev A", "REVISION-B GATE OPEN"],
-           ["Panel CAD", "Audited inherited FCStd/STEP/IGES/DXF hashes and retained Rev-A reopen/reimport evidence", "REVISION-B GATE OPEN"],
+           ["Canonical consistency", "VAL-C-STATIC covers source-generator parity, UDT/DB semantics, schedules, HMI isolation, drive/native-adapter contracts, complete relay paths, baseline hashes and no-fake artifacts", "PASS"],
+           ["Deterministic regression", "20 simulator + 11 edge-service + 6 interface-harness tests; 32 timed scenarios; 7,147 samples; one release; zero invariant violations/restarts", "PASS - not PLCSIM"],
+           ["Workbook", "20 sheets rendered; formula-error scan returned zero matches; contact-sheet and detailed visual review", "PASS"],
+           ["QElectroTech", "Audited inherited hash; well-formed XML; retained native reopen evidence for Rev A", "REVISION-C GATE OPEN"],
+           ["Panel CAD", "Audited inherited FCStd/STEP/IGES/DXF hashes and retained Rev-A reopen/reimport evidence", "REVISION-C GATE OPEN"],
            ["TIA / WinCC / drives", "V20 installed; no native project, compile, cross-reference, archive restore or Startdrive evidence", "BLOCKED"],
            ["PLCSIM", "Not installed", "BLOCKED"],
            ["NVIDIA model/runtime", "Hardware detected; runtime stack and dataset absent", "BLOCKED"]], [56*mm, 142*mm, 57*mm]),

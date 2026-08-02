@@ -6,7 +6,7 @@
 
 | Domain | Evidence available | Result |
 |---|---|---|
-| Canonical data / schedules | Automated uniqueness, required signals, CSV parse, hash manifest | Pass when validator reports zero errors |
+| Canonical data / schedules | Automated uniqueness, required signals and CSV/canonical parity | Pass when validator reports zero errors; final manifest is verified separately |
 | Modular Siemens SCL | Text/source review only | Implemented; native compile blocked |
 | HMI/Startdrive | Functional specifications and tag schedules | Native configuration/compile blocked |
 | Deterministic simulator | 32 regression scenarios | Executed locally; not PLCSIM evidence |

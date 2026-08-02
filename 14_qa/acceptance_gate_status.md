@@ -1,16 +1,28 @@
-# Acceptance gate status
+# Acceptance gate status — Revision C
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-## Overall: PARTIALLY COMPLETE
-
-- Siemens native project open/compile/HMI/archive restore: **BLOCKED — TIA Portal V20 is installed, but usable licence/native access is unproven and the current identity lacks Openness authorization**. Startdrive and PLCSIM/PLCSIM Advanced are not installed.
-- NVIDIA model training/evaluation/latency/rollback execution: **BLOCKED — no real dataset, compatible GPU or runtime**.
-- DeepStream configuration: **DESIGNED, NOT RUNTIME-VALIDATED**.
-- QET revision-B upgrade: **BLOCKED/INCOMPLETE**; genuine baseline retained with prior reopen evidence.
-- CAD revision-B upgrade: **BLOCKED/INCOMPLETE**; genuine baseline retained with prior reopen/reimport evidence.
-- Canonical model, schedules, modular sources, documentation and deterministic non-PLC regression: **IMPLEMENTED AND LOCALLY VALIDATED**.
-
-No FAT, SAT, physical commissioning, electrical test, safety validation or model-performance result is claimed.
+- Gate 1: **PARTIAL** — Requirements/interfaces traceable: Controlled model and tests present; owner approval absent
+- Gate 2: **PASS** — Canonical model reconciles schedules: VAL-C-STATIC passed 238/238 checks; independent package audit found zero mismatches across all 19 schedules
+- Gate 3: **PARTIAL** — Siemens hardware baseline confirmed: V20/FW4.0 design baseline documented; native catalog and delivered state open
+- Gate 4: **BLOCKED** — Native TIA project opens: No genuine AP20 project created
+- Gate 5: **BLOCKED** — Native TIA archive restores: No genuine ZAP20 archive created
+- Gate 6: **BLOCKED** — PLC compiles zero errors: Static source lint only; native compile not run
+- Gate 7: **BLOCKED** — HMI compiles zero errors: WinCC project not created
+- Gate 8: **BLOCKED** — Startdrive configured/reviewed: Startdrive not installed and motor data absent
+- Gate 9: **BLOCKED** — PLCSIM traces pass: PLCSIM not installed; Python simulator is independent evidence
+- Gate 10: **BLOCKED** — Revision-C QET reopens and reconciles: Historical revision-A native baseline only
+- Gate 11: **BLOCKED** — Schematics visual review: Revision-C schematics not yet created
+- Gate 12: **BLOCKED** — Revision-C FCStd reopens: Historical baseline only
+- Gate 13: **BLOCKED** — STEP/IGES/DXF reimport: Revision-C exchange files not created
+- Gate 14: **PARTIAL** — Full BOM/panel layout reconcile: Expanded controlled schedules; unresolved selections and native CAD remain open
+- Gate 15: **BLOCKED** — Electrical calculations confirmed: Site supply, fault current, loads and environmental inputs missing
+- Gate 16: **BLOCKED** — Real NVIDIA dataset controlled: No real dataset supplied
+- Gate 17: **BLOCKED** — Genuine model training/evaluation: No dataset or TAO runtime
+- Gate 18: **BLOCKED** — TensorRT/DeepStream target runtime: No selected target carrier/runtime
+- Gate 19: **PASS** — PLC-NVIDIA failure tests: Local source-design scope: 20 simulator tests, 32 scenarios, 11 edge tests and 6 interface-harness tests pass; native integration remains blocked under gates 9 and 18
+- Gate 20: **OPEN** — FAT/SAT/commissioning: Procedures issued, never executed
+- Gate 21: **BLOCKED** — Qualified safety activities: External qualified work required
+- Gate 22: **PASS** — Manifest independently verifies: Final deterministic JSON/CSV verifier reports zero missing, unlisted or mismatched files on the frozen release tree; regenerate after any file change

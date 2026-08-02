@@ -1,0 +1,5 @@
+decision_id,decision,rationale,consequence
+ADR-C-001,TIA Portal V20 remains authoritative; CPU baseline is 1AL03 FS03/FW4.0,Official manual identifies native V20 support for FW4.0; later FW4.1 requires reviewed handling,Delivered CPU state must be checked; FS04/FW4.1 may require V21 or predecessor-mode validation
+ADR-C-002,G120C Standard Telegram 1 is primary control,Removes contradictory hardwired run/status architecture,STO remains external; native Startdrive confirmation is mandatory
+ADR-C-003,XC208 plus S615 implements three network zones,XB008 6GK5008-0BA10-1AB2 is unmanaged and cannot implement VLAN/firewall policy,Exact configuration and site approval remain open
+ADR-C-004,Quality uncertainty always holds product,NVIDIA is non-safety quality inspection and cannot grant transfer without matched result,Operator disposition confirms removal; reset never releases held product

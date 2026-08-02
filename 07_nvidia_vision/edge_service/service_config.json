@@ -1,0 +1,13 @@
+{
+  "status": "DESIGN CONFIGURATION - NO MODEL OR RUNTIME VALIDATION",
+  "namespace_version": "FC01.Vision.v1",
+  "opcua_endpoint": "opc.tcp://192.168.10.10:4840",
+  "security_policy": "Basic256Sha256/SignAndEncrypt",
+  "anonymous_access": false,
+  "expected_bottles": 2,
+  "request_timeout_ms": 1000,
+  "heartbeat_timeout_ms": 1000,
+  "result_atomicity": "write payload, write result ID, then set RESULT_VALID last",
+  "certificate_policy": "Site CA, named client identity, least-privilege namespace; provisioning open",
+  "model_bundle": null
+}

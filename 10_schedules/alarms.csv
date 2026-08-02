@@ -1,23 +1,36 @@
 alarm_id,message,class,response,ack_required,reset_condition
-1001,Emergency/safety chain not healthy,Fault,Controlled stop; outputs de-energized; manual reset after external safety restored,Yes,Cause cleared and explicit reset; never automatic restart
-1002,Air pressure lost,Fault,Abort fill; close valves; stop pump; hold bottles,Yes,Cause cleared and explicit reset; never automatic restart
-1003,Product supply lost,Fault,Abort fill and hold,Yes,Cause cleared and explicit reset; never automatic restart
-1101,Conveyor VFD fault,Fault,Stop cycle and hold,Yes,Cause cleared and explicit reset; never automatic restart
-1102,Pump VFD fault,Fault,Close valves immediately; stop request; hold,Yes,Cause cleared and explicit reset; never automatic restart
-1201,Gate motion timeout or contradictory feedback,Fault,Stop conveyor; hold,Yes,Cause cleared and explicit reset; never automatic restart
-1202,Clamp motion timeout or contradictory feedback,Fault,Stop pump; close valves; hold,Yes,Cause cleared and explicit reset; never automatic restart
-1301,Fill channel 1 no flow,Fault,Close valve 1; stop pump when both closed; hold,Yes,Cause cleared and explicit reset; never automatic restart
-1302,Fill channel 2 no flow,Fault,Close valve 2; stop pump when both closed; hold,Yes,Cause cleared and explicit reset; never automatic restart
-1303,Flow pulse/analog disagreement,Fault,Close affected valve; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
-1304,Underfill detected,Fault,Quality hold,Yes,Cause cleared and explicit reset; never automatic restart
-1305,Overfill detected,Fault,Close affected valve; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
-1306,Valve fails to close,Fault,Stop pump; close both command paths; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
-1401,Capping station unavailable or timeout,Fault,Keep pair controlled; operator disposition,Yes,Cause cleared and explicit reset; never automatic restart
-1402,Capping station fault,Fault,Keep pair controlled,Yes,Cause cleared and explicit reset; never automatic restart
+1001,Emergency/safety chain not healthy,Fault,De-energize controlled outputs; external safety restoration and reset required,Yes,Cause cleared and explicit reset; never automatic restart
+1002,Air pressure lost,Fault,"Abort fill, close valves, stop pump and hold",Yes,Cause cleared and explicit reset; never automatic restart
+1003,Product supply lost,Fault,"Abort fill, close valves, stop pump and hold",Yes,Cause cleared and explicit reset; never automatic restart
+1004,Guard status not closed,Fault,De-energize standard motion/process commands; qualified safety design remains external,Yes,Cause cleared and explicit reset; never automatic restart
+1101,Conveyor VFD fault or PN I/O invalid,Fault,Stop motion and hold,Yes,Cause cleared and explicit reset; never automatic restart
+1102,Pump VFD fault or PN I/O invalid,Fault,"Close valves, stop pump request and hold",Yes,Cause cleared and explicit reset; never automatic restart
+1201,Gate feedback contradiction or travel timeout,Fault,Stop conveyor and hold,Yes,Cause cleared and explicit reset; never automatic restart
+1202,Clamp feedback contradiction or travel timeout,Fault,"Close valves, stop pump and hold",Yes,Cause cleared and explicit reset; never automatic restart
+1301,Fill channel 1 no flow,Fault,Close channel 1; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1303,Fill channel 1 pulse/analog disagreement,Fault,Close channel 1; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1304,Fill channel 1 underfill,Fault,Close channel 1; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1305,Fill channel 1 overfill,Fault,Close channel 1; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1306,Fill channel 1 valve close mismatch,Fault,Close channel 1; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1307,Fill channel 1 analog channel broken wire,Fault,Close channel 1; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1308,Fill channel 1 valve open mismatch,Fault,Close channel 1; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1309,Fill channel 1 continued flow after close,Fault,Close channel 1; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1310,Fill channel 1 invalid configuration/fill timeout/abort,Fault,Close channel 1; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1311,Fill channel 2 no flow,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1313,Fill channel 2 pulse/analog disagreement,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1314,Fill channel 2 underfill,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1315,Fill channel 2 overfill,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1316,Fill channel 2 valve close mismatch,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1317,Fill channel 2 analog channel broken wire,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1318,Fill channel 2 valve open mismatch,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1319,Fill channel 2 continued flow after close,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1320,Fill channel 2 invalid configuration/fill timeout/abort,Fault,Close channel 2; stop pump when both valves closed; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1401,"Capper not ready, acceptance timeout or completion timeout",Fault,Keep pair controlled; operator disposition,Yes,Cause cleared and explicit reset; never automatic restart
+1402,Capper reported fault or invalid handshake order,Fault,Keep pair controlled; operator disposition,Yes,Cause cleared and explicit reset; never automatic restart
 1501,Vision not ready,Fault,Do not transfer; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
 1502,Vision result timeout,Fault,Do not transfer; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
-1503,Vision result ID stale or contradictory,Fault,Discard result; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
-1504,Vision low confidence,Warning,Quality hold; operator inspection required,Yes,Cause cleared and explicit reset; never automatic restart
-1505,Vision heartbeat lost,Fault,Quality hold,Yes,Cause cleared and explicit reset; never automatic restart
-1506,Vision reports one or both bottles failed,Fault,Quality hold,Yes,Cause cleared and explicit reset; never automatic restart
-1601,HMI communications lost,Warning,Continue only autonomous safe state; no new HMI command accepted,Yes,Cause cleared and explicit reset; never automatic restart
+1503,Vision stale/mismatched result ID,Fault,Do not transfer; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1504,Vision blocking quality result or low confidence,Fault,Do not transfer; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1505,Vision heartbeat lost,Fault,Do not transfer; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1506,Vision protocol contradiction,Fault,Do not transfer; quality hold,Yes,Cause cleared and explicit reset; never automatic restart
+1601,HMI command heartbeat lost,Fault,Reject new HMI commands and enter controlled fault handling,Yes,Cause cleared and explicit reset; never automatic restart

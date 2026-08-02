@@ -1,3 +1,4 @@
-revision,date,description,authority
-A,2026-08-01,Primary electrical/CAD and secondary controls concepts,Legacy sources
-B,2026-08-02,"Integrated Siemens/NVIDIA architecture, canonical model, reviewable sources and deterministic tests",Chief systems engineer; native gates remain open
+revision,date,status,description
+A,2026-06-28,Historical baseline,Inherited QET/FreeCAD evidence baseline
+B,2026-08-01,Published preliminary,Initial Siemens/NVIDIA architecture and schedules
+C,2026-08-02,Controlled partial release,Corrected generator/SCL/HMI/drive/network/manifest; dynamic simulation and expanded schedules/docs
