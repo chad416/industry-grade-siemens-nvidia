@@ -9283,8 +9283,8 @@
     {
       "gate": 22,
       "acceptance_gate": "Manifest independently verifies",
-      "status": "PARTIAL",
-      "evidence_or_blocker": "Pre-publication source and generated-artifact controls are implemented; final staged/HEAD manifest, upstream alignment and pushed-commit fresh-clone verification remain pending until the candidate is committed and published"
+      "status": "PASS",
+      "evidence_or_blocker": "Published candidate b9633c6255fe34e48a1be34afe5024935f48651e was cloned afresh from GitHub outside OneDrive and passed the complete HEAD workflow: manifest 310/310 with zero discrepancies, integrity 534/534, validator 551/551, all tests/native checks, deterministic artifacts and clean state"
     }
   ],
   "rationales": [

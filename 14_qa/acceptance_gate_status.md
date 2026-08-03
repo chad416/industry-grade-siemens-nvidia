@@ -25,4 +25,4 @@
 - Gate 19: **PASS** - PLC-NVIDIA failure tests: Source/simulator, edge-service, interface-harness and real asyncua encrypted server/client integration tests pass; production PLC/Jetson endpoint validation remains outside this local gate
 - Gate 20: **OPEN** - FAT/SAT/commissioning: Controlled procedures issued; no FAT, SAT or commissioning was executed
 - Gate 21: **BLOCKED** - Qualified safety activities: Project-specific qualified machinery-safety engineering, verification and validation are external and not performed
-- Gate 22: **PARTIAL** - Manifest independently verifies: Pre-publication source and generated-artifact controls are implemented; final staged/HEAD manifest, upstream alignment and pushed-commit fresh-clone verification remain pending until the candidate is committed and published
+- Gate 22: **PASS** - Manifest independently verifies: Published candidate b9633c6255fe34e48a1be34afe5024935f48651e was cloned afresh from GitHub outside OneDrive and passed the complete HEAD workflow: manifest 310/310 with zero discrepancies, integrity 534/534, validator 551/551, all tests/native checks, deterministic artifacts and clean state

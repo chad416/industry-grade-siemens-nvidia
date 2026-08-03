@@ -12,3 +12,4 @@ DOC-010,Release evidence PDF,release/FC01_release_evidence.pdf,E,Lead systems en
 DOC-011,Release manifest,release/manifest.json,E,Configuration management,Frozen after all content
 DOC-012,Native panel verification,09_panel_cad/revision_e/native_verification.json,E,Panel engineer,Native gate evidence
 DOC-013,Native QET verification,03_electrical/revision_e/native_verification.json,E,Electrical engineer,Native gate evidence when present
+DOC-014,Post-push fresh-clone reproduction,14_qa/post_push_reproduction.md,E,Configuration management,Published-candidate release-integrity evidence

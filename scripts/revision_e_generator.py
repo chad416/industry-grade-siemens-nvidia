@@ -159,7 +159,7 @@ def _gates(cad_status: str, cad_evidence: str, qet_status: str, qet_evidence: st
         {"gate":19,"acceptance_gate":"PLC-NVIDIA failure tests","status":"PASS","evidence_or_blocker":"Source/simulator, edge-service, interface-harness and real asyncua encrypted server/client integration tests pass; production PLC/Jetson endpoint validation remains outside this local gate"},
         {"gate":20,"acceptance_gate":"FAT/SAT/commissioning","status":"OPEN","evidence_or_blocker":"Controlled procedures issued; no FAT, SAT or commissioning was executed"},
         {"gate":21,"acceptance_gate":"Qualified safety activities","status":"BLOCKED","evidence_or_blocker":"Project-specific qualified machinery-safety engineering, verification and validation are external and not performed"},
-        {"gate":22,"acceptance_gate":"Manifest independently verifies","status":"PARTIAL","evidence_or_blocker":"Pre-publication source and generated-artifact controls are implemented; final staged/HEAD manifest, upstream alignment and pushed-commit fresh-clone verification remain pending until the candidate is committed and published"},
+        {"gate":22,"acceptance_gate":"Manifest independently verifies","status":"PASS","evidence_or_blocker":"Published candidate b9633c6255fe34e48a1be34afe5024935f48651e was cloned afresh from GitHub outside OneDrive and passed the complete HEAD workflow: manifest 310/310 with zero discrepancies, integrity 534/534, validator 551/551, all tests/native checks, deterministic artifacts and clean state"},
     ]
 
 
@@ -265,6 +265,7 @@ def apply_revision_e(root: Path) -> None:
         {"review_record_id":"RR-E-003","reviewer_task":"/root/rev_e_nvidia_opcua","review_type":"NVIDIA OPC UA implementation workstream record","scope":"Secure asyncua adapter, health/metrics, service configuration, deployment/rollback and real server/client integration tests","method":"Bounded source implementation and asyncua 2.0.1 encrypted test-server/client execution with temporary PKI","evidence_sha256":_digest(root,["07_nvidia_vision/edge_service/opcua_adapter.py","07_nvidia_vision/edge_service/opcua_runtime_config.json","07_nvidia_vision/edge_service/tests/test_opcua_adapter.py","07_nvidia_vision/edge_service/opcua_adapter_runbook.md"]),"limitations":"Synthetic OPC UA endpoint, not production S7/Jetson; no dataset/model/DeepStream/TensorRT performance or cybersecurity acceptance","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"IMPLEMENTED AND LOCALLY INTEGRATION-TESTED; TARGET RUNTIME AND MODEL GATES REMAIN BLOCKED"},
         {"review_record_id":"RR-E-004","reviewer_task":"/root","review_type":"Lead systems implementation record","scope":"Poll-safe PLC request, immutable transaction identity, canonical/release integration and generator parity","method":"Siemens-oriented source change, nine added contracts and inherited simulator/interface regression","evidence_sha256":_digest(root,["scripts/revision_d_scl.py","04_controls_siemens/scl/FB_VisionInterface.scl","04_controls_siemens/scl/FB_CellMain.scl","11_simulation/tests/test_revision_e_vision_request_contract.py"]),"limitations":"Lead authored/integrated this delta; it is not independent review, native TIA compile or qualified controls approval","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"IMPLEMENTED AND SOURCE-TESTED; NATIVE TIA/PLCSIM REMAIN BLOCKED"},
         {"review_record_id":"RR-E-005","reviewer_task":"/root/rev_e_independent_review","review_type":"Final independent integrated software-agent audit","scope":"Frozen Revision-E electrical/CAD/Siemens/edge/release-integrity candidate, visual artifacts, safety wording and blocker truthfulness","method":"Read-only adversarial audit plus isolated reproduction of validator, QET, simulator/source/native contracts, edge, interface harness, scenarios, FreeCAD and workbook/PDF visual evidence","evidence_sha256":"80b2445d3edf7f310a0520ad6a7ab56a73f4d69da773813106a309f314e6a686","limitations":"Audit preceded manifest freeze/commit/push; no qualified-human approval, native TIA/WinCC/Startdrive/PLCSIM, final-hash QET reopen/export, production PLC/Jetson endpoint, dataset/model/runtime, site electrical inputs, hardware/FAT/SAT/commissioning or qualified safety validation","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"ACCEPT FOR CONTROLLED MANIFEST FREEZE, COMMIT, PUSH AND POST-PUSH FRESH-CLONE VERIFICATION; GATE 22 REMAINS PARTIAL UNTIL THAT EVIDENCE PASSES"},
+        {"review_record_id":"RR-E-006","reviewer_task":"/root","review_type":"Post-push clean-clone release-control execution","scope":"Published Revision-E candidate Git object, authoritative manifest, complete reproduction and upstream alignment","method":"Fresh GitHub clone outside OneDrive at b9633c6255fe34e48a1be34afe5024935f48651e; complete reproduce_validation.ps1 execution with locked runtimes and clean-state assertion","evidence_sha256":_digest(root,["release/manifest.json","scripts/reproduce_validation.ps1","14_qa/automated_validation_report.md","14_qa/determinism_report.md"]),"limitations":"Configuration-management execution by the lead software agent; final attestation commit is reverified after publication; no qualified-human, native Siemens, final-QET, physical, model or safety approval","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"PASS FOR RELEASE-INTEGRITY GATE — 310/310 manifest, 534/534 integrity, 551/551 validator and complete clean-clone workflow passed with zero discrepancy"},
     ]:
         reviews = _append_row(reviews, "review_record_id", row["review_record_id"], row)
     _csv(root, "14_qa/review_records.csv", reviews)
@@ -382,7 +383,7 @@ An RTX 5060 Laptop GPU, driver `595.95`, 8,151 MiB and compute capability 12.0 w
 | FreeCAD/STEP/IGES/DXF | Selected-architecture native source, reopen/reimport and visual package | Native gate follows controlled verification record |
 | XLSX/PDF | Deterministic generation, formula scan and rendered visual review | Final release evidence after freeze |
 | Safety/electrical construction | Boundary statement and conceptual separation | Qualified/site/physical activities BLOCKED |
-| Release integrity | Staged/HEAD manifest, determinism and fresh-clone reproduction | Final acceptance only after pushed-commit re-clone |
+| Release integrity | Staged/HEAD manifest, determinism and fresh-clone reproduction | PASS for published candidate `b9633c6255fe34e48a1be34afe5024935f48651e`; final attestation commit is rechecked after push |
 """))
 
     _write(root, "00_project_control/final_release_checklist.md", _doc("Final release checklist - Revision E", """- [x] Revision-E canonical schedules regenerate from controlled owners.
@@ -393,7 +394,7 @@ An RTX 5060 Laptop GPU, driver `595.95`, 8,151 MiB and compute capability 12.0 w
 - [ ] Corrected final QET hash reopens, exports and receives all-page/cross-reference review.
 - [ ] Native TIA V20/WinCC/Startdrive projects open and compile; PLCSIM traces pass.
 - [ ] Site electrical calculations, qualified safety validation, real AI model/target execution, FAT and SAT pass.
-- [ ] Final committed manifest, clean worktree, upstream SHA and fresh-clone reproduction pass after freeze.
+- [x] Published candidate `b9633c6255fe34e48a1be34afe5024935f48651e` manifest, clean worktree, upstream SHA and fresh GitHub-clone reproduction passed; repeat for the final attestation commit before handoff.
 
 Unchecked items block construction, production deployment or physical acceptance; they are not missing success claims."""))
 
@@ -413,16 +414,40 @@ The selected-architecture FreeCAD workstream supersedes the obsolete historical 
 | QET verifier | 24/24 PASS; dedicated tests 6/6 | Corrected source only; exact-hash native reopen/export remains BLOCKED |
 | FreeCAD native verifier | 80/80 PASS | 165 objects, 148 valid controlled solids, exact GUI-tool provenance, STEP solids, IGES bounded faces, DXF and 30 holes |
 | FreeCAD verifier repeatability | 3/3 generated evidence files byte-identical across two runs | Native geometry/evidence determinism; FCStd/IGES byte identity is not claimed |
-| Workbook | 21 sheets; zero formula-error matches | Two normalized builds SHA-256 `C6899C10D680F030901E966FAD00694D6F22C77CD9B7C6BF8F0E33B39145E855` |
-| Release PDF | 5 pages | Two builds SHA-256 `76D12BAEB56E60E5025D2995546EF08B5085462C8DD6F3C8A2AA3CAC77906D03` |
+| Workbook | 21 sheets; zero formula-error matches | Two normalized builds SHA-256 `32D6D4CC67054C911149D65444F332D04EA1D6907B4F887E93A5FF5118B85D49` |
+| Release PDF | 5 pages | Two builds SHA-256 `5E9DEEEF050524140B730BEDFAB41998811F7C7EB472183CC264FCA092400E08` |
 
-Final manifest/release-integrity counts and the pushed-commit clean-clone result are frozen only after all controlled content and review records are complete."""))
+Published candidate `b9633c6255fe34e48a1be34afe5024935f48651e` was cloned afresh from GitHub outside OneDrive. The complete workflow passed: manifest 310/310 with zero discrepancies, integrity 534/534, validator 551/551, 88/88 simulator/source/native contracts, 59/59 edge tests, 15/15 interface tests, 32 scenarios, FreeCAD 80/80, QET 24/24, deterministic workbook/PDF builds and a clean final worktree. The final attestation commit is subjected to the same post-push check before handoff."""))
+
+    _write(root, "14_qa/post_push_reproduction.md", _doc("Post-push fresh-clone reproduction - Revision E", """## Published candidate
+
+- Branch: `codex/revision-e-native-engineering-execution`
+- GitHub commit: `b9633c6255fe34e48a1be34afe5024935f48651e`
+- Clone basis: brand-new GitHub clone outside OneDrive
+- Workflow: `powershell -ExecutionPolicy Bypass -File scripts/reproduce_validation.ps1`
+- Result: **PASS** with exit code 0
+
+| Check | Result |
+|---|---|
+| Manifest | 310 listed / 310 actual; 0 missing, unlisted, unexpected or discrepant |
+| Release integrity | 534/534 PASS |
+| Engineering validator | 551/551 PASS |
+| Siemens/simulator/native contracts | 88/88 PASS |
+| NVIDIA edge-service tests | 59/59 PASS |
+| PLC-AI interface harness | 15/15 PASS |
+| Timed scenarios | 32/32 PASS |
+| QET structural verifier | 24/24 PASS |
+| FreeCAD native verifier | 80/80 PASS |
+| Workbook/PDF | Two deterministic builds each; 21 sheets and 5 pages rendered |
+| Final repository state | Clean |
+
+This closes the locally achievable release-integrity gate for the published candidate. It is configuration-management evidence, not qualified-human engineering approval. The final attestation commit is re-cloned and rerun after publication; no native Siemens, exact-final-hash QET reopen/export, construction, model, physical or safety gate is implied."""))
 
     _write(root, "14_qa/visual_review_report.md", _doc("Visual artifact review report - Revision E", """A software-agent visual review inspected the complete rendered sets. This is not qualified-human electrical, panel, safety or construction approval.
 
 | Artifact | Rendered/inspected | Result |
 |---|---:|---|
-| Engineering workbook | 21/21 sheets | PASS: consistent navy/blue tabular style, frozen/table structure, readable wrapping, no visible clipping; summary shows 4 PASS / 5 PARTIAL / 12 BLOCKED / 1 OPEN and exact pre-publication release boundary |
+| Engineering workbook | 21/21 sheets | PASS: consistent navy/blue tabular style, frozen/table structure, readable wrapping, no visible clipping; summary shows 5 PASS / 4 PARTIAL / 12 BLOCKED / 1 OPEN and exact release boundary |
 | Release-evidence PDF | 5/5 pages | PASS: titles, tables, margins, footer/page numbers and boundary wording readable |
 | Revision-E CAD general arrangement | 4/4 pages | PASS: front, isometric/depth, door and segregation/clearance views readable; provisional assumptions visible |
 | Revision-E mounting-plate PDF | 2/2 pages | PASS: dimensioned layout and 30-hole coordinate register readable; construction boundary visible |
@@ -434,7 +459,7 @@ The release PDF and workbook were rebuilt twice with identical controlled hashes
 
     _write(root, "14_qa/final_gate_review.md", _doc("Final locally achievable gate review - Revision E", """The integrated candidate closes native FreeCAD and local encrypted OPC UA implementation gates while preserving Revision-D.1 Git-object authority. The corrected QET is controlled and statically reconciled but its final hash was not reopened/exported, so native schematic and all-page review gates remain partial/blocked. No software-agent review is represented as qualified-human approval.
 
-Current pre-publication gate totals are **4 PASS, 5 PARTIAL, 12 BLOCKED and 1 OPEN**. PASS applies to canonical reconciliation, native FCStd reopen, STEP/IGES/DXF reimport and local PLC-NVIDIA failure testing. PARTIAL applies to requirements ownership, hardware/catalog confirmation, QET source/native evidence, final BOM/panel construction reconciliation and release integrity until the committed, pushed candidate is independently reproduced from a fresh clone.
+Current gate totals are **5 PASS, 4 PARTIAL, 12 BLOCKED and 1 OPEN**. PASS applies to canonical reconciliation, native FCStd reopen, STEP/IGES/DXF reimport, local PLC-NVIDIA failure testing and release integrity after published-candidate clean-clone reproduction. PARTIAL applies to requirements ownership, hardware/catalog confirmation, QET source/native evidence and final BOM/panel construction reconciliation.
 
 Native Siemens, site-dependent electrical calculations, real dataset/model/target NVIDIA runtime, FAT/SAT/commissioning and qualified machinery-safety activities remain explicit blockers. Construction, production deployment, CE/regulatory conformity and physical acceptance are not claimed."""))
 
@@ -500,6 +525,7 @@ Acceptance-gate states are derived from controlled evidence, not filenames. Nati
         {"document_id":"DOC-011","title":"Release manifest","path":"release/manifest.json","revision":REVISION,"owner":"Configuration management","status":"Frozen after all content"},
         {"document_id":"DOC-012","title":"Native panel verification","path":"09_panel_cad/revision_e/native_verification.json","revision":REVISION,"owner":"Panel engineer","status":"Native gate evidence"},
         {"document_id":"DOC-013","title":"Native QET verification","path":"03_electrical/revision_e/native_verification.json","revision":REVISION,"owner":"Electrical engineer","status":"Native gate evidence when present"},
+        {"document_id":"DOC-014","title":"Post-push fresh-clone reproduction","path":"14_qa/post_push_reproduction.md","revision":REVISION,"owner":"Configuration management","status":"Published-candidate release-integrity evidence"},
     ]
     _csv(root, "00_project_control/document_register.csv", docs)
     _csv(root, "10_schedules/document_register.csv", docs)

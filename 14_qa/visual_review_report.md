@@ -8,7 +8,7 @@ A software-agent visual review inspected the complete rendered sets. This is not
 
 | Artifact | Rendered/inspected | Result |
 |---|---:|---|
-| Engineering workbook | 21/21 sheets | PASS: consistent navy/blue tabular style, frozen/table structure, readable wrapping, no visible clipping; summary shows 4 PASS / 5 PARTIAL / 12 BLOCKED / 1 OPEN and exact pre-publication release boundary |
+| Engineering workbook | 21/21 sheets | PASS: consistent navy/blue tabular style, frozen/table structure, readable wrapping, no visible clipping; summary shows 5 PASS / 4 PARTIAL / 12 BLOCKED / 1 OPEN and exact release boundary |
 | Release-evidence PDF | 5/5 pages | PASS: titles, tables, margins, footer/page numbers and boundary wording readable |
 | Revision-E CAD general arrangement | 4/4 pages | PASS: front, isometric/depth, door and segregation/clearance views readable; provisional assumptions visible |
 | Revision-E mounting-plate PDF | 2/2 pages | PASS: dimensioned layout and 30-hole coordinate register readable; construction boundary visible |

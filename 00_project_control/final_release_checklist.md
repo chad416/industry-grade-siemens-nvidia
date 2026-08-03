@@ -12,6 +12,6 @@
 - [ ] Corrected final QET hash reopens, exports and receives all-page/cross-reference review.
 - [ ] Native TIA V20/WinCC/Startdrive projects open and compile; PLCSIM traces pass.
 - [ ] Site electrical calculations, qualified safety validation, real AI model/target execution, FAT and SAT pass.
-- [ ] Final committed manifest, clean worktree, upstream SHA and fresh-clone reproduction pass after freeze.
+- [x] Published candidate `b9633c6255fe34e48a1be34afe5024935f48651e` manifest, clean worktree, upstream SHA and fresh GitHub-clone reproduction passed; repeat for the final attestation commit before handoff.
 
 Unchecked items block construction, production deployment or physical acceptance; they are not missing success claims.

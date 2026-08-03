@@ -16,7 +16,7 @@ Execution date: 2026-08-03. Source/design tests use the controlled Python 3.12.1
 | QET verifier | 24/24 PASS; dedicated tests 6/6 | Corrected source only; exact-hash native reopen/export remains BLOCKED |
 | FreeCAD native verifier | 80/80 PASS | 165 objects, 148 valid controlled solids, exact GUI-tool provenance, STEP solids, IGES bounded faces, DXF and 30 holes |
 | FreeCAD verifier repeatability | 3/3 generated evidence files byte-identical across two runs | Native geometry/evidence determinism; FCStd/IGES byte identity is not claimed |
-| Workbook | 21 sheets; zero formula-error matches | Two normalized builds SHA-256 `C6899C10D680F030901E966FAD00694D6F22C77CD9B7C6BF8F0E33B39145E855` |
-| Release PDF | 5 pages | Two builds SHA-256 `76D12BAEB56E60E5025D2995546EF08B5085462C8DD6F3C8A2AA3CAC77906D03` |
+| Workbook | 21 sheets; zero formula-error matches | Two normalized builds SHA-256 `32D6D4CC67054C911149D65444F332D04EA1D6907B4F887E93A5FF5118B85D49` |
+| Release PDF | 5 pages | Two builds SHA-256 `5E9DEEEF050524140B730BEDFAB41998811F7C7EB472183CC264FCA092400E08` |
 
-Final manifest/release-integrity counts and the pushed-commit clean-clone result are frozen only after all controlled content and review records are complete.
+Published candidate `b9633c6255fe34e48a1be34afe5024935f48651e` was cloned afresh from GitHub outside OneDrive. The complete workflow passed: manifest 310/310 with zero discrepancies, integrity 534/534, validator 551/551, 88/88 simulator/source/native contracts, 59/59 edge tests, 15/15 interface tests, 32 scenarios, FreeCAD 80/80, QET 24/24, deterministic workbook/PDF builds and a clean final worktree. The final attestation commit is subjected to the same post-push check before handoff.
