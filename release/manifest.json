@@ -3048,8 +3048,8 @@
     },
     {
       "path": "scripts/revision_e_generator.py",
-      "bytes": 62396,
-      "sha256": "d60850cfc4320a342e0a4c8518a64cca256a9e7a4a2b1d4935a71ae0e7d38fbb",
+      "bytes": 62319,
+      "sha256": "a803e2d1a486b1fa1708c03f5afe9a1ced2057f1bf76409cd22a3ca114caf7a6",
       "category": "Reproduction",
       "role": "Controlled artifact",
       "revision": "E",
