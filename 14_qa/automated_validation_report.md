@@ -103,8 +103,10 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - composed PLC/edge test covers rejected delayed publication cleanup and rearm
 - connection mandatory fields populated
 - contradictory hardwired drive run/status I/O removed
+- controlled determinism report uses source-neutral authoritative-snapshot wording
 - current equipment faults arbitrate and permissives recompute before one-shot power-recovery reset reaches coordinator
 - determinism exports authoritative index or HEAD snapshots
+- determinism report is byte-identical for index and HEAD sources
 - direct Revision-D interface test present: test_analog_zero_pulses_positive
 - direct Revision-D interface test present: test_both_measurements_no_flow
 - direct Revision-D interface test present: test_busy_ready_contradiction

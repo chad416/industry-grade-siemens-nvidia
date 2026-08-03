@@ -106,7 +106,7 @@ story = [
     PageBreak(),
     Paragraph("Validation evidence and release blockers", styles["PTitle"]),
     table([["Gate", "Evidence", "Status"],
-           ["Canonical consistency", "426 deterministic Revision-D.1 checks cover source-generator parity, Git byte and locked-toolchain policy, SCL/edge contracts, schedules, HMI isolation, drive/native-adapter contracts, baseline hashes and no-fake artifacts", "PASS"],
+           ["Canonical consistency", "428 deterministic Revision-D.1 checks cover source-generator parity, Git byte and locked-toolchain policy, SCL/edge contracts, schedules, HMI isolation, drive/native-adapter contracts, baseline hashes and no-fake artifacts", "PASS"],
            ["Deterministic regression", "58 simulator/interface/source-contract + 42 edge-service + 15 interface-harness tests; 32 timed scenarios; one release; zero invariant violations/restarts", "PASS - not PLCSIM"],
            ["Workbook", "20 schedule/summary sheets rendered; formula-error scan returned zero matches; contact-sheet and detailed visual review", "PASS"],
            ["QElectroTech", "Audited inherited byte-exact hash and 24-page structure only; no runnable QET found and no Revision-D.1 reopen/export", "REVISION-D.1 GATE BLOCKED"],
