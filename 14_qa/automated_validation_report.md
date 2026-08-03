@@ -1,4 +1,4 @@
-# Automated validation report — Revision D
+# Automated validation report — Revision D.1
 
 Result: **PASS**
 
@@ -24,8 +24,16 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - OB1 executes root cell instance
 - PLC physical addresses unique
 - PLC symbols unique
+- Poppler renderer version is locked
 - QET historical baseline is well-formed XML
 - RecipeManager owns atomic apply acceptance/rejection
+- Revision-D.1 edge regression test present: test_advanced_disabled_session_invalidates_prior_publication
+- Revision-D.1 edge regression test present: test_initial_zero_ack_poll_is_idempotent
+- Revision-D.1 edge regression test present: test_model_identity_rejects_whitespace_control_and_path_characters
+- Revision-D.1 edge regression test present: test_publication_survives_transport_fault_reset_and_wrong_ack
+- Revision-D.1 edge regression test present: test_same_session_reset_rejects_regressed_plc_snapshot
+- Revision-D.1 edge regression test present: test_same_session_reset_snapshot_can_carry_exact_ack
+- Revision-D.1 edge regression test present: test_tick_contains_session_change_for_polling_adapter
 - S102 guard monitor has explicit dry-contact supply and signal conductors
 - acceptance_gates.csv exactly derives from canonical model
 - alarms.csv exactly derives from canonical model
@@ -35,6 +43,9 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - all standard output commands are assigned: []
 - all writable HMI tags use DB_HMI command requests
 - analog/HSC shields scheduled
+- artifact-reproduction Python version is locked
+- artifact-reproduction toolchain lock is Revision D.1
+- artifact-tool version is locked
 - balanced DATA_BLOCK endings: DB_CellMain.scl
 - balanced DATA_BLOCK endings: DB_Global.scl
 - balanced FUNCTION_BLOCK endings: FB_Actuator2Pos.scl
@@ -70,7 +81,7 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - cable/core allocations unique
 - cable_schedule.csv exactly derives from canonical model
 - canonical cell inputs are normalized and consumed: []
-- canonical revision D
+- canonical revision D.1
 - capper external/handshake faults map to alarm 1402
 - capper reset requires all diagnosed causes cleared
 - command arbitration separated from output mapper
@@ -86,12 +97,14 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - complete relay coil/contact/load path: STACK_AMBER
 - complete relay coil/contact/load path: STACK_GREEN
 - complete relay coil/contact/load path: STACK_RED
+- complete reproduction verifies the locked artifact toolchain
 - component rationale separates selection status from open evidence/blocker
 - component_rationale.csv exactly derives from canonical model
 - composed PLC/edge test covers rejected delayed publication cleanup and rearm
 - connection mandatory fields populated
 - contradictory hardwired drive run/status I/O removed
 - current equipment faults arbitrate and permissives recompute before one-shot power-recovery reset reaches coordinator
+- determinism exports authoritative index or HEAD snapshots
 - direct Revision-D interface test present: test_analog_zero_pulses_positive
 - direct Revision-D interface test present: test_both_measurements_no_flow
 - direct Revision-D interface test present: test_busy_ready_contradiction
@@ -110,6 +123,7 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - edge config node IDs exactly match generated node map
 - edge config records disabled four-counter anti-replay synchronization
 - edge node map/config exactly track canonical vision signals
+- edge publication remains immutable through same-session faults and records new-session invalidation
 - edge rearm reuses one protected validated identity read
 - edge service enforces monotonic/matched inspection IDs
 - edge service is fail-closed on model identity and timed heartbeat
@@ -127,6 +141,15 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - exact safety boundary present: README.md
 - exact safety boundary present: release/RELEASE_NOTES.md
 - expanded panel and field BOM has at least 45 controlled lines
+- explicit Git byte policy includes * text=auto eol=lf
+- explicit Git byte policy includes *.FCStd    -text
+- explicit Git byte policy includes *.dxf      -text
+- explicit Git byte policy includes *.iges     -text
+- explicit Git byte policy includes *.pdf      -text
+- explicit Git byte policy includes *.png      -text
+- explicit Git byte policy includes *.qet      -text
+- explicit Git byte policy includes *.step     -text
+- explicit Git byte policy includes *.xlsx     -text
 - explicit TM Count M/reference conductor: FLOW_1_PULSE
 - explicit TM Count M/reference conductor: FLOW_2_PULSE
 - external connection cable/core/terminal fields populated
@@ -150,6 +173,7 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - fill-channel implements tAnalogNoFlow
 - fill-channel implements tPulseMissing
 - fill-channel implements tValveClose
+- fresh-clone Revision-D.1 CI workflow is controlled
 - generated Siemens source parity: 00_types.scl
 - generated Siemens source parity: DB_CellMain.scl
 - generated Siemens source parity: DB_Global.scl
@@ -169,6 +193,7 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - hardware and panel rows use strict full reference designations
 - historical native baseline retained: 03_electrical/native_baseline/filling_cell.qet
 - historical native baseline retained: 09_panel_cad/native_baseline/filling_cell_panel.FCStd
+- historical native baseline retained: 09_panel_cad/native_baseline/mounting_plate.dxf
 - hmi_tags.csv exactly derives from canonical model
 - input_request_register.csv exactly derives from canonical model
 - insulated-core allocation/spares reconcile: C001
@@ -231,6 +256,8 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - known panel bodies do not overlap: -X100..-X199 / -WD100
 - load_budget.csv exactly derives from canonical model
 - malformed acknowledgement faults without clearing the current publication
+- manifest builder hashes staged Git-index bytes
+- manifest verifier supports authoritative sources and rejects unexpected files
 - manual HMI rationale describes decommanded hold-to-run behavior
 - manual commands are explicit heartbeat-supervised hold-to-run requests
 - manual conveyor and secure motions are mutually exclusive and stop-sequenced
@@ -300,6 +327,7 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - read-only HMI rationale describes visibility rather than command arbitration
 - recipe manager atomically validates current candidate, timing and nonzero pulse targets
 - recipe manager references only delivered UDT fields: []
+- release-byte and clean-clone evidence documents are controlled
 - removed recipe members and hard-coded scan time are absent
 - required directory 00_project_control
 - required directory 01_requirements
@@ -381,10 +409,11 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - spares are never HMI writable
 - stale pre-Revision-D PDF render directories are empty
 - standard reproduction compares two normalized XLSX and PDF builds by SHA-256
+- standard reproduction verifies clean committed bytes before and after generation
 - switch misidentification corrected with managed/firewall design
 - terminal_plan.csv exactly derives from canonical model
 - test_coverage.csv exactly derives from canonical model
-- truthful controlled-development maturity status
+- truthful controlled-development release-candidate status
 - two Standard Telegram 1 PZD mappings controlled
 - vfd_parameters.csv exactly derives from canonical model
 - vision-interface recovery contract includes #pending := FALSE; #triggered := FALSE

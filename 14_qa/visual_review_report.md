@@ -1,10 +1,10 @@
-# Visual artifact review report - Revision D
+# Visual artifact review report - Revision D.1
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-Review date: 2026-08-02. Renderers: `@oai/artifact-tool` 2.8.31 for XLSX and Poppler 26.05.0 for PDF rasterization.
+Review date: 2026-08-03. Renderers: bundled `@oai/artifact-tool` for XLSX and Poppler for PDF rasterization.
 
 ## Engineering workbook
 
@@ -14,8 +14,8 @@ Every sheet was rendered to PNG and reviewed via five contact sheets; high-infor
 
 ## Release evidence PDF
 
-`release/FC01_release_evidence.pdf` is a five-page A4-landscape Revision-D evidence index. All pages were rasterized at 140 dpi and reviewed. Title/footer, safety disclaimers, controlled architecture, current test counts and blocked native gates are visible and consistent; no overlap, cutoff, missing glyph or misleading completion statement was observed.
+`release/FC01_release_evidence.pdf` is a five-page A4-landscape Revision-D.1 evidence index. All pages were rasterized at 140 dpi and reviewed. Title/footer, safety disclaimers, controlled architecture, current test counts and blocked native gates are visible and consistent; no overlap, cutoff, missing glyph or misleading completion statement was observed.
 
 ## Inherited native baselines
 
-`03_electrical/native_baseline/filling_cell_schematics.pdf` remains a 24-page QElectroTech-generated Revision-A baseline, and the inherited FCStd/exchange set remains Revision-A evidence. Historical renders are legible but do not contain the selected Revision-D Siemens/NVIDIA design. They are quarantined baselines only, not accepted Revision-D electrical or panel-CAD deliverables.
+`03_electrical/native_baseline/filling_cell_schematics.pdf` remains a 24-page QElectroTech-generated Revision-A baseline, and the inherited FCStd/exchange set remains Revision-A evidence. Historical renders are legible but do not contain the selected Revision-D.1 Siemens/NVIDIA design. They are quarantined baselines only, not accepted Revision-D.1 electrical or panel-CAD deliverables.
