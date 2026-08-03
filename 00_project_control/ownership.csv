@@ -1,0 +1,5 @@
+workstream,author,reviewer,status
+00-02/release,Lead software agent / systems integration task,Independent software-agent review,AI-assisted consistency review only; identified qualified-human approval remains required
+04-06,Lead software agent / controls task,Independent Siemens software-agent audit,Source-design checks only; native TIA/WinCC/Startdrive/PLCSIM and qualified-human review open
+11 simulation/07 edge,Lead software agent / vision task,Independent NVIDIA/repro software-agent audit,Independent Python evidence only; not PLC/native runtime or AI-performance proof
+03/09/10/13,Lead software agent / electrical task,Independent electrical software-agent audit,"Schedule/data checks only; native QET/CAD, calculations and qualified-human review open"

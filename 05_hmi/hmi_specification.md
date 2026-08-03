@@ -4,17 +4,14 @@
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-| Screen | Purpose | Key faceplates |
-|---|---|---|
-| Overview / automatic | Mode, state, pair flow, disposition | machine state, actuator, fill channel, vision |
-| Filling detail | Pulses, mA, targets, valve state, diagnostics | two fill-channel instances |
-| Manual/setup | Permission-controlled jogs | actuator and drive faceplates |
-| Recipes | Staged values, validation, apply handshake | recipe editor/change record |
-| Alarms/history | first-out, active, acknowledged, cleared | alarm summary/history |
-| I/O diagnostics | module/channel/address/raw/scaled | diagnostic table |
-| Drives | status word, reference, actuals, faults | G120C faceplate |
-| NVIDIA inspection | ready/busy/ID/result/confidence/model identity | vision faceplate |
-| Maintenance/production | counters, service due, good/held pairs | counter tiles |
-| Users/config/system | roles, audit, network health, backups | administration |
+## Screens
 
-Commands use a sequence-number/accepted/rejected handshake. Operator commands require Operator role; manual actuator/drive commands require Maintenance and MANUAL_SETUP; recipe/security changes require Engineer or Administrator. Every disabled control displays the blocking state, permissive or interlock. No HMI command writes a physical output tag directly.
+Overview/automatic, filling detail, manual/setup, recipe, alarm history, I/O diagnostics, drive diagnostics, NVIDIA inspection, counters/maintenance, and users/security screens are required. Native screen objects do not yet exist.
+
+## Command contract
+
+Every command writes only `DB_HMI.<Command>.Request` and increments `RequestSeq`. The PLC returns AcceptedSeq or RejectedSeq plus Allowed/Busy/DisabledReason. Start, controlled stop, reset, acknowledgement, mode, disposition and recipe apply are separate. Physical DO, PZD, stack lights, camera light and spare channels are never writable HMI tags.
+
+## Security and audit
+
+Operator may start/stop/ack/reset when permitted. Supervisor controls recipes and disposition. Maintenance may use hold-to-run manual requests subject to PLC interlocks and heartbeat. User changes, recipe changes, dispositions, alarm acknowledgements and rejected commands are audit-relevant. Native roles, bindings, trends and compile remain open.

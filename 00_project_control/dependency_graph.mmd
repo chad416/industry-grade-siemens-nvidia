@@ -1,21 +1,14 @@
-flowchart LR
-  R["Requirements + design basis"] --> C["Canonical model"]
-  C --> E["Electrical / I-O"]
-  C --> S["Siemens sources"]
-  C --> V["Vision ICD"]
-  C --> H["HMI / drives"]
-  E --> TIA["TIA V20 native build"]
-  S --> TIA
-  H --> TIA
-  V --> AI["Dataset + NVIDIA runtime"]
-  V --> SIM["Deterministic simulator"]
-  S --> SIM
-  TIA --> PLC["PLCSIM evidence"]
-  AI --> DS["DeepStream deployment evidence"]
-  E --> QET["Revision-B QET"]
-  E --> CAD["Revision-B panel CAD"]
-  PLC --> REL["Integrated release gate"]
-  DS --> REL
-  QET --> REL
-  CAD --> REL
-  SIM --> REL
+flowchart TD
+  R[Approved requirements and site inputs] --> C[Revision-D.1 canonical model]
+  C --> S[Controlled schedules]
+  C --> PLC[Siemens source design]
+  C --> HMI[HMI tag/command contract]
+  C --> V[Vision protocol and simulator]
+  S --> QET[Revision-D.1 QET - blocked]
+  S --> CAD[Revision-D.1 panel CAD - blocked]
+  PLC --> TIA[Native TIA compile - blocked]
+  HMI --> WINCC[Native WinCC compile - blocked]
+  V --> TARGET[Dataset/model/Jetson validation - blocked]
+  QET --> PHYSICAL[Construction/commissioning - blocked]
+  CAD --> PHYSICAL
+  TIA --> PHYSICAL

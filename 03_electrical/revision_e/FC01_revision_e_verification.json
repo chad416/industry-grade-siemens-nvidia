@@ -1,0 +1,197 @@
+{
+  "checks": [
+    {
+      "check": "native QET source exists",
+      "evidence": "03_electrical/revision_e/FC01_revision_e.qet",
+      "pass": true
+    },
+    {
+      "check": "project version is QET 0.100.0",
+      "evidence": {
+        "title": "FC01 Compact Filling-Cell Electrical Design Package - Revision E",
+        "version": "0.100.0"
+      },
+      "pass": true
+    },
+    {
+      "check": "26 controlled folios",
+      "evidence": 26,
+      "pass": true
+    },
+    {
+      "check": "folio order contiguous",
+      "evidence": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5",
+        "6",
+        "7",
+        "8",
+        "9",
+        "10",
+        "11",
+        "12",
+        "13",
+        "14",
+        "15",
+        "16",
+        "17",
+        "18",
+        "19",
+        "20",
+        "21",
+        "22",
+        "23",
+        "24",
+        "25",
+        "26"
+      ],
+      "pass": true
+    },
+    {
+      "check": "all folios Revision E",
+      "evidence": [
+        "E"
+      ],
+      "pass": true
+    },
+    {
+      "check": "no historical Revision-A claim",
+      "evidence": "Revision A absent",
+      "pass": true
+    },
+    {
+      "check": "embedded native symbols",
+      "evidence": 78,
+      "pass": true
+    },
+    {
+      "check": "native conductor topology",
+      "evidence": 60,
+      "pass": true
+    },
+    {
+      "check": "fictional boundary present",
+      "evidence": "FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION",
+      "pass": true
+    },
+    {
+      "check": "mandatory safety boundary present",
+      "evidence": "CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.",
+      "pass": true
+    },
+    {
+      "check": "all embedded element anchors remain inside the controlled folio canvas",
+      "evidence": {
+        "canvas": "1000 x 700",
+        "positions": 78
+      },
+      "pass": true
+    },
+    {
+      "check": "all controlled text/table anchors remain inside the controlled folio canvas",
+      "evidence": {
+        "canvas": "1000 x 700",
+        "positions": 599
+      },
+      "pass": true
+    },
+    {
+      "check": "long terminal/BOM schedules retain controlled three-column pagination",
+      "evidence": {
+        "22": [
+          40.0,
+          285.0,
+          530.0
+        ],
+        "23": [
+          40.0,
+          285.0,
+          530.0
+        ],
+        "26": [
+          40.0,
+          285.0,
+          530.0
+        ]
+      },
+      "pass": true
+    },
+    {
+      "check": "all BOM designations represented",
+      "evidence": [],
+      "pass": true
+    },
+    {
+      "check": "all PLC symbols represented",
+      "evidence": [],
+      "pass": true
+    },
+    {
+      "check": "all PLC addresses represented",
+      "evidence": [],
+      "pass": true
+    },
+    {
+      "check": "all terminal references represented",
+      "evidence": [],
+      "pass": true
+    },
+    {
+      "check": "all cable identifiers represented",
+      "evidence": [],
+      "pass": true
+    },
+    {
+      "check": "all network nodes represented",
+      "evidence": [],
+      "pass": true
+    },
+    {
+      "check": "PLC addresses unique",
+      "evidence": 74,
+      "pass": true
+    },
+    {
+      "check": "terminal references unique",
+      "evidence": 84,
+      "pass": true
+    },
+    {
+      "check": "cable identifiers unique",
+      "evidence": 22,
+      "pass": true
+    },
+    {
+      "check": "controlled element register row count",
+      "evidence": {
+        "actual": 168,
+        "expected": 168
+      },
+      "pass": true
+    },
+    {
+      "check": "element register classifications",
+      "evidence": [
+        "CABLE",
+        "DEVICE",
+        "TERMINAL"
+      ],
+      "pass": true
+    }
+  ],
+  "claim_boundary": "Static structure and tool provenance are verified here; native reopen/export evidence is recorded separately after actual GUI execution.",
+  "conductor_count": 60,
+  "element_count": 78,
+  "failed": 0,
+  "page_count": 26,
+  "passed": 24,
+  "project": "03_electrical/revision_e/FC01_revision_e.qet",
+  "qet_sha256": "BCA022BE0B9F65AA061F9731C1EE0BD0399947F04C94EE596D4AD231BB47AAD5",
+  "release": "Revision E",
+  "tool": {
+    "status": "NOT_REQUESTED"
+  }
+}

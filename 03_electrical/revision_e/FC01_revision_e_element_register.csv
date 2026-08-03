@@ -1,0 +1,169 @@
+record_type,reference,description,interface_or_location,controlled_basis,status
+DEVICE,=FC01+CP01-A100,SIMATIC S7-1500 CPU 1511-1 PN,Panel/field hardware,Native catalog/configuration and delivered hardware state not yet verified,Selected baseline
+DEVICE,=FC01+CP01-A101,TM Count 2x24V,Panel/field hardware,Two channels selected; TO configuration and K-factor inputs open,Selected baseline
+DEVICE,=FC01+CP01-A102,DI 32x24V DC HF,Panel/field hardware,Front connector and channel parameters included separately,Selected baseline
+DEVICE,=FC01+CP01-A103,DQ 32x24V DC/0.5A HF,Panel/field hardware,Field loads use interposing relays,Selected baseline
+DEVICE,=FC01+CP01-A104,AI 8xU/I HF,Panel/field hardware,4-20 mA channel diagnostics require native parameterization,Selected baseline
+DEVICE,=FC01+CP01-H100,MTP700 Unified Comfort,Panel/field hardware,Door cutout 198.3 x 142 mm; native HMI project/compile open,Selected baseline
+DEVICE,=FC01+CP01-U100,SINAMICS G120C PN 0.75 kW unfiltered,Panel/field hardware,"Rating, envelope and clearances blocked by motor/mechanics and native Startdrive",Provisional
+DEVICE,=FC01+CP01-U101,SINAMICS G120C PN 0.75 kW unfiltered,Panel/field hardware,"Rating, envelope and clearances blocked by pump curve and motor data",Provisional
+DEVICE,=FC01+CP01-SW100,SCALANCE XC208 managed,Panel/field hardware,VLAN-capable Layer 2 switch; firewall/router required for inter-zone traffic,Selected network baseline
+DEVICE,=FC01+CP01-FW100,SCALANCE S615 EEC,Panel/field hardware,Exact width and site policy remain procurement/native gates,Selected network baseline
+DEVICE,=FC01+CP01-PC200,Jetson Orin NX 16GB on industrial carrier,Panel/field hardware,"Carrier, thermals, power, EMC and lifecycle are open",Architecture only
+DEVICE,=FC01+CP01-MC100,SIMATIC memory card; capacity to be selected after compiled project sizing,Panel,Native compiled project size unavailable,TBD
+DEVICE,=FC01+CP01-RA100,S7-1500 mounting rail and fixing hardware,Panel,Rail length depends on final cabinet layout,TBD
+DEVICE,=FC01+CP01-FC100,Front connector for DI module,Panel,Exact accessory to be confirmed in TIA Selection Tool,TBD
+DEVICE,=FC01+CP01-FC101,Front connector for DQ module,Panel,Exact accessory to be confirmed in TIA Selection Tool,TBD
+DEVICE,=FC01+CP01-FC102,Front connector for AI module,Panel,Exact accessory to be confirmed in TIA Selection Tool,TBD
+DEVICE,=FC01+CP01-FC103,Front connector for TM Count module,Panel,Exact accessory to be confirmed in TIA Selection Tool,TBD
+DEVICE,=FC01+CP01-QS100,Main door-coupled isolator,Panel,"Supply, fault current and regulatory basis missing",TBD
+DEVICE,=FC01+CP01-QF100,Main protective device,Panel,"Fault level, load and selectivity study missing",TBD
+DEVICE,=FC01+CP01-PS100,24 VDC 20 A power supply,Panel,Demand estimate includes margin; inrush and derating open,Provisional
+DEVICE,=FC01+CP01-QF110,24 VDC electronic branch protection,Panel,Branch currents and discrimination require device data,TBD
+DEVICE,=FC01+CP01-K100,Main control enable contactor / external safety interface with dry monitoring contact,Panel,Qualified safety design external,TBD
+DEVICE,=FC01+CP01-K202..-K213,Interposing relays with bases and status indication,Panel,Twelve active output relays; coil/contact/load ratings and approved supplier missing,TBD
+DEVICE,=FC01+CP01-D202..-D213,Coil suppression modules,Panel,One device per active relay; match relay coil technology,TBD
+DEVICE,=FC01+CP01-X100..-X199,"DIN-rail terminal blocks, disconnect/test where required",Panel,Final QET continuity and terminal-family selection open,Provisional quantity
+DEVICE,=FC01+CP01-PE100,Copper protective-earth bar and bonding hardware,Panel,PE sizing requires supply/earthing inputs,TBD
+DEVICE,=FC01+CP01-SC100,Shield-clamp rail and spring clamps,Panel,Cable OD and final shield count open,Provisional quantity
+DEVICE,=FC01+CP01-ENC100,IP-rated enclosure with mounting plate,Panel,"Environment, IP rating and thermal calculation open",TBD
+DEVICE,=FC01+CP01-WD100,Slotted wiring duct set,Panel,Duct fill pending final conductors,TBD
+DEVICE,=FC01+CP01-DR100,35 mm DIN rail set,Panel,Final layout open,TBD
+DEVICE,=FC01+FLD-GL100,Cable glands and EMC glands,Installation,Cable OD and IP rating open,TBD
+DEVICE,=FC01+CP01-FAN100,Filter fan / cooling solution,Panel,Thermal model and ambient inputs open,TBD
+DEVICE,=FC01+FLD-M100,Conveyor motor,Field,"Nameplate, duty, cable and mechanical data required",TBD
+DEVICE,=FC01+FLD-M101,Pump motor,Field,"Pump curve, nameplate, dead-head and cable data required",TBD
+DEVICE,=FC01+FLD-YV100,Gate valve/cylinder solenoid,Field,"Coil current, response and fail state required",TBD
+DEVICE,=FC01+FLD-YV101,Clamp valve/cylinder solenoid,Field,"Coil current, response and fail state required",TBD
+DEVICE,=FC01+FLD-YV102,"Fill valve channel 1, fail closed",Field,"Wetted materials, Kv, coil and closing time required",TBD
+DEVICE,=FC01+FLD-YV103,"Fill valve channel 2, fail closed",Field,"Wetted materials, Kv, coil and closing time required",TBD
+DEVICE,=FC01+FLD-FT100,Pulse plus 4-20 mA flowmeter channel 1,Field,"K-factor, max pulse rate and analog diagnostics required",TBD
+DEVICE,=FC01+FLD-FT101,Pulse plus 4-20 mA flowmeter channel 2,Field,"K-factor, max pulse rate and analog diagnostics required",TBD
+DEVICE,=FC01+FLD-S100,Local reset pushbutton,Field,Operator-station family and IP rating open,TBD
+DEVICE,=FC01+FLD-S101,Local controlled-stop pushbutton,Field,Not a safety stop; operator-station family open,TBD
+DEVICE,=FC01+FLD-S102,Guard-status dry-contact monitoring interface,Field,Monitoring only; qualified guard-interlocking design remains external,TBD
+DEVICE,=FC01+FLD-H101,Three-color stack light with sounder,Field,"Lens, sound level and mounting open",TBD
+DEVICE,=FC01+FLD-IF140,Capper interface terminals/relays,Field,Interface specification missing,TBD
+DEVICE,=FC01+FLD-CAM200,Industrial camera,Vision,Vision physical basis and target interface open,TBD
+DEVICE,=FC01+FLD-LENS200,C-mount lens,Vision,"Sensor, FOV, working distance and DoF open",TBD
+DEVICE,=FC01+FLD-LT200,Machine-vision backlight/front-light assembly,Vision,Optical trials and exposure limits open,TBD
+DEVICE,=FC01+FLD-CB200,Industrial Jetson carrier,Vision,"Power, lifecycle, thermal and EMC selection open",TBD
+DEVICE,=FC01+FLD-W900,Industrial Ethernet patch cables/connectors,Installation,Lengths and routing open,Provisional quantity
+DEVICE,=FC01+FLD-W901,Shielded VFD motor cables and EMC termination kits,Installation,Motor cable lengths and drive EMC design open,TBD
+DEVICE,=FC01+FLD-CONS100,"Markers, ferrules, lugs, ties and installation consumables",Installation,Quantity after detailed design,TBD
+DEVICE,=FC01+FLD-B100,Pneumatic pressure switch,Field,Automatically added from canonical I/O; exact device selection open,TBD
+DEVICE,=FC01+FLD-B101,Product supply permissive,Field,Automatically added from canonical I/O; exact device selection open,TBD
+DEVICE,=FC01+FLD-B110,Bottle 1 position sensor,Field,Automatically added from canonical I/O; exact device selection open,TBD
+DEVICE,=FC01+FLD-B111,Bottle 2 position sensor,Field,Automatically added from canonical I/O; exact device selection open,TBD
+DEVICE,=FC01+FLD-B120,Gate open feedback,Field,Automatically added from canonical I/O; exact device selection open,TBD
+DEVICE,=FC01+FLD-B121,Gate closed feedback,Field,Automatically added from canonical I/O; exact device selection open,TBD
+DEVICE,=FC01+FLD-B122,Clamp released feedback,Field,Automatically added from canonical I/O; exact device selection open,TBD
+DEVICE,=FC01+FLD-B123,Clamp engaged feedback,Field,Automatically added from canonical I/O; exact device selection open,TBD
+DEVICE,=FC01+FLD-B130,Valve 1 closed proof,Field,Automatically added from canonical I/O; exact device selection open,TBD
+DEVICE,=FC01+FLD-B131,Valve 2 closed proof,Field,Automatically added from canonical I/O; exact device selection open,TBD
+TERMINAL,=FC01+CP01-X100:1,GUARD_CLOSED_STATUS - Guard-monitor contact signal,C001/1 -> -A102 I0.1,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:2,GUARD_CLOSED_STATUS - Guard-monitor contact supply,C001/2 -> -A102 I0.1,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:3,AIR_PRESSURE_OK - PNP signal,C002/1 -> -A102 I0.2,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:4,AIR_PRESSURE_OK - Sensor/interface supply,C002/2 -> -A102 I0.2,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:5,AIR_PRESSURE_OK - Sensor/interface return,C002/3 -> -A102 I0.2,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:6,PRODUCT_SUPPLY_OK - PNP signal,C003/1 -> -A102 I0.3,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:7,PRODUCT_SUPPLY_OK - Sensor/interface supply,C003/2 -> -A102 I0.3,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:8,PRODUCT_SUPPLY_OK - Sensor/interface return,C003/3 -> -A102 I0.3,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:9,BOTTLE_AT_NEST_1 - PNP signal,C004/1 -> -A102 I1.2,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:10,BOTTLE_AT_NEST_1 - Sensor/interface supply,C004/2 -> -A102 I1.2,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:11,BOTTLE_AT_NEST_1 - Sensor/interface return,C004/3 -> -A102 I1.2,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:12,BOTTLE_AT_NEST_2 - PNP signal,C005/1 -> -A102 I1.3,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:13,BOTTLE_AT_NEST_2 - Sensor/interface supply,C005/2 -> -A102 I1.3,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:14,BOTTLE_AT_NEST_2 - Sensor/interface return,C005/3 -> -A102 I1.3,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:15,GATE_OPEN_FB - PNP signal,C006/1 -> -A102 I1.4,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:16,GATE_OPEN_FB - Sensor/interface supply,C006/2 -> -A102 I1.4,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:17,GATE_OPEN_FB - Sensor/interface return,C006/3 -> -A102 I1.4,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:18,GATE_CLOSED_FB - PNP signal,C007/1 -> -A102 I1.5,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:19,GATE_CLOSED_FB - Sensor/interface supply,C007/2 -> -A102 I1.5,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:20,GATE_CLOSED_FB - Sensor/interface return,C007/3 -> -A102 I1.5,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:21,CLAMP_RELEASED_FB - PNP signal,C008/1 -> -A102 I1.6,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:22,CLAMP_RELEASED_FB - Sensor/interface supply,C008/2 -> -A102 I1.6,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:23,CLAMP_RELEASED_FB - Sensor/interface return,C008/3 -> -A102 I1.6,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X100:24,CLAMP_ENGAGED_FB - PNP signal,C009/1 -> -A102 I1.7,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:1,CLAMP_ENGAGED_FB - Sensor/interface supply,C009/2 -> -A102 I1.7,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:2,CLAMP_ENGAGED_FB - Sensor/interface return,C009/3 -> -A102 I1.7,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:3,FILL_VALVE_1_CLOSED_FB - PNP signal,C010/1 -> -A102 I2.0,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:4,FILL_VALVE_1_CLOSED_FB - Sensor/interface supply,C010/2 -> -A102 I2.0,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:5,FILL_VALVE_1_CLOSED_FB - Sensor/interface return,C010/3 -> -A102 I2.0,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:6,FILL_VALVE_2_CLOSED_FB - PNP signal,C011/1 -> -A102 I2.1,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:7,FILL_VALVE_2_CLOSED_FB - Sensor/interface supply,C011/2 -> -A102 I2.1,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:8,FILL_VALVE_2_CLOSED_FB - Sensor/interface return,C011/3 -> -A102 I2.1,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:9,CAPPER_READY - PNP signal,C012/1 -> -A102 I2.2,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:10,CAPPER_READY - Sensor/interface supply,C012/2 -> -A102 I2.2,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:11,CAPPER_READY - Sensor/interface return,C012/3 -> -A102 I2.2,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:12,CAPPER_BUSY - PNP signal,C012/4 -> -A102 I2.3,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:13,CAPPER_COMPLETE - PNP signal,C012/5 -> -A102 I2.4,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:14,CAPPER_FAULT - PNP signal,C012/6 -> -A102 I2.5,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:15,LOCAL_RESET_PB - PNP signal,C013/1 -> -A102 I2.6,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:16,LOCAL_RESET_PB - Sensor/interface supply,C013/2 -> -A102 I2.6,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:17,LOCAL_RESET_PB - Sensor/interface return,C013/3 -> -A102 I2.6,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:18,LOCAL_STOP_PB - PNP signal,C014/1 -> -A102 I2.7,24 VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:19,LOCAL_STOP_PB - Sensor/interface supply,C014/2 -> -A102 I2.7,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:20,LOCAL_STOP_PB - Sensor/interface return,C014/3 -> -A102 I2.7,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:21,FILL_VALVE_1_OPEN_CMD - Relay contact 14 to field load,C015/1 -> -A103 Q0.2,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:22,FILL_VALVE_1_OPEN_CMD - Field load return,C015/2 -> -A103 Q0.2,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:23,FILL_VALVE_2_OPEN_CMD - Relay contact 14 to field load,C016/1 -> -A103 Q0.3,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X101:24,FILL_VALVE_2_OPEN_CMD - Field load return,C016/2 -> -A103 Q0.3,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:1,GATE_OPEN_CMD - Relay contact 14 to field load,C017/1 -> -A103 Q0.4,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:2,GATE_OPEN_CMD - Field load return,C017/2 -> -A103 Q0.4,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:3,GATE_CLOSE_CMD - Relay contact 14 to field load,C017/3 -> -A103 Q0.5,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:4,GATE_CLOSE_CMD - Field load return,C017/4 -> -A103 Q0.5,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:5,CLAMP_ENGAGE_CMD - Relay contact 14 to field load,C018/1 -> -A103 Q0.6,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:6,CLAMP_ENGAGE_CMD - Field load return,C018/2 -> -A103 Q0.6,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:7,CLAMP_RELEASE_CMD - Relay contact 14 to field load,C018/3 -> -A103 Q0.7,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:8,CLAMP_RELEASE_CMD - Field load return,C018/4 -> -A103 Q0.7,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:9,CAPPER_REQUEST - Relay contact 14 to field load,C012/7 -> -A103 Q1.0,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:10,CAPPER_REQUEST - Field load return,C012/8 -> -A103 Q1.0,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:11,STACK_GREEN - Relay contact 14 to field load,C019/1 -> -A103 Q1.1,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:12,STACK_GREEN - Field load return,C019/2 -> -A103 Q1.1,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:13,STACK_AMBER - Relay contact 14 to field load,C019/3 -> -A103 Q1.2,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:14,STACK_AMBER - Field load return,C019/4 -> -A103 Q1.2,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:15,STACK_RED - Relay contact 14 to field load,C019/5 -> -A103 Q1.3,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:16,STACK_RED - Field load return,C019/6 -> -A103 Q1.3,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:17,AUDIBLE_ALARM - Relay contact 14 to field load,C019/7 -> -A103 Q1.4,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:18,AUDIBLE_ALARM - Field load return,C019/8 -> -A103 Q1.4,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:19,CAMERA_LIGHT_ENABLE - Relay contact 14 to field load,C020/1 -> -A103 Q1.5,+24VDC switched,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:20,CAMERA_LIGHT_ENABLE - Field load return,C020/2 -> -A103 Q1.5,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:21,FLOW_1_MA_RAW - 4-20 mA signal positive,C021/1 -> -A104 IW64,4-20mA,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:22,FLOW_1_MA_RAW - Instrument supply,C021/2 -> -A104 IW64,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:23,FLOW_1_MA_RAW - Analog signal return,C021/3 -> -A104 IW64,0V analog,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X102:24,FLOW_1_MA_RAW - Cable shield,C021/SH -> -A104 IW64,FE,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X103:1,FLOW_2_MA_RAW - 4-20 mA signal positive,C022/1 -> -A104 IW66,4-20mA,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X103:2,FLOW_2_MA_RAW - Instrument supply,C022/2 -> -A104 IW66,+24VDC fused,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X103:3,FLOW_2_MA_RAW - Analog signal return,C022/3 -> -A104 IW66,0V analog,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X103:4,FLOW_2_MA_RAW - Cable shield,C022/SH -> -A104 IW66,FE,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X103:5,FLOW_1_PULSE - Counter pulse,C021/4 -> -A101 TM1.CH0.A,24 V pulse,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X103:6,FLOW_1_PULSE - Counter reference,C021/5 -> -A101 TM1.CH0.A,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X103:7,FLOW_2_PULSE - Counter pulse,C022/4 -> -A101 TM1.CH1.A,24 V pulse,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X103:8,FLOW_2_PULSE - Counter reference,C022/5 -> -A101 TM1.CH1.A,0V,Controlled Rev-D topology; conductor size/terminal family and native QET continuity verification remain open
+TERMINAL,=FC01+CP01-X24:+24V,X24:+24V - Fused 24 VDC distribution reference,/ ->  ,+24VDC,Final product family and bridge plan open
+TERMINAL,=FC01+CP01-X0:0V,X0:0V - 0 V distribution reference,/ ->  ,0V,0 V/PE bonding policy requires site EMC decision
+TERMINAL,=FC01+CP01-X0:MANA,X0:MANA - Analog reference,/ ->  ,0V analog,MANA/0 V bonding follows AI manual and approved EMC plan; native verification open
+TERMINAL,=FC01+CP01-SC100:1,SC100:1 - Panel-end shield clamp bonded once to PE100/functional earth,/ ->  ,FE,Bond conductor size and physical route open pending EMC/PE design
+CABLE,C001,=FC01+CP01 panel terminals to =FC01+FLD-S102 - Industrial control,cores 1-2; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C002,=FC01+CP01 panel terminals to =FC01+FLD-B100 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C003,=FC01+CP01 panel terminals to =FC01+FLD-B101 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C004,=FC01+CP01 panel terminals to =FC01+FLD-B110 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C005,=FC01+CP01 panel terminals to =FC01+FLD-B111 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C006,=FC01+CP01 panel terminals to =FC01+FLD-B120 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C007,=FC01+CP01 panel terminals to =FC01+FLD-B121 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C008,=FC01+CP01 panel terminals to =FC01+FLD-B122 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C009,=FC01+CP01 panel terminals to =FC01+FLD-B123 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C010,=FC01+CP01 panel terminals to =FC01+FLD-B130 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C011,=FC01+CP01 panel terminals to =FC01+FLD-B131 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C012,=FC01+CP01 panel terminals to =FC01+FLD-IF140 - Industrial control,cores 1-8; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C013,=FC01+CP01 panel terminals to =FC01+FLD-S100 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C014,=FC01+CP01 panel terminals to =FC01+FLD-S101 - Industrial control,cores 1-3; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C015,=FC01+CP01 panel terminals to =FC01+FLD-YV102 - Industrial control,cores 1-2; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C016,=FC01+CP01 panel terminals to =FC01+FLD-YV103 - Industrial control,cores 1-2; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C017,=FC01+CP01 panel terminals to =FC01+FLD-YV100 - Industrial control,cores 1-4; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C018,=FC01+CP01 panel terminals to =FC01+FLD-YV101 - Industrial control,cores 1-4; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C019,=FC01+CP01 panel terminals to =FC01+FLD-H101 - Industrial control,cores 1-8; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C020,=FC01+CP01 panel terminals to =FC01+FLD-LT200 - Industrial control,cores 1-2; 24 VDC control,None scheduled,"Length, conductor size, installation method and final cable family open"
+CABLE,C021,=FC01+CP01 panel terminals to =FC01+FLD-FT100 - Shielded instrumentation,cores 1-5; Analog/instrument,Separate overall shield/drain to SC100; not counted as an insulated core,"Length, conductor size, installation method and final cable family open"
+CABLE,C022,=FC01+CP01 panel terminals to =FC01+FLD-FT101 - Shielded instrumentation,cores 1-5; Analog/instrument,Separate overall shield/drain to SC100; not counted as an insulated core,"Length, conductor size, installation method and final cable family open"

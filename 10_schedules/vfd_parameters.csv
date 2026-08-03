@@ -1,6 +1,7 @@
 drive,parameter,value,status
--U100,Control source,PROFINET telegram,Startdrive entry pending native project
--U100,Rated power,0.75 kW provisional,Verify motor nameplate
--U101,Control source,PROFINET telegram,Startdrive entry pending native project
--U101,Rated power,0.75 kW provisional,Verify motor/pump data
-Both,STO,External conceptual safety interface only,No safety claim; qualified design required
+-U100/-U101,Primary control,PROFINET Standard Telegram 1,Design baseline; native confirmation open
+-U100/-U101,PZD,"STW1/NSOLL_A and ZSW1/NIST_A, 2 words each direction",Addresses controlled in drive interface schedule
+-U100/-U101,Scaling,Signed 16384 = 100 percent reference speed,Reference speed/motor data open
+-U100/-U101,Hardwired standard I/O,None for run/ready/running/fault,Removed from PLC physical I/O
+-U100/-U101,STO,External conceptual safety interface only,Qualified safety design required
+-U100/-U101,Ramps/current/min/max/braking/EMC,Not selected,"Motor, mechanics, supply and cable inputs required"

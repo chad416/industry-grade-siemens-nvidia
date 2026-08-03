@@ -1,0 +1,15 @@
+document_id,title,path,revision,owner,status
+DOC-001,Repository overview,README.md,E,Lead systems engineer,Controlled
+DOC-002,Canonical model,00_project_control/canonical_model.json,E,Lead systems engineer,Controlled
+DOC-003,Functional design specification,13_documentation/functional_design_specification.md,E,Controls engineer,Controlled; native compile open
+DOC-004,Software design specification,13_documentation/software_design_specification.md,E,Controls engineer,Controlled; native compile open
+DOC-005,PLC-NVIDIA interface control,02_system_architecture/interface_control_document.md,E,Controls/vision,Controlled; production endpoint open
+DOC-006,Panel design report,13_documentation/panel_design_report.md,E,Electrical/panel,Controlled assumptions; construction open
+DOC-007,Electrical calculation report,13_documentation/electrical_calculation_report.md,E,Electrical,Provisional; site inputs open
+DOC-008,Acceptance gate status,14_qa/acceptance_gate_status.md,E,Independent V&V,Controlled
+DOC-009,Engineering workbook,10_schedules/FC01_engineering_schedules.xlsx,E,Lead systems engineer,Controlled generated artifact
+DOC-010,Release evidence PDF,release/FC01_release_evidence.pdf,E,Lead systems engineer,Controlled generated artifact
+DOC-011,Release manifest,release/manifest.json,E,Configuration management,Frozen after all content
+DOC-012,Native panel verification,09_panel_cad/revision_e/native_verification.json,E,Panel engineer,Native gate evidence
+DOC-013,Native QET verification,03_electrical/revision_e/native_verification.json,E,Electrical engineer,Native gate evidence when present
+DOC-014,Post-push fresh-clone reproduction,14_qa/post_push_reproduction.md,E,Configuration management,Published-candidate release-integrity evidence

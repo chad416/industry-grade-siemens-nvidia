@@ -1,0 +1,43 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+ORGANIZATION_BLOCK "Startup"
+BEGIN
+   "DB_IO".Commands.FillValve1 := FALSE;
+   "DB_IO".Commands.FillValve2 := FALSE;
+   "DB_IO".Commands.GateOpen := FALSE;
+   "DB_IO".Commands.GateClose := FALSE;
+   "DB_IO".Commands.ClampEngage := FALSE;
+   "DB_IO".Commands.ClampRelease := FALSE;
+   "DB_IO".Commands.CapperRequest := FALSE;
+   "DB_IO".Commands.CameraLight := FALSE;
+   "DB_IO".Commands.StackGreen := FALSE;
+   "DB_IO".Commands.StackAmber := FALSE;
+   "DB_IO".Commands.StackRed := FALSE;
+   "DB_IO".Commands.Audible := FALSE;
+   "DB_IO".ReleasePermissive := FALSE;
+   "DB_IO".PowerRecoveryRequired := TRUE;
+   IF "DB_VisionComms".SessionEpoch = UDINT#4294967295 THEN "DB_VisionComms".SessionEpoch := UDINT#1;
+   ELSE "DB_VisionComms".SessionEpoch := "DB_VisionComms".SessionEpoch + UDINT#1; END_IF;
+   "DB_VisionComms".Enable := FALSE;
+   "DB_VisionComms".InspectionId := UDINT#0;
+   "DB_VisionComms".PlcHeartbeat := UDINT#0;
+   "DB_VisionComms".Trigger := FALSE;
+   "DB_VisionComms".ResultAckId := UDINT#0;
+   "DB_HMI".Start.Request := FALSE;
+   "DB_HMI".ControlledStop.Request := FALSE;
+   "DB_HMI".Reset.Request := FALSE;
+   "DB_HMI".AlarmAck.Request := FALSE;
+   "DB_HMI".AutoMode.Request := FALSE;
+   "DB_HMI".ManualMode.Request := FALSE;
+   "DB_HMI".DispositionRemoved.Request := FALSE;
+   "DB_HMI".RecipeApply.Request := FALSE;
+   "DB_HMI".ManualConveyorJog.Request := FALSE;
+   "DB_HMI".ManualPumpJog.Request := FALSE;
+   "DB_HMI".ManualValve1.Request := FALSE;
+   "DB_HMI".ManualValve2.Request := FALSE;
+   "DB_HMI".ManualSecure.Request := FALSE;
+   "DB_Recipe".Apply.Request := FALSE;
+   %Q0.2 := FALSE; %Q0.3 := FALSE; %Q0.4 := FALSE; %Q0.5 := FALSE;
+   %Q0.6 := FALSE; %Q0.7 := FALSE; %Q1.0 := FALSE; %Q1.1 := FALSE;
+   %Q1.2 := FALSE; %Q1.3 := FALSE; %Q1.4 := FALSE; %Q1.5 := FALSE;
+   %QW256 := W#16#047E; %QW258 := 0; %QW260 := W#16#047E; %QW262 := 0;
+END_ORGANIZATION_BLOCK

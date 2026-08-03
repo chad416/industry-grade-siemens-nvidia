@@ -1,4 +1,4 @@
-# Toolchain and access audit
+# Toolchain audit - Revision E
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
@@ -6,24 +6,16 @@
 
 ## Siemens
 
-- Authoritative target: **TIA Portal V20**, executable/product version `2000.0.9501.1`.
-- Installed component evidence: STEP 7 V20 `20.00.0000`, WinCC V20 `20.00.0000`, TIA Openness V20 assemblies `2000.0.9501.1`.
-- Secondary installed environment: TIA Portal V16 `1600.0.3102.1`.
-- Automation License Manager V6.2 SP1 service is running and a licence store exists, but usable STEP 7/WinCC entitlements were not observable; no licence claim is made.
-- The local `Siemens TIA Openness` group has no listed members and the current automation identity is not authorized. Automated native project creation/compile is blocked.
-- Startdrive and PLCSIM/PLCSIM Advanced are absent. Adapter DLLs are not treated as simulator installation.
+TIA Portal V20 executable version `2000.0.9501.1` was observed at `C:\Program Files\Siemens\Automation\Portal V20\Bin\Siemens.Automation.Portal.exe`, SHA-256 `4AB4C76CFA956956187B4E1401DD11EED3473FE60CA121C13698F6918DA4354F`. Engineering/Openness and HMI assemblies have SHA-256 `4593BDDCBBE92472B2FAC25955051066C39C9935A5E696359C6C5F2BD214FCD1` and `93FACFD3EE14536EC1640CEC5501BB2102444579901E713930E662950F4AC7C9`. STEP 7/WinCC components and Automation License Manager 6.2 SP1 are present. The active sandbox identity is not in TIA Engineer or TIA Openness groups, a V20 entitlement is unproven, Startdrive is absent and PLCSIM/PLCSIM Advanced are absent. No project/archive was fabricated and no compile result is claimed.
 
-## Electrical/CAD
+## FreeCAD
 
-- A portable QElectroTech executable is available in the primary source package and reports `0.100.1-dev`; the inherited native baseline has retained prior reopen/export evidence. The revision-B schematic was not rebuilt.
-- FreeCAD is not installed; only the verified FreeCAD 1.1.3 archive and prior native evidence exist. Revision-B CAD and fresh reimport gates are blocked.
+Portable FreeCAD `1.1.3`, revision `20260725 (Git shallow)`, is runnable through FreeCADCmd. The `FreeCADCmd.exe` SHA-256 is `B5551D26050ED64981C5767729BB35900FD4975FA7FD31714C17DD714B6FD44C` and is authoritative for the final reopen/reimport. The retained pre-clearance-metadata-correction GUI views were rendered by `FreeCAD.exe` of the same version, SHA-256 `D831ED7EEE385D5A370A83B078DD90B1F7621BB65BB7C427F06C736C8652D5F0`; their limited semantic-geometry provenance is recorded without claiming a second final GUI reopen. Exact native result and exchange-format behavior are recorded in `09_panel_cad/revision_e/native_verification.json`; the controlled output directory contains no backup/lock/autosave artifact.
 
-## NVIDIA
+## QElectroTech
 
-- Hardware: NVIDIA GeForce RTX 5060 Laptop GPU, driver `595.95`, 8151 MiB VRAM, compute capability `12.0`.
-- Driver-reported CUDA compatibility is not a CUDA Toolkit installation. CUDA Toolkit/`nvcc`, Docker, TAO, DeepStream, TensorRT, Omniverse and OpenUSD utilities are absent.
-- No real labeled dataset is available. No training, export, benchmark, metric, engine or USD claim is made.
+The official Windows ready-to-use QElectroTech `0.100.0+git8590` package was used. Executable SHA-256: `FCC3465825CC6F1BF3997D9C8054858E647A2038C8C01B7A3335A914106DE926`; downloaded archive SHA-256: `552402198011F37633FFCFF4F9CE561A9ABAF22DC14F9CC09DDC231245B16445`. A superseded candidate reopened, but layout defects were found and corrected. The final corrected QET hash was not natively reopened/exported; no final native-QET pass is claimed.
 
-## Supported non-native validation
+## NVIDIA/runtime
 
-Bundled Python 3.12.13, Node 24.14, `@oai/artifact-tool` 2.8.31, ReportLab 4.4.9, Poppler 26.05.0 and spreadsheet/PDF parsers support canonical checks, deterministic simulation, workbook generation, PDF rendering and visual inspection.
+An RTX 5060 Laptop GPU, driver `595.95`, 8,151 MiB and compute capability 12.0 were observed. `nvidia-smi` reports CUDA compatibility 13.2, not a CUDA Toolkit installation. CUDA Toolkit (`nvcc`), TensorRT, DeepStream, TAO, Docker, NVIDIA Container Toolkit, OpenUSD and Omniverse tools were not found. A temporary Python 3.12.13 environment with `asyncua 2.0.1`, `cryptography 50.0.0` and `pyOpenSSL 26.4.0` executed encrypted local integration tests; it is not a production target runtime.

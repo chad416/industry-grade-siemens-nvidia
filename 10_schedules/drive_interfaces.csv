@@ -1,0 +1,9 @@
+drive,name,telegram,direction,pzd,address,signal,data_type,scaling,status
+-U100,CONVEYOR,Standard Telegram 1,Drive_to_PLC,1,IW256,ZSW1 status word,WORD,Bit-coded per SINAMICS,Native Startdrive/TIA confirmation open
+-U100,CONVEYOR,Standard Telegram 1,Drive_to_PLC,2,IW258,NIST_A actual speed,INT,16384 = 100% reference speed,Native Startdrive/TIA confirmation open
+-U100,CONVEYOR,Standard Telegram 1,PLC_to_Drive,1,QW256,STW1 control word,WORD,Bit-coded per SINAMICS,Native Startdrive/TIA confirmation open
+-U100,CONVEYOR,Standard Telegram 1,PLC_to_Drive,2,QW258,NSOLL_A speed setpoint,INT,16384 = 100% reference speed,Native Startdrive/TIA confirmation open
+-U101,PUMP,Standard Telegram 1,Drive_to_PLC,1,IW260,ZSW1 status word,WORD,Bit-coded per SINAMICS,Native Startdrive/TIA confirmation open
+-U101,PUMP,Standard Telegram 1,Drive_to_PLC,2,IW262,NIST_A actual speed,INT,16384 = 100% reference speed,Native Startdrive/TIA confirmation open
+-U101,PUMP,Standard Telegram 1,PLC_to_Drive,1,QW260,STW1 control word,WORD,Bit-coded per SINAMICS,Native Startdrive/TIA confirmation open
+-U101,PUMP,Standard Telegram 1,PLC_to_Drive,2,QW262,NSOLL_A speed setpoint,INT,16384 = 100% reference speed,Native Startdrive/TIA confirmation open

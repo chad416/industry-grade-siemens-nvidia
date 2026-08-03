@@ -1,0 +1,33 @@
+[Unit]
+Description=FC01 non-safety vision OPC UA edge service
+After=network-online.target time-sync.target
+Wants=network-online.target time-sync.target
+
+[Service]
+Type=simple
+User=fc01-vision
+Group=fc01-vision
+EnvironmentFile=/etc/fc01-vision-edge/fc01-vision-edge.env
+ExecStart=/opt/fc01-vision-edge/venv/bin/python /opt/fc01-vision-edge/main.py --config /etc/fc01-vision-edge/opcua_runtime_config.json
+Restart=on-failure
+RestartSec=2s
+TimeoutStartSec=15s
+TimeoutStopSec=10s
+NoNewPrivileges=true
+PrivateTmp=true
+PrivateDevices=true
+ProtectSystem=strict
+ProtectHome=true
+ProtectKernelTunables=true
+ProtectKernelModules=true
+ProtectControlGroups=true
+RestrictSUIDSGID=true
+RestrictRealtime=true
+LockPersonality=true
+MemoryDenyWriteExecute=true
+ReadOnlyPaths=/etc/fc01-vision-edge
+ReadWritePaths=/var/lib/fc01-vision-edge /var/log/fc01-vision-edge
+UMask=0077
+
+[Install]
+WantedBy=multi-user.target

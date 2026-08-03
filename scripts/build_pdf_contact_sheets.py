@@ -3,6 +3,8 @@ from PIL import Image, ImageDraw, ImageFont
 
 ROOT = Path(__file__).resolve().parents[1]
 out = ROOT / "14_qa/pdf_contact_sheets"
+if out.exists():
+    for existing in out.glob("*.png"): existing.unlink()
 out.mkdir(parents=True, exist_ok=True)
 font = ImageFont.load_default()
 
@@ -26,5 +28,7 @@ def contacts(source: Path, prefix: str, per_page: int, cols: int, rows: int) -> 
 
 
 contacts(ROOT / "14_qa/pdf_renders/qet_baseline", "qet-baseline", 6, 3, 2)
-contacts(ROOT / "14_qa/pdf_renders/release", "release-evidence", 6, 3, 2)
+contacts(ROOT / "14_qa/pdf_renders/release_e", "release-evidence", 6, 3, 2)
+contacts(ROOT / "14_qa/pdf_renders/cad_general_arrangement", "cad-general-arrangement", 4, 2, 2)
+contacts(ROOT / "14_qa/pdf_renders/cad_mounting_plate", "cad-mounting-plate", 2, 2, 1)
 print("Created PDF contact sheets")

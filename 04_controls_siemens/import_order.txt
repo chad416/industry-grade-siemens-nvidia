@@ -1,0 +1,9 @@
+1. 00_types.scl
+2. FB_Actuator2Pos.scl, FB_VFD.scl, FB_FillChannel.scl, FB_VisionInterface.scl, FB_CapperInterface.scl, FB_RecipeManager.scl, FB_AlarmManager.scl, FB_HMICommandManager.scl, FB_MachineCoordinator.scl
+3. DB_Global.scl
+4. FB_CellMain.scl
+5. DB_CellMain.scl
+6. OB1_Call_Structure.scl
+7. OB100_Startup.scl
+
+Static design order only. Import and compile in TIA Portal V20 before any deployability claim.

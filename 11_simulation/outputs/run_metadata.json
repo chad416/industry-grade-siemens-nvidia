@@ -1,0 +1,45 @@
+{
+  "evidence_type": "Independent deterministic Python plant/controller/interface simulation",
+  "native_plcsim": "NOT RUN - PLCSIM/PLCSIM Advanced is not installed",
+  "siemens_execution_claimed": false,
+  "config": {
+    "dt_ms": 20,
+    "max_time_ms": 15000,
+    "target_pulses": [
+      500,
+      500
+    ],
+    "target_volume_ml": 500.0,
+    "pulses_per_ml": 1.0,
+    "flow_rates_ml_s": [
+      260.0,
+      220.0
+    ],
+    "bottle_index_rate_s": 0.85,
+    "gate_travel_ms": 280,
+    "clamp_travel_ms": 260,
+    "valve_travel_ms": 120,
+    "pump_ramp_ms": 180,
+    "position_timeout_ms": 3000,
+    "gate_timeout_ms": 900,
+    "clamp_timeout_ms": 900,
+    "fill_timeout_ms": 5000,
+    "no_flow_timeout_ms": 500,
+    "flow_compare_delay_ms": 500,
+    "valve_mismatch_ms": 160,
+    "drip_settle_ms": 400,
+    "vision_ready_timeout_ms": 1000,
+    "vision_result_timeout_ms": 1000,
+    "heartbeat_period_ms": 500,
+    "heartbeat_stale_ms": 1000,
+    "transfer_timeout_ms": 2000,
+    "capper_ready_timeout_ms": 1000,
+    "capper_busy_timeout_ms": 1000,
+    "capper_complete_timeout_ms": 2000
+  },
+  "scenario_count": 32,
+  "released_scenarios": [
+    "normal_two_bottle_cycle"
+  ],
+  "invariant_violation_count": 0
+}

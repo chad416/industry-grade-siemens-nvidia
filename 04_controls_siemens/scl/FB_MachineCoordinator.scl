@@ -1,33 +1,33 @@
 // FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 FUNCTION_BLOCK "FB_MachineCoordinator"
-VAR_INPUT InitDone : Bool; PermissivesOk : Bool; StartEdge : Bool; StopEdge : Bool; ResetEdge : Bool; ManualRequest : Bool; PairPresent : Bool; GateClosed : Bool; ClampEngaged : Bool; Fill1Done : Bool; Fill2Done : Bool; DripDone : Bool; VisionAccepted : Bool; VisionPass : Bool; CapperReady : Bool; CapperComplete : Bool; BlockingFault : Bool; END_VAR
-VAR_OUTPUT State : UInt; IndexRequest : Bool; GateCloseRequest : Bool; ClampRequest : Bool; FillStartPulse : Bool; VisionRequestPulse : Bool; CapperRequest : Bool; QualityHold : Bool; END_VAR
-VAR step : UInt; lastState : UInt; END_VAR
+VAR_INPUT InitDone : Bool; PermissivesOk : Bool; StartEdge : Bool; StopEdge : Bool; ResetEdge : Bool; AutoRequest : Bool; ManualRequest : Bool; DispositionRemoved : Bool; PairPresent : Bool; PairAbsent : Bool; ConveyorStopped : Bool; GateClosed : Bool; GateOpen : Bool; ClampEngaged : Bool; ClampReleased : Bool; Fill1Done : Bool; Fill2Done : Bool; DripDone : Bool; VisionAccepted : Bool; VisionPass : Bool; CapperReady : Bool; CapperComplete : Bool; BlockingFault : Bool; END_VAR
+VAR_OUTPUT State : "E_MachineState"; AutoStep : "E_AutoStep"; IndexRequest : Bool; GateCloseRequest : Bool; ClampRequest : Bool; FillStartPulse : Bool; VisionRequestPulse : Bool; CapperRequestPulse : Bool; QualityHold : Bool; DispositionRequired : Bool; END_VAR
 BEGIN
-  #FillStartPulse := FALSE; #VisionRequestPulse := FALSE;
-  CASE #State OF
-    0: IF #InitDone THEN #State := 10; END_IF; // UNINITIALIZED -> INITIALIZING
-    10: IF #BlockingFault THEN #State := 80; ELSIF #PermissivesOk THEN #State := 20; END_IF;
-    20: #step := 0; IF #ResetEdge AND #PermissivesOk THEN #State := 30; END_IF;
-    30: IF #ManualRequest THEN #State := 50; ELSIF #StartEdge THEN #State := 40; END_IF;
-    40:
-+      IF #BlockingFault THEN #State := 80;
-+      ELSIF #StopEdge THEN #State := 70;
-+      ELSE
-+        CASE #step OF
-+          0: #IndexRequest := TRUE; IF #PairPresent THEN #IndexRequest := FALSE; #step := 10; END_IF;
-+          10: #GateCloseRequest := TRUE; #ClampRequest := TRUE; IF #GateClosed AND #ClampEngaged THEN #FillStartPulse := TRUE; #step := 20; END_IF;
-+          20: IF #Fill1Done AND #Fill2Done AND #DripDone THEN #VisionRequestPulse := TRUE; #step := 30; END_IF;
-+          30: IF #VisionAccepted THEN IF #VisionPass THEN #step := 40; ELSE #QualityHold := TRUE; #State := 60; END_IF; END_IF;
-+          40: #CapperRequest := #CapperReady; IF #CapperComplete THEN #CapperRequest := FALSE; #GateCloseRequest := FALSE; #ClampRequest := FALSE; #step := 0; END_IF;
-+        END_CASE;
-+      END_IF;
-+    50: IF #StopEdge THEN #State := 70; ELSIF #BlockingFault THEN #State := 80; END_IF;
-+    60: #QualityHold := TRUE; IF #ResetEdge AND NOT #BlockingFault THEN #State := 90; END_IF;
-+    70: #IndexRequest := FALSE; #CapperRequest := FALSE; #State := 20;
-+    80: #QualityHold := TRUE; IF #ResetEdge AND NOT #BlockingFault THEN #State := 90; END_IF;
-+    90: #IndexRequest := FALSE; #CapperRequest := FALSE; #GateCloseRequest := FALSE; #ClampRequest := FALSE; #QualityHold := FALSE; #State := 20;
-+    ELSE #State := 0;
-+  END_CASE;
-+  IF #BlockingFault THEN #IndexRequest := FALSE; #CapperRequest := FALSE; END_IF;
-+END_FUNCTION_BLOCK
+   #FillStartPulse := FALSE; #VisionRequestPulse := FALSE; #CapperRequestPulse := FALSE;
+   CASE #State OF
+      "E_MachineState".UNINITIALIZED: IF #InitDone THEN #State := "E_MachineState".INITIALIZING; END_IF;
+      "E_MachineState".INITIALIZING: IF #BlockingFault THEN #DispositionRequired := NOT #PairAbsent; #State := "E_MachineState".FAULTED; ELSE #State := "E_MachineState".STOPPED; END_IF;
+      "E_MachineState".STOPPED: #IndexRequest := FALSE; #GateCloseRequest := FALSE; #ClampRequest := FALSE; #QualityHold := #DispositionRequired; IF #DispositionRequired THEN #State := "E_MachineState".HOLDING; ELSIF #ResetEdge AND #PermissivesOk THEN #State := "E_MachineState".READY; END_IF;
+      "E_MachineState".READY: IF #BlockingFault THEN #DispositionRequired := NOT #PairAbsent; #State := "E_MachineState".FAULTED; ELSIF #ManualRequest THEN #State := "E_MachineState".MANUAL_SETUP; ELSIF #StartEdge AND #PermissivesOk THEN #DispositionRequired := FALSE; #AutoStep := "E_AutoStep".WAIT_PAIR; #State := "E_MachineState".AUTOMATIC; END_IF;
+      "E_MachineState".AUTOMATIC:
+         IF #BlockingFault THEN #DispositionRequired := (NOT #PairAbsent) OR (#AutoStep <> "E_AutoStep".WAIT_PAIR); #State := "E_MachineState".FAULTED;
+         ELSIF #StopEdge THEN #DispositionRequired := (NOT #PairAbsent) OR (#AutoStep <> "E_AutoStep".WAIT_PAIR); #State := "E_MachineState".CONTROLLED_STOPPING;
+         ELSE
+            CASE #AutoStep OF
+               "E_AutoStep".WAIT_PAIR: #IndexRequest := TRUE; IF #PairPresent THEN #IndexRequest := FALSE; #AutoStep := "E_AutoStep".SECURE_PAIR; END_IF;
+               "E_AutoStep".SECURE_PAIR: #GateCloseRequest := TRUE; #ClampRequest := TRUE; IF #ConveyorStopped AND #GateClosed AND #ClampEngaged THEN #FillStartPulse := TRUE; #AutoStep := "E_AutoStep".FILL_PAIR; END_IF;
+               "E_AutoStep".FILL_PAIR: IF #Fill1Done AND #Fill2Done THEN #AutoStep := "E_AutoStep".DRIP_SETTLE; END_IF;
+               "E_AutoStep".DRIP_SETTLE: IF #DripDone THEN #VisionRequestPulse := TRUE; #AutoStep := "E_AutoStep".INSPECT; END_IF;
+               "E_AutoStep".INSPECT: IF #VisionAccepted THEN IF #VisionPass THEN #CapperRequestPulse := TRUE; #AutoStep := "E_AutoStep".TRANSFER; ELSE #DispositionRequired := TRUE; #QualityHold := TRUE; #State := "E_MachineState".HOLDING; END_IF; END_IF;
+               "E_AutoStep".TRANSFER: IF #CapperComplete THEN #GateCloseRequest := FALSE; #ClampRequest := FALSE; #AutoStep := "E_AutoStep".RELEASE_PAIR; END_IF;
+               "E_AutoStep".RELEASE_PAIR: IF #GateOpen AND #ClampReleased AND #PairAbsent THEN #DispositionRequired := FALSE; #AutoStep := "E_AutoStep".WAIT_PAIR; #State := "E_MachineState".READY; END_IF;
+            END_CASE;
+         END_IF;
+      "E_MachineState".MANUAL_SETUP: IF #BlockingFault THEN #DispositionRequired := NOT #PairAbsent; #State := "E_MachineState".FAULTED; ELSIF #StopEdge THEN #DispositionRequired := NOT #PairAbsent; #State := "E_MachineState".CONTROLLED_STOPPING; ELSIF #AutoRequest THEN #State := "E_MachineState".READY; END_IF;
+      "E_MachineState".HOLDING: #QualityHold := TRUE; IF #DispositionRemoved AND #PairAbsent AND NOT #BlockingFault THEN #DispositionRequired := FALSE; #State := "E_MachineState".RECOVERY_RESET; END_IF;
+      "E_MachineState".CONTROLLED_STOPPING: #IndexRequest := FALSE; IF #ConveyorStopped THEN IF #DispositionRequired THEN #State := "E_MachineState".HOLDING; ELSE #State := "E_MachineState".STOPPED; END_IF; END_IF;
+      "E_MachineState".FAULTED: #IndexRequest := FALSE; #QualityHold := TRUE; IF #ResetEdge AND NOT #BlockingFault THEN IF #DispositionRequired THEN #State := "E_MachineState".HOLDING; ELSE #State := "E_MachineState".RECOVERY_RESET; END_IF; END_IF;
+      "E_MachineState".RECOVERY_RESET: #IndexRequest := FALSE; #GateCloseRequest := FALSE; #ClampRequest := FALSE; #QualityHold := FALSE; #State := "E_MachineState".STOPPED;
+   END_CASE;
+   IF #BlockingFault THEN #IndexRequest := FALSE; #FillStartPulse := FALSE; #VisionRequestPulse := FALSE; #CapperRequestPulse := FALSE; END_IF;
+END_FUNCTION_BLOCK

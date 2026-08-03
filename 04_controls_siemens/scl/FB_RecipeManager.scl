@@ -1,9 +1,23 @@
 // FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 FUNCTION_BLOCK "FB_RecipeManager"
-VAR_INPUT Candidate : "UDT_Recipe"; ApplyEdge : Bool; MachineStopped : Bool; END_VAR
-VAR_OUTPUT Active : "UDT_Recipe"; Valid : Bool; Rejected : Bool; END_VAR
+VAR_INPUT Candidate : "UDT_Recipe"; ApplyRequest : Bool; RequestSeq : UDInt; MachineStopped : Bool; END_VAR
+VAR_OUTPUT Active : "UDT_Recipe"; Valid : Bool; Rejected : Bool; AcceptedSeq : UDInt; RejectedSeq : UDInt; END_VAR
 BEGIN
-  #Valid := (#Candidate.TargetPulsesCh1 >= 100) AND (#Candidate.TargetPulsesCh1 <= 10000000) AND (#Candidate.TargetPulsesCh2 >= 100) AND (#Candidate.TargetPulsesCh2 <= 10000000) AND (#Candidate.TargetFillLevel >= 0.1) AND (#Candidate.TargetFillLevel <= 0.95);
-  #Rejected := #ApplyEdge AND (NOT #MachineStopped OR NOT #Valid);
-  IF #ApplyEdge AND #MachineStopped AND #Valid THEN #Active := #Candidate; END_IF;
+   #Valid := (#Candidate.TargetMlCh1 >= 10.0) AND (#Candidate.TargetMlCh1 <= 10000.0)
+      AND (#Candidate.TargetMlCh2 >= 10.0) AND (#Candidate.TargetMlCh2 <= 10000.0)
+      AND (#Candidate.PulsesPerLitreCh1 >= 1.0) AND (#Candidate.PulsesPerLitreCh1 <= 10000000.0)
+      AND (#Candidate.PulsesPerLitreCh2 >= 1.0) AND (#Candidate.PulsesPerLitreCh2 <= 10000000.0)
+      AND (#Candidate.UnderToleranceMl >= 0.0) AND (#Candidate.OverToleranceMl >= 0.0)
+      AND (#Candidate.NoFlowTimeout >= T#100ms) AND (#Candidate.FillTimeout > #Candidate.NoFlowTimeout)
+      AND (#Candidate.ValveOpenTimeout >= T#100ms) AND (#Candidate.ValveCloseTimeout >= T#100ms)
+      AND (#Candidate.PlausibilityTime >= T#100ms) AND (#Candidate.PulseWindowTimeS >= 0.1)
+      AND (#Candidate.DripSettleTime >= T#100ms) AND (#Candidate.VisionTimeout >= T#100ms)
+      AND ((#Candidate.TargetMlCh1 * #Candidate.PulsesPerLitreCh1) >= 1000.0)
+      AND ((#Candidate.TargetMlCh2 * #Candidate.PulsesPerLitreCh2) >= 1000.0)
+      AND (#Candidate.TargetFillLevel >= 0.1) AND (#Candidate.TargetFillLevel <= 1.0);
+   #Rejected := FALSE;
+   IF #ApplyRequest AND (#RequestSeq <> #AcceptedSeq) AND (#RequestSeq <> #RejectedSeq) THEN
+      IF #MachineStopped AND #Valid THEN #Active := #Candidate; #AcceptedSeq := #RequestSeq;
+      ELSE #Rejected := TRUE; #RejectedSeq := #RequestSeq; END_IF;
+   END_IF;
 END_FUNCTION_BLOCK

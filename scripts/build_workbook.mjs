@@ -5,17 +5,20 @@ import { SpreadsheetFile, Workbook } from "@oai/artifact-tool";
 const root = process.cwd();
 const scheduleDir = path.join(root, "10_schedules");
 const previewDir = path.join(root, "14_qa", "workbook_renders");
+await fs.rm(previewDir, { recursive: true, force: true });
 await fs.mkdir(previewDir, { recursive: true });
 
 const sheets = [
   ["siemens_hardware.csv", "Siemens Hardware"],
   ["plc_io.csv", "PLC I-O"],
+  ["drive_interfaces.csv", "Drive PZD"],
   ["hmi_tags.csv", "HMI Tags"],
   ["alarms.csv", "Alarms"],
   ["vfd_parameters.csv", "VFD Parameters"],
   ["nvidia_interface_tags.csv", "NVIDIA Interface"],
   ["network_nodes.csv", "Network Nodes"],
   ["terminal_plan.csv", "Terminal Plan"],
+  ["point_to_point_connections.csv", "Point-to-Point"],
   ["cable_schedule.csv", "Cable Schedule"],
   ["wire_list.csv", "Wire List"],
   ["bom.csv", "BOM"],
@@ -23,12 +26,22 @@ const sheets = [
   ["panel_placement.csv", "Panel Placement"],
   ["requirements_traceability.csv", "Requirements Trace"],
   ["test_coverage.csv", "Test Coverage"],
+  ["input_request_register.csv", "Input Requests"],
+  ["acceptance_gates.csv", "Acceptance Gates"],
+  ["document_register.csv", "Document Register"],
 ];
 
-const firstCsv = await fs.readFile(path.join(scheduleDir, sheets[0][0]), "utf8");
+// IEC 81346 designations intentionally begin with "=".  Protect those CSV
+// fields from being interpreted as spreadsheet formulas while retaining the
+// visible designation text (the leading apostrophe is an Excel text marker).
+function protectDesignationText(csvText) {
+  return csvText.replace(/(^|,)(=FC01\+)/gm, "$1'$2");
+}
+
+const firstCsv = protectDesignationText(await fs.readFile(path.join(scheduleDir, sheets[0][0]), "utf8"));
 const workbook = await Workbook.fromCSV(firstCsv, { sheetName: sheets[0][1] });
 for (const [file, name] of sheets.slice(1)) {
-  await workbook.fromCSV(await fs.readFile(path.join(scheduleDir, file), "utf8"), { sheetName: name });
+  await workbook.fromCSV(protectDesignationText(await fs.readFile(path.join(scheduleDir, file), "utf8")), { sheetName: name });
 }
 
 function columnName(index) {
@@ -42,6 +55,19 @@ function columnName(index) {
   return text;
 }
 
+const proseSheets = new Set([
+  "Alarms",
+  "NVIDIA Interface",
+  "BOM",
+  "Load Budget",
+  "Panel Placement",
+  "Requirements Trace",
+  "Test Coverage",
+  "Input Requests",
+  "Acceptance Gates",
+  "Document Register",
+]);
+
 for (const sheet of workbook.worksheets.items) {
   sheet.showGridLines = false;
   sheet.freezePanes.freezeRows(1);
@@ -49,6 +75,7 @@ for (const sheet of workbook.worksheets.items) {
   const values = used.values;
   const rowCount = values.length;
   const colCount = values[0].length;
+  if (rowCount > 30 || colCount > 10) sheet.freezePanes.freezeColumns(1);
   const last = columnName(colCount - 1);
   used.format = {
     font: { size: 9, color: "#15232D" },
@@ -63,11 +90,13 @@ for (const sheet of workbook.worksheets.items) {
     verticalAlignment: "center",
   };
   sheet.getRange(`A1:${last}1`).format.rowHeightPx = 42;
-  if (rowCount > 1) sheet.getRange(`A2:${last}${rowCount}`).format.rowHeightPx = 36;
+  if (rowCount > 1) {
+    sheet.getRange(`A2:${last}${rowCount}`).format.rowHeightPx = proseSheets.has(sheet.name) ? 72 : 36;
+  }
   for (let col = 0; col < colCount; col += 1) {
     const header = String(values[0][col] ?? "").toLowerCase();
     let width = 155;
-    if (header.includes("description") || header.includes("requirement") || header.includes("response") || header.includes("basis") || header.includes("expected")) width = 270;
+    if (header.includes("description") || header.includes("requirement") || header.includes("response") || header.includes("basis") || header.includes("expected") || header.includes("evidence") || header.includes("limitation")) width = 270;
     else if (header.includes("status") || header.includes("meaning") || header.includes("address") || header.includes("symbol")) width = 180;
     else if (header.includes("sha") || header.includes("path")) width = 240;
     else if (header.includes("qty") || header.includes("id") || header.includes("channel")) width = 85;
@@ -83,12 +112,15 @@ for (const sheet of workbook.worksheets.items) {
 const summary = workbook.worksheets.add("Release Summary");
 summary.showGridLines = false;
 summary.getRange("A1:H2").merge();
-summary.getRange("A1").values = [["FC01 — SIEMENS / NVIDIA ENGINEERING SCHEDULES"]];
+summary.getRange("A1").values = [["FC01 - SIEMENS / NVIDIA ENGINEERING SCHEDULES"]];
 summary.getRange("A1:H2").format = { fill: "#12304A", font: { bold: true, color: "#FFFFFF", size: 18 }, verticalAlignment: "center" };
 summary.getRange("A3:H3").merge();
-summary.getRange("A3").values = [["FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION | Revision B | Overall status: PARTIALLY COMPLETE"]];
+summary.getRange("A3").values = [["FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION | Revision E | Controlled native-engineering release candidate"]];
 summary.getRange("A3:H3").format = { fill: "#EAF1F5", font: { bold: true, color: "#324B5C", size: 10 }, wrapText: true };
-summary.getRange("A5:B13").values = [
+summary.getRange("A4:H4").merge();
+summary.getRange("A4").values = [["CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."]];
+summary.getRange("A4:H4").format = { fill: "#FFF1F1", font: { bold: true, color: "#8B1E2D", size: 8 }, wrapText: true };
+summary.getRange("A5:B17").values = [
   ["Controlled metric", "Value"],
   ["PLC I/O rows", null],
   ["Physical DI", null],
@@ -96,8 +128,12 @@ summary.getRange("A5:B13").values = [
   ["Analog inputs", null],
   ["High-speed counters", null],
   ["Vision contract signals", null],
-  ["Controlled tests", null],
-  ["Open native gates", 4],
+  ["Traceability test records", null],
+  ["PASS gates", null],
+  ["PARTIAL gates", null],
+  ["BLOCKED + OPEN gates", null],
+  ["24 VDC demand (W)", null],
+  ["Minimum current for 25% margin (A)", null],
 ];
 summary.getRange("B6").formulas = [["=COUNTA('PLC I-O'!A2:A200)"]];
 summary.getRange("B7").formulas = [["=COUNTIF('PLC I-O'!B2:B200,\"DI\")"]];
@@ -107,21 +143,31 @@ summary.getRange("B10").formulas = [["=COUNTIF('PLC I-O'!B2:B200,\"HSC\")"]];
 summary.getRange("B11").formulas = [["=COUNTA('NVIDIA Interface'!A2:A100)"]];
 summary.getRange("B12").formulas = [["=COUNTA('Test Coverage'!A2:A100)"]];
 summary.getRange("A5:B5").format = { fill: "#1F6F9F", font: { bold: true, color: "#FFFFFF" } };
-summary.getRange("A6:A13").format = { fill: "#EAF1F5", font: { bold: true, color: "#12304A" } };
-summary.getRange("A5:A13").format.columnWidthPx = 220;
-summary.getRange("B5:B13").format.columnWidthPx = 130;
+summary.getRange("A6:A17").format = { fill: "#EAF1F5", font: { bold: true, color: "#12304A" } };
+summary.getRange("A5:A17").format.columnWidthPx = 260;
+summary.getRange("B5:B17").format.columnWidthPx = 130;
 summary.getRange("D5:H5").merge();
 summary.getRange("D5").values = [["Release boundary"]];
 summary.getRange("D5:H5").format = { fill: "#C43D3D", font: { bold: true, color: "#FFFFFF" } };
-summary.getRange("D6:H13").merge();
-summary.getRange("D6").values = [["Native TIA/WinCC/Startdrive/PLCSIM, trained NVIDIA model, revision-B QElectroTech upgrade and revision-B panel CAD remain blocked. The inherited native electrical/CAD files are quarantined historical baselines. No construction, safety, compile, FAT, SAT or model-performance claim is made."]];
-summary.getRange("D6:H13").format = { fill: "#FFF1F1", font: { color: "#642F36", size: 10 }, wrapText: true, verticalAlignment: "center" };
-for (const col of ["D", "E", "F", "G", "H"]) summary.getRange(`${col}5:${col}13`).format.columnWidthPx = 110;
+summary.getRange("D6:H15").merge();
+summary.getRange("B13").formulas = [["=COUNTIF('Acceptance Gates'!C2:C100,\"PASS\")"]];
+summary.getRange("B14").formulas = [["=COUNTIF('Acceptance Gates'!C2:C100,\"PARTIAL\")"]];
+summary.getRange("B15").formulas = [["=COUNTIF('Acceptance Gates'!C2:C100,\"BLOCKED\")+COUNTIF('Acceptance Gates'!C2:C100,\"OPEN\")"]];
+// Use explicit arithmetic so the portable renderer calculates and caches these
+// release-summary values without depending on cross-sheet recalculation support.
+summary.getRange("B16").formulas = [["=55+24+120+100"]];
+summary.getRange("B17").formulas = [["=(55+24+120+100)/24*1.25"]];
+summary.getRange("D6").values = [["Revision E includes source-tested poll-safe PLC/AI logic, secure asyncua integration and separately controlled native CAD/QET evidence. Native TIA/WinCC/Startdrive/PLCSIM, final site electrical design, trained NVIDIA model, target runtime, FAT/SAT, qualified safety and physical commissioning remain blocked or open exactly as listed. No construction, safety, native compile or model-performance claim is made."]];
+summary.getRange("D6:H15").format = { fill: "#FFF1F1", font: { color: "#642F36", size: 10 }, wrapText: true, verticalAlignment: "center" };
+for (const col of ["D", "E", "F", "G", "H"]) summary.getRange(`${col}5:${col}17`).format.columnWidthPx = 110;
 
 const sheetInfo = await workbook.inspect({ kind: "sheet", include: "id,name", maxChars: 6000 });
 console.log(sheetInfo.ndjson);
 const formulaErrors = await workbook.inspect({ kind: "match", searchTerm: "#REF!|#DIV/0!|#VALUE!|#NAME\\?|#N/A", options: { useRegex: true, maxResults: 100 }, summary: "formula error scan" });
 console.log(formulaErrors.ndjson);
+if (formulaErrors.ndjson.includes('"kind":"match"')) {
+  throw new Error("Workbook formula-error scan found one or more invalid cells");
+}
 
 for (const sheet of workbook.worksheets.items) {
   const preview = await workbook.render({ sheetName: sheet.name, autoCrop: "all", scale: 1, format: "png" });

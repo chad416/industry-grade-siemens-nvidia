@@ -1,17 +1,15 @@
-# Integrated interface-control document
+# PLC-NVIDIA interface control document - Revision E
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-## Physical and logical chain
+## Atomic request and result lifecycle
 
-Field sensor → identified cable/core → numbered terminal → Siemens module/channel → symbolic PLC tag → equipment FB input → coordinator permissive/interlock → HMI diagnostic. The revision-B schedules are machine-generated from the canonical model.
+The PLC owns sequence and publishes the complete request payload with a nonzero retained `SESSION_EPOCH` and strictly monotonic `INSPECTION_ID` before raising `INSPECTION_TRIGGER`. Trigger is a level-held transport request, not a one-scan event: it remains true until coherent `VISION_READY=1, VISION_BUSY=1` is observed or a terminal result arrives. A repeated coordinator pulse cannot mutate the active ID. Session, ID, recipe, expected bottle count and target remain immutable while pending.
 
-## PLC–vision contract
+The edge adapter deduplicates by `(session epoch, inspection ID)`, publishes BUSY when it owns the request, and never processes the same pair twice across polling or reconnect. A matching terminal result may complete before BUSY is sampled. Any wrong, stale, future or regressed session/ID, heartbeat regression/loss, malformed value, model-ID/hash mismatch, contradictory state, low confidence, partial result, warning or fault fails closed to PLC HOLD/FAULT. No edge node can command motion or bypass PLC permissives.
 
-Transport selection: OPC UA using fixed node identifiers in a routed quality VLAN. The PLC publishes request data atomically then toggles `INSPECTION_TRIGGER`; NVIDIA latches the payload, sets busy, and publishes the complete result before `RESULT_VALID`. The PLC accepts a result only when `RESULT_VALID`, `RESULT_ID = INSPECTION_ID`, heartbeat is fresh, ready is true, fault is false and all semantic fields are non-contradictory.
+The immutable result payload is written before `RESULT_VALID`. It remains stable until the PLC writes the exact `RESULT_ACK_ID`; the acknowledgement is transport cleanup only and never grants product transfer. Restart/reconnect re-seeds the coherent PLC snapshot, preserves same-session unacknowledged publication, and permits invalidation only under the controlled serially advanced disabled-session rule.
 
-Timeout: 1000 ms default, recipe-bounded 250–5000 ms. No retry with the same ID. After timeout the PLC enters HOLDING; a new inspection requires a new monotonic ID and explicit operator action. Byte order for non-OPC-UA fallback is big-endian network order. Heartbeats are UDINT counters updated at 500 ms; unchanged for 1500 ms is failed.
-
-Startup defaults are disabled/not ready/result invalid. Shutdown invalidates results. Model identity and SHA-256 are read-only metadata; a model-loading state keeps `VISION_READY = FALSE`. Communications loss, stale ID, low confidence or contradiction can never grant transfer.
+Revision-E automated evidence includes a real encrypted asyncua test server/client and controlled PKI flow, but not a production S7-1500 endpoint, production certificate authority, Jetson deployment or trained model. Native TIA compilation/PLCSIM and site cybersecurity acceptance remain explicit gates.

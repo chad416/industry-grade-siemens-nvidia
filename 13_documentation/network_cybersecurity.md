@@ -1,7 +1,24 @@
-# Network architecture and cybersecurity assumptions
+# Network and cybersecurity design
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-Cell control, quality vision and temporary service are separate zones. Use unique certificates, least-privilege OPC UA nodes, allow-listed ports, disabled unused services, authenticated time, signed backups/model bundles, role-controlled update windows and security event logging. Final firewall, key management, vulnerability response and site policy require owner approval.
+## Zones
+
+VLAN 10 is cell control (PLC, HMI, two drives), VLAN 20 is quality vision, and VLAN 99 is temporary engineering service. A managed SCALANCE XC208 provides port-based VLANs; a SCALANCE S615 routes only approved inter-zone flows. The former 6GK5008-0BA10-1AB2 selection was corrected: it is an unmanaged XB008 and is not used for zoning.
+
+## Allow list
+
+| Source | Destination | Service | Policy |
+|---|---|---|---|
+| 192.168.20.10 | 192.168.10.10 | TCP/4840 | Stateful allow only for the named vision-client certificate/application URI and approved namespace; return traffic only |
+| HMI/Drives VLAN 10 | PLC VLAN 10 | Native PROFINET/HMI traffic | Allow within control zone |
+| Engineering VLAN 99 | Approved nodes | Native engineering services | Disabled in production; maintenance change window only |
+| Any other | Any | Any | Deny and log |
+
+## Identity, rights and certificates
+
+Default deny and log applies at the S615 boundary. Pin PLC-server and vision-client application URIs/certificates to the site trust list; maintain issuance, revocation and expiry records; protect private keys in platform-backed or encrypted storage under named OT ownership. The vision client receives read-only rights to every PLC-owned node, including `VISION_DIAG_REASON`, and write-only rights to the explicitly NVIDIA-owned READY/BUSY/result/model/heartbeat/warning/fault nodes in `plc_ai_node_map.csv`; unrestricted browse, anonymous access, ownership-crossing writes and shared engineering accounts are prohibited. Result writes are ordered payload first and `RESULT_VALID` last; clear `RESULT_VALID` only after matching `RESULT_ACK_ID` or a recorded serially advanced session transition.
+
+NTP, PKI, syslog and engineering-workstation addresses, cipher policy, log retention and vulnerability-response owners remain blocked inputs. Structured logs must correlate session epoch, inspection ID, PLC/vision heartbeat, model ID/hash, diagnostic code and duration without retaining images by default.

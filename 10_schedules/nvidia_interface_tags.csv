@@ -1,6 +1,6 @@
 signal,data_type,owner,meaning,transport,timeout_ms
 VISION_ENABLE,BOOL,PLC,Enable inspection service,OPC UA subscribed/published node,0
-INSPECTION_TRIGGER,BOOL,PLC,One-shot request,OPC UA subscribed/published node,0
+INSPECTION_TRIGGER,BOOL,PLC,Level-held inspection request; remains true until coherent BUSY observation or terminal result for the immutable session/inspection ID,OPC UA subscribed request level; monotonic session/ID is authoritative,0
 INSPECTION_ID,UDINT,PLC,Monotonic correlation identifier,OPC UA subscribed/published node,0
 RECIPE_ID,UINT,PLC,Active recipe identifier,OPC UA subscribed/published node,0
 EXPECTED_BOTTLES,USINT,PLC,Expected count; fixed at 2 for production,OPC UA subscribed/published node,0
@@ -20,3 +20,9 @@ VISION_WARNING,BOOL,NVIDIA,Degraded but communicating,OPC UA subscribed/publishe
 VISION_FAULT,BOOL,NVIDIA,Blocking internal fault,OPC UA subscribed/published node,0
 INFERENCE_TIME,UDINT,NVIDIA,Measured pipeline time in milliseconds,OPC UA subscribed/published node,0
 VISION_HEARTBEAT,UDINT,NVIDIA,Monotonic heartbeat counter,OPC UA subscribed/published node,1000
+VISION_RESULT_ACK_ID,UDINT,PLC,Acknowledges the immutable published result; edge clears RESULT_VALID only on exact match,OPC UA subscribed node,0
+VISION_SESSION_EPOCH,UDINT,PLC,PLC startup/session correlation; reconnect must not replay a prior-session release,OPC UA subscribed node,0
+VISION_RESULT_SESSION_EPOCH,UDINT,NVIDIA,Echoes the request session epoch in the immutable result; PLC rejects cross-session publication,OPC UA published result payload,0
+VISION_DIAG_REASON,UINT,PLC,First-out PLC interface diagnostic enumeration,OPC UA published node,0
+VISION_MODEL_ID,STRING[32],NVIDIA,Controlled model identifier included in the atomic result,OPC UA published result payload,0
+VISION_MODEL_SHA256,STRING[64],NVIDIA,Exact controlled model SHA-256 included in the atomic result,OPC UA published result payload,0

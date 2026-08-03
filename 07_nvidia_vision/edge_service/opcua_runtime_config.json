@@ -1,0 +1,43 @@
+{
+  "status": "REVISION-E PRODUCTION-SHAPED CONFIGURATION - SITE PKI AND PLC ENDPOINT NOT COMMISSIONED",
+  "contract_config": "service_config.json",
+  "security": {
+    "policy": "Basic256Sha256",
+    "mode": "SignAndEncrypt",
+    "application_uri": "urn:fc01:vision-edge:client",
+    "anonymous_access": false,
+    "environment": {
+      "application_certificate": "FC01_OPCUA_APPLICATION_CERTIFICATE",
+      "application_private_key": "FC01_OPCUA_APPLICATION_PRIVATE_KEY",
+      "server_certificate": "FC01_OPCUA_SERVER_CERTIFICATE",
+      "trusted_certificates": "FC01_OPCUA_TRUSTED_CERTIFICATES",
+      "certificate_revocation_lists": "FC01_OPCUA_CERTIFICATE_REVOCATION_LISTS",
+      "user_certificate": "FC01_OPCUA_USER_CERTIFICATE",
+      "user_private_key": "FC01_OPCUA_USER_PRIVATE_KEY"
+    }
+  },
+  "runtime": {
+    "poll_interval_ms": 50,
+    "connect_timeout_ms": 5000,
+    "operation_timeout_ms": 1000,
+    "inference_timeout_ms": 1000,
+    "reconnect_initial_ms": 250,
+    "reconnect_max_ms": 5000,
+    "reconnect_jitter_ms": 100,
+    "coherent_snapshot_attempts": 3
+  },
+  "health": {
+    "bind": "127.0.0.1",
+    "port": 8088,
+    "routes": ["/healthz", "/readyz", "/metrics"],
+    "external_exposure": "PROHIBITED WITHOUT SITE CYBERSECURITY APPROVAL"
+  },
+  "logging": {
+    "format": "JSON lines",
+    "level": "INFO",
+    "path_environment": "FC01_EDGE_LOG_PATH",
+    "default_sink": "stderr",
+    "credentials_and_image_payloads": "NEVER LOGGED"
+  },
+  "model_backend": null
+}

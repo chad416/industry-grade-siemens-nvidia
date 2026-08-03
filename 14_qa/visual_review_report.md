@@ -1,19 +1,19 @@
-# Visual artifact review report
+# Visual artifact review report - Revision E
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
-Review date: 2026-08-02. Renderers: `@oai/artifact-tool` 2.8.31 for XLSX and Poppler 26.05.0 for PDF rasterization.
+> CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-## Engineering workbook
+A software-agent visual review inspected the complete rendered sets. This is not qualified-human electrical, panel, safety or construction approval.
 
-`10_schedules/FC01_engineering_schedules.xlsx` contains 16 rendered sheets: Siemens Hardware, PLC I-O, HMI Tags, Alarms, VFD Parameters, NVIDIA Interface, Network Nodes, Terminal Plan, Cable Schedule, Wire List, BOM, Load Budget, Panel Placement, Requirements Trace, Test Coverage and Release Summary.
+| Artifact | Rendered/inspected | Result |
+|---|---:|---|
+| Engineering workbook | 21/21 sheets | PASS: consistent navy/blue tabular style, frozen/table structure, readable wrapping, no visible clipping; summary shows 5 PASS / 4 PARTIAL / 12 BLOCKED / 1 OPEN and exact release boundary |
+| Release-evidence PDF | 5/5 pages | PASS: titles, tables, margins, footer/page numbers and boundary wording readable |
+| Revision-E CAD general arrangement | 4/4 pages | PASS: front, isometric/depth, door and segregation/clearance views readable; provisional assumptions visible |
+| Revision-E mounting-plate PDF | 2/2 pages | PASS: dimensioned layout and 30-hole coordinate register readable; construction boundary visible |
+| Native CAD PNG views | 4/4 views | PASS: front, isometric, segregation and door images open without corruption; provenance is bounded in native evidence |
+| Historical QET baseline PDF | 24/24 pages | PASS for retained historical legibility only; it remains Revision A and is not the current schematic package |
+| Corrected Revision-E QET | 0/26 final-hash folios | BLOCKED: no corrected-hash native reopen/PDF export, so no all-page visual pass is claimed |
 
-Every sheet was rendered to PNG and reviewed via four contact sheets; the four tall schedules were also inspected at original resolution. Headers, row banding, cell wrapping, formulas, numeric values and open-gate notices are legible with no clipped columns or overlapping text. Artifact-tool's formula-error scan matched zero cells.
-
-## Release evidence PDF
-
-`release/FC01_release_evidence.pdf` is a five-page A4 landscape PDF. All pages were rasterized and reviewed. A first render exposed unwrapped table text; the table cells were changed to paragraph flowables, the PDF was regenerated, and both the contact sheet and detailed pages 1 and 4 were re-inspected. Final result: no overlap, cutoff, missing glyph or misleading status statement observed.
-
-## Inherited QElectroTech baseline PDF
-
-`03_electrical/native_baseline/filling_cell_schematics.pdf` is a 24-page QElectroTech-generated Rev-A baseline. Every page was rasterized and reviewed in four contact sheets. Pages are legible, but the review confirms the electrical gate deficiency: device/module representations are generic, many folios are block-level, terminal/cable pages do not establish point-to-point continuity, and the exact revision-B safety wording/Siemens/NVIDIA hardware are absent. This PDF is retained only under `native_baseline` and is not accepted as the revision-B electrical deliverable.
+The release PDF and workbook were rebuilt twice with identical controlled hashes. Contact sheets are controlled for audit navigation; detailed source files remain authoritative.

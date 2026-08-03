@@ -1,9 +1,411 @@
-# Automated validation report
+# Automated validation report — Revision E
 
 Result: **PASS**
 
+This is deterministic static/data/independent-model validation. Native QET/FreeCAD results are accepted only through separate controlled reopen/reimport evidence; this report is not TIA, WinCC, Startdrive, PLCSIM or physical proof.
+
 ## Passed checks
 
+- 0 V/return commons scheduled
+- 2 HSC channels allocated
+- 24 VDC 25-percent demand-margin current is 15.573 A before inrush/derating
+- 24 VDC subtotal reconciles without a false aggregate demand factor
+- 32 DI channels allocated
+- 32 DO channels allocated
+- 32 scenario summaries generated
+- 8 AI channels allocated
+- BOM covers all I/O devices: []
+- CPU/TIA V20 firmware baseline documented
+- FCStd historical baseline container has 76 entries
+- HMI heartbeat rationale describes fail-closed counter supervision
+- HMI is door-mounted
+- HMI never writes physical output symbols
+- K100 safety-interface monitor has explicit supply and signal conductors
+- OB1 executes root cell instance
+- PLC physical addresses unique
+- PLC symbols unique
+- Poppler renderer version is locked
+- QET historical baseline is well-formed XML
+- RecipeManager owns atomic apply acceptance/rejection
+- Revision-E QET contains at least 24 controlled folios
+- Revision-E QET static verifier records exactly 24/24 passing checks
+- Revision-E QET verification hash matches the controlled corrected source
+- Revision-E QElectroTech native source is controlled
+- Revision-E STEP/IGES/DXF exchange set is controlled
+- Revision-E native FCStd source is controlled
+- Revision-E real OPC UA integration contract present: test_missed_one_scan_request_level_fails_closed
+- Revision-E real OPC UA integration contract present: test_secure_named_client_endpoint_and_atomic_acknowledged_result
+- Revision-E real OPC UA integration contract present: test_unsolicited_server_side_publication_fails_closed
+- S102 guard monitor has explicit dry-contact supply and signal conductors
+- acceptance_gates.csv exactly derives from canonical model
+- alarms.csv exactly derives from canonical model
+- all BOM rows use strict full reference designations
+- all analog returns reference the dedicated MANA common
+- all source alarm mappings exist in canonical alarm schedule: []
+- all standard output commands are assigned: []
+- all writable HMI tags use DB_HMI command requests
+- analog/HSC shields scheduled
+- artifact-reproduction Python version is locked
+- artifact-reproduction toolchain lock is Revision E
+- artifact-tool version is locked
+- balanced DATA_BLOCK endings: DB_CellMain.scl
+- balanced DATA_BLOCK endings: DB_Global.scl
+- balanced FUNCTION_BLOCK endings: FB_Actuator2Pos.scl
+- balanced FUNCTION_BLOCK endings: FB_AlarmManager.scl
+- balanced FUNCTION_BLOCK endings: FB_CapperInterface.scl
+- balanced FUNCTION_BLOCK endings: FB_CellMain.scl
+- balanced FUNCTION_BLOCK endings: FB_FillChannel.scl
+- balanced FUNCTION_BLOCK endings: FB_HMICommandManager.scl
+- balanced FUNCTION_BLOCK endings: FB_MachineCoordinator.scl
+- balanced FUNCTION_BLOCK endings: FB_RecipeManager.scl
+- balanced FUNCTION_BLOCK endings: FB_VFD.scl
+- balanced FUNCTION_BLOCK endings: FB_VisionInterface.scl
+- balanced ORGANIZATION_BLOCK endings: OB100_Startup.scl
+- balanced ORGANIZATION_BLOCK endings: OB1_Call_Structure.scl
+- blocking-fault arbitration includes AirPressureOk
+- blocking-fault arbitration includes Capper.Fault
+- blocking-fault arbitration includes Clamp.Fault
+- blocking-fault arbitration includes CommunicationsHealthy
+- blocking-fault arbitration includes Gate.Fault
+- blocking-fault arbitration includes GuardClosed
+- blocking-fault arbitration includes ProductSupplyOk
+- blocking-fault arbitration includes Vision.Fault
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -A100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -A101
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -A102
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -A103
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -A104
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -FW100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -PC200
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -PE100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -SW100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -U100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -U101
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -WD100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -X100..-X199
+- bom.csv exactly derives from canonical model
+- cable/core allocations unique
+- cable_schedule.csv exactly derives from canonical model
+- canonical cell inputs are normalized and consumed: []
+- canonical major-device coordinates, envelopes and clearances match the native Revision-E placement schedule
+- canonical revision E
+- capper external/handshake faults map to alarm 1402
+- capper reset requires all diagnosed causes cleared
+- command arbitration separated from output mapper
+- complete relay coil/contact/load path: AUDIBLE_ALARM
+- complete relay coil/contact/load path: CAMERA_LIGHT_ENABLE
+- complete relay coil/contact/load path: CAPPER_REQUEST
+- complete relay coil/contact/load path: CLAMP_ENGAGE_CMD
+- complete relay coil/contact/load path: CLAMP_RELEASE_CMD
+- complete relay coil/contact/load path: FILL_VALVE_1_OPEN_CMD
+- complete relay coil/contact/load path: FILL_VALVE_2_OPEN_CMD
+- complete relay coil/contact/load path: GATE_CLOSE_CMD
+- complete relay coil/contact/load path: GATE_OPEN_CMD
+- complete relay coil/contact/load path: STACK_AMBER
+- complete relay coil/contact/load path: STACK_GREEN
+- complete relay coil/contact/load path: STACK_RED
+- complete reproduction verifies the locked artifact toolchain
+- component rationale separates selection status from open evidence/blocker
+- component_rationale.csv exactly derives from canonical model
+- composed PLC/edge test covers rejected delayed publication cleanup and rearm
+- connection mandatory fields populated
+- contradictory hardwired drive run/status I/O removed
+- controlled determinism report uses source-neutral authoritative-snapshot wording
+- controlled hardware schedule and native CAD agree on drive, firewall and edge-compute envelopes
+- current equipment faults arbitrate and permissives recompute before one-shot power-recovery reset reaches coordinator
+- determinism exports authoritative index or HEAD snapshots
+- determinism report is byte-identical for index and HEAD sources
+- direct Revision-D interface test present: test_analog_zero_pulses_positive
+- direct Revision-D interface test present: test_both_measurements_no_flow
+- direct Revision-D interface test present: test_busy_ready_contradiction
+- direct Revision-D interface test present: test_counter_rollover
+- direct Revision-D interface test present: test_duplicate_request_id
+- direct Revision-D interface test present: test_future_id
+- direct Revision-D interface test present: test_pulse_zero_analog_positive
+- direct Revision-D interface test present: test_reset_after_stale
+- direct Revision-D interface test present: test_reset_does_not_restart
+- direct Revision-D interface test present: test_result_valid_stuck_high
+- direct Revision-D interface test present: test_stale_id
+- direct Revision-D interface test present: test_timeout_then_delayed_result
+- direct Revision-D interface test present: test_timer_boundary
+- drive PZD process-image mapping present
+- drive_interfaces.csv exactly derives from canonical model
+- duplicate vision request cannot advance the active inspection ID
+- edge config node IDs exactly match generated node map
+- edge config records disabled four-counter anti-replay synchronization
+- edge node map/config exactly track canonical vision signals
+- edge publication remains immutable through same-session faults and records new-session invalidation
+- edge rearm reuses one protected validated identity read
+- edge service enforces monotonic/matched inspection IDs
+- edge service is fail-closed on model identity and timed heartbeat
+- edge tests cover malformed ACK and model-identity ingress
+- every cable is referenced by connection records
+- exact 15-file Siemens type/FB/DB/OB source inventory present
+- exact notice present: 00_project_control/design_basis.md
+- exact notice present: 14_qa/acceptance_gate_status.md
+- exact notice present: AGENTS.md
+- exact notice present: README.md
+- exact notice present: release/RELEASE_NOTES.md
+- exact safety boundary present: 00_project_control/design_basis.md
+- exact safety boundary present: 14_qa/acceptance_gate_status.md
+- exact safety boundary present: AGENTS.md
+- exact safety boundary present: README.md
+- exact safety boundary present: release/RELEASE_NOTES.md
+- expanded panel and field BOM has at least 45 controlled lines
+- explicit Git byte policy includes * text=auto eol=lf
+- explicit Git byte policy includes *.FCStd    -text
+- explicit Git byte policy includes *.dxf      -text
+- explicit Git byte policy includes *.example  text eol=lf
+- explicit Git byte policy includes *.iges     -text
+- explicit Git byte policy includes *.log      text eol=lf
+- explicit Git byte policy includes *.pdf      -text
+- explicit Git byte policy includes *.png      -text
+- explicit Git byte policy includes *.qet      -text
+- explicit Git byte policy includes *.service  text eol=lf
+- explicit Git byte policy includes *.step     -text
+- explicit Git byte policy includes *.xlsx     -text
+- explicit TM Count M/reference conductor: FLOW_1_PULSE
+- explicit TM Count M/reference conductor: FLOW_2_PULSE
+- external connection cable/core/terminal fields populated
+- external connections use strict class-number reference designations
+- external panel terminals unique
+- field and relay terminals are not double-landed
+- fill start/reset/post-close contract includes #FlowLMin <= #NoFlowMinLMin
+- fill start/reset/post-close contract includes #scanDelta := 0; #lastPulseTotal := #PulseTotal
+- fill start/reset/post-close contract includes NOT #AnalogBrokenWire
+- fill start/reset/post-close contract includes NOT #closing
+- fill start/reset/post-close contract includes tFlowStopped
+- fill-channel implements ABORTED
+- fill-channel implements ANALOG_NO_FLOW
+- fill-channel implements CounterDiscontinuity
+- fill-channel implements CounterRolloverObserved
+- fill-channel implements MeasurementWindowValid
+- fill-channel implements PULSE_COUNTER_DISCONTINUITY
+- fill-channel implements PULSE_MISSING
+- fill-channel implements PumpRequest
+- fill-channel implements comparisonArmed
+- fill-channel implements tAnalogNoFlow
+- fill-channel implements tPulseMissing
+- fill-channel implements tValveClose
+- fresh-clone Revision-E CI workflow is controlled
+- generated Siemens source parity: 00_types.scl
+- generated Siemens source parity: DB_CellMain.scl
+- generated Siemens source parity: DB_Global.scl
+- generated Siemens source parity: FB_Actuator2Pos.scl
+- generated Siemens source parity: FB_AlarmManager.scl
+- generated Siemens source parity: FB_CapperInterface.scl
+- generated Siemens source parity: FB_CellMain.scl
+- generated Siemens source parity: FB_FillChannel.scl
+- generated Siemens source parity: FB_HMICommandManager.scl
+- generated Siemens source parity: FB_MachineCoordinator.scl
+- generated Siemens source parity: FB_RecipeManager.scl
+- generated Siemens source parity: FB_VFD.scl
+- generated Siemens source parity: FB_VisionInterface.scl
+- generated Siemens source parity: OB100_Startup.scl
+- generated Siemens source parity: OB1_Call_Structure.scl
+- guard-status mirror maps to controlled S102 dry-contact interface
+- hardware and panel rows use strict full reference designations
+- historical native baseline retained: 03_electrical/native_baseline/filling_cell.qet
+- historical native baseline retained: 09_panel_cad/native_baseline/filling_cell_panel.FCStd
+- historical native baseline retained: 09_panel_cad/native_baseline/mounting_plate.dxf
+- hmi_tags.csv exactly derives from canonical model
+- inherited Revision-D.1 edge regression test present: test_advanced_disabled_session_invalidates_prior_publication
+- inherited Revision-D.1 edge regression test present: test_initial_zero_ack_poll_is_idempotent
+- inherited Revision-D.1 edge regression test present: test_model_identity_rejects_whitespace_control_and_path_characters
+- inherited Revision-D.1 edge regression test present: test_publication_survives_transport_fault_reset_and_wrong_ack
+- inherited Revision-D.1 edge regression test present: test_same_session_reset_rejects_regressed_plc_snapshot
+- inherited Revision-D.1 edge regression test present: test_same_session_reset_snapshot_can_carry_exact_ack
+- inherited Revision-D.1 edge regression test present: test_tick_contains_session_change_for_polling_adapter
+- input_request_register.csv exactly derives from canonical model
+- insulated-core allocation/spares reconcile: C001
+- insulated-core allocation/spares reconcile: C002
+- insulated-core allocation/spares reconcile: C003
+- insulated-core allocation/spares reconcile: C004
+- insulated-core allocation/spares reconcile: C005
+- insulated-core allocation/spares reconcile: C006
+- insulated-core allocation/spares reconcile: C007
+- insulated-core allocation/spares reconcile: C008
+- insulated-core allocation/spares reconcile: C009
+- insulated-core allocation/spares reconcile: C010
+- insulated-core allocation/spares reconcile: C011
+- insulated-core allocation/spares reconcile: C012
+- insulated-core allocation/spares reconcile: C013
+- insulated-core allocation/spares reconcile: C014
+- insulated-core allocation/spares reconcile: C015
+- insulated-core allocation/spares reconcile: C016
+- insulated-core allocation/spares reconcile: C017
+- insulated-core allocation/spares reconcile: C018
+- insulated-core allocation/spares reconcile: C019
+- insulated-core allocation/spares reconcile: C020
+- insulated-core allocation/spares reconcile: C021
+- insulated-core allocation/spares reconcile: C022
+- known panel bodies do not overlap: -A100 / -A101
+- known panel bodies do not overlap: -A100 / -A102
+- known panel bodies do not overlap: -A100 / -A103
+- known panel bodies do not overlap: -A100 / -A104
+- known panel bodies do not overlap: -A100 / -FW100
+- known panel bodies do not overlap: -A100 / -PC200
+- known panel bodies do not overlap: -A100 / -PE100
+- known panel bodies do not overlap: -A100 / -SW100
+- known panel bodies do not overlap: -A100 / -U100
+- known panel bodies do not overlap: -A100 / -U101
+- known panel bodies do not overlap: -A100 / -WD100
+- known panel bodies do not overlap: -A100 / -X100..-X199
+- known panel bodies do not overlap: -A101 / -A102
+- known panel bodies do not overlap: -A101 / -A103
+- known panel bodies do not overlap: -A101 / -A104
+- known panel bodies do not overlap: -A101 / -FW100
+- known panel bodies do not overlap: -A101 / -PC200
+- known panel bodies do not overlap: -A101 / -PE100
+- known panel bodies do not overlap: -A101 / -SW100
+- known panel bodies do not overlap: -A101 / -U100
+- known panel bodies do not overlap: -A101 / -U101
+- known panel bodies do not overlap: -A101 / -WD100
+- known panel bodies do not overlap: -A101 / -X100..-X199
+- known panel bodies do not overlap: -A102 / -A103
+- known panel bodies do not overlap: -A102 / -A104
+- known panel bodies do not overlap: -A102 / -FW100
+- known panel bodies do not overlap: -A102 / -PC200
+- known panel bodies do not overlap: -A102 / -PE100
+- known panel bodies do not overlap: -A102 / -SW100
+- known panel bodies do not overlap: -A102 / -U100
+- known panel bodies do not overlap: -A102 / -U101
+- known panel bodies do not overlap: -A102 / -WD100
+- known panel bodies do not overlap: -A102 / -X100..-X199
+- known panel bodies do not overlap: -A103 / -A104
+- known panel bodies do not overlap: -A103 / -FW100
+- known panel bodies do not overlap: -A103 / -PC200
+- known panel bodies do not overlap: -A103 / -PE100
+- known panel bodies do not overlap: -A103 / -SW100
+- known panel bodies do not overlap: -A103 / -U100
+- known panel bodies do not overlap: -A103 / -U101
+- known panel bodies do not overlap: -A103 / -WD100
+- known panel bodies do not overlap: -A103 / -X100..-X199
+- known panel bodies do not overlap: -A104 / -FW100
+- known panel bodies do not overlap: -A104 / -PC200
+- known panel bodies do not overlap: -A104 / -PE100
+- known panel bodies do not overlap: -A104 / -SW100
+- known panel bodies do not overlap: -A104 / -U100
+- known panel bodies do not overlap: -A104 / -U101
+- known panel bodies do not overlap: -A104 / -WD100
+- known panel bodies do not overlap: -A104 / -X100..-X199
+- known panel bodies do not overlap: -FW100 / -PC200
+- known panel bodies do not overlap: -FW100 / -PE100
+- known panel bodies do not overlap: -FW100 / -WD100
+- known panel bodies do not overlap: -FW100 / -X100..-X199
+- known panel bodies do not overlap: -PC200 / -PE100
+- known panel bodies do not overlap: -PC200 / -WD100
+- known panel bodies do not overlap: -PC200 / -X100..-X199
+- known panel bodies do not overlap: -PE100 / -WD100
+- known panel bodies do not overlap: -PE100 / -X100..-X199
+- known panel bodies do not overlap: -SW100 / -FW100
+- known panel bodies do not overlap: -SW100 / -PC200
+- known panel bodies do not overlap: -SW100 / -PE100
+- known panel bodies do not overlap: -SW100 / -WD100
+- known panel bodies do not overlap: -SW100 / -X100..-X199
+- known panel bodies do not overlap: -U100 / -FW100
+- known panel bodies do not overlap: -U100 / -PC200
+- known panel bodies do not overlap: -U100 / -PE100
+- known panel bodies do not overlap: -U100 / -SW100
+- known panel bodies do not overlap: -U100 / -U101
+- known panel bodies do not overlap: -U100 / -WD100
+- known panel bodies do not overlap: -U100 / -X100..-X199
+- known panel bodies do not overlap: -U101 / -FW100
+- known panel bodies do not overlap: -U101 / -PC200
+- known panel bodies do not overlap: -U101 / -PE100
+- known panel bodies do not overlap: -U101 / -SW100
+- known panel bodies do not overlap: -U101 / -WD100
+- known panel bodies do not overlap: -U101 / -X100..-X199
+- known panel bodies do not overlap: -X100..-X199 / -WD100
+- load_budget.csv exactly derives from canonical model
+- malformed acknowledgement faults without clearing the current publication
+- manifest builder hashes staged Git-index bytes
+- manifest verifier supports authoritative sources and rejects unexpected files
+- manual HMI rationale describes decommanded hold-to-run behavior
+- manual commands are explicit heartbeat-supervised hold-to-run requests
+- manual conveyor and secure motions are mutually exclusive and stop-sequenced
+- manual pump and valve path requires stopped conveyor and secured pair
+- manual secure hold-to-run path includes #manualConveyorInterlocked
+- manual secure hold-to-run path includes #manualPumpInterlocked
+- manual secure hold-to-run path includes #manualSecureInterlocked
+- manual secure hold-to-run path includes ClampRequest OR #manualSecureInterlocked
+- manual secure hold-to-run path includes GateCloseRequest OR #manualSecureInterlocked
+- manual secure hold-to-run path includes ManualSecureRequest
+- mode acceptance permissions match coordinator-consumed states
+- model identity shape is validated before indexing
+- native PN/TM Count adapter consumed: ConveyorPnIoValid
+- native PN/TM Count adapter consumed: Flow1ChannelFault
+- native PN/TM Count adapter consumed: Flow1PulseTotal
+- native PN/TM Count adapter consumed: Flow2ChannelFault
+- native PN/TM Count adapter consumed: Flow2PulseTotal
+- native PN/TM Count adapter consumed: PumpPnIoValid
+- native verification record has truthful status: 03_electrical/revision_e/native_verification.json
+- native verification record has truthful status: 09_panel_cad/revision_e/native_verification.json
+- native verification record is controlled: 03_electrical/revision_e/native_verification.json
+- native verification record is controlled: 09_panel_cad/revision_e/native_verification.json
+- network_nodes.csv exactly derives from canonical model
+- no fabricated native/model artifacts: []
+- no forbidden source placeholder: 00_types.scl
+- no forbidden source placeholder: DB_CellMain.scl
+- no forbidden source placeholder: DB_Global.scl
+- no forbidden source placeholder: FB_Actuator2Pos.scl
+- no forbidden source placeholder: FB_AlarmManager.scl
+- no forbidden source placeholder: FB_CapperInterface.scl
+- no forbidden source placeholder: FB_CellMain.scl
+- no forbidden source placeholder: FB_FillChannel.scl
+- no forbidden source placeholder: FB_HMICommandManager.scl
+- no forbidden source placeholder: FB_MachineCoordinator.scl
+- no forbidden source placeholder: FB_RecipeManager.scl
+- no forbidden source placeholder: FB_VFD.scl
+- no forbidden source placeholder: FB_VisionInterface.scl
+- no forbidden source placeholder: OB100_Startup.scl
+- no forbidden source placeholder: OB1_Call_Structure.scl
+- no leading patch artifact: 00_types.scl
+- no leading patch artifact: DB_CellMain.scl
+- no leading patch artifact: DB_Global.scl
+- no leading patch artifact: FB_Actuator2Pos.scl
+- no leading patch artifact: FB_AlarmManager.scl
+- no leading patch artifact: FB_CapperInterface.scl
+- no leading patch artifact: FB_CellMain.scl
+- no leading patch artifact: FB_FillChannel.scl
+- no leading patch artifact: FB_HMICommandManager.scl
+- no leading patch artifact: FB_MachineCoordinator.scl
+- no leading patch artifact: FB_RecipeManager.scl
+- no leading patch artifact: FB_VFD.scl
+- no leading patch artifact: FB_VisionInterface.scl
+- no leading patch artifact: OB100_Startup.scl
+- no leading patch artifact: OB1_Call_Structure.scl
+- no uncontrolled FreeCAD backup remains in the release tree
+- nvidia_interface_tags.csv exactly derives from canonical model
+- only normal scenario releases product
+- overall cable shields are separate from insulated cores and carry no invented size/color
+- panel placement no longer uses identical envelopes
+- panel-scope BOM rows use CP01 location
+- panel_placement.csv exactly derives from canonical model
+- plc_io.csv exactly derives from canonical model
+- point_to_point_connections.csv exactly derives from canonical model
+- power, analog-reference and shield reference terminals are scheduled
+- production-shaped OPC UA adapter/test evidence includes INSPECTION_ID
+- production-shaped OPC UA adapter/test evidence includes RESULT_ACK_ID
+- production-shaped OPC UA adapter/test evidence includes SESSION_EPOCH
+- production-shaped OPC UA adapter/test evidence includes SecurityPolicyBasic256Sha256
+- production-shaped OPC UA adapter/test evidence includes certificate
+- production-shaped OPC UA adapter/test evidence includes health
+- production-shaped OPC UA adapter/test evidence includes metrics
+- production-shaped OPC UA adapter/test evidence includes namespace
+- production-shaped OPC UA adapter/test evidence includes trust
+- rationale covers every HMI tag
+- rationale covers every NVIDIA interface signal
+- rationale covers every PLC channel
+- rationale covers every alarm
+- rationale covers every cable
+- rationale covers every terminal/reference
+- rationale has an individual row for each active output relay
+- read-only HMI rationale describes visibility rather than command arbitration
+- recipe manager atomically validates current candidate, timing and nonzero pulse targets
+- recipe manager references only delivered UDT fields: []
+- release-byte and clean-clone evidence documents are controlled
+- removed recipe members and hard-coded scan time are absent
 - required directory 00_project_control
 - required directory 01_requirements
 - required directory 02_system_architecture
@@ -20,71 +422,138 @@ Result: **PASS**
 - required directory 13_documentation
 - required directory 14_qa
 - required directory release
-- PLC symbols unique
-- PLC addresses/module channels unique
-- 32 DI channels allocated
-- 32 DO channels allocated
-- 8 AI channels allocated
-- two independent HSC channels allocated
-- required two-bottle/fill/capper I/O present
-- PLC-AI contract has exact required signal set
-- alarm numbers unique
-- all 32 required regression scenarios controlled
-- all ten required operating states controlled
-- DeepStream design configuration parses with required sections
-- DeepStream inference design configuration parses
-- annotation schema is explicit, parseable and untrained
-- CSV parses and has header: 00_project_control\agent_ownership.csv
-- CSV parses and has header: 00_project_control\open_issues.csv
-- CSV parses and has header: 00_project_control\revision_history.csv
-- CSV parses and has header: 07_nvidia_vision\dataset_manifest.csv
-- CSV parses and has header: 07_nvidia_vision\plc_ai_node_map.csv
-- CSV parses and has header: 08_digital_twin\synthetic_variation_plan.csv
-- CSV parses and has header: 10_schedules\alarms.csv
-- CSV parses and has header: 10_schedules\bom.csv
-- CSV parses and has header: 10_schedules\cable_schedule.csv
-- CSV parses and has header: 10_schedules\hmi_tags.csv
-- CSV parses and has header: 10_schedules\load_budget.csv
-- CSV parses and has header: 10_schedules\network_nodes.csv
-- CSV parses and has header: 10_schedules\nvidia_interface_tags.csv
-- CSV parses and has header: 10_schedules\panel_placement.csv
-- CSV parses and has header: 10_schedules\plc_io.csv
-- CSV parses and has header: 10_schedules\requirements_traceability.csv
-- CSV parses and has header: 10_schedules\siemens_hardware.csv
-- CSV parses and has header: 10_schedules\terminal_plan.csv
-- CSV parses and has header: 10_schedules\test_coverage.csv
-- CSV parses and has header: 10_schedules\vfd_parameters.csv
-- CSV parses and has header: 10_schedules\wire_list.csv
-- CSV parses and has header: 11_simulation\outputs\scenario_results.csv
-- CSV parses and has header: 12_testing\io_checkout.csv
-- CSV parses and has header: release\manifest.csv
-- notice present: README.md
-- safety boundary present: README.md
-- notice present: AGENTS.md
-- safety boundary present: AGENTS.md
-- notice present: 00_project_control\design_basis.md
-- safety boundary present: 00_project_control\design_basis.md
-- notice present: 14_qa\acceptance_gate_status.md
-- safety boundary present: 14_qa\acceptance_gate_status.md
-- notice present: release\RELEASE_NOTES.md
-- safety boundary present: release\RELEASE_NOTES.md
-- modular Siemens SCL source set present
-- no pseudocode claim: 00_types.scl
-- no pseudocode claim: FB_Actuator2Pos.scl
-- no pseudocode claim: FB_AlarmManager.scl
-- no pseudocode claim: FB_FillChannel.scl
-- no pseudocode claim: FB_MachineCoordinator.scl
-- no pseudocode claim: FB_RecipeManager.scl
-- no pseudocode claim: FB_VFD.scl
-- no pseudocode claim: FB_VisionInterface.scl
-- no pseudocode claim: OB1_Call_Structure.scl
-- audited baseline hash retained: 03_electrical/native_baseline/filling_cell.qet
-- audited baseline hash retained: 09_panel_cad/native_baseline/filling_cell_panel.FCStd
-- audited baseline hash retained: 09_panel_cad/native_baseline/filling_cell_panel.step
-- audited baseline hash retained: 09_panel_cad/native_baseline/filling_cell_panel.iges
-- audited baseline hash retained: 09_panel_cad/native_baseline/mounting_plate.dxf
-- QET baseline is well-formed XML
-- FCStd baseline ZIP has audited 76 entries
-- STEP exchange header valid
-- no fabricated TIA/model/engine/USD native file delivered
-- PLC I/O schedule exactly derives from canonical model
+- requirements_traceability.csv exactly derives from canonical model
+- retained FreeCAD GUI views have exact executable/version/hash provenance and a limited final-model claim
+- revision-D generator owns every authoritative Siemens source
+- root calls Alarm exactly once
+- root calls Capper exactly once
+- root calls Clamp exactly once
+- root calls ConveyorVfd exactly once
+- root calls Coordinator exactly once
+- root calls FillCh1 exactly once
+- root calls FillCh2 exactly once
+- root calls Gate exactly once
+- root calls PumpVfd exactly once
+- root calls Recipe exactly once
+- root calls Vision exactly once
+- safety-status mirror maps to controlled K100 dry-contact interface
+- scenario summaries report zero invariant violations
+- scheduled clearance envelopes do not overlap: -A100 / -A101
+- scheduled clearance envelopes do not overlap: -A100 / -A102
+- scheduled clearance envelopes do not overlap: -A100 / -A103
+- scheduled clearance envelopes do not overlap: -A100 / -A104
+- scheduled clearance envelopes do not overlap: -A100 / -FW100
+- scheduled clearance envelopes do not overlap: -A100 / -PC200
+- scheduled clearance envelopes do not overlap: -A100 / -PE100
+- scheduled clearance envelopes do not overlap: -A100 / -SW100
+- scheduled clearance envelopes do not overlap: -A100 / -U100
+- scheduled clearance envelopes do not overlap: -A100 / -U101
+- scheduled clearance envelopes do not overlap: -A100 / -WD100
+- scheduled clearance envelopes do not overlap: -A100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -A101 / -A102
+- scheduled clearance envelopes do not overlap: -A101 / -A103
+- scheduled clearance envelopes do not overlap: -A101 / -A104
+- scheduled clearance envelopes do not overlap: -A101 / -FW100
+- scheduled clearance envelopes do not overlap: -A101 / -PC200
+- scheduled clearance envelopes do not overlap: -A101 / -PE100
+- scheduled clearance envelopes do not overlap: -A101 / -SW100
+- scheduled clearance envelopes do not overlap: -A101 / -U100
+- scheduled clearance envelopes do not overlap: -A101 / -U101
+- scheduled clearance envelopes do not overlap: -A101 / -WD100
+- scheduled clearance envelopes do not overlap: -A101 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -A102 / -A103
+- scheduled clearance envelopes do not overlap: -A102 / -A104
+- scheduled clearance envelopes do not overlap: -A102 / -FW100
+- scheduled clearance envelopes do not overlap: -A102 / -PC200
+- scheduled clearance envelopes do not overlap: -A102 / -PE100
+- scheduled clearance envelopes do not overlap: -A102 / -SW100
+- scheduled clearance envelopes do not overlap: -A102 / -U100
+- scheduled clearance envelopes do not overlap: -A102 / -U101
+- scheduled clearance envelopes do not overlap: -A102 / -WD100
+- scheduled clearance envelopes do not overlap: -A102 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -A103 / -A104
+- scheduled clearance envelopes do not overlap: -A103 / -FW100
+- scheduled clearance envelopes do not overlap: -A103 / -PC200
+- scheduled clearance envelopes do not overlap: -A103 / -PE100
+- scheduled clearance envelopes do not overlap: -A103 / -SW100
+- scheduled clearance envelopes do not overlap: -A103 / -U100
+- scheduled clearance envelopes do not overlap: -A103 / -U101
+- scheduled clearance envelopes do not overlap: -A103 / -WD100
+- scheduled clearance envelopes do not overlap: -A103 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -A104 / -FW100
+- scheduled clearance envelopes do not overlap: -A104 / -PC200
+- scheduled clearance envelopes do not overlap: -A104 / -PE100
+- scheduled clearance envelopes do not overlap: -A104 / -SW100
+- scheduled clearance envelopes do not overlap: -A104 / -U100
+- scheduled clearance envelopes do not overlap: -A104 / -U101
+- scheduled clearance envelopes do not overlap: -A104 / -WD100
+- scheduled clearance envelopes do not overlap: -A104 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -FW100 / -PC200
+- scheduled clearance envelopes do not overlap: -FW100 / -PE100
+- scheduled clearance envelopes do not overlap: -FW100 / -WD100
+- scheduled clearance envelopes do not overlap: -FW100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -PC200 / -PE100
+- scheduled clearance envelopes do not overlap: -PC200 / -WD100
+- scheduled clearance envelopes do not overlap: -PC200 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -PE100 / -WD100
+- scheduled clearance envelopes do not overlap: -PE100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -SW100 / -FW100
+- scheduled clearance envelopes do not overlap: -SW100 / -PC200
+- scheduled clearance envelopes do not overlap: -SW100 / -PE100
+- scheduled clearance envelopes do not overlap: -SW100 / -WD100
+- scheduled clearance envelopes do not overlap: -SW100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -U100 / -FW100
+- scheduled clearance envelopes do not overlap: -U100 / -PC200
+- scheduled clearance envelopes do not overlap: -U100 / -PE100
+- scheduled clearance envelopes do not overlap: -U100 / -SW100
+- scheduled clearance envelopes do not overlap: -U100 / -U101
+- scheduled clearance envelopes do not overlap: -U100 / -WD100
+- scheduled clearance envelopes do not overlap: -U100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -U101 / -FW100
+- scheduled clearance envelopes do not overlap: -U101 / -PC200
+- scheduled clearance envelopes do not overlap: -U101 / -PE100
+- scheduled clearance envelopes do not overlap: -U101 / -SW100
+- scheduled clearance envelopes do not overlap: -U101 / -WD100
+- scheduled clearance envelopes do not overlap: -U101 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -X100..-X199 / -WD100
+- semantic requirement/test trace: SYS-005
+- semantic requirement/test trace: SYS-015
+- semantic requirement/test trace: SYS-018
+- semantic requirement/test trace: SYS-023
+- semantic requirement/test trace: SYS-024
+- sensor BOM has one non-overlapping line per active sensor
+- sequenced HMI commands have request/ack/reject/disabled fields
+- siemens_hardware.csv exactly derives from canonical model
+- simulator is a time-stepped fault-injection model
+- single edge protocol owns bounds and exact SHA-256 model identity
+- spares are never HMI writable
+- stale pre-Revision-D PDF render directories are empty
+- standard reproduction compares two normalized XLSX and PDF builds by SHA-256
+- standard reproduction verifies clean committed bytes before and after generation
+- switch misidentification corrected with managed/firewall design
+- terminal_plan.csv exactly derives from canonical model
+- test_coverage.csv exactly derives from canonical model
+- truthful controlled native-engineering release-candidate status
+- two Standard Telegram 1 PZD mappings controlled
+- vfd_parameters.csv exactly derives from canonical model
+- vision request identity is immutable while pending
+- vision request is held across OPC UA polling until coherent observation/result
+- vision-interface recovery contract includes #pending := FALSE; #triggered := FALSE
+- vision-interface recovery contract includes ExpectedModelHash
+- vision-interface recovery contract includes ExpectedModelId
+- vision-interface recovery contract includes HeartbeatHealthy
+- vision-interface recovery contract includes MODEL_MISMATCH
+- vision-interface recovery contract includes NON_MONOTONIC_REQUEST
+- vision-interface recovery contract includes NOT #Result.ResultValid
+- vision-interface recovery contract includes NOT #TriggerEdge
+- vision-interface recovery contract includes PublicationAck
+- vision-interface recovery contract includes RESULT_STUCK_VALID
+- vision-interface recovery contract includes RequestInProgress
+- vision-interface recovery contract includes SessionEpoch
+- vision-interface recovery contract includes Warning
+- vision-interface recovery contract includes lastIssuedId
+- vision-interface recovery contract includes level-held OPC UA request
+- vision-interface recovery contract includes requestObserved
+- vision-interface recovery contract includes resultMustClear
+- wire numbers unique
+- wire_list.csv exactly derives from canonical model

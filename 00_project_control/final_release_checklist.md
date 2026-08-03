@@ -1,21 +1,17 @@
-# Final release checklist
+# Final release checklist - Revision E
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
-- [x] Requirements, controlled tags, address map, alarm ranges and state names reconciled.
-- [x] Hardware and PLC-AI architecture decisions recorded.
-- [x] Modular Siemens-oriented sources, HMI specification and drive philosophy delivered.
-- [x] Deterministic simulator and vision-protocol negative tests executed.
-- [x] CSV parsing, canonical reconciliation, baseline hashes and fake-file scan pass.
-- [x] Workbook and both final PDFs rendered and visually inspected.
-- [ ] Licensed TIA Portal V20 native project opens and restores.
-- [ ] Hardware, PLC and HMI compile with warnings individually reviewed.
-- [ ] Startdrive configuration completed and reviewed.
-- [ ] PLCSIM normal/fault traces complete.
-- [ ] Revision-B QET native metadata, continuity, BOM and cross-reference gates pass.
-- [ ] Revision-B FCStd/STEP/IGES/DXF gates pass with selected device envelopes.
-- [ ] Real dataset, trained model, traceable metrics and tested edge latency pass.
-- [ ] DeepStream runtime and rollback test pass.
-- [ ] Qualified project-specific safety and electrical design/validation activities complete.
+> CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-Release status remains **PARTIALLY COMPLETE** while any unchecked mandatory gate remains.
+- [x] Revision-E canonical schedules regenerate from controlled owners.
+- [x] All 15 Siemens SCL exports retain generator parity and poll-safe request contracts.
+- [x] Encrypted real asyncua test-server/client integration is controlled.
+- [x] Selected-architecture Revision-E FCStd/exchange artifacts and verification evidence are controlled when their record passes.
+- [x] Corrected 26-folio QET source reconciles tags, addresses, terminals and cables.
+- [ ] Corrected final QET hash reopens, exports and receives all-page/cross-reference review.
+- [ ] Native TIA V20/WinCC/Startdrive projects open and compile; PLCSIM traces pass.
+- [ ] Site electrical calculations, qualified safety validation, real AI model/target execution, FAT and SAT pass.
+- [x] Published candidate `b9633c6255fe34e48a1be34afe5024935f48651e` manifest, clean worktree, upstream SHA and fresh GitHub-clone reproduction passed; repeat for the final attestation commit before handoff.
+
+Unchecked items block construction, production deployment or physical acceptance; they are not missing success claims.

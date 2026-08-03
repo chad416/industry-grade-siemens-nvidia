@@ -1,0 +1,11 @@
+source,url,accessed,applied_to,claim_limit
+Siemens TIA Portal V20 Readme,https://support.industry.siemens.com/cs/attachments/109963850/ReadMe_STEP7_WinCC_V20_enUS.pdf,2026-08-02,TIA/STEP 7/WinCC V20 engineering boundary,"Reference only; does not prove installed licence, project or compile"
+Siemens TIA Portal V20 technical slides,https://support.industry.siemens.com/cs/attachments/109963848/TIA_Portal_V20_technical_slides_EN.pdf,2026-08-02,V20/S7-1500 FW V4.0 compatibility basis,Native catalog confirmation for exact MLFB remains required
+IEC 60204-1:2016 + AMD1:2021,https://webstore.iec.ch/en/publication/26037,2026-08-02,"Machine electrical concepts, protective bonding, documentation",Concepts applied; no conformity or construction claim
+IEC 81346-1:2022,https://webstore.iec.ch/en/publication/64021,2026-08-02,Reference-designation principles,Principles applied; project-specific designation review remains required
+IEC TR 61439-0:2022,https://webstore.iec.ch/en/publication/66003,2026-08-02,Panel/assembly input and verification considerations,No IEC 61439 verification or assembly rating claim
+ISO 12100:2010,https://www.iso.org/standard/51528.html,2026-08-02,Risk-assessment methodology scope,No project risk assessment or risk reduction validation performed
+ISO 13849-1:2023,https://www.iso.org/standard/73481.html,2026-08-02,Safety-related-control scope and limitations,"No PLr, achieved PL, category or validation claim"
+NVIDIA TAO 7.0.1 documentation,https://docs.nvidia.com/tao/tao-toolkit/latest/,2026-08-02,Dataset/training/export plan,TAO not installed or executed
+NVIDIA DeepStream 9.1 release notes,https://docs.nvidia.com/metropolis/deepstream/9.1/text/DS_Release_notes.html,2026-08-03,Jetson Orin target runtime planning: JetPack 7.2 GA / L4T 39.2 / TensorRT 10.16.1.7 baseline,"DeepStream, JetPack and target Jetson were not installed or executed"
+NVIDIA TensorRT documentation,https://docs.nvidia.com/deeplearning/tensorrt/latest/,2026-08-03,Generic engine/runtime deployment planning only,Generic TensorRT 11.1 documentation is not the DeepStream 9.1 Jetson compatibility baseline; TensorRT is not installed and no engine exists

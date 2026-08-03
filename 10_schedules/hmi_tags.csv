@@ -1,75 +1,72 @@
-hmi_tag,plc_source,access,screen,role,disabled_reason
-SAFETY_OK,SAFETY_OK,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-GUARD_CLOSED_STATUS,GUARD_CLOSED_STATUS,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-AIR_PRESSURE_OK,AIR_PRESSURE_OK,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-PRODUCT_SUPPLY_OK,PRODUCT_SUPPLY_OK,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-CONVEYOR_READY,CONVEYOR_READY,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-CONVEYOR_RUNNING,CONVEYOR_RUNNING,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-CONVEYOR_FAULT,CONVEYOR_FAULT,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-PUMP_READY,PUMP_READY,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-PUMP_RUNNING,PUMP_RUNNING,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-PUMP_FAULT,PUMP_FAULT,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-BOTTLE_AT_NEST_1,BOTTLE_AT_NEST_1,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-BOTTLE_AT_NEST_2,BOTTLE_AT_NEST_2,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-GATE_OPEN_FB,GATE_OPEN_FB,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-GATE_CLOSED_FB,GATE_CLOSED_FB,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-CLAMP_RELEASED_FB,CLAMP_RELEASED_FB,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-CLAMP_ENGAGED_FB,CLAMP_ENGAGED_FB,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-FILL_VALVE_1_CLOSED_FB,FILL_VALVE_1_CLOSED_FB,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-FILL_VALVE_2_CLOSED_FB,FILL_VALVE_2_CLOSED_FB,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-CAPPER_READY,CAPPER_READY,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-CAPPER_BUSY,CAPPER_BUSY,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-CAPPER_COMPLETE,CAPPER_COMPLETE,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-CAPPER_FAULT,CAPPER_FAULT,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-LOCAL_RESET_PB,LOCAL_RESET_PB,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-LOCAL_STOP_PB,LOCAL_STOP_PB,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-DI_SPARE_01,DI_SPARE_01,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-DI_SPARE_02,DI_SPARE_02,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-DI_SPARE_03,DI_SPARE_03,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-DI_SPARE_04,DI_SPARE_04,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-DI_SPARE_05,DI_SPARE_05,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-DI_SPARE_06,DI_SPARE_06,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-DI_SPARE_07,DI_SPARE_07,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-DI_SPARE_08,DI_SPARE_08,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-CONVEYOR_RUN_CMD,CONVEYOR_RUN_CMD,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-PUMP_RUN_CMD,PUMP_RUN_CMD,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-FILL_VALVE_1_OPEN_CMD,FILL_VALVE_1_OPEN_CMD,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-FILL_VALVE_2_OPEN_CMD,FILL_VALVE_2_OPEN_CMD,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-GATE_OPEN_CMD,GATE_OPEN_CMD,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-GATE_CLOSE_CMD,GATE_CLOSE_CMD,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-CLAMP_ENGAGE_CMD,CLAMP_ENGAGE_CMD,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-CLAMP_RELEASE_CMD,CLAMP_RELEASE_CMD,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-CAPPER_REQUEST,CAPPER_REQUEST,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-STACK_GREEN,STACK_GREEN,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-STACK_AMBER,STACK_AMBER,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-STACK_RED,STACK_RED,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-AUDIBLE_ALARM,AUDIBLE_ALARM,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-CAMERA_LIGHT_ENABLE,CAMERA_LIGHT_ENABLE,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_01,DO_SPARE_01,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_02,DO_SPARE_02,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_03,DO_SPARE_03,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_04,DO_SPARE_04,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_05,DO_SPARE_05,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_06,DO_SPARE_06,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_07,DO_SPARE_07,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_08,DO_SPARE_08,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_09,DO_SPARE_09,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_10,DO_SPARE_10,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_11,DO_SPARE_11,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_12,DO_SPARE_12,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_13,DO_SPARE_13,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_14,DO_SPARE_14,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_15,DO_SPARE_15,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_16,DO_SPARE_16,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_17,DO_SPARE_17,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-DO_SPARE_18,DO_SPARE_18,Read/command handshake,Manual/Overview,Maintenance for manual commands,Interlock/permissive/state reason from HMI interface DB
-FLOW_1_MA_RAW,FLOW_1_MA_RAW,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-FLOW_2_MA_RAW,FLOW_2_MA_RAW,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-AI_SPARE_01,AI_SPARE_01,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-AI_SPARE_02,AI_SPARE_02,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-AI_SPARE_03,AI_SPARE_03,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-AI_SPARE_04,AI_SPARE_04,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-AI_SPARE_05,AI_SPARE_05,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-AI_SPARE_06,AI_SPARE_06,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-FLOW_1_PULSE,FLOW_1_PULSE,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
-FLOW_2_PULSE,FLOW_2_PULSE,Read,Diagnostics,Operator,Interlock/permissive/state reason from HMI interface DB
+hmi_tag,plc_source,access,command,request_seq,accepted_seq,rejected_seq,disabled_reason,role,screen
+STATUS_MACHINE_STATE,DB_HMI.StateCode,Read only,No,,,,,Operator,Overview
+STATUS_AUTO_STEP,DB_HMI.AutoStepCode,Read only,No,,,,,Operator,Overview
+STATUS_QUALITY_HOLD,DB_HMI.QualityHold,Read only,No,,,,,Operator,Overview
+STATUS_FIRST_OUT_ALARM,DB_HMI.FirstOutAlarm,Read only,No,,,,,Operator,Alarms
+STATUS_SAFETY_OK,DB_IO.Inputs.SafetyOk,Read only,No,,,,,Operator,Diagnostics
+STATUS_GUARD_CLOSED_STATUS,DB_IO.Inputs.GuardClosed,Read only,No,,,,,Operator,Diagnostics
+STATUS_AIR_PRESSURE_OK,DB_IO.Inputs.AirPressureOk,Read only,No,,,,,Operator,Diagnostics
+STATUS_PRODUCT_SUPPLY_OK,DB_IO.Inputs.ProductSupplyOk,Read only,No,,,,,Operator,Diagnostics
+STATUS_BOTTLE_AT_NEST_1,DB_IO.Inputs.Bottle1Present,Read only,No,,,,,Operator,Overview
+STATUS_BOTTLE_AT_NEST_2,DB_IO.Inputs.Bottle2Present,Read only,No,,,,,Operator,Overview
+STATUS_GATE_OPEN_FB,DB_IO.Inputs.GateOpen,Read only,No,,,,,Operator,Diagnostics
+STATUS_GATE_CLOSED_FB,DB_IO.Inputs.GateClosed,Read only,No,,,,,Operator,Diagnostics
+STATUS_CLAMP_RELEASED_FB,DB_IO.Inputs.ClampReleased,Read only,No,,,,,Operator,Diagnostics
+STATUS_CLAMP_ENGAGED_FB,DB_IO.Inputs.ClampEngaged,Read only,No,,,,,Operator,Diagnostics
+STATUS_FILL_VALVE_1_CLOSED_FB,DB_IO.Inputs.Valve1Closed,Read only,No,,,,,Operator,Filling
+STATUS_FILL_VALVE_2_CLOSED_FB,DB_IO.Inputs.Valve2Closed,Read only,No,,,,,Operator,Filling
+STATUS_FLOW_1_MA_RAW,DB_IO.Inputs.Flow1Raw,Read only,No,,,,,Operator,Filling
+STATUS_FLOW_2_MA_RAW,DB_IO.Inputs.Flow2Raw,Read only,No,,,,,Operator,Filling
+STATUS_FLOW_1_DELIVERED_ML,DB_CellMain.FillCh1.DeliveredMl,Read only,No,,,,,Operator,Filling
+STATUS_FLOW_2_DELIVERED_ML,DB_CellMain.FillCh2.DeliveredMl,Read only,No,,,,,Operator,Filling
+STATUS_FILL_1_DIAG,DB_CellMain.FillCh1.DiagReason,Read only,No,,,,,Operator,Filling
+STATUS_FILL_2_DIAG,DB_CellMain.FillCh2.DiagReason,Read only,No,,,,,Operator,Filling
+STATUS_CONVEYOR_READY,DB_Drives.Conveyor.Ready,Read only,No,,,,,Operator,Drives
+STATUS_CONVEYOR_RUNNING,DB_Drives.Conveyor.Running,Read only,No,,,,,Operator,Drives
+STATUS_CONVEYOR_FAULT,DB_Drives.Conveyor.Fault,Read only,No,,,,,Operator,Drives
+STATUS_CONVEYOR_SPEED_PCT,DB_Drives.Conveyor.ActualSpeedPct,Read only,No,,,,,Operator,Drives
+STATUS_PUMP_READY,DB_Drives.Pump.Ready,Read only,No,,,,,Operator,Drives
+STATUS_PUMP_RUNNING,DB_Drives.Pump.Running,Read only,No,,,,,Operator,Drives
+STATUS_PUMP_FAULT,DB_Drives.Pump.Fault,Read only,No,,,,,Operator,Drives
+STATUS_PUMP_SPEED_PCT,DB_Drives.Pump.ActualSpeedPct,Read only,No,,,,,Operator,Drives
+STATUS_VISION_READY,DB_VisionComms.Ready,Read only,No,,,,,Operator,Vision
+STATUS_VISION_BUSY,DB_VisionComms.Busy,Read only,No,,,,,Operator,Vision
+STATUS_VISION_RESULT_ID,DB_VisionComms.Result.ResultId,Read only,No,,,,,Operator,Vision
+STATUS_VISION_LOW_CONFIDENCE,DB_VisionComms.Result.LowConfidence,Read only,No,,,,,Operator,Vision
+STATUS_VISION_FAULT,DB_VisionComms.Result.Fault,Read only,No,,,,,Operator,Vision
+STATUS_VISION_MODEL_ID,DB_VisionComms.Result.ModelId,Read only,No,,,,,Operator,Vision
+STATUS_CAPPER_READY,DB_IO.Inputs.CapperReady,Read only,No,,,,,Operator,Diagnostics
+STATUS_CAPPER_BUSY,DB_IO.Inputs.CapperBusy,Read only,No,,,,,Operator,Diagnostics
+STATUS_CAPPER_COMPLETE,DB_IO.Inputs.CapperComplete,Read only,No,,,,,Operator,Diagnostics
+STATUS_CAPPER_FAULT,DB_IO.Inputs.CapperFault,Read only,No,,,,,Operator,Diagnostics
+STATUS_HMI_COMMUNICATIONS_HEALTHY,DB_HMI.CommunicationsHealthy,Read only,No,,,,,Operator,Diagnostics
+CMD_START,DB_HMI.Start.Request,Write request only,Yes,DB_HMI.Start.RequestSeq,DB_HMI.Start.AcceptedSeq,DB_HMI.Start.RejectedSeq,DB_HMI.Start.DisabledReason,Operator,Overview
+CMD_CONTROLLED_STOP,DB_HMI.ControlledStop.Request,Write request only,Yes,DB_HMI.ControlledStop.RequestSeq,DB_HMI.ControlledStop.AcceptedSeq,DB_HMI.ControlledStop.RejectedSeq,DB_HMI.ControlledStop.DisabledReason,Operator,Overview
+CMD_RESET,DB_HMI.Reset.Request,Write request only,Yes,DB_HMI.Reset.RequestSeq,DB_HMI.Reset.AcceptedSeq,DB_HMI.Reset.RejectedSeq,DB_HMI.Reset.DisabledReason,Operator,Overview
+CMD_ALARM_ACK,DB_HMI.AlarmAck.Request,Write request only,Yes,DB_HMI.AlarmAck.RequestSeq,DB_HMI.AlarmAck.AcceptedSeq,DB_HMI.AlarmAck.RejectedSeq,DB_HMI.AlarmAck.DisabledReason,Operator,Alarms
+CMD_AUTO_MODE,DB_HMI.AutoMode.Request,Write request only,Yes,DB_HMI.AutoMode.RequestSeq,DB_HMI.AutoMode.AcceptedSeq,DB_HMI.AutoMode.RejectedSeq,DB_HMI.AutoMode.DisabledReason,Operator,Overview
+CMD_MANUAL_MODE,DB_HMI.ManualMode.Request,Write request only,Yes,DB_HMI.ManualMode.RequestSeq,DB_HMI.ManualMode.AcceptedSeq,DB_HMI.ManualMode.RejectedSeq,DB_HMI.ManualMode.DisabledReason,Maintenance,Manual
+CMD_DISPOSITION_REMOVED,DB_HMI.DispositionRemoved.Request,Write request only,Yes,DB_HMI.DispositionRemoved.RequestSeq,DB_HMI.DispositionRemoved.AcceptedSeq,DB_HMI.DispositionRemoved.RejectedSeq,DB_HMI.DispositionRemoved.DisabledReason,Supervisor,Holding
+CMD_RECIPE_APPLY,DB_HMI.RecipeApply.Request,Write request only,Yes,DB_HMI.RecipeApply.RequestSeq,DB_HMI.RecipeApply.AcceptedSeq,DB_HMI.RecipeApply.RejectedSeq,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+HOLD_MANUALCONVEYORJOG,DB_HMI.ManualConveyorJog.Request,Write while pressed; PLC heartbeat supervised,Yes - hold to run,,,,DB_HMI.ManualConveyorJog.DisabledReason,Maintenance,Manual
+HOLD_MANUALPUMPJOG,DB_HMI.ManualPumpJog.Request,Write while pressed; PLC heartbeat supervised,Yes - hold to run,,,,DB_HMI.ManualPumpJog.DisabledReason,Maintenance,Manual
+HOLD_MANUALVALVE1,DB_HMI.ManualValve1.Request,Write while pressed; PLC heartbeat supervised,Yes - hold to run,,,,DB_HMI.ManualValve1.DisabledReason,Maintenance,Manual
+HOLD_MANUALVALVE2,DB_HMI.ManualValve2.Request,Write while pressed; PLC heartbeat supervised,Yes - hold to run,,,,DB_HMI.ManualValve2.DisabledReason,Maintenance,Manual
+HOLD_MANUALSECURE,DB_HMI.ManualSecure.Request,Write while pressed; PLC heartbeat supervised,Yes - hold to run,,,,DB_HMI.ManualSecure.DisabledReason,Maintenance,Manual
+RECIPE_CANDIDATE_RECIPEID,DB_Recipe.Candidate.RecipeId,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_TARGETMLCH1,DB_Recipe.Candidate.TargetMlCh1,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_TARGETMLCH2,DB_Recipe.Candidate.TargetMlCh2,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_PULSESPERLITRECH1,DB_Recipe.Candidate.PulsesPerLitreCh1,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_PULSESPERLITRECH2,DB_Recipe.Candidate.PulsesPerLitreCh2,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_UNDERTOLERANCEML,DB_Recipe.Candidate.UnderToleranceMl,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_OVERTOLERANCEML,DB_Recipe.Candidate.OverToleranceMl,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_NOFLOWTIMEOUT,DB_Recipe.Candidate.NoFlowTimeout,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_FILLTIMEOUT,DB_Recipe.Candidate.FillTimeout,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_VALVEOPENTIMEOUT,DB_Recipe.Candidate.ValveOpenTimeout,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_VALVECLOSETIMEOUT,DB_Recipe.Candidate.ValveCloseTimeout,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_PLAUSIBILITYTIME,DB_Recipe.Candidate.PlausibilityTime,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_PULSEWINDOWTIMES,DB_Recipe.Candidate.PulseWindowTimeS,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_DRIPSETTLETIME,DB_Recipe.Candidate.DripSettleTime,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_VISIONTIMEOUT,DB_Recipe.Candidate.VisionTimeout,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+RECIPE_CANDIDATE_TARGETFILLLEVEL,DB_Recipe.Candidate.TargetFillLevel,Supervisor write; committed only by sequenced RecipeApply,No,,,,DB_HMI.RecipeApply.DisabledReason,Supervisor,Recipes
+HMI_COMMAND_HEARTBEAT,DB_HMI.CommandHeartbeat,Write heartbeat counter only,No,,,,,System,System

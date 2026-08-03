@@ -1,0 +1,98 @@
+// FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+DATA_BLOCK "DB_IO"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR
+      Inputs : "UDT_CellInputs";
+      Commands : "UDT_OutputCommands";
+      ReleasePermissive : Bool;
+      PowerRecoveryRequired : Bool;
+   END_VAR
+BEGIN
+END_DATA_BLOCK
+
+DATA_BLOCK "DB_HMI"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR
+      Start : "UDT_HmiCommand";
+      ControlledStop : "UDT_HmiCommand";
+      Reset : "UDT_HmiCommand";
+      AlarmAck : "UDT_HmiCommand";
+      AutoMode : "UDT_HmiCommand";
+      ManualMode : "UDT_HmiCommand";
+      DispositionRemoved : "UDT_HmiCommand";
+      RecipeApply : "UDT_HmiCommand";
+      ManualConveyorJog : "UDT_HmiCommand";
+      ManualPumpJog : "UDT_HmiCommand";
+      ManualValve1 : "UDT_HmiCommand";
+      ManualValve2 : "UDT_HmiCommand";
+      ManualSecure : "UDT_HmiCommand";
+      CommandHeartbeat : UDInt;
+      CommunicationsHealthy : Bool;
+      StateCode : UInt;
+      AutoStepCode : UInt;
+      FirstOutAlarm : UInt;
+      QualityHold : Bool;
+   END_VAR
+BEGIN
+END_DATA_BLOCK
+
+DATA_BLOCK "DB_NativeBindings"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR
+      Inputs : "UDT_NativeBindings";
+   END_VAR
+BEGIN
+END_DATA_BLOCK
+
+DATA_BLOCK "DB_Recipe"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR
+      Candidate : "UDT_Recipe";
+      Active : "UDT_Recipe";
+      Apply : "UDT_HmiCommand";
+   END_VAR
+BEGIN
+END_DATA_BLOCK
+
+DATA_BLOCK "DB_VisionComms"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR
+      Enable : Bool;
+      Trigger : Bool;
+      InspectionId : UDInt;
+      RecipeId : UInt;
+      ExpectedBottles : USInt;
+      TargetFillLevel : Real;
+      PlcHeartbeat : UDInt;
+      Ready : Bool;
+      Busy : Bool;
+      ResultAckId : UDInt;
+      DiagReason : "E_VisionDiag";
+      Result : "UDT_VisionResult";
+   END_VAR
+   // Controller/approved-model identity must survive a warm or power restart.
+   // A memory reset is a controlled commissioning event and requires the edge
+   // replay state to be purged before production is re-enabled.
+   VAR RETAIN
+      SessionEpoch : UDInt;
+      ExpectedModelId : String[32];
+      ExpectedModelHash : String[64];
+      ModelConfigurationApproved : Bool;
+   END_VAR
+BEGIN
+END_DATA_BLOCK
+
+DATA_BLOCK "DB_Drives"
+{ S7_Optimized_Access := 'TRUE' }
+VERSION : 0.1
+   VAR
+      Conveyor : "UDT_DrivePzd";
+      Pump : "UDT_DrivePzd";
+   END_VAR
+BEGIN
+END_DATA_BLOCK

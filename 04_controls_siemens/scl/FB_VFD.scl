@@ -1,13 +1,48 @@
 // FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 FUNCTION_BLOCK "FB_VFD"
-VAR_INPUT Enable : Bool; RunRequest : Bool; Ready : Bool; Running : Bool; FaultIn : Bool; ResetEdge : Bool; StartTimeout : Time; END_VAR
-VAR_OUTPUT RunCmd : Bool; Permissive : Bool; Fault : Bool; DiagCode : UInt; END_VAR
-VAR tStart : TON; END_VAR
+VAR_INPUT
+   Enable : Bool;
+   RunRequest : Bool;
+   ResetEdge : Bool;
+   CommsHealthy : Bool;
+   StatusWord1 : Word;
+   ActualSpeedPzd : Int;
+   SpeedReferencePct : Real;
+   StartTimeout : Time;
+   StopTimeout : Time;
+END_VAR
+VAR_OUTPUT
+   ControlWord1 : Word;
+   SpeedSetpointPzd : Int;
+   Ready : Bool;
+   Running : Bool;
+   Stopped : Bool;
+   Fault : Bool;
+   ActualSpeedPct : Real;
+   DiagReason : UInt;
+END_VAR
+VAR
+   tStart : TON;
+   tStop : TON;
+   boundedSpeed : Real;
+END_VAR
 BEGIN
-  #Permissive := #Enable AND #Ready AND NOT #FaultIn;
-  #RunCmd := #RunRequest AND #Permissive AND NOT #Fault;
-  #tStart(IN := #RunCmd AND NOT #Running, PT := #StartTimeout);
-  IF #FaultIn THEN #Fault := TRUE; #DiagCode := 16#1101; END_IF;
-  IF #tStart.Q THEN #Fault := TRUE; #DiagCode := 16#1102; END_IF;
-  IF #ResetEdge AND NOT #FaultIn AND NOT #RunRequest THEN #Fault := FALSE; #DiagCode := 0; END_IF;
+   #Ready := #CommsHealthy AND ((#StatusWord1 AND W#16#0001) <> W#16#0000);
+   #Running := #CommsHealthy AND ((#StatusWord1 AND W#16#0004) <> W#16#0000);
+   #Fault := NOT #CommsHealthy OR ((#StatusWord1 AND W#16#0008) <> W#16#0000) OR #Fault;
+   #Stopped := NOT #Running AND (ABS(#ActualSpeedPzd) < 164);
+   #ActualSpeedPct := INT_TO_REAL(#ActualSpeedPzd) * 100.0 / 16384.0;
+   #boundedSpeed := LIMIT(MN := -100.0, IN := #SpeedReferencePct, MX := 100.0);
+   #SpeedSetpointPzd := REAL_TO_INT(#boundedSpeed * 16384.0 / 100.0);
+   #ControlWord1 := W#16#047E;
+   IF #Enable AND #RunRequest AND #Ready AND NOT #Fault THEN #ControlWord1 := W#16#047F; END_IF;
+   IF #ResetEdge AND NOT #RunRequest AND #CommsHealthy THEN #ControlWord1 := #ControlWord1 OR W#16#0080; END_IF;
+   #tStart(IN := #RunRequest AND #Ready AND NOT #Running, PT := #StartTimeout);
+   #tStop(IN := NOT #RunRequest AND NOT #Stopped, PT := #StopTimeout);
+   IF NOT #CommsHealthy THEN #DiagReason := 1;
+   ELSIF ((#StatusWord1 AND W#16#0008) <> W#16#0000) THEN #DiagReason := 2;
+   ELSIF #tStart.Q THEN #Fault := TRUE; #DiagReason := 3;
+   ELSIF #tStop.Q THEN #Fault := TRUE; #DiagReason := 4;
+   ELSIF NOT #Fault THEN #DiagReason := 0; END_IF;
+   IF #ResetEdge AND #CommsHealthy AND NOT #RunRequest AND ((#StatusWord1 AND W#16#0008) = W#16#0000) THEN #Fault := FALSE; #DiagReason := 0; END_IF;
 END_FUNCTION_BLOCK
