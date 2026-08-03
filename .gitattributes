@@ -1,3 +1,49 @@
-# The release manifest verifies exact file bytes. Disable automatic line-ending
-# conversion so a checkout reproduces the committed SHA-256 content on every OS.
-* -text
+# Revision D.1 controlled byte policy.
+#
+# Source and document text is canonical LF in both the Git object database and
+# every checkout. Native engineering, exchange, Office, PDF, image and archive
+# formats are byte-exact and must never be line-ending filtered.  QET, DXF,
+# STEP and IGES are deliberately byte-exact despite containing text because
+# they are native/exchange evidence whose recorded hashes must identify the
+# actual committed file.
+* text=auto eol=lf
+
+*.md       text eol=lf
+*.csv      text eol=lf
+*.json     text eol=lf
+*.scl      text eol=lf
+*.txt      text eol=lf
+*.mmd      text eol=lf
+*.py       text eol=lf
+*.ps1      text eol=lf
+*.mjs      text eol=lf
+*.yml      text eol=lf
+*.yaml     text eol=lf
+.gitignore text eol=lf
+.gitattributes text eol=lf
+
+*.qet      -text -diff
+*.dxf      -text -diff
+*.FCStd    -text -diff
+*.fcstd    -text -diff
+*.step     -text -diff
+*.stp      -text -diff
+*.iges     -text -diff
+*.igs      -text -diff
+*.xlsx     -text -diff
+*.xls      -text -diff
+*.pdf      -text -diff
+*.png      -text -diff
+*.jpg      -text -diff
+*.jpeg     -text -diff
+*.gif      -text -diff
+*.zip      -text -diff
+*.7z       -text -diff
+*.ap20     -text -diff
+*.zap20    -text -diff
+*.onnx     -text -diff
+*.engine   -text -diff
+*.plan     -text -diff
+*.usd      -text -diff
+*.usda     -text -diff
+*.usdc     -text -diff

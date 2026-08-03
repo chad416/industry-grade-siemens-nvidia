@@ -1,0 +1,58 @@
+name: Revision D.1 release integrity
+
+on:
+  push:
+    branches:
+      - codex/revision-d1-release-integrity-native-readiness
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  source-integrity:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Verify committed release bytes and source-level reproduction
+        shell: pwsh
+        run: |
+          git config core.autocrlf false
+          python scripts/verify_manifest.py --source head --require-clean
+          python scripts/test_release_integrity.py --source head
+          python scripts/validate_project.py --check
+          python -m unittest discover -s 11_simulation/tests -v
+          python 11_simulation/run_scenarios.py
+          python -m unittest discover -s 07_nvidia_vision/edge_service/tests -v
+          Push-Location 07_nvidia_vision
+          try { python -m unittest -v test_plc_interface_harness.py } finally { Pop-Location }
+          python scripts/check_determinism.py --source head
+          git diff --exit-code
+          if (git status --porcelain=v1 --untracked-files=all) { throw 'Source-integrity job left a dirty tree' }
+
+  complete-artifact-reproduction:
+    runs-on: [self-hosted, Windows, X64, fc01-release]
+    steps:
+      - name: Fresh-clone and run complete controlled reproduction
+        shell: pwsh
+        env:
+          FC01_PYTHON: ${{ vars.FC01_PYTHON }}
+          FC01_NODE: ${{ vars.FC01_NODE }}
+          FC01_NODE_MODULES: ${{ vars.FC01_NODE_MODULES }}
+          FC01_PDFTOPPM: ${{ vars.FC01_PDFTOPPM }}
+        run: |
+          $Clone = Join-Path $env:RUNNER_TEMP "fc01-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
+          if (Test-Path -LiteralPath $Clone) { throw "Fresh-clone target already exists: $Clone" }
+          git clone --no-checkout "$env:GITHUB_SERVER_URL/$env:GITHUB_REPOSITORY.git" $Clone
+          Push-Location $Clone
+          try {
+            git checkout --detach $env:GITHUB_SHA
+            powershell -ExecutionPolicy Bypass -File scripts/reproduce_validation.ps1
+          }
+          finally { Pop-Location }

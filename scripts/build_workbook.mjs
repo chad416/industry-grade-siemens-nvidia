@@ -113,7 +113,7 @@ summary.getRange("A1:H2").merge();
 summary.getRange("A1").values = [["FC01 — SIEMENS / NVIDIA ENGINEERING SCHEDULES"]];
 summary.getRange("A1:H2").format = { fill: "#12304A", font: { bold: true, color: "#FFFFFF", size: 18 }, verticalAlignment: "center" };
 summary.getRange("A3:H3").merge();
-summary.getRange("A3").values = [["FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION | Revision D | Professional controlled engineering-development package"]];
+summary.getRange("A3").values = [["FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION | Revision D.1 | Professional controlled engineering-development release candidate"]];
 summary.getRange("A3:H3").format = { fill: "#EAF1F5", font: { bold: true, color: "#324B5C", size: 10 }, wrapText: true };
 summary.getRange("A4:H4").merge();
 summary.getRange("A4").values = [["CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."]];
@@ -151,7 +151,7 @@ summary.getRange("B13").formulas = [["=COUNTIF('Acceptance Gates'!C2:C100,\"BLOC
 // release-summary values without depending on cross-sheet recalculation support.
 summary.getRange("B14").formulas = [["=55+24+120+100"]];
 summary.getRange("B15").formulas = [["=(55+24+120+100)/24*1.25"]];
-summary.getRange("D6").values = [["Native TIA/WinCC/Startdrive/PLCSIM, trained NVIDIA model, Revision-D QElectroTech and Revision-D panel CAD remain blocked. Historical native electrical/CAD files are quarantined baselines. No construction, safety, native compile, FAT, SAT or model-performance claim is made."]];
+summary.getRange("D6").values = [["Native TIA/WinCC/Startdrive/PLCSIM, trained NVIDIA model, Revision-D.1 QElectroTech and Revision-D.1 panel CAD remain blocked. Historical native electrical/CAD files are byte-exact quarantined baselines. No construction, safety, native compile, FAT, SAT or model-performance claim is made."]];
 summary.getRange("D6:H13").format = { fill: "#FFF1F1", font: { color: "#642F36", size: 10 }, wrapText: true, verticalAlignment: "center" };
 for (const col of ["D", "E", "F", "G", "H"]) summary.getRange(`${col}5:${col}13`).format.columnWidthPx = 110;
 

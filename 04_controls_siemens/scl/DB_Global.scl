@@ -69,14 +69,20 @@ VERSION : 0.1
       ExpectedBottles : USInt;
       TargetFillLevel : Real;
       PlcHeartbeat : UDInt;
-      SessionEpoch : UDInt;
-      ExpectedModelId : String[32];
-      ExpectedModelHash : String[64];
       Ready : Bool;
       Busy : Bool;
       ResultAckId : UDInt;
       DiagReason : "E_VisionDiag";
       Result : "UDT_VisionResult";
+   END_VAR
+   // Controller/approved-model identity must survive a warm or power restart.
+   // A memory reset is a controlled commissioning event and requires the edge
+   // replay state to be purged before production is re-enabled.
+   VAR RETAIN
+      SessionEpoch : UDInt;
+      ExpectedModelId : String[32];
+      ExpectedModelHash : String[64];
+      ModelConfigurationApproved : Bool;
    END_VAR
 BEGIN
 END_DATA_BLOCK

@@ -1,11 +1,11 @@
 {
   "project": {
     "id": "FC01",
-    "revision": "D",
-    "date": "2026-08-02",
+    "revision": "D.1",
+    "date": "2026-08-03",
     "notice": "FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION",
     "safety_boundary": "CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.",
-    "status": "PROFESSIONAL CONTROLLED ENGINEERING-DEVELOPMENT PACKAGE; CONSTRUCTION AND DEPLOYMENT RELEASE PENDING EXPLICIT NATIVE, PHYSICAL AND QUALIFIED ACCEPTANCE GATES"
+    "status": "PROFESSIONAL CONTROLLED ENGINEERING-DEVELOPMENT RELEASE CANDIDATE; CONSTRUCTION AND DEPLOYMENT RELEASE PENDING EXPLICIT NATIVE, PHYSICAL AND QUALIFIED ACCEPTANCE GATES"
   },
   "states": [
     "UNINITIALIZED",
@@ -1762,7 +1762,7 @@
       "status": "Implemented in reviewable sources; native Siemens verification blocked",
       "design_artifact": "00_project_control/canonical_model.json; scripts/validate_project.py",
       "test_ids": "VAL-D-STATIC",
-      "evidence": "Revision-D canonical/source/schedule validation suite; the executed report records the current check count"
+      "evidence": "Revision-D.1 canonical/source/schedule validation suite; the executed report records the current check count"
     },
     {
       "requirement_id": "SYS-024",
@@ -9075,7 +9075,7 @@
       "request_id": "IR-019",
       "required_input": "FreeCAD installation and qualified panel-CAD reviewer",
       "owner": "Electrical owner",
-      "blocks": "Revision-D FCStd/exchange validation",
+      "blocks": "Revision-D.1 FCStd/exchange validation",
       "status": "OPEN",
       "date_requested": "2026-08-02",
       "evidence_required": "Approved source document or native evidence"
@@ -9093,7 +9093,7 @@
       "request_id": "IR-021",
       "required_input": "Usable QElectroTech installation and qualified electrical schematic reviewer",
       "owner": "Electrical owner",
-      "blocks": "Revision-D schematic authoring, reopen, export and review",
+      "blocks": "Revision-D.1 schematic authoring, reopen, export and review",
       "status": "OPEN",
       "date_requested": "2026-08-02",
       "evidence_required": "Approved source document or native evidence"
@@ -9164,7 +9164,7 @@
       "gate": 2,
       "acceptance_gate": "Canonical model reconciles schedules",
       "status": "PASS",
-      "evidence_or_blocker": "Revision-D deterministic validator and source-parity checks pass; see current automated report for count"
+      "evidence_or_blocker": "Revision-D.1 deterministic validator and source-parity checks pass; see current automated report for count"
     },
     {
       "gate": 3,
@@ -9210,7 +9210,7 @@
     },
     {
       "gate": 10,
-      "acceptance_gate": "Revision-D QET reopens and reconciles",
+      "acceptance_gate": "Revision-D.1 QET reopens and reconciles",
       "status": "BLOCKED",
       "evidence_or_blocker": "No runnable QElectroTech found; historical revision-A native baseline only"
     },
@@ -9218,11 +9218,11 @@
       "gate": 11,
       "acceptance_gate": "Schematics visual review",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Revision-D native schematics do not exist"
+      "evidence_or_blocker": "Revision-D.1 native schematics do not exist"
     },
     {
       "gate": 12,
-      "acceptance_gate": "Revision-D FCStd reopens",
+      "acceptance_gate": "Revision-D.1 FCStd reopens",
       "status": "BLOCKED",
       "evidence_or_blocker": "No runnable FreeCAD found; historical baseline only"
     },
@@ -9230,7 +9230,7 @@
       "gate": 13,
       "acceptance_gate": "STEP/IGES/DXF reimport",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Revision-D exchange files do not exist and FreeCAD is absent"
+      "evidence_or_blocker": "Revision-D.1 exchange files do not exist and FreeCAD is absent"
     },
     {
       "gate": 14,
@@ -9266,7 +9266,7 @@
       "gate": 19,
       "acceptance_gate": "PLC-NVIDIA failure tests",
       "status": "PASS",
-      "evidence_or_blocker": "Local source-design scope: simulator, 32 scenarios, edge service, interface harness and Revision-D independent interface-oracle tests pass; native integration remains blocked under gates 9 and 18"
+      "evidence_or_blocker": "Local source-design scope: simulator, 32 scenarios, edge service, interface harness and Revision-D.1 independent interface-oracle tests pass; native integration remains blocked under gates 9 and 18"
     },
     {
       "gate": 20,

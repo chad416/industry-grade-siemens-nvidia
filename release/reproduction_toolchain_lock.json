@@ -1,0 +1,24 @@
+{
+  "schema_version": 1,
+  "release": "D.1",
+  "python": {
+    "version": "3.12.13",
+    "executable_sha256": "3c6a206b7d93cca823934a83732220dcffd413fd1036d9fb82eebb64599cf7f3",
+    "packages": {
+      "Pillow": "12.2.0",
+      "reportlab": "4.4.9"
+    }
+  },
+  "node": {
+    "version": "v24.14.0",
+    "executable_sha256": "63c259c81e5d472b5f11c8d506070130cb04a1ecf84b80377a34ed6ec9048088",
+    "packages": {
+      "@oai/artifact-tool": "2.8.31"
+    }
+  },
+  "pdftoppm": {
+    "version": "26.05.0",
+    "executable_sha256": "742cbbd9a00931ad16c6618410bc40471375d639a45c61c1d86f3dcfc54b6388"
+  },
+  "policy": "Complete binary reproduction is valid only when this exact release toolchain verifies. A different toolchain requires a controlled lock update and complete two-build visual and hash requalification."
+}

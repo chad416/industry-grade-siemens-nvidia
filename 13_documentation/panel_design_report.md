@@ -14,4 +14,4 @@ Mains/VFD input and motor output routes remain separated from 24 VDC, analog/HSC
 
 ## Open native evidence
 
-The inherited FCStd/STEP/IGES/DXF files are historical baselines only. A Revision-D assembly, collision check, FCStd reopen and exchange-format reimport are mandatory before the panel gate can pass.
+The inherited FCStd/STEP/IGES/DXF files are historical baselines only. A Revision-D.1 assembly, collision check, FCStd reopen and exchange-format reimport are mandatory before the panel gate can pass.

@@ -3,3 +3,4 @@ A,2026-06-28,Historical baseline,Inherited QET/FreeCAD evidence baseline
 B,2026-08-01,Published preliminary,Initial Siemens/NVIDIA architecture and schedules
 C,2026-08-02,Controlled partial release,Corrected generator/SCL/HMI/drive/network/manifest; dynamic simulation and expanded schedules/docs
 D,2026-08-02,Controlled engineering-development release,"Fail-closed vision recovery, explicit fill-window diagnostics, deterministic reproduction, evidence/governance and artifact hardening"
+D.1,2026-08-03,Release candidate,"Git-object release integrity, retained PLC transaction identity, post-fault disposition, immutable edge publication and clean-clone reproduction"

@@ -20,6 +20,7 @@ VAR
    preBlockingFault : Bool;
    immediateStop : Bool;
    processPermissive : Bool;
+   modelConfigured : Bool;
    manualConveyorInterlocked : Bool;
    manualSecureInterlocked : Bool;
    manualPumpInterlocked : Bool;
@@ -65,9 +66,10 @@ BEGIN
    "DB_Drives".Pump.StatusWord1 := %IW260;
    "DB_Drives".Pump.ActualSpeedPzd := %IW262;
 
+   #modelConfigured := "DB_VisionComms".ModelConfigurationApproved AND ("DB_VisionComms".ExpectedModelId <> '') AND (LEN("DB_VisionComms".ExpectedModelHash) = 64);
    #immediateStop := NOT "DB_IO".Inputs.SafetyOk OR NOT "DB_IO".Inputs.GuardClosed OR NOT "DB_IO".Inputs.AirPressureOk OR NOT "DB_IO".Inputs.ProductSupplyOk;
    #processPermissive := NOT #immediateStop AND NOT "DB_IO".PowerRecoveryRequired;
-   #preBlockingFault := #immediateStop OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #FillCh2.Fault OR #Vision.Fault OR NOT "DB_VisionComms".Ready OR #Capper.Fault OR NOT #HmiCommands.CommunicationsHealthy;
+   #preBlockingFault := #immediateStop OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #FillCh2.Fault OR #Vision.Fault OR NOT #modelConfigured OR NOT "DB_VisionComms".Ready OR #Capper.Fault OR NOT #HmiCommands.CommunicationsHealthy;
    #HmiCommands(StartRequest := "DB_HMI".Start.Request, StartSeq := "DB_HMI".Start.RequestSeq, StopRequest := "DB_HMI".ControlledStop.Request, StopSeq := "DB_HMI".ControlledStop.RequestSeq, ResetRequest := "DB_HMI".Reset.Request, ResetSeq := "DB_HMI".Reset.RequestSeq, AckRequest := "DB_HMI".AlarmAck.Request, AckSeq := "DB_HMI".AlarmAck.RequestSeq, AutoRequest := "DB_HMI".AutoMode.Request, AutoSeq := "DB_HMI".AutoMode.RequestSeq, ManualRequest := "DB_HMI".ManualMode.Request, ManualSeq := "DB_HMI".ManualMode.RequestSeq, DispositionRequest := "DB_HMI".DispositionRemoved.Request, DispositionSeq := "DB_HMI".DispositionRemoved.RequestSeq, ManualConveyorRequest := "DB_HMI".ManualConveyorJog.Request, ManualPumpRequest := "DB_HMI".ManualPumpJog.Request, ManualValve1Request := "DB_HMI".ManualValve1.Request, ManualValve2Request := "DB_HMI".ManualValve2.Request, ManualSecureRequest := "DB_HMI".ManualSecure.Request, ManualHoldAllowed := (#Coordinator.State = "E_MachineState".MANUAL_SETUP) AND #processPermissive, LocalStop := "DB_IO".Inputs.LocalStop, LocalReset := "DB_IO".Inputs.LocalReset, CommandHeartbeat := "DB_HMI".CommandHeartbeat, StartAllowed := (#Coordinator.State = "E_MachineState".READY) AND #processPermissive, ResetAllowed := NOT #immediateStop, AutoAllowed := (#Coordinator.State = "E_MachineState".MANUAL_SETUP), ManualAllowed := (#Coordinator.State = "E_MachineState".READY), DispositionAllowed := (#Coordinator.State = "E_MachineState".HOLDING));
    "DB_HMI".Start.AcceptedSeq := #HmiCommands.StartAcceptedSeq; "DB_HMI".Start.RejectedSeq := #HmiCommands.StartRejectedSeq;
    "DB_HMI".ControlledStop.AcceptedSeq := #HmiCommands.StopAcceptedSeq;
@@ -114,7 +116,7 @@ BEGIN
    IF #Coordinator.VisionRequestPulse AND ("DB_VisionComms".InspectionId < UDINT#4294967295) THEN "DB_VisionComms".InspectionId := "DB_VisionComms".InspectionId + UDINT#1; END_IF;
    // READY low holds VISION_ENABLE low so a cold/restarted edge can atomically
    // seed the PLC session/ID/ACK/heartbeat snapshot before declaring READY.
-   "DB_VisionComms".Enable := #processPermissive AND "DB_VisionComms".Ready AND NOT #Vision.Fault; "DB_VisionComms".RecipeId := "DB_Recipe".Active.RecipeId; "DB_VisionComms".ExpectedBottles := 2; "DB_VisionComms".TargetFillLevel := "DB_Recipe".Active.TargetFillLevel;
+   "DB_VisionComms".Enable := #processPermissive AND #modelConfigured AND "DB_VisionComms".Ready AND NOT #Vision.Fault; "DB_VisionComms".RecipeId := "DB_Recipe".Active.RecipeId; "DB_VisionComms".ExpectedBottles := 2; "DB_VisionComms".TargetFillLevel := "DB_Recipe".Active.TargetFillLevel;
    #PlcHeartbeatTimer(IN := NOT #PlcHeartbeatTimer.Q, PT := T#500ms);
    IF #PlcHeartbeatTimer.Q THEN
       IF "DB_VisionComms".PlcHeartbeat = UDINT#4294967295 THEN "DB_VisionComms".PlcHeartbeat := UDINT#0;
@@ -122,7 +124,7 @@ BEGIN
    END_IF;
    #Vision(Enable := "DB_VisionComms".Enable, TriggerEdge := #Coordinator.VisionRequestPulse, InspectionId := "DB_VisionComms".InspectionId, SessionEpoch := "DB_VisionComms".SessionEpoch, ExpectedModelId := "DB_VisionComms".ExpectedModelId, ExpectedModelHash := "DB_VisionComms".ExpectedModelHash, Ready := "DB_VisionComms".Ready, Busy := "DB_VisionComms".Busy, Result := "DB_VisionComms".Result, Heartbeat := "DB_VisionComms".Result.Heartbeat, Timeout := "DB_Recipe".Active.VisionTimeout, HeartbeatTimeout := T#1s, ResetEdge := #HmiCommands.ResetPulse);
    "DB_VisionComms".Trigger := #Vision.Trigger;
-   "DB_VisionComms".DiagReason := #Vision.DiagReason;
+   IF #modelConfigured THEN "DB_VisionComms".DiagReason := #Vision.DiagReason; ELSE "DB_VisionComms".DiagReason := "E_VisionDiag".MODEL_MISMATCH; END_IF;
    IF #Vision.PublicationAck THEN "DB_VisionComms".ResultAckId := "DB_VisionComms".Result.ResultId; END_IF;
    FOR #i := 0 TO 31 DO #activeFaults[#i] := FALSE; #faultCodes[#i] := 0; END_FOR;
    #activeFaults[0] := NOT "DB_IO".Inputs.SafetyOk; #faultCodes[0] := 1001;
@@ -135,13 +137,18 @@ BEGIN
    #activeFaults[7] := #Clamp.Fault; #faultCodes[7] := 1202;
    #activeFaults[8] := #FillCh1.Fault; CASE #FillCh1.DiagReason OF "E_FillDiag".ANALOG_BROKEN_WIRE: #faultCodes[8] := 1307; "E_FillDiag".NO_FLOW: #faultCodes[8] := 1301; "E_FillDiag".PULSE_MISSING: #faultCodes[8] := 1321; "E_FillDiag".ANALOG_NO_FLOW: #faultCodes[8] := 1322; "E_FillDiag".PULSE_ANALOG_DISAGREE: #faultCodes[8] := 1303; "E_FillDiag".UNDERFILL: #faultCodes[8] := 1304; "E_FillDiag".OVERFILL: #faultCodes[8] := 1305; "E_FillDiag".VALVE_OPEN_MISMATCH: #faultCodes[8] := 1308; "E_FillDiag".VALVE_CLOSE_MISMATCH: #faultCodes[8] := 1306; "E_FillDiag".CONTINUED_FLOW: #faultCodes[8] := 1309; ELSE #faultCodes[8] := 1310; END_CASE;
    #activeFaults[9] := #FillCh2.Fault; CASE #FillCh2.DiagReason OF "E_FillDiag".ANALOG_BROKEN_WIRE: #faultCodes[9] := 1317; "E_FillDiag".NO_FLOW: #faultCodes[9] := 1311; "E_FillDiag".PULSE_MISSING: #faultCodes[9] := 1323; "E_FillDiag".ANALOG_NO_FLOW: #faultCodes[9] := 1324; "E_FillDiag".PULSE_ANALOG_DISAGREE: #faultCodes[9] := 1313; "E_FillDiag".UNDERFILL: #faultCodes[9] := 1314; "E_FillDiag".OVERFILL: #faultCodes[9] := 1315; "E_FillDiag".VALVE_OPEN_MISMATCH: #faultCodes[9] := 1318; "E_FillDiag".VALVE_CLOSE_MISMATCH: #faultCodes[9] := 1316; "E_FillDiag".CONTINUED_FLOW: #faultCodes[9] := 1319; ELSE #faultCodes[9] := 1320; END_CASE;
-   #activeFaults[10] := #Vision.Fault OR #Vision.HoldRequired; CASE #Vision.DiagReason OF "E_VisionDiag".READY_TIMEOUT: #faultCodes[10] := 1501; "E_VisionDiag".RESULT_TIMEOUT: #faultCodes[10] := 1502; "E_VisionDiag".RESULT_ID_MISMATCH: #faultCodes[10] := 1503; "E_VisionDiag".QUALITY_BLOCK: #faultCodes[10] := 1504; "E_VisionDiag".HEARTBEAT_LOSS: #faultCodes[10] := 1505; ELSE #faultCodes[10] := 1506; END_CASE;
+   #activeFaults[10] := #Vision.Fault OR #Vision.HoldRequired OR NOT #modelConfigured OR NOT "DB_VisionComms".Ready;
+   IF NOT #modelConfigured THEN #faultCodes[10] := 1506;
+   ELSIF NOT "DB_VisionComms".Ready AND NOT #Vision.Fault AND NOT #Vision.HoldRequired THEN #faultCodes[10] := 1501;
+   ELSE CASE #Vision.DiagReason OF "E_VisionDiag".READY_TIMEOUT: #faultCodes[10] := 1501; "E_VisionDiag".RESULT_TIMEOUT: #faultCodes[10] := 1502; "E_VisionDiag".RESULT_ID_MISMATCH: #faultCodes[10] := 1503; "E_VisionDiag".QUALITY_BLOCK: #faultCodes[10] := 1504; "E_VisionDiag".HEARTBEAT_LOSS: #faultCodes[10] := 1505; ELSE #faultCodes[10] := 1506; END_CASE; END_IF;
    #activeFaults[11] := #Capper.Fault; IF (#Capper.DiagReason = 1) OR (#Capper.DiagReason = 5) THEN #faultCodes[11] := 1402; ELSE #faultCodes[11] := 1401; END_IF;
    #activeFaults[12] := NOT #HmiCommands.CommunicationsHealthy; #faultCodes[12] := 1601;
    // Quality holds remain alarmed and output-interlocked but are not equipment
    // faults; this preserves the coordinator's INSPECT -> HOLDING disposition path.
-   #blockingFault := #immediateStop OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #FillCh2.Fault OR #Vision.Fault OR NOT "DB_VisionComms".Ready OR #Capper.Fault OR NOT #HmiCommands.CommunicationsHealthy;
-   IF #HmiCommands.ResetPulse AND NOT #blockingFault THEN "DB_IO".PowerRecoveryRequired := FALSE; #processPermissive := NOT #immediateStop; END_IF;
+   #blockingFault := #immediateStop OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #FillCh2.Fault OR #Vision.Fault OR NOT #modelConfigured OR NOT "DB_VisionComms".Ready OR #Capper.Fault OR NOT #HmiCommands.CommunicationsHealthy;
+   // A restart never reprocesses a bottle already in the cell. Recovery is
+   // acknowledged only after the cell is physically empty.
+   IF #HmiCommands.ResetPulse AND NOT #blockingFault AND NOT "DB_IO".Inputs.Bottle1Present AND NOT "DB_IO".Inputs.Bottle2Present THEN "DB_IO".PowerRecoveryRequired := FALSE; #processPermissive := NOT #immediateStop; END_IF;
    #Coordinator(InitDone := TRUE, PermissivesOk := #processPermissive, StartEdge := #HmiCommands.StartPulse, StopEdge := #HmiCommands.StopPulse, ResetEdge := #HmiCommands.ResetPulse, AutoRequest := #HmiCommands.AutoPulse, ManualRequest := #HmiCommands.ManualPulse, DispositionRemoved := #HmiCommands.DispositionPulse, PairPresent := "DB_IO".Inputs.Bottle1Present AND "DB_IO".Inputs.Bottle2Present, PairAbsent := NOT "DB_IO".Inputs.Bottle1Present AND NOT "DB_IO".Inputs.Bottle2Present, ConveyorStopped := #ConveyorVfd.Stopped, GateClosed := "DB_IO".Inputs.GateClosed, GateOpen := "DB_IO".Inputs.GateOpen, ClampEngaged := "DB_IO".Inputs.ClampEngaged, ClampReleased := "DB_IO".Inputs.ClampReleased, Fill1Done := #FillCh1.Done, Fill2Done := #FillCh2.Done, DripDone := #DripTimer.Q, VisionAccepted := #Vision.Accepted, VisionPass := #Vision.QualityPass, CapperReady := "DB_IO".Inputs.CapperReady, CapperComplete := #Capper.CompletePulse, BlockingFault := #blockingFault);
    #Alarm(ActiveFaults := #activeFaults, FaultCodes := #faultCodes, AckEdge := #HmiCommands.AckPulse, ResetEdge := #HmiCommands.ResetPulse);
    "DB_HMI".FirstOutAlarm := #Alarm.FirstOutCode;
@@ -167,5 +174,5 @@ BEGIN
    %Q1.1 := "DB_IO".Commands.StackGreen; %Q1.2 := "DB_IO".Commands.StackAmber; %Q1.3 := "DB_IO".Commands.StackRed; %Q1.4 := "DB_IO".Commands.Audible; %Q1.5 := "DB_IO".Commands.CameraLight;
    IF "DB_IO".ReleasePermissive THEN %QW256 := #ConveyorVfd.ControlWord1; %QW258 := #ConveyorVfd.SpeedSetpointPzd; %QW260 := #PumpVfd.ControlWord1; %QW262 := #PumpVfd.SpeedSetpointPzd;
    ELSE %QW256 := W#16#047E; %QW258 := 0; %QW260 := W#16#047E; %QW262 := 0; END_IF;
-   "DB_HMI".StateCode := ENUM_TO_UINT(#Coordinator.State); "DB_HMI".AutoStepCode := ENUM_TO_UINT(#Coordinator.AutoStep); "DB_HMI".QualityHold := #Coordinator.QualityHold;
+   "DB_HMI".StateCode := ENUM_TO_UINT(#Coordinator.State); "DB_HMI".AutoStepCode := ENUM_TO_UINT(#Coordinator.AutoStep); "DB_HMI".QualityHold := #Coordinator.QualityHold OR #Coordinator.DispositionRequired;
 END_FUNCTION_BLOCK

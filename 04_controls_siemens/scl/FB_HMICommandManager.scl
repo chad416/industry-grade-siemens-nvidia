@@ -38,9 +38,12 @@ BEGIN
    IF #CommunicationsHealthy AND #StartRequest AND (#StartSeq <> #StartAcceptedSeq) AND (#StartSeq <> #StartRejectedSeq) THEN
       IF #StartAllowed THEN #StartPulse := TRUE; #StartAcceptedSeq := #StartSeq; ELSE #StartRejectedSeq := #StartSeq; END_IF;
    END_IF;
-   IF (#CommunicationsHealthy AND #StopRequest AND (#StopSeq <> #StopAcceptedSeq)) OR #LocalStop THEN #StopPulse := TRUE; IF #StopRequest THEN #StopAcceptedSeq := #StopSeq; END_IF; END_IF;
-   IF (#CommunicationsHealthy AND #ResetRequest AND (#ResetSeq <> #ResetAcceptedSeq) AND (#ResetSeq <> #ResetRejectedSeq)) OR #localResetEdge.Q THEN
-      IF #ResetAllowed THEN #ResetPulse := TRUE; IF #ResetRequest THEN #ResetAcceptedSeq := #ResetSeq; END_IF; ELSIF #ResetRequest THEN #ResetRejectedSeq := #ResetSeq; END_IF;
+   // Local hardwired commands never consume or reject an HMI sequence number.
+   IF #LocalStop THEN #StopPulse := TRUE; END_IF;
+   IF #CommunicationsHealthy AND #StopRequest AND (#StopSeq <> #StopAcceptedSeq) THEN #StopPulse := TRUE; #StopAcceptedSeq := #StopSeq; END_IF;
+   IF #localResetEdge.Q AND #ResetAllowed THEN #ResetPulse := TRUE; END_IF;
+   IF #CommunicationsHealthy AND #ResetRequest AND (#ResetSeq <> #ResetAcceptedSeq) AND (#ResetSeq <> #ResetRejectedSeq) THEN
+      IF #ResetAllowed THEN #ResetPulse := TRUE; #ResetAcceptedSeq := #ResetSeq; ELSE #ResetRejectedSeq := #ResetSeq; END_IF;
    END_IF;
    IF #CommunicationsHealthy AND #AckRequest AND (#AckSeq <> #AckAcceptedSeq) THEN #AckPulse := TRUE; #AckAcceptedSeq := #AckSeq; END_IF;
    IF #CommunicationsHealthy AND #AutoRequest AND (#AutoSeq <> #AutoAcceptedSeq) AND (#AutoSeq <> #AutoRejectedSeq) THEN IF #AutoAllowed THEN #AutoPulse := TRUE; #AutoAcceptedSeq := #AutoSeq; ELSE #AutoRejectedSeq := #AutoSeq; END_IF; END_IF;

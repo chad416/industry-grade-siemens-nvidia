@@ -13,7 +13,7 @@ from filling_cell_simulator import SCENARIOS, FillingCellSimulator, SimulationCo
 def _write_csv(path: Path, rows: list[dict[str, object]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", newline="", encoding="utf-8") as stream:
-        writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 
@@ -38,6 +38,7 @@ def run_and_write(output_dir: Path | None = None, config: SimulationConfig | Non
     (output_dir / "run_metadata.json").write_text(
         json.dumps(metadata, indent=2) + "\n",
         encoding="utf-8",
+        newline="\n",
     )
     return results
 

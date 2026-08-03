@@ -28,8 +28,8 @@ def csv_rows(name: str) -> list[dict]:
 
 
 model = json.loads((ROOT / "00_project_control/canonical_model.json").read_text(encoding="utf-8"))
-ok(model["project"]["revision"] == "D", "canonical revision D")
-ok(model["project"]["status"].startswith("PROFESSIONAL CONTROLLED ENGINEERING-DEVELOPMENT PACKAGE"), "truthful controlled-development maturity status")
+ok(model["project"]["revision"] == "D.1", "canonical revision D.1")
+ok(model["project"]["status"].startswith("PROFESSIONAL CONTROLLED ENGINEERING-DEVELOPMENT RELEASE CANDIDATE"), "truthful controlled-development release-candidate status")
 
 required_dirs = [f"{i:02d}_{name}" for i,name in enumerate(["project_control","requirements","system_architecture","electrical","controls_siemens","hmi","drives","nvidia_vision","digital_twin","panel_cad","schedules","simulation","testing","documentation","qa"])] + ["release"]
 for directory in required_dirs: ok((ROOT / directory).is_dir(), f"required directory {directory}")
@@ -234,6 +234,9 @@ edge_tests = (ROOT / "07_nvidia_vision/edge_service/tests/test_service.py").read
 harness_tests = (ROOT / "07_nvidia_vision/test_plc_interface_harness.py").read_text(encoding="utf-8")
 ok("test_malformed_ack_never_clears_valid_publication" in edge_tests and "test_malformed_identity_shapes_and_property_failure_stay_not_ready" in edge_tests, "edge tests cover malformed ACK and model-identity ingress")
 ok("test_rearm_uses_single_validated_identity_read_and_catches_transition_failure" in edge_tests and "self._validated_identity" in edge_service, "edge rearm reuses one protected validated identity read")
+for test_name in ["test_initial_zero_ack_poll_is_idempotent","test_same_session_reset_rejects_regressed_plc_snapshot","test_publication_survives_transport_fault_reset_and_wrong_ack","test_same_session_reset_snapshot_can_carry_exact_ack","test_advanced_disabled_session_invalidates_prior_publication","test_tick_contains_session_change_for_polling_adapter","test_model_identity_rejects_whitespace_control_and_path_characters"]:
+    ok(test_name in edge_tests, f"Revision-D.1 edge regression test present: {test_name}")
+ok("invalidate_publication: bool = False" in edge_service and "publication_invalidated_on_new_session" in edge_service, "edge publication remains immutable through same-session faults and records new-session invalidation")
 ok("test_rejected_delayed_publication_is_acked_cleared_and_rearmed" in harness_tests, "composed PLC/edge test covers rejected delayed publication cleanup and rearm")
 node_map = list(csv.DictReader((ROOT / "07_nvidia_vision/plc_ai_node_map.csv").open(encoding="utf-8-sig", newline="")))
 service_config = json.loads((ROOT / "07_nvidia_vision/edge_service/service_config.json").read_text(encoding="utf-8"))
@@ -243,6 +246,24 @@ ok(set(service_config["nodes"]) == set(vision_signals) and all(service_config["n
 ok(all(token in service_config["session_rearm"] for token in ["VISION_SESSION_EPOCH","INSPECTION_ID","RESULT_ACK_ID","PLC_HEARTBEAT","VISION_ENABLE low"]), "edge config records disabled four-counter anti-replay synchronization")
 reproduction = (ROOT / "scripts/reproduce_validation.ps1").read_text(encoding="utf-8")
 ok(reproduction.count("WorkbookHash") >= 4 and reproduction.count("PdfHash") >= 4 and "Get-FileHash -Algorithm SHA256" in reproduction, "standard reproduction compares two normalized XLSX and PDF builds by SHA-256")
+ok("verify_manifest.py' '--source' 'head' '--require-clean'" in reproduction and "Assert-CleanGitState" in reproduction, "standard reproduction verifies clean committed bytes before and after generation")
+attributes = (ROOT / ".gitattributes").read_text(encoding="utf-8")
+for token in ["* text=auto eol=lf","*.qet      -text","*.dxf      -text","*.FCStd    -text","*.step     -text","*.iges     -text","*.xlsx     -text","*.pdf      -text","*.png      -text"]:
+    ok(token in attributes, f"explicit Git byte policy includes {token}")
+toolchain_lock = json.loads((ROOT / "release/reproduction_toolchain_lock.json").read_text(encoding="utf-8"))
+ok(toolchain_lock["release"] == "D.1", "artifact-reproduction toolchain lock is Revision D.1")
+ok(toolchain_lock["python"]["version"] == "3.12.13", "artifact-reproduction Python version is locked")
+ok(toolchain_lock["node"]["packages"]["@oai/artifact-tool"] == "2.8.31", "artifact-tool version is locked")
+ok(toolchain_lock["pdftoppm"]["version"] == "26.05.0", "Poppler renderer version is locked")
+ok("verify_release_toolchain.py" in reproduction, "complete reproduction verifies the locked artifact toolchain")
+manifest_builder = (ROOT / "scripts/build_manifest.py").read_text(encoding="utf-8")
+manifest_verifier = (ROOT / "scripts/verify_manifest.py").read_text(encoding="utf-8")
+determinism = (ROOT / "scripts/check_determinism.py").read_text(encoding="utf-8")
+ok("tracked_paths(\"index\")" in manifest_builder and "read_bytes(\"index\", rel)" in manifest_builder, "manifest builder hashes staged Git-index bytes")
+ok('choices=("head", "index", "worktree")' in manifest_verifier and "untracked/unexpected worktree path" in manifest_verifier, "manifest verifier supports authoritative sources and rejects unexpected files")
+ok("checkout-index" in determinism and "git\", \"archive" in determinism, "determinism exports authoritative index or HEAD snapshots")
+ok((ROOT / ".github/workflows/revision-d1-reproduce.yml").exists(), "fresh-clone Revision-D.1 CI workflow is controlled")
+ok((ROOT / "00_project_control/repository_release_workflow.md").exists() and (ROOT / "14_qa/release_integrity_reproduction.md").exists(), "release-byte and clean-clone evidence documents are controlled")
 ok(all(not (ROOT / "14_qa/pdf_renders" / stale).exists() or not any((ROOT / "14_qa/pdf_renders" / stale).iterdir()) for stale in ["release","release_c"]), "stale pre-Revision-D PDF render directories are empty")
 ok("FS03 / FW4.0" in (ROOT / "04_controls_siemens/cpu_tia_v20_compatibility.md").read_text(encoding="utf-8"), "CPU/TIA V20 firmware baseline documented")
 network_decision = (ROOT / "02_system_architecture/network_hardware_decision.md").read_text(encoding="utf-8")
@@ -258,6 +279,7 @@ for rel in ["README.md","AGENTS.md","00_project_control/design_basis.md","14_qa/
 expected_hashes = {
     "03_electrical/native_baseline/filling_cell.qet":"d817036497afbf0f48379da4dbce81cd1d7b7cca28bfc8341d5b437d2421660b",
     "09_panel_cad/native_baseline/filling_cell_panel.FCStd":"306b7376fd2b870b879cf78171e51b02b68fe23678fe15c61c81d48bcc90cf31",
+    "09_panel_cad/native_baseline/mounting_plate.dxf":"9ddd38069e43c74c92393bf7f2d3dda729dfce041cedcd16fcdfca0dd433828d",
 }
 for rel,digest in expected_hashes.items(): ok(hashlib.sha256((ROOT / rel).read_bytes()).hexdigest() == digest, f"historical native baseline retained: {rel}")
 ElementTree.parse(ROOT / "03_electrical/native_baseline/filling_cell.qet"); checks.append("QET historical baseline is well-formed XML")
@@ -267,10 +289,10 @@ bad = sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*") if p.is_fil
 ok(not bad, f"no fabricated native/model artifacts: {bad}")
 
 report = ROOT / "14_qa/automated_validation_report.md"
-lines = ["# Automated validation report — Revision D","",f"Result: **{'PASS' if not errors else 'FAIL'}**","","This is deterministic static/data/independent-model validation. It is not TIA, WinCC, Startdrive, PLCSIM, QET or FreeCAD native proof.","","## Passed checks",""] + [f"- {item}" for item in sorted(checks)]
+lines = ["# Automated validation report — Revision D.1","",f"Result: **{'PASS' if not errors else 'FAIL'}**","","This is deterministic static/data/independent-model validation. It is not TIA, WinCC, Startdrive, PLCSIM, QET or FreeCAD native proof.","","## Passed checks",""] + [f"- {item}" for item in sorted(checks)]
 if errors: lines += ["","## Errors",""] + [f"- {item}" for item in sorted(errors)]
 if not OPTIONS.check:
-    report.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    report.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")
 print(f"PASS={len(checks)} FAIL={len(errors)}")
 for error in errors: print(f"ERROR: {error}")
 sys.exit(1 if errors else 0)

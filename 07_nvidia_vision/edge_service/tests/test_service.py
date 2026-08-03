@@ -127,6 +127,8 @@ class EdgeServiceTests(unittest.TestCase):
         with self.assertRaisesRegex(ProtocolError, "acknowledgement"):
             service.acknowledge_result(2)
         self.assertFalse(service.state.ready)
+        self.assertTrue(service.state.result_valid)
+        self.assertEqual(service.state.published_result_id, 1)
 
     def test_malformed_ack_never_clears_valid_publication(self) -> None:
         for malformed in (True, 1.0, -1, 0x1_0000_0000):
@@ -252,6 +254,89 @@ class EdgeServiceTests(unittest.TestCase):
         service.acknowledge_result(1)
         self.assertTrue(service.state.ready)
 
+    def test_initial_zero_ack_poll_is_idempotent(self) -> None:
+        service = self.service(observed_ack_id=0)
+        service.acknowledge_result(0)
+        self.assertTrue(service.state.ready)
+        self.assertFalse(service.state.result_valid)
+        self.assertEqual(service.state.diagnostic_code, "OK")
+
+    def test_same_session_reset_rejects_regressed_plc_snapshot(self) -> None:
+        service = self.service()
+        service.tick(10, 0, 1)
+        service.inspect(self.request(10, 10, 1)); service.acknowledge_result(10)
+
+        with self.assertRaisesRegex(ProtocolError, "inspection identifier regressed"):
+            service.reset(disabled=True, session_epoch=1, observed_inspection_id=9,
+                          observed_ack_id=9, observed_plc_heartbeat=10)
+        with self.assertRaisesRegex(ProtocolError, "acknowledgement regressed"):
+            service.reset(disabled=True, session_epoch=1, observed_inspection_id=10,
+                          observed_ack_id=9, observed_plc_heartbeat=10)
+        with self.assertRaisesRegex(ProtocolError, "heartbeat regressed"):
+            service.reset(disabled=True, session_epoch=1, observed_inspection_id=10,
+                          observed_ack_id=10, observed_plc_heartbeat=9)
+
+        self.assertEqual((service.state.last_inspection_id,
+                          service.state.last_acknowledged_result_id,
+                          service.state.last_plc_heartbeat), (10, 10, 10))
+        service.reset(disabled=True, session_epoch=1, observed_inspection_id=10,
+                      observed_ack_id=10, observed_plc_heartbeat=10)
+        self.assertEqual(service.inspect(self.request(11, 11, 1)).result_id, 11)
+
+    def test_publication_survives_transport_fault_reset_and_wrong_ack(self) -> None:
+        service = self.service(heartbeat_timeout_ms=1000)
+        service.inspect(self.request(1, 1, 1))
+        service.tick(1, 0, 1)
+        service.tick(1, 1000, 1)
+
+        self.assertFalse(service.state.ready)
+        self.assertEqual(service.state.diagnostic_code, "PLC_HEARTBEAT_TIMEOUT")
+        self.assertTrue(service.state.result_valid)
+        self.assertEqual(service.state.published_result_id, 1)
+
+        with self.assertRaisesRegex(ProtocolError, "exact acknowledgement"):
+            service.reset(disabled=True, session_epoch=1, observed_inspection_id=1,
+                          observed_ack_id=0, observed_plc_heartbeat=1)
+        with self.assertRaisesRegex(ProtocolError, "acknowledgement"):
+            service.acknowledge_result(2)
+        self.assertTrue(service.state.result_valid)
+        self.assertEqual(service.state.published_result_id, 1)
+
+        service.acknowledge_result(1)
+        self.assertFalse(service.state.result_valid)
+        service.reset(disabled=True, session_epoch=1, observed_inspection_id=1,
+                      observed_ack_id=1, observed_plc_heartbeat=1)
+        self.assertTrue(service.state.ready)
+        self.assertEqual(service.inspect(self.request(2, 2, 1)).result_id, 2)
+
+    def test_same_session_reset_snapshot_can_carry_exact_ack(self) -> None:
+        service = self.service()
+        service.inspect(self.request(1, 1, 1))
+        service.reset(disabled=True, session_epoch=1, observed_inspection_id=1,
+                      observed_ack_id=1, observed_plc_heartbeat=1)
+        self.assertFalse(service.state.result_valid)
+        self.assertEqual(service.state.last_acknowledged_result_id, 1)
+        self.assertEqual(service.events[-2]["event"], "result_acknowledged_from_reset_snapshot")
+
+    def test_advanced_disabled_session_invalidates_prior_publication(self) -> None:
+        service = self.service(session_epoch=1)
+        service.inspect(self.request(7, 7, 1))
+        service.reset(disabled=True, session_epoch=2, observed_inspection_id=0,
+                      observed_ack_id=0, observed_plc_heartbeat=0)
+        self.assertFalse(service.state.result_valid)
+        self.assertEqual(service.state.published_result_id, 0)
+        self.assertEqual(service.state.session_epoch, 2)
+        self.assertTrue(any(event["event"] == "publication_invalidated_on_new_session"
+                            for event in service.events))
+        self.assertEqual(service.inspect(self.request(1, 1, 2)).result_id, 1)
+
+    def test_tick_contains_session_change_for_polling_adapter(self) -> None:
+        service = self.service(session_epoch=1)
+        service.tick(1, 0, 2)
+        self.assertFalse(service.state.ready)
+        self.assertEqual(service.state.diagnostic_code, "SESSION_SYNC_REQUIRED")
+        self.assertIn("disabled synchronization", service.state.fault)
+
     def test_prior_ack_level_is_ignored_while_new_result_waits(self) -> None:
         service = self.service()
         service.inspect(self.request(1, 1)); service.acknowledge_result(1)
@@ -291,6 +376,14 @@ class EdgeServiceTests(unittest.TestCase):
         service = VisionService(RaisingBackend())
         self.assertFalse(service.state.ready)
         self.assertEqual(service.state.diagnostic_code, "NO_CONTROLLED_MODEL")
+
+    def test_model_identity_rejects_whitespace_control_and_path_characters(self) -> None:
+        for model_id in (" ", "MODEL\nINJECT", "MODEL/RELATIVE", "-LEADING"):
+            class Backend(ControlledTestBackend):
+                controlled_identity = (model_id, "a" * 64)
+            service = VisionService(Backend())
+            self.assertFalse(service.state.ready, repr(model_id))
+            self.assertEqual(service.state.diagnostic_code, "NO_CONTROLLED_MODEL")
 
     def test_rearm_uses_single_validated_identity_read_and_catches_transition_failure(self) -> None:
         class ThirdReadRaises(ControlledTestBackend):

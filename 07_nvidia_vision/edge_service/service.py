@@ -114,6 +114,21 @@ class VisionService:
             raise ProtocolError("disabled reset requires a nonzero PLC session epoch")
         if self.state.session_epoch and session_epoch != self.state.session_epoch and not heartbeat_advance(self.state.session_epoch, session_epoch):
             raise ProtocolError("session epoch did not advance")
+        same_session = self.state.session_synchronized and session_epoch == self.state.session_epoch
+        if same_session:
+            if (self.state.result_valid
+                    and observed_ack_id != self.state.published_result_id):
+                raise ProtocolError("same-session reset requires exact acknowledgement of the outstanding publication")
+            if observed_inspection_id < self.state.last_inspection_id:
+                raise ProtocolError("same-session inspection identifier regressed")
+            if observed_ack_id < self.state.last_acknowledged_result_id:
+                raise ProtocolError("same-session acknowledgement regressed")
+            if (observed_plc_heartbeat != self.state.last_plc_heartbeat
+                    and not heartbeat_advance(self.state.last_plc_heartbeat, observed_plc_heartbeat)):
+                raise ProtocolError("same-session PLC heartbeat regressed")
+        if self.state.result_valid:
+            event = "result_acknowledged_from_reset_snapshot" if same_session else "publication_invalidated_on_new_session"
+            self.events.append({"event":event,"session_epoch":self.state.session_epoch,"inspection_id":self.state.published_result_id,"plc_heartbeat":self.state.last_plc_heartbeat})
         self.state.session_epoch = session_epoch
         self.state.session_synchronized = True
         self.state.result_valid = False
@@ -131,7 +146,7 @@ class VisionService:
             self.session_identity = self._validated_identity
         self.events.append({"event":"service_rearmed","session_epoch":self.state.session_epoch,"inspection_id":self.state.last_inspection_id,"acknowledgement_id":self.state.last_acknowledged_result_id,"plc_heartbeat":self.state.last_plc_heartbeat})
 
-    def _fault(self, code: str, message: str, *, invalidate_publication: bool = True, inspection_id: int | None = None, plc_heartbeat: int | None = None) -> None:
+    def _fault(self, code: str, message: str, *, invalidate_publication: bool = False, inspection_id: int | None = None, plc_heartbeat: int | None = None) -> None:
         self.state.ready = False
         self.state.fault = message
         self.state.diagnostic_code = code
@@ -147,7 +162,12 @@ class VisionService:
         self.state.vision_heartbeat = (self.state.vision_heartbeat + 1) & UINT32_MAX
         if not self.state.session_synchronized:
             return
-        self.begin_session(session_epoch)
+        try:
+            self.begin_session(session_epoch)
+        except ProtocolError:
+            # A polling adapter must remain alive long enough to publish the
+            # fail-closed diagnostic and wait for disabled synchronization.
+            return
         if self.state.heartbeat_last_change_ms is None:
             self.state.last_plc_heartbeat = plc_heartbeat
             self.state.heartbeat_last_change_ms = now_ms
@@ -167,7 +187,7 @@ class VisionService:
         if self.state.result_valid and result_id == self.state.last_acknowledged_result_id and result_id != self.state.published_result_id:
             self.events.append({"event":"prior_result_acknowledgement_poll_ignored","session_epoch":self.state.session_epoch,"inspection_id":result_id,"plc_heartbeat":self.state.last_plc_heartbeat})
             return
-        if not self.state.result_valid and result_id == self.state.last_acknowledged_result_id and result_id != 0:
+        if not self.state.result_valid and result_id == self.state.last_acknowledged_result_id:
             self.events.append({"event":"result_acknowledgement_poll_ignored","session_epoch":self.state.session_epoch,"inspection_id":result_id,"plc_heartbeat":self.state.last_plc_heartbeat})
             return
         if not self.state.result_valid or result_id != self.state.published_result_id:

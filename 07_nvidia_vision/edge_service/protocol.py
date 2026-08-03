@@ -41,13 +41,14 @@ MIN_TARGET_FILL_LEVEL = 0.1
 MAX_TARGET_FILL_LEVEL = 1.0
 HEARTBEAT_TIMEOUT_MS = 1000
 MODEL_HASH_RE = re.compile(r"^[0-9a-fA-F]{64}$")
+MODEL_ID_RE = re.compile(r"^[A-Za-z0-9][A-Za-z0-9._-]{0,31}$")
 UINT16_MAX = 0xFFFF
 UINT32_MAX = 0xFFFFFFFF
 
 
 def validate_model_identity(identity: tuple[str, str] | None) -> tuple[str, str]:
     if (type(identity) is not tuple or len(identity) != 2
-            or type(identity[0]) is not str or not 1 <= len(identity[0]) <= 32
+            or type(identity[0]) is not str or MODEL_ID_RE.fullmatch(identity[0]) is None
             or type(identity[1]) is not str or MODEL_HASH_RE.fullmatch(identity[1]) is None):
         raise ProtocolError("controlled model identity/hash is absent or malformed")
     return identity

@@ -1,21 +1,42 @@
-"""Single Revision-D controlled-file inclusion and classification policy."""
+"""Single Revision-D.1 controlled-file inclusion and classification policy."""
 from __future__ import annotations
 
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 
 EXCLUDED_NAMES = {"manifest.json", "manifest.csv", ".DS_Store"}
 EXCLUDED_DIRS = {".git", "__pycache__", "node_modules", ".cache", ".pytest_cache", ".determinism", "tmp"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".tmp"}
 FIELDS = ["path","bytes","sha256","category","role","revision","gate_status","blocker"]
+REVISION = "D.1"
+FORBIDDEN_PATHS = {
+    "scripts/revision_c_generator.py",
+    "scripts/revision_c_scl.py",
+}
+FORBIDDEN_PREFIXES = (
+    "14_qa/pdf_renders/release/",
+    "14_qa/pdf_renders/release_c/",
+)
+
+
+def included_rel(rel: str) -> bool:
+    pure = PurePosixPath(rel)
+    return (
+        not pure.is_absolute()
+        and ".." not in pure.parts
+        and pure.name not in EXCLUDED_NAMES
+        and not any(part in EXCLUDED_DIRS for part in pure.parts)
+        and pure.suffix.lower() not in EXCLUDED_SUFFIXES
+        and not pure.name.endswith(".inspect.ndjson")
+    )
+
+
+def forbidden(rel: str) -> bool:
+    return rel in FORBIDDEN_PATHS or rel.startswith(FORBIDDEN_PREFIXES)
 
 
 def included(root: Path, path: Path) -> bool:
-    rel = path.relative_to(root)
-    return (path.is_file() and path.name not in EXCLUDED_NAMES and
-            not any(part in EXCLUDED_DIRS for part in rel.parts) and
-            path.suffix.lower() not in EXCLUDED_SUFFIXES and
-            not path.name.endswith(".inspect.ndjson"))
+    return path.is_file() and included_rel(path.relative_to(root).as_posix())
 
 
 def reparse_points(root: Path) -> list[str]:
@@ -39,7 +60,7 @@ def classify(rel: str) -> tuple[str, str, str, str]:
         "11_simulation":"Simulation","12_testing":"Testing","13_documentation":"Documentation","14_qa":"QA","release":"Release","scripts":"Reproduction"
     }.get(top, "Repository control")
     if top in {"03_electrical","09_panel_cad"}:
-        return category,"Historical/native-boundary and controlled design data","OPEN","Revision-D native replacement/reopen blocked"
+        return category,"Historical/native-boundary and controlled design data","OPEN","Revision-D.1 native replacement/reopen blocked"
     if top in {"04_controls_siemens","05_hmi","06_drives"}:
         return category,"Design source/specification","OPEN","Native compile/configuration not executed"
     if top == "07_nvidia_vision":

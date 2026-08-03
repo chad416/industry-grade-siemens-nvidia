@@ -6,7 +6,7 @@
 
 ## Preconditions
 
-A controlled real dataset, approved model card, held-out metrics, target Jetson/JetPack/DeepStream compatibility, signed bundle, security approval and measured latency/thermal evidence are mandatory. None exists in this revision.
+A controlled real dataset, approved model card, held-out metrics, target Jetson/JetPack/DeepStream compatibility, signed bundle, security approval and measured latency/thermal evidence are mandatory. The DeepStream 9.1 Jetson Orin planning baseline is JetPack 7.2 GA, L4T 39.2 and TensorRT 10.16.1.7; generic TensorRT 11.1 documentation is not target compatibility evidence. None of the required target evidence exists in this revision.
 
 ## Deployment
 

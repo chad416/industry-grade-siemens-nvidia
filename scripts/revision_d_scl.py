@@ -234,14 +234,20 @@ VERSION : 0.1
       ExpectedBottles : USInt;
       TargetFillLevel : Real;
       PlcHeartbeat : UDInt;
-      SessionEpoch : UDInt;
-      ExpectedModelId : String[32];
-      ExpectedModelHash : String[64];
       Ready : Bool;
       Busy : Bool;
       ResultAckId : UDInt;
       DiagReason : "E_VisionDiag";
       Result : "UDT_VisionResult";
+   END_VAR
+   // Controller/approved-model identity must survive a warm or power restart.
+   // A memory reset is a controlled commissioning event and requires the edge
+   // replay state to be purged before production is re-enabled.
+   VAR RETAIN
+      SessionEpoch : UDInt;
+      ExpectedModelId : String[32];
+      ExpectedModelHash : String[64];
+      ModelConfigurationApproved : Bool;
    END_VAR
 BEGIN
 END_DATA_BLOCK
@@ -296,9 +302,12 @@ BEGIN
    IF #CommunicationsHealthy AND #StartRequest AND (#StartSeq <> #StartAcceptedSeq) AND (#StartSeq <> #StartRejectedSeq) THEN
       IF #StartAllowed THEN #StartPulse := TRUE; #StartAcceptedSeq := #StartSeq; ELSE #StartRejectedSeq := #StartSeq; END_IF;
    END_IF;
-   IF (#CommunicationsHealthy AND #StopRequest AND (#StopSeq <> #StopAcceptedSeq)) OR #LocalStop THEN #StopPulse := TRUE; IF #StopRequest THEN #StopAcceptedSeq := #StopSeq; END_IF; END_IF;
-   IF (#CommunicationsHealthy AND #ResetRequest AND (#ResetSeq <> #ResetAcceptedSeq) AND (#ResetSeq <> #ResetRejectedSeq)) OR #localResetEdge.Q THEN
-      IF #ResetAllowed THEN #ResetPulse := TRUE; IF #ResetRequest THEN #ResetAcceptedSeq := #ResetSeq; END_IF; ELSIF #ResetRequest THEN #ResetRejectedSeq := #ResetSeq; END_IF;
+   // Local hardwired commands never consume or reject an HMI sequence number.
+   IF #LocalStop THEN #StopPulse := TRUE; END_IF;
+   IF #CommunicationsHealthy AND #StopRequest AND (#StopSeq <> #StopAcceptedSeq) THEN #StopPulse := TRUE; #StopAcceptedSeq := #StopSeq; END_IF;
+   IF #localResetEdge.Q AND #ResetAllowed THEN #ResetPulse := TRUE; END_IF;
+   IF #CommunicationsHealthy AND #ResetRequest AND (#ResetSeq <> #ResetAcceptedSeq) AND (#ResetSeq <> #ResetRejectedSeq) THEN
+      IF #ResetAllowed THEN #ResetPulse := TRUE; #ResetAcceptedSeq := #ResetSeq; ELSE #ResetRejectedSeq := #ResetSeq; END_IF;
    END_IF;
    IF #CommunicationsHealthy AND #AckRequest AND (#AckSeq <> #AckAcceptedSeq) THEN #AckPulse := TRUE; #AckAcceptedSeq := #AckSeq; END_IF;
    IF #CommunicationsHealthy AND #AutoRequest AND (#AutoSeq <> #AutoAcceptedSeq) AND (#AutoSeq <> #AutoRejectedSeq) THEN IF #AutoAllowed THEN #AutoPulse := TRUE; #AutoAcceptedSeq := #AutoSeq; ELSE #AutoRejectedSeq := #AutoSeq; END_IF; END_IF;
@@ -652,10 +661,15 @@ VAR_OUTPUT Request : Bool; Accepted : Bool; CompletePulse : Bool; HoldRequired :
 VAR tReady : TON; tAccept : TON; tComplete : TON; pending : Bool; seenBusy : Bool; END_VAR
 BEGIN
    #CompletePulse := FALSE;
-   IF #RequestEdge AND #Enable AND NOT #pending THEN #pending := TRUE; #Request := FALSE; #seenBusy := FALSE; END_IF;
+   IF #RequestEdge AND #Enable AND NOT #pending AND NOT #Fault THEN
+      IF #Busy OR #Complete THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 5;
+      ELSE #pending := TRUE; #Request := FALSE; #seenBusy := FALSE; #Accepted := FALSE; END_IF;
+   END_IF;
    #tReady(IN := #pending AND NOT #Ready AND NOT #seenBusy, PT := #AcceptTimeout);
    IF #pending AND #Ready AND NOT #Busy AND NOT #seenBusy THEN #Request := TRUE; END_IF;
-   IF #pending AND #Busy THEN #seenBusy := TRUE; #Accepted := TRUE; END_IF;
+   // BUSY is correlated only after this transaction asserted REQUEST. A
+   // pre-existing BUSY can belong to another bottle and must never be accepted.
+   IF #pending AND #Request AND #Busy THEN #seenBusy := TRUE; #Accepted := TRUE; END_IF;
    #tAccept(IN := #pending AND #Ready AND #Request AND NOT #seenBusy, PT := #AcceptTimeout);
    #tComplete(IN := #pending AND #seenBusy AND NOT #Complete, PT := #CompleteTimeout);
    IF #pending AND #seenBusy AND #Complete THEN #CompletePulse := TRUE; #Request := FALSE; #pending := FALSE; #Accepted := FALSE; END_IF;
@@ -663,40 +677,40 @@ BEGIN
    ELSIF #tReady.Q THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 2;
    ELSIF #tAccept.Q THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 3;
    ELSIF #tComplete.Q THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 4;
-   ELSIF #Complete AND NOT #seenBusy THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 5; END_IF;
-   IF #Fault THEN #Request := FALSE; #pending := FALSE; END_IF;
-   IF #ResetEdge AND #Ready AND NOT #FaultIn AND NOT #Busy AND NOT #Complete AND NOT #RequestEdge AND NOT #pending THEN #Fault := FALSE; #HoldRequired := FALSE; #DiagReason := 0; END_IF;
+   ELSIF (#Complete AND NOT #seenBusy) OR (#pending AND #Busy AND NOT #Request) THEN #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := 5; END_IF;
+   IF #Fault THEN #Request := FALSE; #pending := FALSE; #Accepted := FALSE; END_IF;
+   IF #ResetEdge AND #Ready AND NOT #FaultIn AND NOT #Busy AND NOT #Complete AND NOT #RequestEdge AND NOT #pending THEN #Fault := FALSE; #HoldRequired := FALSE; #Accepted := FALSE; #DiagReason := 0; END_IF;
 END_FUNCTION_BLOCK''',
 
         "FB_MachineCoordinator.scl": f'''// {NOTICE}
 FUNCTION_BLOCK "FB_MachineCoordinator"
 VAR_INPUT InitDone : Bool; PermissivesOk : Bool; StartEdge : Bool; StopEdge : Bool; ResetEdge : Bool; AutoRequest : Bool; ManualRequest : Bool; DispositionRemoved : Bool; PairPresent : Bool; PairAbsent : Bool; ConveyorStopped : Bool; GateClosed : Bool; GateOpen : Bool; ClampEngaged : Bool; ClampReleased : Bool; Fill1Done : Bool; Fill2Done : Bool; DripDone : Bool; VisionAccepted : Bool; VisionPass : Bool; CapperReady : Bool; CapperComplete : Bool; BlockingFault : Bool; END_VAR
-VAR_OUTPUT State : "E_MachineState"; AutoStep : "E_AutoStep"; IndexRequest : Bool; GateCloseRequest : Bool; ClampRequest : Bool; FillStartPulse : Bool; VisionRequestPulse : Bool; CapperRequestPulse : Bool; QualityHold : Bool; END_VAR
+VAR_OUTPUT State : "E_MachineState"; AutoStep : "E_AutoStep"; IndexRequest : Bool; GateCloseRequest : Bool; ClampRequest : Bool; FillStartPulse : Bool; VisionRequestPulse : Bool; CapperRequestPulse : Bool; QualityHold : Bool; DispositionRequired : Bool; END_VAR
 BEGIN
    #FillStartPulse := FALSE; #VisionRequestPulse := FALSE; #CapperRequestPulse := FALSE;
    CASE #State OF
       "E_MachineState".UNINITIALIZED: IF #InitDone THEN #State := "E_MachineState".INITIALIZING; END_IF;
-      "E_MachineState".INITIALIZING: IF #BlockingFault THEN #State := "E_MachineState".FAULTED; ELSE #State := "E_MachineState".STOPPED; END_IF;
-      "E_MachineState".STOPPED: #IndexRequest := FALSE; #GateCloseRequest := FALSE; #ClampRequest := FALSE; #QualityHold := FALSE; IF #ResetEdge AND #PermissivesOk THEN #State := "E_MachineState".READY; END_IF;
-      "E_MachineState".READY: IF #BlockingFault THEN #State := "E_MachineState".FAULTED; ELSIF #ManualRequest THEN #State := "E_MachineState".MANUAL_SETUP; ELSIF #StartEdge AND #PermissivesOk THEN #AutoStep := "E_AutoStep".WAIT_PAIR; #State := "E_MachineState".AUTOMATIC; END_IF;
+      "E_MachineState".INITIALIZING: IF #BlockingFault THEN #DispositionRequired := NOT #PairAbsent; #State := "E_MachineState".FAULTED; ELSE #State := "E_MachineState".STOPPED; END_IF;
+      "E_MachineState".STOPPED: #IndexRequest := FALSE; #GateCloseRequest := FALSE; #ClampRequest := FALSE; #QualityHold := #DispositionRequired; IF #DispositionRequired THEN #State := "E_MachineState".HOLDING; ELSIF #ResetEdge AND #PermissivesOk THEN #State := "E_MachineState".READY; END_IF;
+      "E_MachineState".READY: IF #BlockingFault THEN #DispositionRequired := NOT #PairAbsent; #State := "E_MachineState".FAULTED; ELSIF #ManualRequest THEN #State := "E_MachineState".MANUAL_SETUP; ELSIF #StartEdge AND #PermissivesOk THEN #DispositionRequired := FALSE; #AutoStep := "E_AutoStep".WAIT_PAIR; #State := "E_MachineState".AUTOMATIC; END_IF;
       "E_MachineState".AUTOMATIC:
-         IF #BlockingFault THEN #State := "E_MachineState".FAULTED;
-         ELSIF #StopEdge THEN #State := "E_MachineState".CONTROLLED_STOPPING;
+         IF #BlockingFault THEN #DispositionRequired := (NOT #PairAbsent) OR (#AutoStep <> "E_AutoStep".WAIT_PAIR); #State := "E_MachineState".FAULTED;
+         ELSIF #StopEdge THEN #DispositionRequired := (NOT #PairAbsent) OR (#AutoStep <> "E_AutoStep".WAIT_PAIR); #State := "E_MachineState".CONTROLLED_STOPPING;
          ELSE
             CASE #AutoStep OF
                "E_AutoStep".WAIT_PAIR: #IndexRequest := TRUE; IF #PairPresent THEN #IndexRequest := FALSE; #AutoStep := "E_AutoStep".SECURE_PAIR; END_IF;
                "E_AutoStep".SECURE_PAIR: #GateCloseRequest := TRUE; #ClampRequest := TRUE; IF #ConveyorStopped AND #GateClosed AND #ClampEngaged THEN #FillStartPulse := TRUE; #AutoStep := "E_AutoStep".FILL_PAIR; END_IF;
                "E_AutoStep".FILL_PAIR: IF #Fill1Done AND #Fill2Done THEN #AutoStep := "E_AutoStep".DRIP_SETTLE; END_IF;
                "E_AutoStep".DRIP_SETTLE: IF #DripDone THEN #VisionRequestPulse := TRUE; #AutoStep := "E_AutoStep".INSPECT; END_IF;
-               "E_AutoStep".INSPECT: IF #VisionAccepted THEN IF #VisionPass THEN #CapperRequestPulse := TRUE; #AutoStep := "E_AutoStep".TRANSFER; ELSE #QualityHold := TRUE; #State := "E_MachineState".HOLDING; END_IF; END_IF;
+               "E_AutoStep".INSPECT: IF #VisionAccepted THEN IF #VisionPass THEN #CapperRequestPulse := TRUE; #AutoStep := "E_AutoStep".TRANSFER; ELSE #DispositionRequired := TRUE; #QualityHold := TRUE; #State := "E_MachineState".HOLDING; END_IF; END_IF;
                "E_AutoStep".TRANSFER: IF #CapperComplete THEN #GateCloseRequest := FALSE; #ClampRequest := FALSE; #AutoStep := "E_AutoStep".RELEASE_PAIR; END_IF;
-               "E_AutoStep".RELEASE_PAIR: IF #GateOpen AND #ClampReleased AND #PairAbsent THEN #AutoStep := "E_AutoStep".WAIT_PAIR; #State := "E_MachineState".READY; END_IF;
+               "E_AutoStep".RELEASE_PAIR: IF #GateOpen AND #ClampReleased AND #PairAbsent THEN #DispositionRequired := FALSE; #AutoStep := "E_AutoStep".WAIT_PAIR; #State := "E_MachineState".READY; END_IF;
             END_CASE;
          END_IF;
-      "E_MachineState".MANUAL_SETUP: IF #BlockingFault THEN #State := "E_MachineState".FAULTED; ELSIF #StopEdge THEN #State := "E_MachineState".CONTROLLED_STOPPING; ELSIF #AutoRequest THEN #State := "E_MachineState".READY; END_IF;
-      "E_MachineState".HOLDING: #QualityHold := TRUE; IF #DispositionRemoved AND #PairAbsent AND NOT #BlockingFault THEN #State := "E_MachineState".RECOVERY_RESET; END_IF;
-      "E_MachineState".CONTROLLED_STOPPING: #IndexRequest := FALSE; IF #ConveyorStopped THEN #State := "E_MachineState".STOPPED; END_IF;
-      "E_MachineState".FAULTED: #IndexRequest := FALSE; #QualityHold := TRUE; IF #ResetEdge AND NOT #BlockingFault THEN #State := "E_MachineState".RECOVERY_RESET; END_IF;
+      "E_MachineState".MANUAL_SETUP: IF #BlockingFault THEN #DispositionRequired := NOT #PairAbsent; #State := "E_MachineState".FAULTED; ELSIF #StopEdge THEN #DispositionRequired := NOT #PairAbsent; #State := "E_MachineState".CONTROLLED_STOPPING; ELSIF #AutoRequest THEN #State := "E_MachineState".READY; END_IF;
+      "E_MachineState".HOLDING: #QualityHold := TRUE; IF #DispositionRemoved AND #PairAbsent AND NOT #BlockingFault THEN #DispositionRequired := FALSE; #State := "E_MachineState".RECOVERY_RESET; END_IF;
+      "E_MachineState".CONTROLLED_STOPPING: #IndexRequest := FALSE; IF #ConveyorStopped THEN IF #DispositionRequired THEN #State := "E_MachineState".HOLDING; ELSE #State := "E_MachineState".STOPPED; END_IF; END_IF;
+      "E_MachineState".FAULTED: #IndexRequest := FALSE; #QualityHold := TRUE; IF #ResetEdge AND NOT #BlockingFault THEN IF #DispositionRequired THEN #State := "E_MachineState".HOLDING; ELSE #State := "E_MachineState".RECOVERY_RESET; END_IF; END_IF;
       "E_MachineState".RECOVERY_RESET: #IndexRequest := FALSE; #GateCloseRequest := FALSE; #ClampRequest := FALSE; #QualityHold := FALSE; #State := "E_MachineState".STOPPED;
    END_CASE;
    IF #BlockingFault THEN #IndexRequest := FALSE; #FillStartPulse := FALSE; #VisionRequestPulse := FALSE; #CapperRequestPulse := FALSE; END_IF;
@@ -724,6 +738,7 @@ VAR
    preBlockingFault : Bool;
    immediateStop : Bool;
    processPermissive : Bool;
+   modelConfigured : Bool;
    manualConveyorInterlocked : Bool;
    manualSecureInterlocked : Bool;
    manualPumpInterlocked : Bool;
@@ -769,9 +784,10 @@ BEGIN
    "DB_Drives".Pump.StatusWord1 := %IW260;
    "DB_Drives".Pump.ActualSpeedPzd := %IW262;
 
+   #modelConfigured := "DB_VisionComms".ModelConfigurationApproved AND ("DB_VisionComms".ExpectedModelId <> '') AND (LEN("DB_VisionComms".ExpectedModelHash) = 64);
    #immediateStop := NOT "DB_IO".Inputs.SafetyOk OR NOT "DB_IO".Inputs.GuardClosed OR NOT "DB_IO".Inputs.AirPressureOk OR NOT "DB_IO".Inputs.ProductSupplyOk;
    #processPermissive := NOT #immediateStop AND NOT "DB_IO".PowerRecoveryRequired;
-   #preBlockingFault := #immediateStop OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #FillCh2.Fault OR #Vision.Fault OR NOT "DB_VisionComms".Ready OR #Capper.Fault OR NOT #HmiCommands.CommunicationsHealthy;
+   #preBlockingFault := #immediateStop OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #FillCh2.Fault OR #Vision.Fault OR NOT #modelConfigured OR NOT "DB_VisionComms".Ready OR #Capper.Fault OR NOT #HmiCommands.CommunicationsHealthy;
    #HmiCommands(StartRequest := "DB_HMI".Start.Request, StartSeq := "DB_HMI".Start.RequestSeq, StopRequest := "DB_HMI".ControlledStop.Request, StopSeq := "DB_HMI".ControlledStop.RequestSeq, ResetRequest := "DB_HMI".Reset.Request, ResetSeq := "DB_HMI".Reset.RequestSeq, AckRequest := "DB_HMI".AlarmAck.Request, AckSeq := "DB_HMI".AlarmAck.RequestSeq, AutoRequest := "DB_HMI".AutoMode.Request, AutoSeq := "DB_HMI".AutoMode.RequestSeq, ManualRequest := "DB_HMI".ManualMode.Request, ManualSeq := "DB_HMI".ManualMode.RequestSeq, DispositionRequest := "DB_HMI".DispositionRemoved.Request, DispositionSeq := "DB_HMI".DispositionRemoved.RequestSeq, ManualConveyorRequest := "DB_HMI".ManualConveyorJog.Request, ManualPumpRequest := "DB_HMI".ManualPumpJog.Request, ManualValve1Request := "DB_HMI".ManualValve1.Request, ManualValve2Request := "DB_HMI".ManualValve2.Request, ManualSecureRequest := "DB_HMI".ManualSecure.Request, ManualHoldAllowed := (#Coordinator.State = "E_MachineState".MANUAL_SETUP) AND #processPermissive, LocalStop := "DB_IO".Inputs.LocalStop, LocalReset := "DB_IO".Inputs.LocalReset, CommandHeartbeat := "DB_HMI".CommandHeartbeat, StartAllowed := (#Coordinator.State = "E_MachineState".READY) AND #processPermissive, ResetAllowed := NOT #immediateStop, AutoAllowed := (#Coordinator.State = "E_MachineState".MANUAL_SETUP), ManualAllowed := (#Coordinator.State = "E_MachineState".READY), DispositionAllowed := (#Coordinator.State = "E_MachineState".HOLDING));
    "DB_HMI".Start.AcceptedSeq := #HmiCommands.StartAcceptedSeq; "DB_HMI".Start.RejectedSeq := #HmiCommands.StartRejectedSeq;
    "DB_HMI".ControlledStop.AcceptedSeq := #HmiCommands.StopAcceptedSeq;
@@ -818,7 +834,7 @@ BEGIN
    IF #Coordinator.VisionRequestPulse AND ("DB_VisionComms".InspectionId < UDINT#4294967295) THEN "DB_VisionComms".InspectionId := "DB_VisionComms".InspectionId + UDINT#1; END_IF;
    // READY low holds VISION_ENABLE low so a cold/restarted edge can atomically
    // seed the PLC session/ID/ACK/heartbeat snapshot before declaring READY.
-   "DB_VisionComms".Enable := #processPermissive AND "DB_VisionComms".Ready AND NOT #Vision.Fault; "DB_VisionComms".RecipeId := "DB_Recipe".Active.RecipeId; "DB_VisionComms".ExpectedBottles := 2; "DB_VisionComms".TargetFillLevel := "DB_Recipe".Active.TargetFillLevel;
+   "DB_VisionComms".Enable := #processPermissive AND #modelConfigured AND "DB_VisionComms".Ready AND NOT #Vision.Fault; "DB_VisionComms".RecipeId := "DB_Recipe".Active.RecipeId; "DB_VisionComms".ExpectedBottles := 2; "DB_VisionComms".TargetFillLevel := "DB_Recipe".Active.TargetFillLevel;
    #PlcHeartbeatTimer(IN := NOT #PlcHeartbeatTimer.Q, PT := T#500ms);
    IF #PlcHeartbeatTimer.Q THEN
       IF "DB_VisionComms".PlcHeartbeat = UDINT#4294967295 THEN "DB_VisionComms".PlcHeartbeat := UDINT#0;
@@ -826,7 +842,7 @@ BEGIN
    END_IF;
    #Vision(Enable := "DB_VisionComms".Enable, TriggerEdge := #Coordinator.VisionRequestPulse, InspectionId := "DB_VisionComms".InspectionId, SessionEpoch := "DB_VisionComms".SessionEpoch, ExpectedModelId := "DB_VisionComms".ExpectedModelId, ExpectedModelHash := "DB_VisionComms".ExpectedModelHash, Ready := "DB_VisionComms".Ready, Busy := "DB_VisionComms".Busy, Result := "DB_VisionComms".Result, Heartbeat := "DB_VisionComms".Result.Heartbeat, Timeout := "DB_Recipe".Active.VisionTimeout, HeartbeatTimeout := T#1s, ResetEdge := #HmiCommands.ResetPulse);
    "DB_VisionComms".Trigger := #Vision.Trigger;
-   "DB_VisionComms".DiagReason := #Vision.DiagReason;
+   IF #modelConfigured THEN "DB_VisionComms".DiagReason := #Vision.DiagReason; ELSE "DB_VisionComms".DiagReason := "E_VisionDiag".MODEL_MISMATCH; END_IF;
    IF #Vision.PublicationAck THEN "DB_VisionComms".ResultAckId := "DB_VisionComms".Result.ResultId; END_IF;
    FOR #i := 0 TO 31 DO #activeFaults[#i] := FALSE; #faultCodes[#i] := 0; END_FOR;
    #activeFaults[0] := NOT "DB_IO".Inputs.SafetyOk; #faultCodes[0] := 1001;
@@ -839,13 +855,18 @@ BEGIN
    #activeFaults[7] := #Clamp.Fault; #faultCodes[7] := 1202;
    #activeFaults[8] := #FillCh1.Fault; CASE #FillCh1.DiagReason OF "E_FillDiag".ANALOG_BROKEN_WIRE: #faultCodes[8] := 1307; "E_FillDiag".NO_FLOW: #faultCodes[8] := 1301; "E_FillDiag".PULSE_MISSING: #faultCodes[8] := 1321; "E_FillDiag".ANALOG_NO_FLOW: #faultCodes[8] := 1322; "E_FillDiag".PULSE_ANALOG_DISAGREE: #faultCodes[8] := 1303; "E_FillDiag".UNDERFILL: #faultCodes[8] := 1304; "E_FillDiag".OVERFILL: #faultCodes[8] := 1305; "E_FillDiag".VALVE_OPEN_MISMATCH: #faultCodes[8] := 1308; "E_FillDiag".VALVE_CLOSE_MISMATCH: #faultCodes[8] := 1306; "E_FillDiag".CONTINUED_FLOW: #faultCodes[8] := 1309; ELSE #faultCodes[8] := 1310; END_CASE;
    #activeFaults[9] := #FillCh2.Fault; CASE #FillCh2.DiagReason OF "E_FillDiag".ANALOG_BROKEN_WIRE: #faultCodes[9] := 1317; "E_FillDiag".NO_FLOW: #faultCodes[9] := 1311; "E_FillDiag".PULSE_MISSING: #faultCodes[9] := 1323; "E_FillDiag".ANALOG_NO_FLOW: #faultCodes[9] := 1324; "E_FillDiag".PULSE_ANALOG_DISAGREE: #faultCodes[9] := 1313; "E_FillDiag".UNDERFILL: #faultCodes[9] := 1314; "E_FillDiag".OVERFILL: #faultCodes[9] := 1315; "E_FillDiag".VALVE_OPEN_MISMATCH: #faultCodes[9] := 1318; "E_FillDiag".VALVE_CLOSE_MISMATCH: #faultCodes[9] := 1316; "E_FillDiag".CONTINUED_FLOW: #faultCodes[9] := 1319; ELSE #faultCodes[9] := 1320; END_CASE;
-   #activeFaults[10] := #Vision.Fault OR #Vision.HoldRequired; CASE #Vision.DiagReason OF "E_VisionDiag".READY_TIMEOUT: #faultCodes[10] := 1501; "E_VisionDiag".RESULT_TIMEOUT: #faultCodes[10] := 1502; "E_VisionDiag".RESULT_ID_MISMATCH: #faultCodes[10] := 1503; "E_VisionDiag".QUALITY_BLOCK: #faultCodes[10] := 1504; "E_VisionDiag".HEARTBEAT_LOSS: #faultCodes[10] := 1505; ELSE #faultCodes[10] := 1506; END_CASE;
+   #activeFaults[10] := #Vision.Fault OR #Vision.HoldRequired OR NOT #modelConfigured OR NOT "DB_VisionComms".Ready;
+   IF NOT #modelConfigured THEN #faultCodes[10] := 1506;
+   ELSIF NOT "DB_VisionComms".Ready AND NOT #Vision.Fault AND NOT #Vision.HoldRequired THEN #faultCodes[10] := 1501;
+   ELSE CASE #Vision.DiagReason OF "E_VisionDiag".READY_TIMEOUT: #faultCodes[10] := 1501; "E_VisionDiag".RESULT_TIMEOUT: #faultCodes[10] := 1502; "E_VisionDiag".RESULT_ID_MISMATCH: #faultCodes[10] := 1503; "E_VisionDiag".QUALITY_BLOCK: #faultCodes[10] := 1504; "E_VisionDiag".HEARTBEAT_LOSS: #faultCodes[10] := 1505; ELSE #faultCodes[10] := 1506; END_CASE; END_IF;
    #activeFaults[11] := #Capper.Fault; IF (#Capper.DiagReason = 1) OR (#Capper.DiagReason = 5) THEN #faultCodes[11] := 1402; ELSE #faultCodes[11] := 1401; END_IF;
    #activeFaults[12] := NOT #HmiCommands.CommunicationsHealthy; #faultCodes[12] := 1601;
    // Quality holds remain alarmed and output-interlocked but are not equipment
    // faults; this preserves the coordinator's INSPECT -> HOLDING disposition path.
-   #blockingFault := #immediateStop OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #FillCh2.Fault OR #Vision.Fault OR NOT "DB_VisionComms".Ready OR #Capper.Fault OR NOT #HmiCommands.CommunicationsHealthy;
-   IF #HmiCommands.ResetPulse AND NOT #blockingFault THEN "DB_IO".PowerRecoveryRequired := FALSE; #processPermissive := NOT #immediateStop; END_IF;
+   #blockingFault := #immediateStop OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #FillCh1.Fault OR #FillCh2.Fault OR #Vision.Fault OR NOT #modelConfigured OR NOT "DB_VisionComms".Ready OR #Capper.Fault OR NOT #HmiCommands.CommunicationsHealthy;
+   // A restart never reprocesses a bottle already in the cell. Recovery is
+   // acknowledged only after the cell is physically empty.
+   IF #HmiCommands.ResetPulse AND NOT #blockingFault AND NOT "DB_IO".Inputs.Bottle1Present AND NOT "DB_IO".Inputs.Bottle2Present THEN "DB_IO".PowerRecoveryRequired := FALSE; #processPermissive := NOT #immediateStop; END_IF;
    #Coordinator(InitDone := TRUE, PermissivesOk := #processPermissive, StartEdge := #HmiCommands.StartPulse, StopEdge := #HmiCommands.StopPulse, ResetEdge := #HmiCommands.ResetPulse, AutoRequest := #HmiCommands.AutoPulse, ManualRequest := #HmiCommands.ManualPulse, DispositionRemoved := #HmiCommands.DispositionPulse, PairPresent := "DB_IO".Inputs.Bottle1Present AND "DB_IO".Inputs.Bottle2Present, PairAbsent := NOT "DB_IO".Inputs.Bottle1Present AND NOT "DB_IO".Inputs.Bottle2Present, ConveyorStopped := #ConveyorVfd.Stopped, GateClosed := "DB_IO".Inputs.GateClosed, GateOpen := "DB_IO".Inputs.GateOpen, ClampEngaged := "DB_IO".Inputs.ClampEngaged, ClampReleased := "DB_IO".Inputs.ClampReleased, Fill1Done := #FillCh1.Done, Fill2Done := #FillCh2.Done, DripDone := #DripTimer.Q, VisionAccepted := #Vision.Accepted, VisionPass := #Vision.QualityPass, CapperReady := "DB_IO".Inputs.CapperReady, CapperComplete := #Capper.CompletePulse, BlockingFault := #blockingFault);
    #Alarm(ActiveFaults := #activeFaults, FaultCodes := #faultCodes, AckEdge := #HmiCommands.AckPulse, ResetEdge := #HmiCommands.ResetPulse);
    "DB_HMI".FirstOutAlarm := #Alarm.FirstOutCode;
@@ -871,7 +892,7 @@ BEGIN
    %Q1.1 := "DB_IO".Commands.StackGreen; %Q1.2 := "DB_IO".Commands.StackAmber; %Q1.3 := "DB_IO".Commands.StackRed; %Q1.4 := "DB_IO".Commands.Audible; %Q1.5 := "DB_IO".Commands.CameraLight;
    IF "DB_IO".ReleasePermissive THEN %QW256 := #ConveyorVfd.ControlWord1; %QW258 := #ConveyorVfd.SpeedSetpointPzd; %QW260 := #PumpVfd.ControlWord1; %QW262 := #PumpVfd.SpeedSetpointPzd;
    ELSE %QW256 := W#16#047E; %QW258 := 0; %QW260 := W#16#047E; %QW262 := 0; END_IF;
-   "DB_HMI".StateCode := ENUM_TO_UINT(#Coordinator.State); "DB_HMI".AutoStepCode := ENUM_TO_UINT(#Coordinator.AutoStep); "DB_HMI".QualityHold := #Coordinator.QualityHold;
+   "DB_HMI".StateCode := ENUM_TO_UINT(#Coordinator.State); "DB_HMI".AutoStepCode := ENUM_TO_UINT(#Coordinator.AutoStep); "DB_HMI".QualityHold := #Coordinator.QualityHold OR #Coordinator.DispositionRequired;
 END_FUNCTION_BLOCK''',
 
         "DB_CellMain.scl": f'''// {NOTICE}
@@ -894,15 +915,42 @@ ORGANIZATION_BLOCK "Startup"
 BEGIN
    "DB_IO".Commands.FillValve1 := FALSE;
    "DB_IO".Commands.FillValve2 := FALSE;
+   "DB_IO".Commands.GateOpen := FALSE;
+   "DB_IO".Commands.GateClose := FALSE;
+   "DB_IO".Commands.ClampEngage := FALSE;
+   "DB_IO".Commands.ClampRelease := FALSE;
    "DB_IO".Commands.CapperRequest := FALSE;
+   "DB_IO".Commands.CameraLight := FALSE;
+   "DB_IO".Commands.StackGreen := FALSE;
+   "DB_IO".Commands.StackAmber := FALSE;
+   "DB_IO".Commands.StackRed := FALSE;
+   "DB_IO".Commands.Audible := FALSE;
    "DB_IO".ReleasePermissive := FALSE;
    "DB_IO".PowerRecoveryRequired := TRUE;
    IF "DB_VisionComms".SessionEpoch = UDINT#4294967295 THEN "DB_VisionComms".SessionEpoch := UDINT#1;
    ELSE "DB_VisionComms".SessionEpoch := "DB_VisionComms".SessionEpoch + UDINT#1; END_IF;
+   "DB_VisionComms".Enable := FALSE;
    "DB_VisionComms".InspectionId := UDINT#0;
+   "DB_VisionComms".PlcHeartbeat := UDINT#0;
    "DB_VisionComms".Trigger := FALSE;
    "DB_VisionComms".ResultAckId := UDINT#0;
    "DB_HMI".Start.Request := FALSE;
    "DB_HMI".ControlledStop.Request := FALSE;
+   "DB_HMI".Reset.Request := FALSE;
+   "DB_HMI".AlarmAck.Request := FALSE;
+   "DB_HMI".AutoMode.Request := FALSE;
+   "DB_HMI".ManualMode.Request := FALSE;
+   "DB_HMI".DispositionRemoved.Request := FALSE;
+   "DB_HMI".RecipeApply.Request := FALSE;
+   "DB_HMI".ManualConveyorJog.Request := FALSE;
+   "DB_HMI".ManualPumpJog.Request := FALSE;
+   "DB_HMI".ManualValve1.Request := FALSE;
+   "DB_HMI".ManualValve2.Request := FALSE;
+   "DB_HMI".ManualSecure.Request := FALSE;
+   "DB_Recipe".Apply.Request := FALSE;
+   %Q0.2 := FALSE; %Q0.3 := FALSE; %Q0.4 := FALSE; %Q0.5 := FALSE;
+   %Q0.6 := FALSE; %Q0.7 := FALSE; %Q1.0 := FALSE; %Q1.1 := FALSE;
+   %Q1.2 := FALSE; %Q1.3 := FALSE; %Q1.4 := FALSE; %Q1.5 := FALSE;
+   %QW256 := W#16#047E; %QW258 := 0; %QW260 := W#16#047E; %QW262 := 0;
 END_ORGANIZATION_BLOCK''',
     }

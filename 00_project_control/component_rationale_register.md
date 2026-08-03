@@ -1,4 +1,4 @@
-# Component rationale register - Revision D
+# Component rationale register - Revision D.1
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 

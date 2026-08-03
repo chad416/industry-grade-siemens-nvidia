@@ -40,7 +40,7 @@ def footer(canvas, doc):
     canvas.saveState()
     canvas.setFont("ProjectSans", 7)
     canvas.setFillColor(colors.HexColor("#526875"))
-    canvas.drawString(18 * mm, 10 * mm, "FC01 | Revision D | 2026-08-02 | Evidence summary - not a native acceptance certificate")
+    canvas.drawString(18 * mm, 10 * mm, "FC01 | Revision D.1 | 2026-08-03 | Evidence summary - not a native acceptance certificate")
     canvas.drawRightString(279 * mm, 10 * mm, f"Page {doc.page}")
     canvas.restoreState()
 
@@ -62,14 +62,14 @@ def table(data, widths):
     return t
 
 
-doc = SimpleDocTemplate(str(OUT), pagesize=landscape(A4), leftMargin=18*mm, rightMargin=18*mm, topMargin=15*mm, bottomMargin=16*mm, title="FC01 Revision D release evidence", invariant=1, pageCompression=1)
+doc = SimpleDocTemplate(str(OUT), pagesize=landscape(A4), leftMargin=18*mm, rightMargin=18*mm, topMargin=15*mm, bottomMargin=16*mm, title="FC01 Revision D.1 release evidence", invariant=1, pageCompression=1)
 story = [
     Paragraph("FC01 compact two-nozzle filling cell", styles["PTitle"]),
     Paragraph("Siemens-authoritative controls and bounded NVIDIA quality architecture", styles["PHead"]),
     Spacer(1, 5*mm),
     Paragraph(NOTICE, styles["PWarn"]), Spacer(1, 3*mm), Paragraph(SAFETY, styles["PWarn"]), Spacer(1, 7*mm),
     table([["Release status", "What is implemented", "What remains blocked"],
-           ["CONTROLLED ENGINEERING DEVELOPMENT", "Canonical Revision-D model; fail-closed interface recovery; explicit flow windows; separated HMI commands; PROFINET PZD design; expanded rationale/electrical data; 32 timed scenarios; deterministic manifest build/verification.", "Native TIA/WinCC compile/archive; Startdrive; PLCSIM; Revision-D QET/CAD; confirmed electrical inputs; real dataset; TAO/DeepStream/TensorRT execution; physical FAT/SAT."]], [45*mm, 105*mm, 105*mm]),
+           ["CONTROLLED ENGINEERING RELEASE CANDIDATE", "Canonical Revision-D.1 model; Git-object byte authority; retained PLC transaction identity; post-fault disposition; immutable edge publication; 32 timed scenarios; staged-index manifest and clean-clone verification.", "Native TIA/WinCC compile/archive; Startdrive; PLCSIM; Revision-D.1 QET/CAD; confirmed electrical inputs; real dataset; TAO/DeepStream/TensorRT execution; physical FAT/SAT."]], [45*mm, 105*mm, 105*mm]),
     Spacer(1, 8*mm),
     Paragraph("This report is an evidence index. It is not proof of construction readiness, functional safety, native compile, FAT, SAT, electrical test, physical commissioning or AI performance.", styles["PBody"]),
     PageBreak(),
@@ -106,11 +106,11 @@ story = [
     PageBreak(),
     Paragraph("Validation evidence and release blockers", styles["PTitle"]),
     table([["Gate", "Evidence", "Status"],
-           ["Canonical consistency", "VAL-D-STATIC covers Revision-D source-generator parity, UDT/DB semantics, schedules, HMI isolation, drive/native-adapter contracts, relay paths, baseline hashes and no-fake artifacts", "PASS"],
-           ["Deterministic regression", "48 simulator/interface-oracle + 35 edge-service + 15 interface-harness tests; 32 timed scenarios; one release; zero invariant violations/restarts", "PASS - not PLCSIM"],
+           ["Canonical consistency", "426 deterministic Revision-D.1 checks cover source-generator parity, Git byte and locked-toolchain policy, SCL/edge contracts, schedules, HMI isolation, drive/native-adapter contracts, baseline hashes and no-fake artifacts", "PASS"],
+           ["Deterministic regression", "58 simulator/interface/source-contract + 42 edge-service + 15 interface-harness tests; 32 timed scenarios; one release; zero invariant violations/restarts", "PASS - not PLCSIM"],
            ["Workbook", "20 schedule/summary sheets rendered; formula-error scan returned zero matches; contact-sheet and detailed visual review", "PASS"],
-           ["QElectroTech", "Audited inherited hash and structure only; no runnable QET found and no Revision-D reopen/export", "REVISION-D GATE BLOCKED"],
-           ["Panel CAD", "Audited inherited FCStd/STEP/IGES/DXF hashes only; no runnable FreeCAD and no Revision-D reopen/reimport", "REVISION-D GATE BLOCKED"],
+           ["QElectroTech", "Audited inherited byte-exact hash and 24-page structure only; no runnable QET found and no Revision-D.1 reopen/export", "REVISION-D.1 GATE BLOCKED"],
+           ["Panel CAD", "Audited inherited byte-exact FCStd/STEP/IGES/DXF only; no runnable FreeCAD and no Revision-D.1 reopen/reimport", "REVISION-D.1 GATE BLOCKED"],
            ["TIA / WinCC / drives", "V20 installed; no native project, compile, cross-reference, archive restore or Startdrive evidence", "BLOCKED"],
            ["PLCSIM", "Not installed", "BLOCKED"],
            ["NVIDIA model/runtime", "Hardware detected; runtime stack and dataset absent", "BLOCKED"]], [56*mm, 142*mm, 57*mm]),

@@ -15,7 +15,7 @@ SAFETY = ("CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASS
 def write(path: str, content: str) -> None:
     target = ROOT / path
     target.parent.mkdir(parents=True, exist_ok=True)
-    target.write_text(content.rstrip() + "\n", encoding="utf-8")
+    target.write_text(content.rstrip() + "\n", encoding="utf-8", newline="\n")
 
 
 def csv_write(path: str, rows: list[dict]) -> None:
@@ -24,7 +24,7 @@ def csv_write(path: str, rows: list[dict]) -> None:
     if not rows:
         raise ValueError(f"No rows for {path}")
     with target.open("w", encoding="utf-8", newline="") as handle:
-        writer = csv.DictWriter(handle, fieldnames=list(rows[0]))
+        writer = csv.DictWriter(handle, fieldnames=list(rows[0]), lineterminator="\n")
         writer.writeheader()
         writer.writerows(rows)
 

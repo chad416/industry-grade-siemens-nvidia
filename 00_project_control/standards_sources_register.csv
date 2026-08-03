@@ -7,5 +7,5 @@ IEC TR 61439-0:2022,https://webstore.iec.ch/en/publication/66003,2026-08-02,Pane
 ISO 12100:2010,https://www.iso.org/standard/51528.html,2026-08-02,Risk-assessment methodology scope,No project risk assessment or risk reduction validation performed
 ISO 13849-1:2023,https://www.iso.org/standard/73481.html,2026-08-02,Safety-related-control scope and limitations,"No PLr, achieved PL, category or validation claim"
 NVIDIA TAO 7.0.1 documentation,https://docs.nvidia.com/tao/tao-toolkit/latest/,2026-08-02,Dataset/training/export plan,TAO not installed or executed
-NVIDIA DeepStream 9.1 release notes,https://docs.nvidia.com/metropolis/deepstream/9.1/text/DS_Release_notes.html,2026-08-02,Target runtime planning,DeepStream not installed or executed
-NVIDIA TensorRT 11.1 documentation,https://docs.nvidia.com/deeplearning/tensorrt/latest/,2026-08-02,Engine/runtime deployment planning,TensorRT not installed; no engine exists
+NVIDIA DeepStream 9.1 release notes,https://docs.nvidia.com/metropolis/deepstream/9.1/text/DS_Release_notes.html,2026-08-03,Jetson Orin target runtime planning: JetPack 7.2 GA / L4T 39.2 / TensorRT 10.16.1.7 baseline,"DeepStream, JetPack and target Jetson were not installed or executed"
+NVIDIA TensorRT documentation,https://docs.nvidia.com/deeplearning/tensorrt/latest/,2026-08-03,Generic engine/runtime deployment planning only,Generic TensorRT 11.1 documentation is not the DeepStream 9.1 Jetson compatibility baseline; TensorRT is not installed and no engine exists

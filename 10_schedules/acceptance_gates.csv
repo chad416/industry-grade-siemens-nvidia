@@ -1,6 +1,6 @@
 gate,acceptance_gate,status,evidence_or_blocker
 1,Requirements/interfaces traceable,PARTIAL,Controlled model and tests present; owner approval absent
-2,Canonical model reconciles schedules,PASS,Revision-D deterministic validator and source-parity checks pass; see current automated report for count
+2,Canonical model reconciles schedules,PASS,Revision-D.1 deterministic validator and source-parity checks pass; see current automated report for count
 3,Siemens hardware baseline confirmed,PARTIAL,V20/FW4.0 design baseline documented; native catalog and delivered state open
 4,Native TIA project opens,BLOCKED,No genuine AP20 project created
 5,Native TIA archive restores,BLOCKED,No genuine ZAP20 archive created
@@ -8,16 +8,16 @@ gate,acceptance_gate,status,evidence_or_blocker
 7,HMI compiles zero errors,BLOCKED,WinCC project not created
 8,Startdrive configured/reviewed,BLOCKED,Startdrive not installed and motor data absent
 9,PLCSIM traces pass,BLOCKED,PLCSIM not installed; Python simulator is independent evidence
-10,Revision-D QET reopens and reconciles,BLOCKED,No runnable QElectroTech found; historical revision-A native baseline only
-11,Schematics visual review,BLOCKED,Revision-D native schematics do not exist
-12,Revision-D FCStd reopens,BLOCKED,No runnable FreeCAD found; historical baseline only
-13,STEP/IGES/DXF reimport,BLOCKED,Revision-D exchange files do not exist and FreeCAD is absent
+10,Revision-D.1 QET reopens and reconciles,BLOCKED,No runnable QElectroTech found; historical revision-A native baseline only
+11,Schematics visual review,BLOCKED,Revision-D.1 native schematics do not exist
+12,Revision-D.1 FCStd reopens,BLOCKED,No runnable FreeCAD found; historical baseline only
+13,STEP/IGES/DXF reimport,BLOCKED,Revision-D.1 exchange files do not exist and FreeCAD is absent
 14,Full BOM/panel layout reconcile,PARTIAL,Expanded controlled schedules; unresolved selections and native CAD remain open
 15,Electrical calculations confirmed,BLOCKED,"Site supply, fault current, loads and environmental inputs missing"
 16,Real NVIDIA dataset controlled,BLOCKED,No real dataset supplied
 17,Genuine model training/evaluation,BLOCKED,No dataset or TAO runtime
 18,TensorRT/DeepStream target runtime,BLOCKED,No selected target carrier/runtime
-19,PLC-NVIDIA failure tests,PASS,"Local source-design scope: simulator, 32 scenarios, edge service, interface harness and Revision-D independent interface-oracle tests pass; native integration remains blocked under gates 9 and 18"
+19,PLC-NVIDIA failure tests,PASS,"Local source-design scope: simulator, 32 scenarios, edge service, interface harness and Revision-D.1 independent interface-oracle tests pass; native integration remains blocked under gates 9 and 18"
 20,FAT/SAT/commissioning,OPEN,"Procedures issued, never executed"
 21,Qualified safety activities,BLOCKED,External qualified work required
 22,Manifest independently verifies,PASS,"Final deterministic JSON/CSV verifier reports zero missing, unlisted or mismatched files on the frozen release tree; regenerate after any file change"
