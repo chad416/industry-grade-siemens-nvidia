@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "D.1",
+  "release": "E",
   "python": {
     "version": "3.12.13",
     "executable_sha256": "3c6a206b7d93cca823934a83732220dcffd413fd1036d9fb82eebb64599cf7f3",
@@ -19,6 +19,24 @@
   "pdftoppm": {
     "version": "26.05.0",
     "executable_sha256": "742cbbd9a00931ad16c6618410bc40471375d639a45c61c1d86f3dcfc54b6388"
+  },
+  "native_execution": {
+    "freecad": {
+      "version": "1.1.3 Revision 20260725 (Git shallow)",
+      "executable_sha256": "b5551d26050ed64981c5767729bb35900fd4975fa7fd31714c17dd714b6fd44c"
+    },
+    "qelectrotech": {
+      "version": "0.100.0",
+      "portable_archive_sha256": "552402198011f37633ffcff4f9ce561a9abaf22dc14f9cc09ddc231245b16445",
+      "executable_sha256": "fcc3465825cc6f1bf3997d9c8054858e647a2038c8c01b7a3335a914106de926"
+    },
+    "opcua_test_runtime": {
+      "python_version": "3.12.13",
+      "python_executable_sha256": "5912d0884b23c0343983a864c6064242391e2265536f50b88624857e353882c9",
+      "asyncua_version": "2.0.1",
+      "cryptography_version": "50.0.0",
+      "pyopenssl_version": "26.4.0"
+    }
   },
   "policy": "Complete binary reproduction is valid only when this exact release toolchain verifies. A different toolchain requires a controlled lock update and complete two-build visual and hash requalification."
 }

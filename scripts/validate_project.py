@@ -28,8 +28,8 @@ def csv_rows(name: str) -> list[dict]:
 
 
 model = json.loads((ROOT / "00_project_control/canonical_model.json").read_text(encoding="utf-8"))
-ok(model["project"]["revision"] == "D.1", "canonical revision D.1")
-ok(model["project"]["status"].startswith("PROFESSIONAL CONTROLLED ENGINEERING-DEVELOPMENT RELEASE CANDIDATE"), "truthful controlled-development release-candidate status")
+ok(model["project"]["revision"] == "E", "canonical revision E")
+ok(model["project"]["status"].startswith("CONTROLLED NATIVE-ENGINEERING RELEASE CANDIDATE"), "truthful controlled native-engineering release-candidate status")
 
 required_dirs = [f"{i:02d}_{name}" for i,name in enumerate(["project_control","requirements","system_architecture","electrical","controls_siemens","hmi","drives","nvidia_vision","digital_twin","panel_cad","schedules","simulation","testing","documentation","qa"])] + ["release"]
 for directory in required_dirs: ok((ROOT / directory).is_dir(), f"required directory {directory}")
@@ -175,7 +175,10 @@ ok('"DB_CellMain"();' in ob1, "OB1 executes root cell instance")
 for owner,count in [("FillCh1",1),("FillCh2",1),("ConveyorVfd",1),("PumpVfd",1),("Gate",1),("Clamp",1),("Vision",1),("Capper",1),("Recipe",1),("Alarm",1),("Coordinator",1)]: ok(cell.count(f"#{owner}(") == count, f"root calls {owner} exactly once")
 for feature in ["PULSE_MISSING","ANALOG_NO_FLOW","PULSE_COUNTER_DISCONTINUITY","MeasurementWindowValid","comparisonArmed","CounterRolloverObserved","CounterDiscontinuity","PumpRequest","tPulseMissing","tAnalogNoFlow","tValveClose","ABORTED"]: ok(feature in fill, f"fill-channel implements {feature}")
 vision_scl = (scl_dir / "FB_VisionInterface.scl").read_text(encoding="utf-8")
-for feature in ["lastIssuedId","NON_MONOTONIC_REQUEST","RESULT_STUCK_VALID","resultMustClear","PublicationAck","HeartbeatHealthy","NOT #Result.ResultValid","#pending := FALSE; #triggered := FALSE","NOT #TriggerEdge","SessionEpoch","Warning","ExpectedModelId","ExpectedModelHash","MODEL_MISMATCH"]: ok(feature in vision_scl, f"vision-interface recovery contract includes {feature}")
+for feature in ["lastIssuedId","NON_MONOTONIC_REQUEST","RESULT_STUCK_VALID","resultMustClear","PublicationAck","HeartbeatHealthy","NOT #Result.ResultValid","#pending := FALSE; #triggered := FALSE","NOT #TriggerEdge","SessionEpoch","Warning","ExpectedModelId","ExpectedModelHash","MODEL_MISMATCH","RequestInProgress","requestObserved","level-held OPC UA request"]: ok(feature in vision_scl, f"vision-interface recovery contract includes {feature}")
+ok("#Trigger := #pending AND #triggered AND NOT #requestObserved" in vision_scl, "vision request is held across OPC UA polling until coherent observation/result")
+ok("#pending AND (#InspectionId <> #latchedId)" in vision_scl, "vision request identity is immutable while pending")
+ok("VisionRequestPulse AND NOT #Vision.RequestInProgress" in cell, "duplicate vision request cannot advance the active inspection ID")
 revision_d_tests = (ROOT / "11_simulation/tests/test_revision_d_interfaces.py").read_text(encoding="utf-8")
 for test_name in ["test_stale_id","test_future_id","test_duplicate_request_id","test_result_valid_stuck_high","test_busy_ready_contradiction","test_timeout_then_delayed_result","test_reset_after_stale","test_reset_does_not_restart","test_pulse_zero_analog_positive","test_analog_zero_pulses_positive","test_both_measurements_no_flow","test_counter_rollover","test_timer_boundary"]: ok(test_name in revision_d_tests, f"direct Revision-D interface test present: {test_name}")
 recipe_type_match = re.search(r'TYPE "UDT_Recipe".*?STRUCT(.*?)END_STRUCT;', types, re.S)
@@ -235,7 +238,7 @@ harness_tests = (ROOT / "07_nvidia_vision/test_plc_interface_harness.py").read_t
 ok("test_malformed_ack_never_clears_valid_publication" in edge_tests and "test_malformed_identity_shapes_and_property_failure_stay_not_ready" in edge_tests, "edge tests cover malformed ACK and model-identity ingress")
 ok("test_rearm_uses_single_validated_identity_read_and_catches_transition_failure" in edge_tests and "self._validated_identity" in edge_service, "edge rearm reuses one protected validated identity read")
 for test_name in ["test_initial_zero_ack_poll_is_idempotent","test_same_session_reset_rejects_regressed_plc_snapshot","test_publication_survives_transport_fault_reset_and_wrong_ack","test_same_session_reset_snapshot_can_carry_exact_ack","test_advanced_disabled_session_invalidates_prior_publication","test_tick_contains_session_change_for_polling_adapter","test_model_identity_rejects_whitespace_control_and_path_characters"]:
-    ok(test_name in edge_tests, f"Revision-D.1 edge regression test present: {test_name}")
+    ok(test_name in edge_tests, f"inherited Revision-D.1 edge regression test present: {test_name}")
 ok("invalidate_publication: bool = False" in edge_service and "publication_invalidated_on_new_session" in edge_service, "edge publication remains immutable through same-session faults and records new-session invalidation")
 ok("test_rejected_delayed_publication_is_acked_cleared_and_rearmed" in harness_tests, "composed PLC/edge test covers rejected delayed publication cleanup and rearm")
 node_map = list(csv.DictReader((ROOT / "07_nvidia_vision/plc_ai_node_map.csv").open(encoding="utf-8-sig", newline="")))
@@ -244,14 +247,24 @@ vision_signals = [r["signal"] for r in model["vision_interface"]]
 ok([r["signal"] for r in node_map] == vision_signals and service_config["signal_count"] == len(vision_signals), "edge node map/config exactly track canonical vision signals")
 ok(set(service_config["nodes"]) == set(vision_signals) and all(service_config["nodes"][r["signal"]] == r["node_id"] for r in node_map), "edge config node IDs exactly match generated node map")
 ok(all(token in service_config["session_rearm"] for token in ["VISION_SESSION_EPOCH","INSPECTION_ID","RESULT_ACK_ID","PLC_HEARTBEAT","VISION_ENABLE low"]), "edge config records disabled four-counter anti-replay synchronization")
+opcua_adapter = (ROOT / "07_nvidia_vision/edge_service/opcua_adapter.py").read_text(encoding="utf-8")
+opcua_tests = (ROOT / "07_nvidia_vision/edge_service/tests/test_opcua_adapter.py").read_text(encoding="utf-8")
+for token in ["SecurityPolicyBasic256Sha256","certificate","trust","namespace","RESULT_ACK_ID","SESSION_EPOCH","INSPECTION_ID","health","metrics"]:
+    ok(token.lower() in (opcua_adapter + opcua_tests).lower(), f"production-shaped OPC UA adapter/test evidence includes {token}")
+for name in [
+    "test_secure_named_client_endpoint_and_atomic_acknowledged_result",
+    "test_missed_one_scan_request_level_fails_closed",
+    "test_unsolicited_server_side_publication_fails_closed",
+]:
+    ok(name in opcua_tests, f"Revision-E real OPC UA integration contract present: {name}")
 reproduction = (ROOT / "scripts/reproduce_validation.ps1").read_text(encoding="utf-8")
 ok(reproduction.count("WorkbookHash") >= 4 and reproduction.count("PdfHash") >= 4 and "Get-FileHash -Algorithm SHA256" in reproduction, "standard reproduction compares two normalized XLSX and PDF builds by SHA-256")
 ok("verify_manifest.py' '--source' 'head' '--require-clean'" in reproduction and "Assert-CleanGitState" in reproduction, "standard reproduction verifies clean committed bytes before and after generation")
 attributes = (ROOT / ".gitattributes").read_text(encoding="utf-8")
-for token in ["* text=auto eol=lf","*.qet      -text","*.dxf      -text","*.FCStd    -text","*.step     -text","*.iges     -text","*.xlsx     -text","*.pdf      -text","*.png      -text"]:
+for token in ["* text=auto eol=lf","*.qet      -text","*.dxf      -text","*.FCStd    -text","*.step     -text","*.iges     -text","*.xlsx     -text","*.pdf      -text","*.png      -text","*.service  text eol=lf","*.example  text eol=lf","*.log      text eol=lf"]:
     ok(token in attributes, f"explicit Git byte policy includes {token}")
 toolchain_lock = json.loads((ROOT / "release/reproduction_toolchain_lock.json").read_text(encoding="utf-8"))
-ok(toolchain_lock["release"] == "D.1", "artifact-reproduction toolchain lock is Revision D.1")
+ok(toolchain_lock["release"] == "E", "artifact-reproduction toolchain lock is Revision E")
 ok(toolchain_lock["python"]["version"] == "3.12.13", "artifact-reproduction Python version is locked")
 ok(toolchain_lock["node"]["packages"]["@oai/artifact-tool"] == "2.8.31", "artifact-tool version is locked")
 ok(toolchain_lock["pdftoppm"]["version"] == "26.05.0", "Poppler renderer version is locked")
@@ -265,7 +278,7 @@ ok("checkout-index" in determinism and "git\", \"archive" in determinism, "deter
 ok("authoritative Git {OPTIONS.source}" not in determinism and "selected authoritative Git snapshot" in determinism, "determinism report is byte-identical for index and HEAD sources")
 determinism_report = (ROOT / "14_qa/determinism_report.md").read_text(encoding="utf-8")
 ok("selected authoritative Git snapshot" in determinism_report and "authoritative Git index bytes" not in determinism_report and "authoritative Git head bytes" not in determinism_report.lower(), "controlled determinism report uses source-neutral authoritative-snapshot wording")
-ok((ROOT / ".github/workflows/revision-d1-reproduce.yml").exists(), "fresh-clone Revision-D.1 CI workflow is controlled")
+ok((ROOT / ".github/workflows/revision-e-reproduce.yml").exists(), "fresh-clone Revision-E CI workflow is controlled")
 ok((ROOT / "00_project_control/repository_release_workflow.md").exists() and (ROOT / "14_qa/release_integrity_reproduction.md").exists(), "release-byte and clean-clone evidence documents are controlled")
 ok(all(not (ROOT / "14_qa/pdf_renders" / stale).exists() or not any((ROOT / "14_qa/pdf_renders" / stale).iterdir()) for stale in ["release","release_c"]), "stale pre-Revision-D PDF render directories are empty")
 ok("FS03 / FW4.0" in (ROOT / "04_controls_siemens/cpu_tia_v20_compatibility.md").read_text(encoding="utf-8"), "CPU/TIA V20 firmware baseline documented")
@@ -287,12 +300,56 @@ expected_hashes = {
 for rel,digest in expected_hashes.items(): ok(hashlib.sha256((ROOT / rel).read_bytes()).hexdigest() == digest, f"historical native baseline retained: {rel}")
 ElementTree.parse(ROOT / "03_electrical/native_baseline/filling_cell.qet"); checks.append("QET historical baseline is well-formed XML")
 with zipfile.ZipFile(ROOT / "09_panel_cad/native_baseline/filling_cell_panel.FCStd") as zf: ok(len(zf.namelist()) == 76, "FCStd historical baseline container has 76 entries")
+cad_dir = ROOT / "09_panel_cad/revision_e"
+qet_dir = ROOT / "03_electrical/revision_e"
+ok((cad_dir / "FC01_control_panel_revision_e.FCStd").is_file(), "Revision-E native FCStd source is controlled")
+ok((cad_dir / "FC01_control_panel_revision_e.step").is_file() and (cad_dir / "FC01_control_panel_revision_e.iges").is_file() and (cad_dir / "FC01_mounting_plate_revision_e.dxf").is_file(), "Revision-E STEP/IGES/DXF exchange set is controlled")
+ok(not list(cad_dir.glob("*.FCBak")), "no uncontrolled FreeCAD backup remains in the release tree")
+cad_build_evidence = json.loads((cad_dir / "freecad_build_evidence.json").read_text(encoding="utf-8"))
+gui_provenance = cad_build_evidence["native_view_provenance"]["gui_render_executable"]
+ok(
+    gui_provenance == {
+        "name": "FreeCAD.exe",
+        "version": "1.1.3 revision 20260725 (Git shallow)",
+        "sha256": "d831ed7eee385d5a370a83b078dd90b1f7621bb65bb7c427f06c736c8652d5f0",
+        "scope": "Retained pre-clearance-metadata-correction GUI views only; FreeCADCmd is authoritative for the final reopen/reimport",
+    },
+    "retained FreeCAD GUI views have exact executable/version/hash provenance and a limited final-model claim",
+)
+native_placement_path = cad_dir / "revision_e_panel_placement.csv"
+if native_placement_path.is_file():
+    native_placement = {row["tag"]: row for row in csv.DictReader(native_placement_path.open(encoding="utf-8-sig", newline=""))}
+    canonical_major = {row["tag"]: row for row in model["panel_placement"] if row["tag"] in native_placement}
+    dimension_keys = ("x_mm", "y_mm", "width_mm", "height_mm", "depth_mm", "top_clearance_mm", "bottom_clearance_mm", "side_clearance_mm")
+    ok(
+        all(abs(float(row[key]) - float(native_placement[tag][key])) < 1e-6 for tag, row in canonical_major.items() for key in dimension_keys),
+        "canonical major-device coordinates, envelopes and clearances match the native Revision-E placement schedule",
+    )
+    hardware_by_tag = {row["tag"]: row for row in model["hardware"]}
+    ok(
+        all(abs(float(hardware_by_tag[tag][key]) - float(native_placement[tag][key])) < 1e-6 for tag in ("-U100", "-U101", "-FW100", "-PC200") for key in ("width_mm", "height_mm", "depth_mm")),
+        "controlled hardware schedule and native CAD agree on drive, firewall and edge-compute envelopes",
+    )
+ok((qet_dir / "FC01_revision_e.qet").is_file(), "Revision-E QElectroTech native source is controlled")
+if (qet_dir / "FC01_revision_e.qet").is_file():
+    qet_root = ElementTree.parse(qet_dir / "FC01_revision_e.qet").getroot()
+    ok(len(qet_root.findall("diagram")) >= 24, "Revision-E QET contains at least 24 controlled folios")
+    qet_verification = json.loads((qet_dir / "FC01_revision_e_verification.json").read_text(encoding="utf-8"))
+    ok(qet_verification["passed"] == 24 and qet_verification["failed"] == 0, "Revision-E QET static verifier records exactly 24/24 passing checks")
+    ok(qet_verification["qet_sha256"] == hashlib.sha256((qet_dir / "FC01_revision_e.qet").read_bytes()).hexdigest().upper(), "Revision-E QET verification hash matches the controlled corrected source")
+for rel in ["09_panel_cad/revision_e/native_verification.json", "03_electrical/revision_e/native_verification.json"]:
+    evidence = ROOT / rel
+    ok(evidence.is_file(), f"native verification record is controlled: {rel}")
+    if evidence.is_file():
+        payload = json.loads(evidence.read_text(encoding="utf-8"))
+        status = str(payload.get("overall_status", payload.get("status", payload.get("result", "")))).upper()
+        ok(status in {"PASS", "BLOCKED", "PARTIAL"}, f"native verification record has truthful status: {rel}")
 banned = {".ap20",".zap20",".onnx",".engine",".plan",".usd",".usda",".usdc"}
 bad = sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*") if p.is_file() and p.suffix.lower() in banned)
 ok(not bad, f"no fabricated native/model artifacts: {bad}")
 
 report = ROOT / "14_qa/automated_validation_report.md"
-lines = ["# Automated validation report — Revision D.1","",f"Result: **{'PASS' if not errors else 'FAIL'}**","","This is deterministic static/data/independent-model validation. It is not TIA, WinCC, Startdrive, PLCSIM, QET or FreeCAD native proof.","","## Passed checks",""] + [f"- {item}" for item in sorted(checks)]
+lines = ["# Automated validation report — Revision E","",f"Result: **{'PASS' if not errors else 'FAIL'}**","","This is deterministic static/data/independent-model validation. Native QET/FreeCAD results are accepted only through separate controlled reopen/reimport evidence; this report is not TIA, WinCC, Startdrive, PLCSIM or physical proof.","","## Passed checks",""] + [f"- {item}" for item in sorted(checks)]
 if errors: lines += ["","## Errors",""] + [f"- {item}" for item in sorted(errors)]
 if not OPTIONS.check:
     report.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")

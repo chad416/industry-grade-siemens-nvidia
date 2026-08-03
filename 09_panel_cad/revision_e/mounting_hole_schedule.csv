@@ -1,0 +1,31 @@
+hole_id,x_local_mm,y_local_mm,x_global_mm,y_global_mm,diameter_mm,associated_feature,dimension_basis,engineering_status
+MP-FIX-01,20,20,45.0,45.0,8.5,Mounting plate interface,Controlled enclosure-interface assumption; confirm selected enclosure mounting-plate hardware,PROVISIONAL — DO NOT DRILL BEFORE VENDOR CONFIRMATION
+MP-FIX-02,730,20,755.0,45.0,8.5,Mounting plate interface,Controlled enclosure-interface assumption; confirm selected enclosure mounting-plate hardware,PROVISIONAL — DO NOT DRILL BEFORE VENDOR CONFIRMATION
+MP-FIX-03,20,730,45.0,755.0,8.5,Mounting plate interface,Controlled enclosure-interface assumption; confirm selected enclosure mounting-plate hardware,PROVISIONAL — DO NOT DRILL BEFORE VENDOR CONFIRMATION
+MP-FIX-04,730,730,755.0,755.0,8.5,Mounting plate interface,Controlled enclosure-interface assumption; confirm selected enclosure mounting-plate hardware,PROVISIONAL — DO NOT DRILL BEFORE VENDOR CONFIRMATION
+RA100-R1-01,285,605,310.0,630.0,5.5,RA100-R1,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA100-R1-02,385,605,410.0,630.0,5.5,RA100-R1,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA100-R1-03,485,605,510.0,630.0,5.5,RA100-R1,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA100-R1-04,585,605,610.0,630.0,5.5,RA100-R1,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA100-R1-05,685,605,710.0,630.0,5.5,RA100-R1,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA101-R2-01,285,375,310.0,400.0,5.5,RA101-R2,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA101-R2-02,385,375,410.0,400.0,5.5,RA101-R2,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA101-R2-03,485,375,510.0,400.0,5.5,RA101-R2,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA101-R2-04,585,375,610.0,400.0,5.5,RA101-R2,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA102-R3-01,285,235,310.0,260.0,5.5,RA102-R3,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA102-R3-02,385,235,410.0,260.0,5.5,RA102-R3,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA102-R3-03,485,235,510.0,260.0,5.5,RA102-R3,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA102-R3-04,585,235,610.0,260.0,5.5,RA102-R3,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA102-R3-05,685,235,710.0,260.0,5.5,RA102-R3,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA103-R4-01,60,85,85.0,110.0,5.5,RA103-R4,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA103-R4-02,185,85,210.0,110.0,5.5,RA103-R4,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA103-R4-03,310,85,335.0,110.0,5.5,RA103-R4,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA103-R4-04,435,85,460.0,110.0,5.5,RA103-R4,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA103-R4-05,560,85,585.0,110.0,5.5,RA103-R4,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+RA103-R4-06,685,85,710.0,110.0,5.5,RA103-R4,35 mm DIN-rail fixing pattern controlled for layout; rail supplier/fixing hardware open,PROVISIONAL — VERIFY RAIL AND FIXING SYSTEM BEFORE MANUFACTURE
+U100-MOUNT-01,60.35,441.0,85.35,466.0,4.5,-U100,"Siemens D31.1 2024 G120C FSA table: 62.3 x 186 mm, 3 x M4; coordinate orientation reconstructed from dimension diagram",PROVISIONAL — CONFIRM AGAINST ORDER-NUMBER CAx BEFORE DRILLING
+U100-MOUNT-02,122.65,441.0,147.65,466.0,4.5,-U100,"Siemens D31.1 2024 G120C FSA table: 62.3 x 186 mm, 3 x M4; coordinate orientation reconstructed from dimension diagram",PROVISIONAL — CONFIRM AGAINST ORDER-NUMBER CAx BEFORE DRILLING
+U100-MOUNT-03,91.5,255.0,116.5,280.0,4.5,-U100,"Siemens D31.1 2024 G120C FSA table: 62.3 x 186 mm, 3 x M4; coordinate orientation reconstructed from dimension diagram",PROVISIONAL — CONFIRM AGAINST ORDER-NUMBER CAx BEFORE DRILLING
+U101-MOUNT-01,155.35,441.0,180.35,466.0,4.5,-U101,"Siemens D31.1 2024 G120C FSA table: 62.3 x 186 mm, 3 x M4; coordinate orientation reconstructed from dimension diagram",PROVISIONAL — CONFIRM AGAINST ORDER-NUMBER CAx BEFORE DRILLING
+U101-MOUNT-02,217.65,441.0,242.65,466.0,4.5,-U101,"Siemens D31.1 2024 G120C FSA table: 62.3 x 186 mm, 3 x M4; coordinate orientation reconstructed from dimension diagram",PROVISIONAL — CONFIRM AGAINST ORDER-NUMBER CAx BEFORE DRILLING
+U101-MOUNT-03,186.5,255.0,211.5,280.0,4.5,-U101,"Siemens D31.1 2024 G120C FSA table: 62.3 x 186 mm, 3 x M4; coordinate orientation reconstructed from dimension diagram",PROVISIONAL — CONFIRM AGAINST ORDER-NUMBER CAx BEFORE DRILLING

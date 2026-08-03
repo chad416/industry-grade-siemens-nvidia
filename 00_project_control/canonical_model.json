@@ -1,11 +1,11 @@
 {
   "project": {
     "id": "FC01",
-    "revision": "D.1",
+    "revision": "E",
     "date": "2026-08-03",
     "notice": "FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION",
     "safety_boundary": "CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.",
-    "status": "PROFESSIONAL CONTROLLED ENGINEERING-DEVELOPMENT RELEASE CANDIDATE; CONSTRUCTION AND DEPLOYMENT RELEASE PENDING EXPLICIT NATIVE, PHYSICAL AND QUALIFIED ACCEPTANCE GATES"
+    "status": "CONTROLLED NATIVE-ENGINEERING RELEASE CANDIDATE; CONSTRUCTION, DEPLOYMENT, NATIVE SIEMENS, PHYSICAL AND QUALIFIED ACCEPTANCE GATES REMAIN EXPLICIT"
   },
   "states": [
     "UNINITIALIZED",
@@ -131,10 +131,10 @@
       "qty": 1,
       "selection": "Provisional",
       "firmware": "Startdrive selection open",
-      "width_mm": "",
-      "height_mm": "",
-      "depth_mm": "",
-      "status": "Rating, envelope and clearances blocked by motor/mechanics and native Startdrive",
+      "width_mm": 73,
+      "height_mm": 196,
+      "depth_mm": 225.4,
+      "status": "SELECTED ENVELOPE; drive rating/duty and Startdrive configuration remain provisional",
       "source_url": "https://mall.industry.siemens.com/mall/en/WW/Catalog/Product/6SL3210-1KE12-3UF2",
       "source_accessed": "2026-08-02",
       "full_designation": "=FC01+CP01-U100"
@@ -148,10 +148,10 @@
       "qty": 1,
       "selection": "Provisional",
       "firmware": "Startdrive selection open",
-      "width_mm": "",
-      "height_mm": "",
-      "depth_mm": "",
-      "status": "Rating, envelope and clearances blocked by pump curve and motor data",
+      "width_mm": 73,
+      "height_mm": 196,
+      "depth_mm": 225.4,
+      "status": "SELECTED ENVELOPE; drive rating/duty and Startdrive configuration remain provisional",
       "source_url": "https://mall.industry.siemens.com/mall/en/WW/Catalog/Product/6SL3210-1KE12-3UF2",
       "source_accessed": "2026-08-02",
       "full_designation": "=FC01+CP01-U101"
@@ -182,10 +182,10 @@
       "qty": 1,
       "selection": "Selected network baseline",
       "firmware": "Native configuration open",
-      "width_mm": "",
+      "width_mm": 35,
       "height_mm": 147,
       "depth_mm": 127,
-      "status": "Exact width and site policy remain procurement/native gates",
+      "status": "SELECTED NETWORK BASELINE — native configuration and site policy open",
       "source_url": "https://mall.industry.siemens.com/mall/en/oeii/Catalog/Product?SiepCountryCode=OE&mlfb=6GK5615-0AA01-2AA2",
       "source_accessed": "2026-08-02",
       "full_designation": "=FC01+CP01-FW100"
@@ -199,10 +199,10 @@
       "qty": 1,
       "selection": "Architecture only",
       "firmware": "JetPack/DeepStream image not selected",
-      "width_mm": "",
-      "height_mm": "",
-      "depth_mm": "",
-      "status": "Carrier, thermals, power, EMC and lifecycle are open",
+      "width_mm": 115,
+      "height_mm": 165,
+      "depth_mm": 80,
+      "status": "TBD — NOT PROCUREMENT OR CONSTRUCTION DATA; confirm industrial carrier, thermal solution, EMC and lifecycle",
       "source_url": "https://developer.nvidia.com/deepstream-sdk",
       "source_accessed": "2026-08-02",
       "full_designation": "=FC01+CP01-PC200"
@@ -1037,8 +1037,8 @@
       "signal": "INSPECTION_TRIGGER",
       "data_type": "BOOL",
       "owner": "PLC",
-      "meaning": "One-shot request",
-      "transport": "OPC UA subscribed/published node",
+      "meaning": "Level-held inspection request; remains true until coherent BUSY observation or terminal result for the immutable session/inspection ID",
+      "transport": "OPC UA subscribed request level; monotonic session/ID is authoritative",
       "timeout_ms": 0
     },
     {
@@ -1753,7 +1753,7 @@
       "status": "Implemented in reviewable sources; native Siemens verification blocked",
       "design_artifact": "11_simulation/filling_cell_simulator.py; 11_simulation/tests",
       "test_ids": "TC-001..TC-032",
-      "evidence": "32 scenario traces and 20 unit/property tests"
+      "evidence": "32 deterministic scenarios plus 88 source/simulator/native-contract tests, 59 edge-service tests and 15 interface-harness tests; see the executed report"
     },
     {
       "requirement_id": "SYS-023",
@@ -1762,7 +1762,7 @@
       "status": "Implemented in reviewable sources; native Siemens verification blocked",
       "design_artifact": "00_project_control/canonical_model.json; scripts/validate_project.py",
       "test_ids": "VAL-D-STATIC",
-      "evidence": "Revision-D.1 canonical/source/schedule validation suite; the executed report records the current check count"
+      "evidence": "Revision-E canonical/source/schedule/native-evidence validator; the executed report records the exact current check count"
     },
     {
       "requirement_id": "SYS-024",
@@ -8561,152 +8561,152 @@
   "panel_placement": [
     {
       "tag": "-A100",
-      "x_mm": 120,
-      "y_mm": 90,
+      "x_mm": 300,
+      "y_mm": 550,
       "width_mm": 35,
       "height_mm": 147,
       "depth_mm": 129,
       "mounting": "DIN rail R1",
       "orientation": "Vertical unless manufacturer requires otherwise",
-      "zone": "Controls",
+      "zone": "PLC / control",
       "top_clearance_mm": 25,
       "bottom_clearance_mm": 25,
-      "side_clearance_mm": 15,
-      "heat_w": "Manufacturer data required",
-      "dimension_basis": "Official Siemens data sheet",
-      "placement_status": "Coordinate reserved; native CAD and clearance verification open",
+      "side_clearance_mm": 0,
+      "heat_w": "TBD",
+      "dimension_basis": "Official Siemens product data; simplified rectangular selected-device envelope",
+      "placement_status": "SELECTED BASELINE — native TIA catalog/configuration and accessory confirmation open",
       "full_designation": "=FC01+CP01-A100"
     },
     {
       "tag": "-A101",
-      "x_mm": 185,
-      "y_mm": 90,
+      "x_mm": 339,
+      "y_mm": 550,
       "width_mm": 35,
       "height_mm": 147,
       "depth_mm": 129,
       "mounting": "DIN rail R1",
       "orientation": "Vertical unless manufacturer requires otherwise",
-      "zone": "Controls",
+      "zone": "PLC / control",
       "top_clearance_mm": 25,
       "bottom_clearance_mm": 25,
-      "side_clearance_mm": 15,
-      "heat_w": "Manufacturer data required",
-      "dimension_basis": "Official Siemens data sheet",
-      "placement_status": "Coordinate reserved; native CAD and clearance verification open",
+      "side_clearance_mm": 0,
+      "heat_w": "TBD",
+      "dimension_basis": "Official Siemens product data; simplified rectangular selected-device envelope",
+      "placement_status": "SELECTED BASELINE — native TIA catalog/configuration and accessory confirmation open",
       "full_designation": "=FC01+CP01-A101"
     },
     {
       "tag": "-A102",
-      "x_mm": 250,
-      "y_mm": 90,
+      "x_mm": 378,
+      "y_mm": 550,
       "width_mm": 35,
       "height_mm": 147,
       "depth_mm": 129,
       "mounting": "DIN rail R1",
       "orientation": "Vertical unless manufacturer requires otherwise",
-      "zone": "Controls",
+      "zone": "PLC / control",
       "top_clearance_mm": 25,
       "bottom_clearance_mm": 25,
-      "side_clearance_mm": 15,
-      "heat_w": "Manufacturer data required",
-      "dimension_basis": "Official Siemens data sheet",
-      "placement_status": "Coordinate reserved; native CAD and clearance verification open",
+      "side_clearance_mm": 0,
+      "heat_w": "TBD",
+      "dimension_basis": "Official Siemens product data; simplified rectangular selected-device envelope",
+      "placement_status": "SELECTED BASELINE — native TIA catalog/configuration and accessory confirmation open",
       "full_designation": "=FC01+CP01-A102"
     },
     {
       "tag": "-A103",
-      "x_mm": 315,
-      "y_mm": 90,
+      "x_mm": 417,
+      "y_mm": 550,
       "width_mm": 35,
       "height_mm": 147,
       "depth_mm": 129,
       "mounting": "DIN rail R1",
       "orientation": "Vertical unless manufacturer requires otherwise",
-      "zone": "Controls",
+      "zone": "PLC / control",
       "top_clearance_mm": 25,
       "bottom_clearance_mm": 25,
-      "side_clearance_mm": 15,
-      "heat_w": "Manufacturer data required",
-      "dimension_basis": "Official Siemens data sheet",
-      "placement_status": "Coordinate reserved; native CAD and clearance verification open",
+      "side_clearance_mm": 0,
+      "heat_w": "TBD",
+      "dimension_basis": "Official Siemens product data; simplified rectangular selected-device envelope",
+      "placement_status": "SELECTED BASELINE — native TIA catalog/configuration and accessory confirmation open",
       "full_designation": "=FC01+CP01-A103"
     },
     {
       "tag": "-A104",
-      "x_mm": 380,
-      "y_mm": 90,
+      "x_mm": 456,
+      "y_mm": 550,
       "width_mm": 35,
       "height_mm": 147,
       "depth_mm": 129,
       "mounting": "DIN rail R1",
       "orientation": "Vertical unless manufacturer requires otherwise",
-      "zone": "Analog",
+      "zone": "PLC / control",
       "top_clearance_mm": 25,
       "bottom_clearance_mm": 25,
-      "side_clearance_mm": 15,
-      "heat_w": "Manufacturer data required",
-      "dimension_basis": "Official Siemens data sheet",
-      "placement_status": "Coordinate reserved; native CAD and clearance verification open",
+      "side_clearance_mm": 0,
+      "heat_w": "TBD",
+      "dimension_basis": "Official Siemens product data; simplified rectangular selected-device envelope",
+      "placement_status": "SELECTED BASELINE — native TIA catalog/configuration and accessory confirmation open",
       "full_designation": "=FC01+CP01-A104"
     },
     {
       "tag": "-H100",
-      "x_mm": 290,
-      "y_mm": 200,
-      "width_mm": 214,
-      "height_mm": 158,
-      "depth_mm": 63.6,
+      "x_mm": 300.85,
+      "y_mm": 329,
+      "width_mm": 198.3,
+      "height_mm": 142,
+      "depth_mm": 55.6,
       "mounting": "Door cutout",
       "orientation": "Vertical unless manufacturer requires otherwise",
       "zone": "HMI",
-      "top_clearance_mm": 25,
-      "bottom_clearance_mm": 25,
-      "side_clearance_mm": 15,
-      "heat_w": "Manufacturer data required",
-      "dimension_basis": "Official Siemens data sheet",
-      "placement_status": "Coordinate reserved; native CAD and clearance verification open",
+      "top_clearance_mm": 0,
+      "bottom_clearance_mm": 0,
+      "side_clearance_mm": 0,
+      "heat_w": "TBD",
+      "dimension_basis": "Official Siemens envelope/cutout: outer 214 x 158 x 63.6 mm; cutout 198.3 x 142 mm",
+      "placement_status": "SELECTED BASELINE — native WinCC project/compile and door reinforcement open",
       "full_designation": "=FC01+CP01-H100"
     },
     {
       "tag": "-U100",
-      "x_mm": 120,
-      "y_mm": 430,
-      "width_mm": "",
-      "height_mm": "",
-      "depth_mm": "",
-      "mounting": "Mounting plate",
+      "x_mm": 80,
+      "y_mm": 275,
+      "width_mm": 73,
+      "height_mm": 196,
+      "depth_mm": 225.4,
+      "mounting": "Direct mounting plate",
       "orientation": "Vertical unless manufacturer requires otherwise",
-      "zone": "VFD heat zone",
-      "top_clearance_mm": 100,
+      "zone": "Mains / drive heat",
+      "top_clearance_mm": 80,
       "bottom_clearance_mm": 100,
-      "side_clearance_mm": 50,
-      "heat_w": "TBD",
-      "dimension_basis": "OPEN - exact selected-device envelope unavailable",
-      "placement_status": "Coordinate reserved; native CAD and clearance verification open",
+      "side_clearance_mm": 0,
+      "heat_w": "38.6",
+      "dimension_basis": "Siemens order-number data sheet: 73 W x 196 H x 225.4 D mm; FSA PN",
+      "placement_status": "SELECTED ENVELOPE; drive rating/duty and Startdrive configuration remain provisional",
       "full_designation": "=FC01+CP01-U100"
     },
     {
       "tag": "-U101",
-      "x_mm": 370,
-      "y_mm": 430,
-      "width_mm": "",
-      "height_mm": "",
-      "depth_mm": "",
-      "mounting": "Mounting plate",
+      "x_mm": 175,
+      "y_mm": 275,
+      "width_mm": 73,
+      "height_mm": 196,
+      "depth_mm": 225.4,
+      "mounting": "Direct mounting plate",
       "orientation": "Vertical unless manufacturer requires otherwise",
-      "zone": "VFD heat zone",
-      "top_clearance_mm": 100,
+      "zone": "Mains / drive heat",
+      "top_clearance_mm": 80,
       "bottom_clearance_mm": 100,
-      "side_clearance_mm": 50,
-      "heat_w": "TBD",
-      "dimension_basis": "OPEN - exact selected-device envelope unavailable",
-      "placement_status": "Coordinate reserved; native CAD and clearance verification open",
+      "side_clearance_mm": 0,
+      "heat_w": "38.6",
+      "dimension_basis": "Siemens order-number data sheet: 73 W x 196 H x 225.4 D mm; FSA PN",
+      "placement_status": "SELECTED ENVELOPE; drive rating/duty and Startdrive configuration remain provisional",
       "full_designation": "=FC01+CP01-U101"
     },
     {
       "tag": "-SW100",
-      "x_mm": 450,
-      "y_mm": 90,
+      "x_mm": 505,
+      "y_mm": 550,
       "width_mm": 60,
       "height_mm": 147,
       "depth_mm": 125,
@@ -8715,17 +8715,17 @@
       "zone": "Network",
       "top_clearance_mm": 25,
       "bottom_clearance_mm": 25,
-      "side_clearance_mm": 15,
-      "heat_w": "Manufacturer data required",
-      "dimension_basis": "Official Siemens data sheet",
-      "placement_status": "Coordinate reserved; native CAD and clearance verification open",
+      "side_clearance_mm": 5,
+      "heat_w": "TBD",
+      "dimension_basis": "Official Siemens technical data; controlled 5 mm lateral layout-clearance assumption; confirm against order-number installation data",
+      "placement_status": "SELECTED NETWORK BASELINE — native configuration and site policy open",
       "full_designation": "=FC01+CP01-SW100"
     },
     {
       "tag": "-FW100",
-      "x_mm": 540,
-      "y_mm": 90,
-      "width_mm": "",
+      "x_mm": 575,
+      "y_mm": 550,
+      "width_mm": 35,
       "height_mm": 147,
       "depth_mm": 127,
       "mounting": "DIN rail R1",
@@ -8733,82 +8733,82 @@
       "zone": "Network",
       "top_clearance_mm": 25,
       "bottom_clearance_mm": 25,
-      "side_clearance_mm": 15,
-      "heat_w": "Manufacturer data required",
-      "dimension_basis": "OPEN - exact selected-device envelope unavailable",
-      "placement_status": "Coordinate reserved; native CAD and clearance verification open",
+      "side_clearance_mm": 5,
+      "heat_w": "TBD",
+      "dimension_basis": "Siemens S615/S615 EEC operating instructions; variant CAx confirmation open; controlled 5 mm lateral layout-clearance assumption; confirm against order-number installation data",
+      "placement_status": "SELECTED NETWORK BASELINE — native configuration and site policy open",
       "full_designation": "=FC01+CP01-FW100"
     },
     {
       "tag": "-PC200",
-      "x_mm": 600,
-      "y_mm": 250,
-      "width_mm": "",
-      "height_mm": "",
-      "depth_mm": "",
+      "x_mm": 620,
+      "y_mm": 540,
+      "width_mm": 115,
+      "height_mm": 165,
+      "depth_mm": 80,
       "mounting": "DIN rail / shelf",
       "orientation": "Vertical unless manufacturer requires otherwise",
-      "zone": "Vision",
+      "zone": "Vision edge",
       "top_clearance_mm": 25,
       "bottom_clearance_mm": 25,
-      "side_clearance_mm": 15,
+      "side_clearance_mm": 5,
       "heat_w": "TBD",
-      "dimension_basis": "OPEN - exact selected-device envelope unavailable",
-      "placement_status": "Coordinate reserved; native CAD and clearance verification open",
+      "dimension_basis": "CONTROLLED ARCHITECTURE-ONLY ENVELOPE ASSUMPTION — carrier, cooling kit and interfaces not selected",
+      "placement_status": "TBD — NOT PROCUREMENT OR CONSTRUCTION DATA; confirm industrial carrier, thermal solution, EMC and lifecycle",
       "full_designation": "=FC01+CP01-PC200"
     },
     {
       "tag": "-PE100",
-      "x_mm": 120,
-      "y_mm": 755,
-      "width_mm": 630,
-      "height_mm": 25,
-      "depth_mm": 25,
+      "x_mm": 80,
+      "y_mm": 45,
+      "width_mm": 640,
+      "height_mm": 15,
+      "depth_mm": 15,
       "mounting": "Mounting plate",
       "orientation": "Horizontal",
       "zone": "PE",
-      "top_clearance_mm": 20,
-      "bottom_clearance_mm": 20,
-      "side_clearance_mm": 20,
-      "heat_w": 0,
-      "dimension_basis": "Provisional bar envelope",
-      "placement_status": "Final PE sizing open",
+      "top_clearance_mm": 0,
+      "bottom_clearance_mm": 0,
+      "side_clearance_mm": 0,
+      "heat_w": "TBD",
+      "dimension_basis": "Controlled provisional bar envelope; section and fixing hardware open",
+      "placement_status": "TBD — PE sizing, bonding points and fault-current basis required",
       "full_designation": "=FC01+CP01-PE100"
     },
     {
       "tag": "-X100..-X199",
-      "x_mm": 120,
-      "y_mm": 650,
-      "width_mm": 630,
+      "x_mm": 80,
+      "y_mm": 90,
+      "width_mm": 655,
       "height_mm": 50,
-      "depth_mm": 70,
+      "depth_mm": 50,
       "mounting": "DIN rail R4",
       "orientation": "Horizontal terminal row",
       "zone": "Field termination",
-      "top_clearance_mm": 40,
-      "bottom_clearance_mm": 30,
-      "side_clearance_mm": 20,
+      "top_clearance_mm": 0,
+      "bottom_clearance_mm": 0,
+      "side_clearance_mm": 0,
       "heat_w": 0,
-      "dimension_basis": "Reserved terminal-row envelope",
-      "placement_status": "Terminal family and count open",
+      "dimension_basis": "Revision-E native schedule: 84 logical terminals plus controlled PE/shield terminal objects",
+      "placement_status": "NATIVE GEOMETRY VERIFIED; terminal family, bridges, accessories and construction release remain open",
       "full_designation": "=FC01+CP01-X100..-X199"
     },
     {
       "tag": "-WD100",
-      "x_mm": 50,
-      "y_mm": 50,
-      "width_mm": 40,
-      "height_mm": 540,
-      "depth_mm": 60,
+      "x_mm": 45,
+      "y_mm": 175,
+      "width_mm": 25,
+      "height_mm": 545,
+      "depth_mm": 55,
       "mounting": "Mounting plate",
       "orientation": "Vertical duct",
-      "zone": "24 VDC routing",
+      "zone": "Routing",
       "top_clearance_mm": 0,
       "bottom_clearance_mm": 0,
-      "side_clearance_mm": 15,
-      "heat_w": 0,
-      "dimension_basis": "Provisional routing reserve",
-      "placement_status": "Duct fill calculation open",
+      "side_clearance_mm": 0,
+      "heat_w": "TBD",
+      "dimension_basis": "Controlled routing envelope; duct family and fill calculation open",
+      "placement_status": "PROVISIONAL — VERIFY DUCT FILL, bend radius, conductor count and EMC separation",
       "full_designation": "=FC01+CP01-WD100"
     }
   ],
@@ -9073,12 +9073,12 @@
     },
     {
       "request_id": "IR-019",
-      "required_input": "FreeCAD installation and qualified panel-CAD reviewer",
+      "required_input": "Qualified panel-CAD reviewer, final vendor envelopes/clearances and construction confirmation",
       "owner": "Electrical owner",
-      "blocks": "Revision-D.1 FCStd/exchange validation",
-      "status": "OPEN",
+      "blocks": "Construction release of Revision-E native panel CAD",
+      "status": "PARTIAL",
       "date_requested": "2026-08-02",
-      "evidence_required": "Approved source document or native evidence"
+      "evidence_required": "Qualified-human review plus approved vendor/site construction data"
     },
     {
       "request_id": "IR-020",
@@ -9091,12 +9091,12 @@
     },
     {
       "request_id": "IR-021",
-      "required_input": "Usable QElectroTech installation and qualified electrical schematic reviewer",
+      "required_input": "Native reopen/export/all-page review of corrected QET and qualified electrical schematic reviewer",
       "owner": "Electrical owner",
-      "blocks": "Revision-D.1 schematic authoring, reopen, export and review",
-      "status": "OPEN",
+      "blocks": "Native schematic gate and construction review",
+      "status": "PARTIAL",
       "date_requested": "2026-08-02",
-      "evidence_required": "Approved source document or native evidence"
+      "evidence_required": "Exact corrected-hash QET reopen, PDF export, cross-reference report and qualified-human review"
     },
     {
       "request_id": "IR-022",
@@ -9158,133 +9158,133 @@
       "gate": 1,
       "acceptance_gate": "Requirements/interfaces traceable",
       "status": "PARTIAL",
-      "evidence_or_blocker": "Controlled model and tests present; owner approval absent"
+      "evidence_or_blocker": "Controlled model, native-workstream schedules and tests are traceable; identified requirements-owner approval is absent"
     },
     {
       "gate": 2,
       "acceptance_gate": "Canonical model reconciles schedules",
       "status": "PASS",
-      "evidence_or_blocker": "Revision-D.1 deterministic validator and source-parity checks pass; see current automated report for count"
+      "evidence_or_blocker": "Revision-E deterministic validator and source/schedule/native-evidence contracts pass; see current automated report for exact count"
     },
     {
       "gate": 3,
       "acceptance_gate": "Siemens hardware baseline confirmed",
       "status": "PARTIAL",
-      "evidence_or_blocker": "V20/FW4.0 design baseline documented; native catalog and delivered state open"
+      "evidence_or_blocker": "V20/FW4.0 source baseline and selected envelopes documented; authorized native catalog confirmation and delivered-state evidence remain open"
     },
     {
       "gate": 4,
       "acceptance_gate": "Native TIA project opens",
       "status": "BLOCKED",
-      "evidence_or_blocker": "No genuine AP20 project created"
+      "evidence_or_blocker": "No genuine AP20 project; active identity is not TIA Engineer/Openness-authorized and V20 entitlement is unproven"
     },
     {
       "gate": 5,
       "acceptance_gate": "Native TIA archive restores",
       "status": "BLOCKED",
-      "evidence_or_blocker": "No genuine ZAP20 archive created"
+      "evidence_or_blocker": "No genuine ZAP20 archive exists; native authorized project creation/restoration was not available"
     },
     {
       "gate": 6,
       "acceptance_gate": "PLC compiles zero errors",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Static source lint only; native compile not run"
+      "evidence_or_blocker": "67 source/simulator contracts pass at Revision-E authoring time; TIA V20 compile was not run"
     },
     {
       "gate": 7,
       "acceptance_gate": "HMI compiles zero errors",
       "status": "BLOCKED",
-      "evidence_or_blocker": "WinCC project not created"
+      "evidence_or_blocker": "WinCC V20 components exist but no authorized/licensed native HMI project or compile is proven"
     },
     {
       "gate": 8,
       "acceptance_gate": "Startdrive configured/reviewed",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Startdrive not installed and motor data absent"
+      "evidence_or_blocker": "Startdrive is not installed; motor, pump and site inputs are also missing"
     },
     {
       "gate": 9,
       "acceptance_gate": "PLCSIM traces pass",
       "status": "BLOCKED",
-      "evidence_or_blocker": "PLCSIM not installed; Python simulator is independent evidence"
+      "evidence_or_blocker": "PLCSIM/PLCSIM Advanced are not installed; deterministic Python evidence is explicitly independent"
     },
     {
       "gate": 10,
-      "acceptance_gate": "Revision-D.1 QET reopens and reconciles",
-      "status": "BLOCKED",
-      "evidence_or_blocker": "No runnable QElectroTech found; historical revision-A native baseline only"
+      "acceptance_gate": "Revision-E QET reopens and reconciles",
+      "status": "PARTIAL",
+      "evidence_or_blocker": "Corrected 26-folio QET source BCA022BE0B9F65AA061F9731C1EE0BD0399947F04C94EE596D4AD231BB47AAD5 passes 24/24 static and 6/6 contract checks; exact corrected hash was not natively reopened/exported, so native reconciliation remains partial"
     },
     {
       "gate": 11,
-      "acceptance_gate": "Schematics visual review",
+      "acceptance_gate": "Schematics export and all-page visual review",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Revision-D.1 native schematics do not exist"
+      "evidence_or_blocker": "Native QET PDF export was not completed and only sampled folios were inspected; all-page visual and native cross-reference review remain blocked"
     },
     {
       "gate": 12,
-      "acceptance_gate": "Revision-D.1 FCStd reopens",
-      "status": "BLOCKED",
-      "evidence_or_blocker": "No runnable FreeCAD found; historical baseline only"
+      "acceptance_gate": "Revision-E FCStd reopens",
+      "status": "PASS",
+      "evidence_or_blocker": "FreeCADCmd independently reopened 165 objects / 148 controlled solids; STEP retained 148 solids; IGES retained bounded face geometry; DXF entities and 30 scheduled holes reconciled"
     },
     {
       "gate": 13,
       "acceptance_gate": "STEP/IGES/DXF reimport",
-      "status": "BLOCKED",
-      "evidence_or_blocker": "Revision-D.1 exchange files do not exist and FreeCAD is absent"
+      "status": "PASS",
+      "evidence_or_blocker": "FreeCADCmd independently reopened 165 objects / 148 controlled solids; STEP retained 148 solids; IGES retained bounded face geometry; DXF entities and 30 scheduled holes reconciled"
     },
     {
       "gate": 14,
       "acceptance_gate": "Full BOM/panel layout reconcile",
       "status": "PARTIAL",
-      "evidence_or_blocker": "Expanded controlled schedules; unresolved selections and native CAD remain open"
+      "evidence_or_blocker": "Revision-E native layout covers selected architecture and controlled provisional envelopes; final carrier, terminal/relay families, vendor clearances, thermal and construction inputs remain open"
     },
     {
       "gate": 15,
       "acceptance_gate": "Electrical calculations confirmed",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Site supply, fault current, loads and environmental inputs missing"
+      "evidence_or_blocker": "Supply, earthing, fault current, motors/pump, cable routes, installation method, ambient and enclosure/site requirements remain unconfirmed"
     },
     {
       "gate": 16,
       "acceptance_gate": "Real NVIDIA dataset controlled",
       "status": "BLOCKED",
-      "evidence_or_blocker": "No real dataset supplied"
+      "evidence_or_blocker": "No representative labeled project dataset or golden/negative image sets were supplied"
     },
     {
       "gate": 17,
       "acceptance_gate": "Genuine model training/evaluation",
       "status": "BLOCKED",
-      "evidence_or_blocker": "No dataset or TAO runtime"
+      "evidence_or_blocker": "No controlled dataset, training run, evaluated model, ONNX export or defensible metrics exist"
     },
     {
       "gate": 18,
       "acceptance_gate": "TensorRT/DeepStream target runtime",
       "status": "BLOCKED",
-      "evidence_or_blocker": "No selected target carrier/runtime"
+      "evidence_or_blocker": "No selected industrial Jetson carrier/runtime image; CUDA Toolkit, TensorRT, DeepStream and TAO are absent locally"
     },
     {
       "gate": 19,
       "acceptance_gate": "PLC-NVIDIA failure tests",
       "status": "PASS",
-      "evidence_or_blocker": "Local source-design scope: simulator, 32 scenarios, edge service, interface harness and Revision-D.1 independent interface-oracle tests pass; native integration remains blocked under gates 9 and 18"
+      "evidence_or_blocker": "Source/simulator, edge-service, interface-harness and real asyncua encrypted server/client integration tests pass; production PLC/Jetson endpoint validation remains outside this local gate"
     },
     {
       "gate": 20,
       "acceptance_gate": "FAT/SAT/commissioning",
       "status": "OPEN",
-      "evidence_or_blocker": "Procedures issued, never executed"
+      "evidence_or_blocker": "Controlled procedures issued; no FAT, SAT or commissioning was executed"
     },
     {
       "gate": 21,
       "acceptance_gate": "Qualified safety activities",
       "status": "BLOCKED",
-      "evidence_or_blocker": "External qualified work required"
+      "evidence_or_blocker": "Project-specific qualified machinery-safety engineering, verification and validation are external and not performed"
     },
     {
       "gate": 22,
       "acceptance_gate": "Manifest independently verifies",
-      "status": "PASS",
-      "evidence_or_blocker": "Final deterministic JSON/CSV verifier reports zero missing, unlisted or mismatched files on the frozen release tree; regenerate after any file change"
+      "status": "PARTIAL",
+      "evidence_or_blocker": "Pre-publication source and generated-artifact controls are implemented; final staged/HEAD manifest, upstream alignment and pushed-commit fresh-clone verification remain pending until the candidate is committed and published"
     }
   ],
   "rationales": [
@@ -12711,9 +12711,9 @@
     {
       "category": "NVIDIA interface",
       "key": "INSPECTION_TRIGGER",
-      "purpose": "One-shot request",
+      "purpose": "Level-held inspection request; remains true until coherent BUSY observation or terminal result for the immutable session/inspection ID",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner PLC; BOOL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner PLC; BOOL; OPC UA subscribed request level; monotonic session/ID is authoritative",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },

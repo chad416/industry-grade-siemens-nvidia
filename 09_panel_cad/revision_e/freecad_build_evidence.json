@@ -1,0 +1,178 @@
+{
+  "artifacts": {
+    "FC01_control_panel_revision_e.FCStd": {
+      "bytes": 162401,
+      "sha256": "017de0217efd1b41bd24882e3f38bcb0cf5a63267399812553dad999068aa203"
+    },
+    "FC01_control_panel_revision_e.iges": {
+      "bytes": 1954044,
+      "sha256": "399281557c0f110df0d454654a12411226ce98916926cd98001b690aea1614d0"
+    },
+    "FC01_control_panel_revision_e.step": {
+      "bytes": 1190478,
+      "sha256": "5ac05ef162822d88a5d625396177dbf008df194b66c8b2c004c524b1bd4a1573"
+    },
+    "FC01_general_arrangement_revision_e.pdf": {
+      "bytes": 1693606,
+      "sha256": "41bd5c3e85010d7d76a4805d9f586cf75aed14f5f44629a4be618794e14727cb"
+    },
+    "FC01_mounting_plate_dimensioned_revision_e.pdf": {
+      "bytes": 914242,
+      "sha256": "94a7acd78cdcad9630e955d1579db2c1ce87e7c3a35ba9708adec603eda704d9"
+    },
+    "FC01_mounting_plate_revision_e.dxf": {
+      "bytes": 13521,
+      "sha256": "60f4a31bfd2c6bf3be6c2edb34fe7a0cc3300e4b263b0f826c59c45bb8565e53"
+    },
+    "README.md": {
+      "bytes": 2637,
+      "sha256": "f839677d9a3ea99b79fef6eb941c50c09d92fe692748731bda76dffc8cc21027"
+    },
+    "door_layout.png": {
+      "bytes": 37732,
+      "sha256": "5172c16bb154e50d4071c94d13b005ef467d34dab008c5e5e90cc80424c4b929"
+    },
+    "front_internal.png": {
+      "bytes": 39372,
+      "sha256": "54c66c8cb51d9ec7ee4a7891cd7d33ab6d9bced7ede4e0a9ac48df9f85703494"
+    },
+    "isometric_internal.png": {
+      "bytes": 70314,
+      "sha256": "10f043e3fc588014a44cc8cf9a221350b292f0d3d31d33634f19a23262de958e"
+    },
+    "mounting_hole_schedule.csv": {
+      "bytes": 6309,
+      "sha256": "931b1e6fc09841f6fb924c483200eeaee1a16dd99f7a8c5a4abdd3da76e4fa3f"
+    },
+    "revision_e_panel_placement.csv": {
+      "bytes": 46307,
+      "sha256": "a9cc29a15bf096c7b01ee5c7f5971cec26df89fba14c07b1091d836cea137007"
+    },
+    "segregation_zones.png": {
+      "bytes": 40417,
+      "sha256": "fcc1163c6e21131d7e64639ef56f6a8e1fe78c0e99b19094e64c4186b1127e32"
+    }
+  },
+  "controlled_assumptions": [
+    "-EN100",
+    "-MP100",
+    "-PS100",
+    "-QF100",
+    "-QF110",
+    "-K100",
+    "-K202..-K213",
+    "-QF111..-QF116",
+    "-X100..",
+    "-PE100",
+    "-PC200",
+    "-FAN100-RESERVED"
+  ],
+  "determinism": {
+    "byte_stable_outputs_observed": [
+      "FC01_control_panel_revision_e.step",
+      "FC01_mounting_plate_revision_e.dxf",
+      "revision_e_panel_placement.csv",
+      "mounting_hole_schedule.csv",
+      "front_internal.png",
+      "isometric_internal.png",
+      "segregation_zones.png",
+      "door_layout.png",
+      "FC01_general_arrangement_revision_e.pdf",
+      "FC01_mounting_plate_dimensioned_revision_e.pdf"
+    ],
+    "repeated_builds_executed": 3,
+    "semantic_verification_only": {
+      "FC01_control_panel_revision_e.FCStd": "FreeCAD native ZIP metadata/stream bytes vary; independent reopen, object, solid, validity and bounding-box checks are authoritative",
+      "FC01_control_panel_revision_e.iges": "OpenCASCADE IGES property-entity pointer ordering varies; native Part.read validity, topology and bounding-box checks are authoritative"
+    }
+  },
+  "freecad": {
+    "executable_name": "freecadcmd.exe",
+    "executable_sha256": "b5551d26050ed64981c5767729bb35900fd4975fa7fd31714c17dd714b6fd44c",
+    "gui_up": 0,
+    "version": [
+      "1",
+      "1",
+      "3",
+      "20260725 (Git shallow)",
+      "Unknown",
+      "2026/07/25 04:52:02",
+      "grafted,grafted",
+      "145529fe741292ff0b3977a01195bf0247425794"
+    ]
+  },
+  "native_model": {
+    "assembly_bounding_box_mm": {
+      "xlen": 800.0,
+      "xmax": 800.0,
+      "xmin": 0.0,
+      "ylen": 800.0,
+      "ymax": 800.0,
+      "ymin": 0.0,
+      "zlen": 327.0,
+      "zmax": 327.0,
+      "zmin": 0.0
+    },
+    "byte_determinism_claimed": false,
+    "controlled_physical_objects": 148,
+    "controlled_physical_solids": 148,
+    "controlled_terminal_count": 84,
+    "determinism_boundary": "FCStd retained exactly as authored by FreeCAD; native reopen/object/solid/bbox verification is authoritative",
+    "document_objects": 165,
+    "invalid_controlled_physical_shapes": [],
+    "modeled_pe_terminal_count": 12,
+    "mounting_hole_count": 30
+  },
+  "native_view_provenance": {
+    "gui_render_executable": {
+      "name": "FreeCAD.exe",
+      "scope": "Retained pre-clearance-metadata-correction GUI views only; FreeCADCmd is authoritative for the final reopen/reimport",
+      "sha256": "d831ed7eee385d5a370a83b078dd90b1f7621bb65bb7c427f06c736c8652d5f0",
+      "version": "1.1.3 revision 20260725 (Git shallow)"
+    },
+    "controlled_view_hashes_actual": {
+      "door_layout.png": "5172c16bb154e50d4071c94d13b005ef467d34dab008c5e5e90cc80424c4b929",
+      "front_internal.png": "54c66c8cb51d9ec7ee4a7891cd7d33ab6d9bced7ede4e0a9ac48df9f85703494",
+      "isometric_internal.png": "10f043e3fc588014a44cc8cf9a221350b292f0d3d31d33634f19a23262de958e",
+      "segregation_zones.png": "fcc1163c6e21131d7e64639ef56f6a8e1fe78c0e99b19094e64c4186b1127e32"
+    },
+    "controlled_view_hashes_expected": {
+      "door_layout.png": "5172c16bb154e50d4071c94d13b005ef467d34dab008c5e5e90cc80424c4b929",
+      "front_internal.png": "54c66c8cb51d9ec7ee4a7891cd7d33ab6d9bced7ede4e0a9ac48df9f85703494",
+      "isometric_internal.png": "10f043e3fc588014a44cc8cf9a221350b292f0d3d31d33634f19a23262de958e",
+      "segregation_zones.png": "fcc1163c6e21131d7e64639ef56f6a8e1fe78c0e99b19094e64c4186b1127e32"
+    },
+    "description": "Genuine FreeCAD GUI renders from the same physical geometry-definition source before a rejected post-save generic ZIP-repack attempt. A controlled correction later changed only SW100/FW100/PC200 side-clearance metadata and dimension-basis text; x/y/z/width/height/depth geometry and mounting holes are unchanged. The final headless rebuild matches the invariant physical-geometry fingerprint and exact controlled PNG hashes. No final FCStd byte identity or second GUI reopen is claimed.",
+    "fcstd_byte_identity_claimed": false,
+    "geometry_fingerprint_actual": "4a9d3fac2f04c302ead3ed6e386bbd318c64514c03eb718e2df87196c392fd3b",
+    "geometry_fingerprint_expected": "4a9d3fac2f04c302ead3ed6e386bbd318c64514c03eb718e2df87196c392fd3b",
+    "nongeometric_clearance_metadata_change": "SW100, FW100 and PC200 side_clearance_mm corrected from 10 to 5; physical placement dimensions and holes unchanged",
+    "placement_schedule_byte_identity_claimed": false,
+    "schedule_hashes_after_rebuild": {
+      "holes": "931b1e6fc09841f6fb924c483200eeaee1a16dd99f7a8c5a4abdd3da76e4fa3f",
+      "placement": "a9cc29a15bf096c7b01ee5c7f5971cec26df89fba14c07b1091d836cea137007"
+    },
+    "schedule_hashes_before_rebuild": {
+      "holes": "931b1e6fc09841f6fb924c483200eeaee1a16dd99f7a8c5a4abdd3da76e4fa3f",
+      "placement": "a9cc29a15bf096c7b01ee5c7f5971cec26df89fba14c07b1091d836cea137007"
+    },
+    "semantic_geometry_identity": true
+  },
+  "project": "FC01 Compact Filling Cell",
+  "release_date": "2026-08-03",
+  "release_status": "NATIVE CAD VERIFIED \u2014 ENGINEERING INPUTS OPEN \u2014 NOT FOR CONSTRUCTION",
+  "revision": "E",
+  "safety_boundary": "CONCEPTUAL SAFETY ARCHITECTURE \u2014 REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.",
+  "selected_envelopes": [
+    "-A100",
+    "-A101",
+    "-A102",
+    "-A103",
+    "-A104",
+    "-H100",
+    "-U100",
+    "-U101",
+    "-SW100",
+    "-FW100"
+  ]
+}

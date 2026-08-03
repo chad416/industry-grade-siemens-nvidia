@@ -36,10 +36,25 @@ function Resolve-Directory {
     throw "Unable to resolve $EnvironmentName; set it explicitly on non-Codex release runners"
 }
 
+function Resolve-ExternalExecutable {
+    param(
+        [Parameter(Mandatory=$true)][string]$EnvironmentName,
+        [Parameter(Mandatory=$true)][string]$KnownPath
+    )
+    $Explicit = [Environment]::GetEnvironmentVariable($EnvironmentName)
+    $Candidate = if ($Explicit) { $Explicit } else { $KnownPath }
+    if (-not (Test-Path -LiteralPath $Candidate -PathType Leaf)) {
+        throw "Unable to resolve $EnvironmentName; checked $Candidate"
+    }
+    return (Resolve-Path -LiteralPath $Candidate).Path
+}
+
 $Python = Resolve-Executable 'FC01_PYTHON' 'python\python.exe' @('python','python3')
 $Node = Resolve-Executable 'FC01_NODE' 'node\bin\node.exe' @('node')
 $NodeModules = Resolve-Directory 'FC01_NODE_MODULES' 'node\node_modules'
 $Pdftoppm = Resolve-Executable 'FC01_PDFTOPPM' 'native\poppler\Library\bin\pdftoppm.exe' @('pdftoppm')
+$OpcUaPython = Resolve-ExternalExecutable 'FC01_OPCUA_PYTHON' 'C:\Users\chand\AppData\Local\Temp\fc01-rev-e-opcua-venv\Scripts\python.exe'
+$FreeCADCmd = Resolve-ExternalExecutable 'FC01_FREECADCMD' 'C:\Users\chand\.codex\visualizations\2026\08\01\019fbf33-0278-7863-9c85-46d6cc9a3115\fc\FreeCAD_1.1.3-Windows-x86_64-py311\bin\FreeCADCmd.exe'
 $BuildJunction = Join-Path $ProjectRoot 'node_modules'
 
 function Invoke-Native {
@@ -74,11 +89,13 @@ try {
     Invoke-Native $Python 'scripts\validate_project.py' '--check'
 
     Invoke-Native $Python 'scripts\build_project.py'
+    Invoke-Native $Python 'scripts\verify_qet_revision_e.py'
     Invoke-Native $Python '-m' 'unittest' 'discover' '-s' '11_simulation\tests' '-v'
     Invoke-Native $Python '11_simulation\run_scenarios.py'
-    Invoke-Native $Python '-m' 'unittest' 'discover' '-s' '07_nvidia_vision\edge_service\tests' '-v'
+    Invoke-Native $OpcUaPython '-m' 'unittest' 'discover' '-s' '07_nvidia_vision\edge_service\tests' '-v'
     Push-Location '07_nvidia_vision'
     try { Invoke-Native $Python '-m' 'unittest' '-v' 'test_plc_interface_harness.py' } finally { Pop-Location }
+    Invoke-Native $FreeCADCmd 'scripts\verify_freecad_revision_e.py'
     Invoke-Native $Python 'scripts\check_determinism.py' '--source' 'head'
 
     if (Test-Path -LiteralPath $BuildJunction) { throw "Unexpected node_modules path exists before workbook build: $BuildJunction" }
@@ -107,9 +124,9 @@ try {
     $PdfHash2 = (Get-FileHash -Algorithm SHA256 'release\FC01_release_evidence.pdf').Hash
     if ($PdfHash1 -ne $PdfHash2) { throw "Release PDF is not binary deterministic: $PdfHash1 != $PdfHash2" }
 
-    Reset-GeneratedDirectory '14_qa\pdf_renders\release_d'
-    Invoke-Native $Pdftoppm '-png' '-r' '140' 'release\FC01_release_evidence.pdf' '14_qa\pdf_renders\release_d\page'
-    $ReleasePages = @(Get-ChildItem '14_qa\pdf_renders\release_d' -File | Sort-Object Name | ForEach-Object Name)
+    Reset-GeneratedDirectory '14_qa\pdf_renders\release_e'
+    Invoke-Native $Pdftoppm '-png' '-r' '140' 'release\FC01_release_evidence.pdf' '14_qa\pdf_renders\release_e\page'
+    $ReleasePages = @(Get-ChildItem '14_qa\pdf_renders\release_e' -File | Sort-Object Name | ForEach-Object Name)
     $ExpectedReleasePages = @(1..5 | ForEach-Object { "page-$_.png" })
     if (Compare-Object $ExpectedReleasePages $ReleasePages) { throw 'Release PDF render set is not exactly pages 1 through 5' }
 
@@ -118,6 +135,18 @@ try {
     $QetPages = @(Get-ChildItem '14_qa\pdf_renders\qet_baseline' -File | Sort-Object Name | ForEach-Object Name)
     $ExpectedQetPages = @(1..24 | ForEach-Object { "page-{0:D2}.png" -f $_ })
     if (Compare-Object $ExpectedQetPages $QetPages) { throw 'QET baseline PDF render set is not exactly pages 01 through 24' }
+
+    Reset-GeneratedDirectory '14_qa\pdf_renders\cad_general_arrangement'
+    Invoke-Native $Pdftoppm '-png' '-r' '140' '09_panel_cad\revision_e\FC01_general_arrangement_revision_e.pdf' '14_qa\pdf_renders\cad_general_arrangement\page'
+    $CadGaPages = @(Get-ChildItem '14_qa\pdf_renders\cad_general_arrangement' -File | Sort-Object Name | ForEach-Object Name)
+    $ExpectedCadGaPages = @(1..4 | ForEach-Object { "page-$_.png" })
+    if (Compare-Object $ExpectedCadGaPages $CadGaPages) { throw 'CAD general-arrangement render set is not exactly pages 1 through 4' }
+
+    Reset-GeneratedDirectory '14_qa\pdf_renders\cad_mounting_plate'
+    Invoke-Native $Pdftoppm '-png' '-r' '140' '09_panel_cad\revision_e\FC01_mounting_plate_dimensioned_revision_e.pdf' '14_qa\pdf_renders\cad_mounting_plate\page'
+    $CadMpPages = @(Get-ChildItem '14_qa\pdf_renders\cad_mounting_plate' -File | Sort-Object Name | ForEach-Object Name)
+    $ExpectedCadMpPages = @(1..2 | ForEach-Object { "page-$_.png" })
+    if (Compare-Object $ExpectedCadMpPages $CadMpPages) { throw 'CAD mounting-plate render set is not exactly pages 1 through 2' }
     Invoke-Native $Python 'scripts\build_pdf_contact_sheets.py'
 
     Invoke-Native $Python 'scripts\validate_project.py'

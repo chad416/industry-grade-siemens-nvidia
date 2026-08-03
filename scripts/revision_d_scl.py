@@ -423,15 +423,17 @@ END_FUNCTION_BLOCK''',
         "FB_VisionInterface.scl": f'''// {NOTICE}
 FUNCTION_BLOCK "FB_VisionInterface"
 VAR_INPUT Enable : Bool; TriggerEdge : Bool; InspectionId : UDInt; SessionEpoch : UDInt; ExpectedModelId : String[32]; ExpectedModelHash : String[64]; Ready : Bool; Busy : Bool; Result : "UDT_VisionResult"; Heartbeat : UDInt; Timeout : Time; HeartbeatTimeout : Time; ResetEdge : Bool; END_VAR
-VAR_OUTPUT Trigger : Bool; Accepted : Bool; PublicationAck : Bool; QualityPass : Bool; HoldRequired : Bool; Fault : Bool; HeartbeatHealthy : Bool; ResultStuckHigh : Bool; DiagReason : "E_VisionDiag"; END_VAR
+VAR_OUTPUT Trigger : Bool; RequestInProgress : Bool; Accepted : Bool; PublicationAck : Bool; QualityPass : Bool; HoldRequired : Bool; Fault : Bool; HeartbeatHealthy : Bool; ResultStuckHigh : Bool; DiagReason : "E_VisionDiag"; END_VAR
 VAR
    tReady : TON; tResult : TON; tHeartbeat : TON; tResultClear : TON;
-   pending : Bool; triggered : Bool; issuedOnce : Bool; heartbeatInitialized : Bool; resultMustClear : Bool; publicationWasAwaitingClear : Bool; heartbeatChanged : Bool; heartbeatRegressed : Bool;
+   pending : Bool; triggered : Bool; requestObserved : Bool; issuedOnce : Bool; heartbeatInitialized : Bool; resultMustClear : Bool; publicationWasAwaitingClear : Bool; heartbeatChanged : Bool; heartbeatRegressed : Bool;
    latchedId : UDInt; latchedSessionEpoch : UDInt; currentSessionEpoch : UDInt; lastIssuedId : UDInt; lastHeartbeat : UDInt;
 END_VAR
 BEGIN
-   // Trigger and Accepted are one-scan pulses. Reset never synthesizes either edge.
+   // Trigger is a level-held OPC UA request until coherent BUSY observation or a
+   // terminal result. Accepted remains a one-scan pulse. Reset synthesizes neither.
    #Trigger := FALSE;
+   #RequestInProgress := #pending;
    #Accepted := FALSE;
    #PublicationAck := FALSE;
 
@@ -444,10 +446,16 @@ BEGIN
    // A session change resets the ID space only after pending/old publication clears.
    IF #SessionEpoch <> #currentSessionEpoch THEN
       IF #pending OR #Result.ResultValid THEN
-         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".SESSION_MISMATCH;
+         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE; #DiagReason := "E_VisionDiag".SESSION_MISMATCH;
       ELSE
          #currentSessionEpoch := #SessionEpoch; #issuedOnce := FALSE; #lastIssuedId := UDINT#0; #resultMustClear := FALSE;
       END_IF;
+   END_IF;
+
+   // The externally visible transaction identity is immutable while pending.
+   // This also catches an upstream duplicate request that mutates the ID.
+   IF #pending AND (#InspectionId <> #latchedId) THEN
+      #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE; #DiagReason := "E_VisionDiag".NON_MONOTONIC_REQUEST;
    END_IF;
 
    // Heartbeat supervision is intentionally suppressed while disabled. On re-enable,
@@ -484,7 +492,7 @@ BEGIN
    // READY=1/BUSY=1 means processing. BUSY without READY, or publication while
    // BUSY, is contradictory and fail-closed.
    IF #Enable AND ((#Busy AND NOT #Ready) OR (#Busy AND #Result.ResultValid)) AND NOT #Fault THEN
-      #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".INTERFACE_CONTRADICTION;
+      #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE; #DiagReason := "E_VisionDiag".INTERFACE_CONTRADICTION;
    END_IF;
 
    IF #TriggerEdge AND #Enable AND NOT #Result.ResultValid AND NOT #pending AND NOT #Fault AND NOT #HoldRequired AND NOT #resultMustClear THEN
@@ -493,12 +501,14 @@ BEGIN
       ELSIF (#InspectionId = UDINT#0) OR (#issuedOnce AND ((#lastIssuedId = UDINT#4294967295) OR (#InspectionId <= #lastIssuedId))) THEN
          #Fault := TRUE; #HoldRequired := TRUE; #DiagReason := "E_VisionDiag".NON_MONOTONIC_REQUEST;
       ELSE
-         #pending := TRUE; #triggered := FALSE; #latchedId := #InspectionId; #latchedSessionEpoch := #SessionEpoch; #lastIssuedId := #InspectionId; #issuedOnce := TRUE; #QualityPass := FALSE;
+         #pending := TRUE; #triggered := FALSE; #requestObserved := FALSE; #latchedId := #InspectionId; #latchedSessionEpoch := #SessionEpoch; #lastIssuedId := #InspectionId; #issuedOnce := TRUE; #QualityPass := FALSE;
       END_IF;
    END_IF;
 
    #tReady(IN := #pending AND NOT #triggered AND (NOT #Ready OR #Busy), PT := #Timeout);
-   IF #pending AND NOT #triggered AND #Ready AND NOT #Busy AND NOT #Fault THEN #Trigger := TRUE; #triggered := TRUE; END_IF;
+   IF #pending AND NOT #triggered AND #Ready AND NOT #Busy AND NOT #Fault THEN #triggered := TRUE; END_IF;
+   IF #pending AND #triggered AND #Ready AND #Busy THEN #requestObserved := TRUE; END_IF;
+   #Trigger := #pending AND #triggered AND NOT #requestObserved AND NOT #Result.ResultValid AND NOT #Fault;
    #tResult(IN := #pending AND #triggered, PT := #Timeout);
 
    IF #pending AND #triggered AND #Result.ResultValid AND NOT #Fault THEN
@@ -506,38 +516,39 @@ BEGIN
       // rejected data. PublicationAck never means product acceptance.
       #PublicationAck := TRUE; #resultMustClear := TRUE;
       IF #Result.SessionEpoch <> #latchedSessionEpoch THEN
-         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".SESSION_MISMATCH;
+         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE; #DiagReason := "E_VisionDiag".SESSION_MISMATCH;
       ELSIF #Result.ResultId <> #latchedId THEN
-         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".RESULT_ID_MISMATCH;
+         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE; #DiagReason := "E_VisionDiag".RESULT_ID_MISMATCH;
       ELSIF (#ExpectedModelId = '') OR (#ExpectedModelHash = '') OR (#Result.ModelId <> #ExpectedModelId) OR (#Result.ModelHash <> #ExpectedModelHash) THEN
-         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".MODEL_MISMATCH;
+         #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE; #DiagReason := "E_VisionDiag".MODEL_MISMATCH;
       ELSIF #Result.Fault OR #Result.Warning OR #Result.LowConfidence OR #Result.LeakOrSpill OR NOT (#Result.Bottle1Pass AND #Result.Bottle2Pass) OR (#Result.Fill1Status <> 2) OR (#Result.Fill2Status <> 2) THEN
-         #Accepted := TRUE; #QualityPass := FALSE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".QUALITY_BLOCK;
+         #Accepted := TRUE; #QualityPass := FALSE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE; #DiagReason := "E_VisionDiag".QUALITY_BLOCK;
       ELSE
-         #Accepted := TRUE; #QualityPass := TRUE; #HoldRequired := FALSE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".VISION_OK;
+         #Accepted := TRUE; #QualityPass := TRUE; #HoldRequired := FALSE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE; #DiagReason := "E_VisionDiag".VISION_OK;
       END_IF;
    END_IF;
 
    // First-out diagnostic is preserved once Fault is latched.
    IF NOT #Fault THEN
-      IF #tReady.Q AND #pending AND NOT #triggered THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".READY_TIMEOUT;
-      ELSIF #tResult.Q AND #pending AND #triggered AND NOT #Result.ResultValid THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #resultMustClear := TRUE; #DiagReason := "E_VisionDiag".RESULT_TIMEOUT;
-      ELSIF NOT #HeartbeatHealthy THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #DiagReason := "E_VisionDiag".HEARTBEAT_LOSS;
+      IF #tReady.Q AND #pending AND NOT #triggered THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE; #DiagReason := "E_VisionDiag".READY_TIMEOUT;
+      ELSIF #tResult.Q AND #pending AND #triggered AND NOT #Result.ResultValid THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE; #resultMustClear := TRUE; #DiagReason := "E_VisionDiag".RESULT_TIMEOUT;
+      ELSIF NOT #HeartbeatHealthy THEN #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE; #DiagReason := "E_VisionDiag".HEARTBEAT_LOSS;
       ELSIF #tResultClear.Q THEN #ResultStuckHigh := TRUE; #Fault := TRUE; #HoldRequired := TRUE; IF #DiagReason = "E_VisionDiag".VISION_OK THEN #DiagReason := "E_VisionDiag".RESULT_STUCK_VALID; END_IF;
       END_IF;
    END_IF;
 
    IF NOT #Enable AND #pending THEN
       IF NOT #Fault THEN #DiagReason := "E_VisionDiag".INTERFACE_CONTRADICTION; END_IF;
-      #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE;
+      #Fault := TRUE; #HoldRequired := TRUE; #pending := FALSE; #triggered := FALSE; #requestObserved := FALSE;
    END_IF;
-   IF #Fault THEN #Trigger := FALSE; #triggered := FALSE; END_IF;
+   IF #Fault THEN #Trigger := FALSE; #triggered := FALSE; #requestObserved := FALSE; END_IF;
 
    // Cause-cleared reset: publication low, interface coherent, heartbeat healthy,
    // request edge absent. The next request must carry an ID greater than lastIssuedId.
    IF #ResetEdge AND NOT #pending AND NOT #Busy AND NOT #Result.ResultValid AND NOT #TriggerEdge AND ((#Enable AND #Ready AND #HeartbeatHealthy) OR NOT #Enable) THEN
-      #Fault := FALSE; #QualityPass := FALSE; #HoldRequired := FALSE; #ResultStuckHigh := FALSE; #resultMustClear := FALSE; #heartbeatRegressed := FALSE; #DiagReason := "E_VisionDiag".VISION_OK;
+      #Fault := FALSE; #QualityPass := FALSE; #HoldRequired := FALSE; #ResultStuckHigh := FALSE; #resultMustClear := FALSE; #requestObserved := FALSE; #heartbeatRegressed := FALSE; #DiagReason := "E_VisionDiag".VISION_OK;
    END_IF;
+   #RequestInProgress := #pending;
 END_FUNCTION_BLOCK''',
 
         "FB_FillChannel.scl": f'''// {NOTICE}
@@ -831,7 +842,9 @@ BEGIN
    #FillCh2(Enable := #processPermissive, PumpRunning := #PumpVfd.Running, StartEdge := #Coordinator.FillStartPulse, Abort := #preBlockingFault OR #ConveyorVfd.Fault OR #PumpVfd.Fault OR #Gate.Fault OR #Clamp.Fault OR #HmiCommands.StopPulse, ResetEdge := #HmiCommands.ResetPulse, PulseTotal := "DB_IO".Inputs.PulseTotal2, FlowRaw := "DB_IO".Inputs.Flow2Raw, PulseChannelFault := "DB_IO".Inputs.Flow2PulseChannelFault, AnalogChannelFault := "DB_IO".Inputs.Flow2ChannelFault, ValveClosedFb := "DB_IO".Inputs.Valve2Closed, TargetMl := "DB_Recipe".Active.TargetMlCh2, PulsesPerLitre := "DB_Recipe".Active.PulsesPerLitreCh2, UnderToleranceMl := "DB_Recipe".Active.UnderToleranceMl, OverToleranceMl := "DB_Recipe".Active.OverToleranceMl, FlowMaxLMin := 20.0, NoFlowMinLMin := 0.2, PlausibilityPct := 25.0, PulseWindowTimeS := "DB_Recipe".Active.PulseWindowTimeS, NoFlowTimeout := "DB_Recipe".Active.NoFlowTimeout, FillTimeout := "DB_Recipe".Active.FillTimeout, ValveOpenTimeout := "DB_Recipe".Active.ValveOpenTimeout, ValveCloseTimeout := "DB_Recipe".Active.ValveCloseTimeout, PlausibilityTime := "DB_Recipe".Active.PlausibilityTime);
    #DripTimer(IN := (#Coordinator.AutoStep = "E_AutoStep".DRIP_SETTLE), PT := "DB_Recipe".Active.DripSettleTime);
    #Capper(Enable := NOT #immediateStop, RequestEdge := #Coordinator.CapperRequestPulse, Ready := "DB_IO".Inputs.CapperReady, Busy := "DB_IO".Inputs.CapperBusy, Complete := "DB_IO".Inputs.CapperComplete, FaultIn := "DB_IO".Inputs.CapperFault, ResetEdge := #HmiCommands.ResetPulse, AcceptTimeout := T#2s, CompleteTimeout := T#10s);
-   IF #Coordinator.VisionRequestPulse AND ("DB_VisionComms".InspectionId < UDINT#4294967295) THEN "DB_VisionComms".InspectionId := "DB_VisionComms".InspectionId + UDINT#1; END_IF;
+   // Allocate exactly one immutable ID. A repeated coordinator pulse cannot mutate
+   // the externally visible transaction while the vision interface is pending.
+   IF #Coordinator.VisionRequestPulse AND NOT #Vision.RequestInProgress AND ("DB_VisionComms".InspectionId < UDINT#4294967295) THEN "DB_VisionComms".InspectionId := "DB_VisionComms".InspectionId + UDINT#1; END_IF;
    // READY low holds VISION_ENABLE low so a cold/restarted edge can atomically
    // seed the PLC session/ID/ACK/heartbeat snapshot before declaring READY.
    "DB_VisionComms".Enable := #processPermissive AND #modelConfigured AND "DB_VisionComms".Ready AND NOT #Vision.Fault; "DB_VisionComms".RecipeId := "DB_Recipe".Active.RecipeId; "DB_VisionComms".ExpectedBottles := 2; "DB_VisionComms".TargetFillLevel := "DB_Recipe".Active.TargetFillLevel;

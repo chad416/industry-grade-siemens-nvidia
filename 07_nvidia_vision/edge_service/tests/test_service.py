@@ -293,6 +293,7 @@ class EdgeServiceTests(unittest.TestCase):
         self.assertEqual(service.state.diagnostic_code, "PLC_HEARTBEAT_TIMEOUT")
         self.assertTrue(service.state.result_valid)
         self.assertEqual(service.state.published_result_id, 1)
+        self.assertEqual(service.published_result.result_id, 1)
 
         with self.assertRaisesRegex(ProtocolError, "exact acknowledgement"):
             service.reset(disabled=True, session_epoch=1, observed_inspection_id=1,
@@ -304,6 +305,7 @@ class EdgeServiceTests(unittest.TestCase):
 
         service.acknowledge_result(1)
         self.assertFalse(service.state.result_valid)
+        self.assertIsNone(service.published_result)
         service.reset(disabled=True, session_epoch=1, observed_inspection_id=1,
                       observed_ack_id=1, observed_plc_heartbeat=1)
         self.assertTrue(service.state.ready)
@@ -325,10 +327,102 @@ class EdgeServiceTests(unittest.TestCase):
                       observed_ack_id=0, observed_plc_heartbeat=0)
         self.assertFalse(service.state.result_valid)
         self.assertEqual(service.state.published_result_id, 0)
+        self.assertIsNone(service.published_result)
         self.assertEqual(service.state.session_epoch, 2)
         self.assertTrue(any(event["event"] == "publication_invalidated_on_new_session"
                             for event in service.events))
         self.assertEqual(service.inspect(self.request(1, 1, 2)).result_id, 1)
+
+    def test_cold_restart_restores_unacknowledged_publication_without_inference(self) -> None:
+        original = self.service()
+        result = original.inspect(self.request(17, 90, 1))
+
+        restarted = self.service(observed_inspection_id=17, observed_ack_id=16,
+                                 observed_plc_heartbeat=90)
+        restarted.restore_publication(result)
+
+        self.assertTrue(restarted.state.result_valid)
+        self.assertEqual(restarted.state.published_result_id, 17)
+        self.assertIs(restarted.published_result, result)
+        self.assertEqual(restarted.events[-1]["event"], "publication_restored_after_restart")
+        with self.assertRaisesRegex(ProtocolError, "unacknowledged"):
+            restarted.inspect(self.request(18, 91, 1))
+        restarted.acknowledge_result(17)
+        self.assertIsNone(restarted.published_result)
+        restarted.reset(disabled=True, session_epoch=1, observed_inspection_id=17,
+                        observed_ack_id=17, observed_plc_heartbeat=90)
+        self.assertEqual(restarted.inspect(self.request(18, 91, 1)).result_id, 18)
+
+    def test_restore_rejects_acked_wrong_session_and_wrong_model_publications(self) -> None:
+        service = self.service(observed_inspection_id=7, observed_ack_id=7,
+                               observed_plc_heartbeat=7)
+        acked = InspectionResult(7, True, True, 2, 2, False, False, False, False,
+                                 25, "TEST-BACKEND-NOT-A-MODEL", "a" * 64, 1)
+        with self.assertRaisesRegex(ProtocolError, "already acknowledged"):
+            service.restore_publication(acked)
+
+        service = self.service(observed_inspection_id=7, observed_ack_id=6,
+                               observed_plc_heartbeat=7)
+        wrong_session = InspectionResult(7, True, True, 2, 2, False, False, False, False,
+                                         25, "TEST-BACKEND-NOT-A-MODEL", "a" * 64, 2)
+        with self.assertRaisesRegex(ProtocolError, "session"):
+            service.restore_publication(wrong_session)
+        wrong_model = InspectionResult(7, True, True, 2, 2, False, False, False, False,
+                                       25, "MODEL-B", "b" * 64, 1)
+        with self.assertRaisesRegex(ProtocolError, "model identity"):
+            service.restore_publication(wrong_model)
+
+    def test_restore_rejects_contradictory_retained_payload(self) -> None:
+        service = self.service(observed_inspection_id=7, observed_ack_id=6,
+                               observed_plc_heartbeat=7)
+        contradictory = InspectionResult(
+            7, True, True, 1, 2, False, False, False, False, 25,
+            "TEST-BACKEND-NOT-A-MODEL", "a" * 64, 1,
+        )
+        with self.assertRaisesRegex(ProtocolError, "contradicts"):
+            service.restore_publication(contradictory)
+
+    def test_transport_resume_preserves_publication_then_reconciles_exact_ack(self) -> None:
+        service = self.service()
+        result = service.inspect(self.request(7, 7, 1))
+        service.resume_transport(
+            disabled=True, session_epoch=1, observed_inspection_id=7,
+            observed_ack_id=0, observed_plc_heartbeat=8,
+            observed_result_valid=True, observed_result=result,
+        )
+        self.assertTrue(service.state.result_valid)
+        self.assertIs(service.published_result, result)
+        self.assertTrue(service.state.ready)
+        self.assertEqual(service.events[-1]["event"], "transport_resumed")
+
+        service.resume_transport(
+            disabled=True, session_epoch=1, observed_inspection_id=7,
+            observed_ack_id=7, observed_plc_heartbeat=8,
+            observed_result_valid=True, observed_result=result,
+        )
+        self.assertFalse(service.state.result_valid)
+        self.assertIsNone(service.published_result)
+        self.assertEqual(service.state.last_acknowledged_result_id, 7)
+
+    def test_transport_resume_rejects_missing_or_mutated_publication(self) -> None:
+        service = self.service()
+        result = service.inspect(self.request(7, 7, 1))
+        with self.assertRaisesRegex(ProtocolError, "disappeared"):
+            service.resume_transport(
+                disabled=True, session_epoch=1, observed_inspection_id=7,
+                observed_ack_id=0, observed_plc_heartbeat=7,
+                observed_result_valid=False, observed_result=None,
+            )
+        mutated = InspectionResult(
+            7, False, True, 1, 2, False, False, False, False, 25,
+            result.model_id, result.model_hash, 1,
+        )
+        with self.assertRaisesRegex(ProtocolError, "changed"):
+            service.resume_transport(
+                disabled=True, session_epoch=1, observed_inspection_id=7,
+                observed_ack_id=0, observed_plc_heartbeat=7,
+                observed_result_valid=True, observed_result=mutated,
+            )
 
     def test_tick_contains_session_change_for_polling_adapter(self) -> None:
         service = self.service(session_epoch=1)

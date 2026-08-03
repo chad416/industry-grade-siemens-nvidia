@@ -1,0 +1,80 @@
+{
+  "release": "Revision E",
+  "artifact": "03_electrical/revision_e/FC01_revision_e.qet",
+  "overall_status": "PARTIAL",
+  "tool": {
+    "name": "QElectroTech",
+    "version_output": "0.100.0",
+    "executable": "C:/Users/chand/AppData/Local/Temp/qelectrotech-0.100.0+git8590-portable/qelectrotech-0.100.0+git8590-x86-win64-readytouse/bin/qelectrotech.exe",
+    "executable_sha256": "FCC3465825CC6F1BF3997D9C8054858E647A2038C8C01B7A3335A914106DE926",
+    "approved_archive_sha256": "552402198011F37633FFCFF4F9CE561A9ABAF22DC14F9CC09DDC231245B16445",
+    "distribution": "Official stable Windows 64-bit ready-to-use release 0.100.0+git8590"
+  },
+  "controlled_source": {
+    "status": "PASS",
+    "qet_sha256": "BCA022BE0B9F65AA061F9731C1EE0BD0399947F04C94EE596D4AD231BB47AAD5",
+    "generation_basis": "Deterministic generation from controlled Revision-D.1 BOM, PLC I/O, terminal, cable, network and Siemens hardware schedules; the historical Revision-A QET was not read or copied",
+    "layout_controls": "Long schedules use bounded three-column pagination; diagram-plus-table folios reserve non-overlapping vertical bands",
+    "folios": 26,
+    "embedded_elements": 78,
+    "conductors": 60,
+    "represented_records": {
+      "bom_designations": 62,
+      "plc_channels_and_addresses": 74,
+      "terminal_references": 84,
+      "cable_identifiers": 22,
+      "network_nodes": 7
+    },
+    "static_verifier": {
+      "result": "PASS",
+      "checks": "24/24"
+    },
+    "dedicated_contract_tests": {
+      "result": "PASS",
+      "tests": "6/6"
+    }
+  },
+  "superseded_native_reopen_evidence": {
+    "status": "RECORDED_NOT_APPLICABLE_TO_FINAL_HASH",
+    "qet_sha256": "D2BBF2B1247E2DE6E632B8E9649C73A96236DD3E7E69E52FE7472D12AF73A5C8",
+    "method": "QElectroTech 0.100.0 GUI opened the exact candidate QET using an isolated temporary configuration directory",
+    "observed_folio_tree": "All 26 folios listed as 1/26 through 26/26",
+    "sampled_native_views": [
+      "E-01 Cover and controlled revision status",
+      "E-03 Design basis, legend and reference designations"
+    ],
+    "disposition": "Superseded after self-review found long-table overflow on E-22/E-26 and diagram/table overlap on E-13/E-17; this reopen evidence does not verify the corrected release artifact"
+  },
+  "native_reopen": {
+    "status": "BLOCKED",
+    "qet_sha256": "BCA022BE0B9F65AA061F9731C1EE0BD0399947F04C94EE596D4AD231BB47AAD5",
+    "reason": "The corrected final hash was not reopened in QElectroTech after layout correction; the available GUI process remained in a modal export state against the superseded temporary-worktree candidate",
+    "claim_boundary": "No native reopen success is claimed for the corrected final hash"
+  },
+  "native_pdf_export": {
+    "status": "BLOCKED",
+    "attempt": "QElectroTech toolbar action 'Exporter en pdf' was invoked for the superseded candidate through Windows UI Automation",
+    "observed_result": "A modal export/save state was entered, but no PDF was written",
+    "blocker": "The remaining native dialog could not be controlled under the available UI automation authority after the execution environment reported an escalation/usage limit",
+    "fabrication_boundary": "No substitute PDF, synthetic QET export log or unsupported success claim was created"
+  },
+  "cross_reference_verification": {
+    "status": "BLOCKED",
+    "reason": "No complete native project report/export was obtained from QElectroTech for the corrected final hash"
+  },
+  "all_page_visual_review": {
+    "status": "BLOCKED",
+    "reviewed_final_hash": 0,
+    "required": 26,
+    "superseded_candidate_sampled": 2,
+    "reason": "Two folios were sampled only on the superseded candidate; no native multipage PDF or corrected-hash GUI session was available for complete rendered-page review"
+  },
+  "gate_disposition": {
+    "controlled_revision_e_qet_source": "PASS",
+    "corrected_native_project_reopen": "BLOCKED",
+    "revision_e_qet_reconciliation": "PARTIAL",
+    "schematic_export_and_all_page_visual_review": "BLOCKED",
+    "construction_readiness": "NOT CLAIMED"
+  },
+  "safety_boundary": "CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."
+}

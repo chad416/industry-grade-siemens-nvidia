@@ -1,0 +1,12 @@
+{
+  "byte_authority": "deterministic controlled schedules; historical Revision-A QET not read",
+  "conductor_count": 60,
+  "element_count": 78,
+  "generator": "scripts/qet_revision_e.py",
+  "native_export": "PENDING",
+  "native_reopen": "PENDING",
+  "page_count": 26,
+  "project": "FC01_revision_e.qet",
+  "qet_sha256": "bca022be0b9f65aa061f9731c1ee0bd0399947f04c94ee596d4ad231bb47aad5",
+  "release": "Revision E"
+}

@@ -1,9 +1,9 @@
-name: Revision D.1 release integrity
+name: Revision E release integrity
 
 on:
   push:
     branches:
-      - codex/revision-d1-release-integrity-native-readiness
+      - codex/revision-e-native-engineering-execution
   pull_request:
   workflow_dispatch:
 
@@ -20,6 +20,9 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
+      - name: Install locked OPC UA integration dependencies
+        shell: pwsh
+        run: python -m pip install -r 07_nvidia_vision/edge_service/requirements-opcua.txt
       - name: Verify committed release bytes and source-level reproduction
         shell: pwsh
         run: |
@@ -27,6 +30,7 @@ jobs:
           python scripts/verify_manifest.py --source head --require-clean
           python scripts/test_release_integrity.py --source head
           python scripts/validate_project.py --check
+          python scripts/verify_qet_revision_e.py
           python -m unittest discover -s 11_simulation/tests -v
           python 11_simulation/run_scenarios.py
           python -m unittest discover -s 07_nvidia_vision/edge_service/tests -v
@@ -43,9 +47,11 @@ jobs:
         shell: pwsh
         env:
           FC01_PYTHON: ${{ vars.FC01_PYTHON }}
+          FC01_OPCUA_PYTHON: ${{ vars.FC01_OPCUA_PYTHON }}
           FC01_NODE: ${{ vars.FC01_NODE }}
           FC01_NODE_MODULES: ${{ vars.FC01_NODE_MODULES }}
           FC01_PDFTOPPM: ${{ vars.FC01_PDFTOPPM }}
+          FC01_FREECADCMD: ${{ vars.FC01_FREECADCMD }}
         run: |
           $Clone = Join-Path $env:RUNNER_TEMP "fc01-$env:GITHUB_RUN_ID-$env:GITHUB_RUN_ATTEMPT"
           if (Test-Path -LiteralPath $Clone) { throw "Fresh-clone target already exists: $Clone" }

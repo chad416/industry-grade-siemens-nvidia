@@ -12,7 +12,7 @@ from pathlib import Path
 
 from git_release_source import ROOT, assert_index_inputs_staged, untracked_paths
 
-TEXT_SUFFIXES = {".md", ".csv", ".json", ".scl", ".txt", ".mmd", ".py", ".ps1", ".mjs", ".yml", ".yaml"}
+TEXT_SUFFIXES = {".md", ".csv", ".json", ".scl", ".txt", ".mmd", ".py", ".ps1", ".mjs", ".yml", ".yaml", ".service", ".example", ".log"}
 EXCLUDE_PARTS = {".git", "__pycache__", "node_modules", ".cache", ".pytest_cache", ".determinism"}
 EXCLUDE_FILES = {"manifest.json", "manifest.csv", "determinism_report.md"}
 ARGS = argparse.ArgumentParser()
@@ -63,7 +63,7 @@ def run_clean(destination: Path) -> dict[str, str]:
 if untracked_paths():
     raise SystemExit(f"Unexpected files prevent deterministic release build: {untracked_paths()}")
 
-with tempfile.TemporaryDirectory(prefix="fc01-rev-d1-determinism-") as temporary:
+with tempfile.TemporaryDirectory(prefix="fc01-rev-e-determinism-") as temporary:
     base = Path(temporary)
     first = run_clean(base / "run_a")
     second = run_clean(base / "run_b")
@@ -73,7 +73,7 @@ extra = sorted(set(second) - set(first))
 mismatched = sorted(path for path in set(first) & set(second) if first[path] != second[path])
 passed = not (missing or extra or mismatched)
 report = [
-    "# Determinism report - Revision D.1",
+    "# Determinism report - Revision E",
     "",
     "Result: **PASS**" if passed else "Result: **FAIL**",
     "",

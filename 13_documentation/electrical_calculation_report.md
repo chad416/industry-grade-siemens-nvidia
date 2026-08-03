@@ -1,22 +1,19 @@
-# Electrical calculation report
+# Electrical calculation report - Revision E
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-## Status
+No construction calculation is released. Site voltage/frequency, earthing arrangement, prospective fault current, motor/pump nameplates and duty, cable lengths/routes/installation method, ambient/altitude, enclosure/environment and final device/protection data are absent.
 
-No construction calculation is released because supply system, fault current, motor data, cable lengths, ambient, IP rating and regulatory basis are missing. The controlled load schedule is a design estimate only.
+| Calculation | Controlled basis | Current disposition |
+|---|---|---|
+| 24 VDC supply | Current schedule totals 299 W demand; 25% design-margin current is 15.573 A before inrush/derating | Provisional 20 A concept; verify load/inrush/ambient |
+| Branch protection | Load current, conductor ampacity, device withstand and coordination | Blocked pending selected devices and field data |
+| Voltage drop | Two-way route length, current, conductor resistance and minimum device voltage | Blocked pending routes/cables/loads |
+| Fault current / SCCR | Site source impedance plus every component interrupt/withstand rating | Blocked; no assembly rating claimed |
+| Thermal | Verified device losses, enclosure, ambient, altitude and solar/process exposure | Blocked; CAD space does not prove thermal compliance |
+| Duct fill / bend | Actual conductor OD, bundle/grouping and manufacturer rules | Blocked; routing envelopes only |
+| PE/bonding/EMC | Earthing system, fault current, conductor route and approved shield policy | Blocked; conceptual topology only |
 
-## Required calculations
-
-| Calculation | Method/input | Acceptance | Status |
-|---|---|---|---|
-| 24 VDC PSU | Sum steady loads + inrush + derating + 25% design margin | Worst-case voltage remains within every device range | Preliminary 20 A concept; open |
-| Branch protection | Load current, conductor ampacity, device withstand | Coordinated protection and documented interrupt rating | Open |
-| Voltage drop | 2 x length x current x conductor resistance | Within device/valve minimum voltage | Open |
-| Fault/SCCR | Site available current and component ratings | Assembly rating approved for site | Blocked |
-| Thermal | Device losses, enclosure, ambient and altitude | Internal temperature below derated limits | Blocked |
-| Duct fill | Actual conductor OD/area and bend requirements | Supplier fill and bend limits met | Open |
-
-False precision is prohibited; values remain open until approved inputs and manufacturer data are attached.
+False precision is prohibited. Native CAD and source-consistent schedules do not close these site-dependent calculations.

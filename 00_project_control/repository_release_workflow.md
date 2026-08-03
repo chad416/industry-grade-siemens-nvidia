@@ -1,4 +1,4 @@
-# Repository and release-byte workflow - Revision D.1
+# Repository and release-byte workflow - Revision E
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
@@ -25,3 +25,7 @@ Revision D's OneDrive checkout resurrected ten obsolete Revision-C render PNGs a
 ## Recovery
 
 Never repair a release by editing manifest hashes. Reproduce the mismatch against Git blobs, establish the intended source bytes, change the bytes or policy under an ECR, rebuild from staged index bytes, and repeat clean-clone verification.
+
+## Revision-E native-application discipline
+
+Author native files only in a disposable non-synchronized engineering clone. Disable native backup/autosave output inside controlled directories and reject `FCBak`, lock, cache, temporary or recovery artifacts. Native-source/exchange binaries are exact-byte Git objects; generators may rebuild only explicitly deterministic source/report artifacts. Stage the frozen engineering content before manifest generation, verify index bytes, commit, then verify HEAD bytes from a clean clone outside OneDrive. If OneDrive resurrects superseded paths, abandon that checkout for release work rather than hiding or manifesting them.

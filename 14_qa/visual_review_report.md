@@ -1,21 +1,19 @@
-# Visual artifact review report - Revision D.1
+# Visual artifact review report - Revision E
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-Review date: 2026-08-03. Renderers: bundled `@oai/artifact-tool` for XLSX and Poppler for PDF rasterization.
+A software-agent visual review inspected the complete rendered sets. This is not qualified-human electrical, panel, safety or construction approval.
 
-## Engineering workbook
+| Artifact | Rendered/inspected | Result |
+|---|---:|---|
+| Engineering workbook | 21/21 sheets | PASS: consistent navy/blue tabular style, frozen/table structure, readable wrapping, no visible clipping; summary shows 4 PASS / 5 PARTIAL / 12 BLOCKED / 1 OPEN and exact pre-publication release boundary |
+| Release-evidence PDF | 5/5 pages | PASS: titles, tables, margins, footer/page numbers and boundary wording readable |
+| Revision-E CAD general arrangement | 4/4 pages | PASS: front, isometric/depth, door and segregation/clearance views readable; provisional assumptions visible |
+| Revision-E mounting-plate PDF | 2/2 pages | PASS: dimensioned layout and 30-hole coordinate register readable; construction boundary visible |
+| Native CAD PNG views | 4/4 views | PASS: front, isometric, segregation and door images open without corruption; provenance is bounded in native evidence |
+| Historical QET baseline PDF | 24/24 pages | PASS for retained historical legibility only; it remains Revision A and is not the current schematic package |
+| Corrected Revision-E QET | 0/26 final-hash folios | BLOCKED: no corrected-hash native reopen/PDF export, so no all-page visual pass is claimed |
 
-`10_schedules/FC01_engineering_schedules.xlsx` contains 20 rendered sheets: Siemens Hardware, PLC I-O, Drive PZD, HMI Tags, Alarms, VFD Parameters, NVIDIA Interface, Network Nodes, Terminal Plan, Point-to-Point, Cable Schedule, Wire List, BOM, Load Budget, Panel Placement, Requirements Trace, Test Coverage, Input Requests, Acceptance Gates and Release Summary.
-
-Every sheet was rendered to PNG and reviewed via five contact sheets; high-information schedules and the Release Summary were inspected at original render scale. Headers, banding, wrapped evidence, formulas, numeric values and open-gate notices are legible without clipped evidence or overlaps. The formula-error scan matched zero cells. The 400-row component/channel/tag/signal rationale remains separately controlled in `10_schedules/component_rationale.csv` and `00_project_control/component_rationale_register.md`; it is intentionally not duplicated as a workbook sheet.
-
-## Release evidence PDF
-
-`release/FC01_release_evidence.pdf` is a five-page A4-landscape Revision-D.1 evidence index. All pages were rasterized at 140 dpi and reviewed. Title/footer, safety disclaimers, controlled architecture, current test counts and blocked native gates are visible and consistent; no overlap, cutoff, missing glyph or misleading completion statement was observed.
-
-## Inherited native baselines
-
-`03_electrical/native_baseline/filling_cell_schematics.pdf` remains a 24-page QElectroTech-generated Revision-A baseline, and the inherited FCStd/exchange set remains Revision-A evidence. Historical renders are legible but do not contain the selected Revision-D.1 Siemens/NVIDIA design. They are quarantined baselines only, not accepted Revision-D.1 electrical or panel-CAD deliverables.
+The release PDF and workbook were rebuilt twice with identical controlled hashes. Contact sheets are controlled for audit navigation; detailed source files remain authoritative.

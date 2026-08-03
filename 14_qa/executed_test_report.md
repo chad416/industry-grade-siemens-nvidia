@@ -1,19 +1,22 @@
-# Executed non-native test report - Revision D.1
+# Executed test report - Revision E
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-Execution date: 2026-08-03. Runtime: bundled Python 3.12. These are deterministic source/design/interface tests, not TIA Portal compile, PLCSIM, FAT, SAT or physical commissioning evidence.
+Execution date: 2026-08-03. Source/design tests use the controlled Python 3.12.13 toolchain; encrypted OPC UA tests use the separately locked Python 3.12.13 / asyncua 2.0.1 environment. Native CAD evidence uses FreeCADCmd 1.1.3. These results are not TIA compile, PLCSIM, FAT, SAT, safety validation, electrical construction test or model-performance evidence.
 
-## Process and interface models
+| Workstream | Exact result | Evidence boundary |
+|---|---:|---|
+| Simulator/source/native contracts | 88/88 PASS | Includes inherited 58, nine poll-safe Siemens contracts, six QET contracts and 15 CAD contracts |
+| NVIDIA edge service | 59/59 PASS | 47 protocol/service, two observability, eight encrypted asyncua server/client and two operational-documentation tests |
+| PLC-AI interface harness | 15/15 PASS | Deterministic composed interface model |
+| Timed scenarios | 32/32 generated with zero invariant violations | Exactly one normal release; no automatic restart |
+| Engineering validator | 551/551 PASS | Static/data/source/native-evidence contracts; no Siemens-native claim |
+| QET verifier | 24/24 PASS; dedicated tests 6/6 | Corrected source only; exact-hash native reopen/export remains BLOCKED |
+| FreeCAD native verifier | 80/80 PASS | 165 objects, 148 valid controlled solids, exact GUI-tool provenance, STEP solids, IGES bounded faces, DXF and 30 holes |
+| FreeCAD verifier repeatability | 3/3 generated evidence files byte-identical across two runs | Native geometry/evidence determinism; FCStd/IGES byte identity is not claimed |
+| Workbook | 21 sheets; zero formula-error matches | Two normalized builds SHA-256 `C6899C10D680F030901E966FAD00694D6F22C77CD9B7C6BF8F0E33B39145E855` |
+| Release PDF | 5 pages | Two builds SHA-256 `76D12BAEB56E60E5025D2995546EF08B5085462C8DD6F3C8A2AA3CAC77906D03` |
 
-`python -m unittest discover -s 11_simulation/tests -v` passed 58 tests: the 48 process simulator/property/protocol/interface tests plus ten Revision-D.1 Siemens restart, capper, HMI-ledger, first-out, decommand and disposition source contracts. `python 11_simulation/run_scenarios.py` regenerated all 32 timed scenarios and their per-scenario traces; exactly one normal scenario releases, invariant violations are zero and reset/power restoration never causes automatic restart.
-
-## PLC-NVIDIA edge contract
-
-`python -m unittest discover -s 07_nvidia_vision/edge_service/tests -v` passed 42 edge-service tests. `python -m unittest -v test_plc_interface_harness.py` passed 15 interface-harness tests. Coverage includes disabled restart synchronization and PLC counter seeding, immutable publication through same-session faults until exact acknowledgement, coherent reset snapshots, serially advanced session invalidation, malformed ACK and model-identity ingress/rearm transitions, canonical model IDs, monotonic nonzero IDs, stale/future/duplicate IDs, delayed-result cleanup, heartbeat timeout/regression/rollover, PLC model identity, per-channel semantic contradictions, warning-bearing pass rejection and fail-closed behavior without a trained model claim.
-
-## Automated project validation
-
-`python scripts/validate_project.py` passes the current static/data/source check set with zero failures. `scripts/check_determinism.py` independently rebuilds the controlled source/report set twice with zero missing, extra or mismatched files; the release entry point additionally compares two normalized workbook builds and two PDF builds by SHA-256. The workbook renders 20 sheets with zero formula-error matches; the PDF renders five pages. Final manifest verification must report equal listed/actual controlled-file counts and zero missing, unlisted, classification or hash mismatches. Native/tool-dependent blockers remain open regardless of these passes.
+Final manifest/release-integrity counts and the pushed-commit clean-clone result are frozen only after all controlled content and review records are complete.

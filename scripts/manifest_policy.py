@@ -1,4 +1,4 @@
-"""Single Revision-D.1 controlled-file inclusion and classification policy."""
+"""Single Revision-E controlled-file inclusion and classification policy."""
 from __future__ import annotations
 
 import os
@@ -8,7 +8,7 @@ EXCLUDED_NAMES = {"manifest.json", "manifest.csv", ".DS_Store"}
 EXCLUDED_DIRS = {".git", "__pycache__", "node_modules", ".cache", ".pytest_cache", ".determinism", "tmp"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".tmp"}
 FIELDS = ["path","bytes","sha256","category","role","revision","gate_status","blocker"]
-REVISION = "D.1"
+REVISION = "E"
 FORBIDDEN_PATHS = {
     "scripts/revision_c_generator.py",
     "scripts/revision_c_scl.py",
@@ -55,16 +55,20 @@ def classify(rel: str) -> tuple[str, str, str, str]:
     top = rel.split("/", 1)[0]
     category = {
         "00_project_control":"Project control","01_requirements":"Requirements","02_system_architecture":"Architecture",
-        "03_electrical":"Electrical baseline","04_controls_siemens":"Siemens sources","05_hmi":"HMI","06_drives":"Drives",
-        "07_nvidia_vision":"Vision","08_digital_twin":"Digital twin","09_panel_cad":"Panel baseline","10_schedules":"Schedules",
+        "03_electrical":"Electrical design","04_controls_siemens":"Siemens sources","05_hmi":"HMI","06_drives":"Drives",
+        "07_nvidia_vision":"Vision","08_digital_twin":"Digital twin","09_panel_cad":"Panel CAD","10_schedules":"Schedules",
         "11_simulation":"Simulation","12_testing":"Testing","13_documentation":"Documentation","14_qa":"QA","release":"Release","scripts":"Reproduction"
     }.get(top, "Repository control")
-    if top in {"03_electrical","09_panel_cad"}:
-        return category,"Historical/native-boundary and controlled design data","OPEN","Revision-D.1 native replacement/reopen blocked"
+    if rel.startswith("03_electrical/native_baseline/") or rel.startswith("09_panel_cad/native_baseline/"):
+        return category,"Quarantined historical native baseline","OPEN","Historical Revision-A evidence only; never current design authority"
+    if rel.startswith("03_electrical/revision_e/"):
+        return category,"Revision-E native electrical source/export/evidence","PARTIAL","Native QET gate status is controlled by the acceptance record; site electrical and qualified review remain open"
+    if rel.startswith("09_panel_cad/revision_e/"):
+        return category,"Revision-E native panel source/export/evidence","PASS","FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     if top in {"04_controls_siemens","05_hmi","06_drives"}:
-        return category,"Design source/specification","OPEN","Native compile/configuration not executed"
+        return category,"Revision-E import-ready design source/specification","OPEN","Native compile/configuration not executed"
     if top == "07_nvidia_vision":
-        return category,"Locally tested source plus deployment specification","PARTIAL","Python tests pass; real dataset/OPC UA/target runtime unavailable"
+        return category,"Locally tested source, secure OPC UA adapter and deployment specification","PARTIAL","Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     if top == "08_digital_twin":
         return category,"Architecture/source","OPEN","Real dataset/target runtime unavailable"
     if top == "11_simulation":

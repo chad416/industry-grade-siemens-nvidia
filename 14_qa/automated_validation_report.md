@@ -1,8 +1,8 @@
-# Automated validation report — Revision D.1
+# Automated validation report — Revision E
 
 Result: **PASS**
 
-This is deterministic static/data/independent-model validation. It is not TIA, WinCC, Startdrive, PLCSIM, QET or FreeCAD native proof.
+This is deterministic static/data/independent-model validation. Native QET/FreeCAD results are accepted only through separate controlled reopen/reimport evidence; this report is not TIA, WinCC, Startdrive, PLCSIM or physical proof.
 
 ## Passed checks
 
@@ -27,13 +27,15 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - Poppler renderer version is locked
 - QET historical baseline is well-formed XML
 - RecipeManager owns atomic apply acceptance/rejection
-- Revision-D.1 edge regression test present: test_advanced_disabled_session_invalidates_prior_publication
-- Revision-D.1 edge regression test present: test_initial_zero_ack_poll_is_idempotent
-- Revision-D.1 edge regression test present: test_model_identity_rejects_whitespace_control_and_path_characters
-- Revision-D.1 edge regression test present: test_publication_survives_transport_fault_reset_and_wrong_ack
-- Revision-D.1 edge regression test present: test_same_session_reset_rejects_regressed_plc_snapshot
-- Revision-D.1 edge regression test present: test_same_session_reset_snapshot_can_carry_exact_ack
-- Revision-D.1 edge regression test present: test_tick_contains_session_change_for_polling_adapter
+- Revision-E QET contains at least 24 controlled folios
+- Revision-E QET static verifier records exactly 24/24 passing checks
+- Revision-E QET verification hash matches the controlled corrected source
+- Revision-E QElectroTech native source is controlled
+- Revision-E STEP/IGES/DXF exchange set is controlled
+- Revision-E native FCStd source is controlled
+- Revision-E real OPC UA integration contract present: test_missed_one_scan_request_level_fails_closed
+- Revision-E real OPC UA integration contract present: test_secure_named_client_endpoint_and_atomic_acknowledged_result
+- Revision-E real OPC UA integration contract present: test_unsolicited_server_side_publication_fails_closed
 - S102 guard monitor has explicit dry-contact supply and signal conductors
 - acceptance_gates.csv exactly derives from canonical model
 - alarms.csv exactly derives from canonical model
@@ -44,7 +46,7 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - all writable HMI tags use DB_HMI command requests
 - analog/HSC shields scheduled
 - artifact-reproduction Python version is locked
-- artifact-reproduction toolchain lock is Revision D.1
+- artifact-reproduction toolchain lock is Revision E
 - artifact-tool version is locked
 - balanced DATA_BLOCK endings: DB_CellMain.scl
 - balanced DATA_BLOCK endings: DB_Global.scl
@@ -73,15 +75,20 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - body and scheduled clearances remain inside 800 x 800 panel boundary: -A102
 - body and scheduled clearances remain inside 800 x 800 panel boundary: -A103
 - body and scheduled clearances remain inside 800 x 800 panel boundary: -A104
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -FW100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -PC200
 - body and scheduled clearances remain inside 800 x 800 panel boundary: -PE100
 - body and scheduled clearances remain inside 800 x 800 panel boundary: -SW100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -U100
+- body and scheduled clearances remain inside 800 x 800 panel boundary: -U101
 - body and scheduled clearances remain inside 800 x 800 panel boundary: -WD100
 - body and scheduled clearances remain inside 800 x 800 panel boundary: -X100..-X199
 - bom.csv exactly derives from canonical model
 - cable/core allocations unique
 - cable_schedule.csv exactly derives from canonical model
 - canonical cell inputs are normalized and consumed: []
-- canonical revision D.1
+- canonical major-device coordinates, envelopes and clearances match the native Revision-E placement schedule
+- canonical revision E
 - capper external/handshake faults map to alarm 1402
 - capper reset requires all diagnosed causes cleared
 - command arbitration separated from output mapper
@@ -104,6 +111,7 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - connection mandatory fields populated
 - contradictory hardwired drive run/status I/O removed
 - controlled determinism report uses source-neutral authoritative-snapshot wording
+- controlled hardware schedule and native CAD agree on drive, firewall and edge-compute envelopes
 - current equipment faults arbitrate and permissives recompute before one-shot power-recovery reset reaches coordinator
 - determinism exports authoritative index or HEAD snapshots
 - determinism report is byte-identical for index and HEAD sources
@@ -122,6 +130,7 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - direct Revision-D interface test present: test_timer_boundary
 - drive PZD process-image mapping present
 - drive_interfaces.csv exactly derives from canonical model
+- duplicate vision request cannot advance the active inspection ID
 - edge config node IDs exactly match generated node map
 - edge config records disabled four-counter anti-replay synchronization
 - edge node map/config exactly track canonical vision signals
@@ -146,10 +155,13 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - explicit Git byte policy includes * text=auto eol=lf
 - explicit Git byte policy includes *.FCStd    -text
 - explicit Git byte policy includes *.dxf      -text
+- explicit Git byte policy includes *.example  text eol=lf
 - explicit Git byte policy includes *.iges     -text
+- explicit Git byte policy includes *.log      text eol=lf
 - explicit Git byte policy includes *.pdf      -text
 - explicit Git byte policy includes *.png      -text
 - explicit Git byte policy includes *.qet      -text
+- explicit Git byte policy includes *.service  text eol=lf
 - explicit Git byte policy includes *.step     -text
 - explicit Git byte policy includes *.xlsx     -text
 - explicit TM Count M/reference conductor: FLOW_1_PULSE
@@ -175,7 +187,7 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - fill-channel implements tAnalogNoFlow
 - fill-channel implements tPulseMissing
 - fill-channel implements tValveClose
-- fresh-clone Revision-D.1 CI workflow is controlled
+- fresh-clone Revision-E CI workflow is controlled
 - generated Siemens source parity: 00_types.scl
 - generated Siemens source parity: DB_CellMain.scl
 - generated Siemens source parity: DB_Global.scl
@@ -197,6 +209,13 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - historical native baseline retained: 09_panel_cad/native_baseline/filling_cell_panel.FCStd
 - historical native baseline retained: 09_panel_cad/native_baseline/mounting_plate.dxf
 - hmi_tags.csv exactly derives from canonical model
+- inherited Revision-D.1 edge regression test present: test_advanced_disabled_session_invalidates_prior_publication
+- inherited Revision-D.1 edge regression test present: test_initial_zero_ack_poll_is_idempotent
+- inherited Revision-D.1 edge regression test present: test_model_identity_rejects_whitespace_control_and_path_characters
+- inherited Revision-D.1 edge regression test present: test_publication_survives_transport_fault_reset_and_wrong_ack
+- inherited Revision-D.1 edge regression test present: test_same_session_reset_rejects_regressed_plc_snapshot
+- inherited Revision-D.1 edge regression test present: test_same_session_reset_snapshot_can_carry_exact_ack
+- inherited Revision-D.1 edge regression test present: test_tick_contains_session_change_for_polling_adapter
 - input_request_register.csv exactly derives from canonical model
 - insulated-core allocation/spares reconcile: C001
 - insulated-core allocation/spares reconcile: C002
@@ -224,37 +243,79 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - known panel bodies do not overlap: -A100 / -A102
 - known panel bodies do not overlap: -A100 / -A103
 - known panel bodies do not overlap: -A100 / -A104
+- known panel bodies do not overlap: -A100 / -FW100
+- known panel bodies do not overlap: -A100 / -PC200
 - known panel bodies do not overlap: -A100 / -PE100
 - known panel bodies do not overlap: -A100 / -SW100
+- known panel bodies do not overlap: -A100 / -U100
+- known panel bodies do not overlap: -A100 / -U101
 - known panel bodies do not overlap: -A100 / -WD100
 - known panel bodies do not overlap: -A100 / -X100..-X199
 - known panel bodies do not overlap: -A101 / -A102
 - known panel bodies do not overlap: -A101 / -A103
 - known panel bodies do not overlap: -A101 / -A104
+- known panel bodies do not overlap: -A101 / -FW100
+- known panel bodies do not overlap: -A101 / -PC200
 - known panel bodies do not overlap: -A101 / -PE100
 - known panel bodies do not overlap: -A101 / -SW100
+- known panel bodies do not overlap: -A101 / -U100
+- known panel bodies do not overlap: -A101 / -U101
 - known panel bodies do not overlap: -A101 / -WD100
 - known panel bodies do not overlap: -A101 / -X100..-X199
 - known panel bodies do not overlap: -A102 / -A103
 - known panel bodies do not overlap: -A102 / -A104
+- known panel bodies do not overlap: -A102 / -FW100
+- known panel bodies do not overlap: -A102 / -PC200
 - known panel bodies do not overlap: -A102 / -PE100
 - known panel bodies do not overlap: -A102 / -SW100
+- known panel bodies do not overlap: -A102 / -U100
+- known panel bodies do not overlap: -A102 / -U101
 - known panel bodies do not overlap: -A102 / -WD100
 - known panel bodies do not overlap: -A102 / -X100..-X199
 - known panel bodies do not overlap: -A103 / -A104
+- known panel bodies do not overlap: -A103 / -FW100
+- known panel bodies do not overlap: -A103 / -PC200
 - known panel bodies do not overlap: -A103 / -PE100
 - known panel bodies do not overlap: -A103 / -SW100
+- known panel bodies do not overlap: -A103 / -U100
+- known panel bodies do not overlap: -A103 / -U101
 - known panel bodies do not overlap: -A103 / -WD100
 - known panel bodies do not overlap: -A103 / -X100..-X199
+- known panel bodies do not overlap: -A104 / -FW100
+- known panel bodies do not overlap: -A104 / -PC200
 - known panel bodies do not overlap: -A104 / -PE100
 - known panel bodies do not overlap: -A104 / -SW100
+- known panel bodies do not overlap: -A104 / -U100
+- known panel bodies do not overlap: -A104 / -U101
 - known panel bodies do not overlap: -A104 / -WD100
 - known panel bodies do not overlap: -A104 / -X100..-X199
+- known panel bodies do not overlap: -FW100 / -PC200
+- known panel bodies do not overlap: -FW100 / -PE100
+- known panel bodies do not overlap: -FW100 / -WD100
+- known panel bodies do not overlap: -FW100 / -X100..-X199
+- known panel bodies do not overlap: -PC200 / -PE100
+- known panel bodies do not overlap: -PC200 / -WD100
+- known panel bodies do not overlap: -PC200 / -X100..-X199
 - known panel bodies do not overlap: -PE100 / -WD100
 - known panel bodies do not overlap: -PE100 / -X100..-X199
+- known panel bodies do not overlap: -SW100 / -FW100
+- known panel bodies do not overlap: -SW100 / -PC200
 - known panel bodies do not overlap: -SW100 / -PE100
 - known panel bodies do not overlap: -SW100 / -WD100
 - known panel bodies do not overlap: -SW100 / -X100..-X199
+- known panel bodies do not overlap: -U100 / -FW100
+- known panel bodies do not overlap: -U100 / -PC200
+- known panel bodies do not overlap: -U100 / -PE100
+- known panel bodies do not overlap: -U100 / -SW100
+- known panel bodies do not overlap: -U100 / -U101
+- known panel bodies do not overlap: -U100 / -WD100
+- known panel bodies do not overlap: -U100 / -X100..-X199
+- known panel bodies do not overlap: -U101 / -FW100
+- known panel bodies do not overlap: -U101 / -PC200
+- known panel bodies do not overlap: -U101 / -PE100
+- known panel bodies do not overlap: -U101 / -SW100
+- known panel bodies do not overlap: -U101 / -WD100
+- known panel bodies do not overlap: -U101 / -X100..-X199
 - known panel bodies do not overlap: -X100..-X199 / -WD100
 - load_budget.csv exactly derives from canonical model
 - malformed acknowledgement faults without clearing the current publication
@@ -278,6 +339,10 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - native PN/TM Count adapter consumed: Flow2ChannelFault
 - native PN/TM Count adapter consumed: Flow2PulseTotal
 - native PN/TM Count adapter consumed: PumpPnIoValid
+- native verification record has truthful status: 03_electrical/revision_e/native_verification.json
+- native verification record has truthful status: 09_panel_cad/revision_e/native_verification.json
+- native verification record is controlled: 03_electrical/revision_e/native_verification.json
+- native verification record is controlled: 09_panel_cad/revision_e/native_verification.json
 - network_nodes.csv exactly derives from canonical model
 - no fabricated native/model artifacts: []
 - no forbidden source placeholder: 00_types.scl
@@ -310,6 +375,7 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - no leading patch artifact: FB_VisionInterface.scl
 - no leading patch artifact: OB100_Startup.scl
 - no leading patch artifact: OB1_Call_Structure.scl
+- no uncontrolled FreeCAD backup remains in the release tree
 - nvidia_interface_tags.csv exactly derives from canonical model
 - only normal scenario releases product
 - overall cable shields are separate from insulated cores and carry no invented size/color
@@ -319,6 +385,15 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - plc_io.csv exactly derives from canonical model
 - point_to_point_connections.csv exactly derives from canonical model
 - power, analog-reference and shield reference terminals are scheduled
+- production-shaped OPC UA adapter/test evidence includes INSPECTION_ID
+- production-shaped OPC UA adapter/test evidence includes RESULT_ACK_ID
+- production-shaped OPC UA adapter/test evidence includes SESSION_EPOCH
+- production-shaped OPC UA adapter/test evidence includes SecurityPolicyBasic256Sha256
+- production-shaped OPC UA adapter/test evidence includes certificate
+- production-shaped OPC UA adapter/test evidence includes health
+- production-shaped OPC UA adapter/test evidence includes metrics
+- production-shaped OPC UA adapter/test evidence includes namespace
+- production-shaped OPC UA adapter/test evidence includes trust
 - rationale covers every HMI tag
 - rationale covers every NVIDIA interface signal
 - rationale covers every PLC channel
@@ -348,6 +423,7 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - required directory 14_qa
 - required directory release
 - requirements_traceability.csv exactly derives from canonical model
+- retained FreeCAD GUI views have exact executable/version/hash provenance and a limited final-model claim
 - revision-D generator owns every authoritative Siemens source
 - root calls Alarm exactly once
 - root calls Capper exactly once
@@ -366,37 +442,79 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - scheduled clearance envelopes do not overlap: -A100 / -A102
 - scheduled clearance envelopes do not overlap: -A100 / -A103
 - scheduled clearance envelopes do not overlap: -A100 / -A104
+- scheduled clearance envelopes do not overlap: -A100 / -FW100
+- scheduled clearance envelopes do not overlap: -A100 / -PC200
 - scheduled clearance envelopes do not overlap: -A100 / -PE100
 - scheduled clearance envelopes do not overlap: -A100 / -SW100
+- scheduled clearance envelopes do not overlap: -A100 / -U100
+- scheduled clearance envelopes do not overlap: -A100 / -U101
 - scheduled clearance envelopes do not overlap: -A100 / -WD100
 - scheduled clearance envelopes do not overlap: -A100 / -X100..-X199
 - scheduled clearance envelopes do not overlap: -A101 / -A102
 - scheduled clearance envelopes do not overlap: -A101 / -A103
 - scheduled clearance envelopes do not overlap: -A101 / -A104
+- scheduled clearance envelopes do not overlap: -A101 / -FW100
+- scheduled clearance envelopes do not overlap: -A101 / -PC200
 - scheduled clearance envelopes do not overlap: -A101 / -PE100
 - scheduled clearance envelopes do not overlap: -A101 / -SW100
+- scheduled clearance envelopes do not overlap: -A101 / -U100
+- scheduled clearance envelopes do not overlap: -A101 / -U101
 - scheduled clearance envelopes do not overlap: -A101 / -WD100
 - scheduled clearance envelopes do not overlap: -A101 / -X100..-X199
 - scheduled clearance envelopes do not overlap: -A102 / -A103
 - scheduled clearance envelopes do not overlap: -A102 / -A104
+- scheduled clearance envelopes do not overlap: -A102 / -FW100
+- scheduled clearance envelopes do not overlap: -A102 / -PC200
 - scheduled clearance envelopes do not overlap: -A102 / -PE100
 - scheduled clearance envelopes do not overlap: -A102 / -SW100
+- scheduled clearance envelopes do not overlap: -A102 / -U100
+- scheduled clearance envelopes do not overlap: -A102 / -U101
 - scheduled clearance envelopes do not overlap: -A102 / -WD100
 - scheduled clearance envelopes do not overlap: -A102 / -X100..-X199
 - scheduled clearance envelopes do not overlap: -A103 / -A104
+- scheduled clearance envelopes do not overlap: -A103 / -FW100
+- scheduled clearance envelopes do not overlap: -A103 / -PC200
 - scheduled clearance envelopes do not overlap: -A103 / -PE100
 - scheduled clearance envelopes do not overlap: -A103 / -SW100
+- scheduled clearance envelopes do not overlap: -A103 / -U100
+- scheduled clearance envelopes do not overlap: -A103 / -U101
 - scheduled clearance envelopes do not overlap: -A103 / -WD100
 - scheduled clearance envelopes do not overlap: -A103 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -A104 / -FW100
+- scheduled clearance envelopes do not overlap: -A104 / -PC200
 - scheduled clearance envelopes do not overlap: -A104 / -PE100
 - scheduled clearance envelopes do not overlap: -A104 / -SW100
+- scheduled clearance envelopes do not overlap: -A104 / -U100
+- scheduled clearance envelopes do not overlap: -A104 / -U101
 - scheduled clearance envelopes do not overlap: -A104 / -WD100
 - scheduled clearance envelopes do not overlap: -A104 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -FW100 / -PC200
+- scheduled clearance envelopes do not overlap: -FW100 / -PE100
+- scheduled clearance envelopes do not overlap: -FW100 / -WD100
+- scheduled clearance envelopes do not overlap: -FW100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -PC200 / -PE100
+- scheduled clearance envelopes do not overlap: -PC200 / -WD100
+- scheduled clearance envelopes do not overlap: -PC200 / -X100..-X199
 - scheduled clearance envelopes do not overlap: -PE100 / -WD100
 - scheduled clearance envelopes do not overlap: -PE100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -SW100 / -FW100
+- scheduled clearance envelopes do not overlap: -SW100 / -PC200
 - scheduled clearance envelopes do not overlap: -SW100 / -PE100
 - scheduled clearance envelopes do not overlap: -SW100 / -WD100
 - scheduled clearance envelopes do not overlap: -SW100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -U100 / -FW100
+- scheduled clearance envelopes do not overlap: -U100 / -PC200
+- scheduled clearance envelopes do not overlap: -U100 / -PE100
+- scheduled clearance envelopes do not overlap: -U100 / -SW100
+- scheduled clearance envelopes do not overlap: -U100 / -U101
+- scheduled clearance envelopes do not overlap: -U100 / -WD100
+- scheduled clearance envelopes do not overlap: -U100 / -X100..-X199
+- scheduled clearance envelopes do not overlap: -U101 / -FW100
+- scheduled clearance envelopes do not overlap: -U101 / -PC200
+- scheduled clearance envelopes do not overlap: -U101 / -PE100
+- scheduled clearance envelopes do not overlap: -U101 / -SW100
+- scheduled clearance envelopes do not overlap: -U101 / -WD100
+- scheduled clearance envelopes do not overlap: -U101 / -X100..-X199
 - scheduled clearance envelopes do not overlap: -X100..-X199 / -WD100
 - semantic requirement/test trace: SYS-005
 - semantic requirement/test trace: SYS-015
@@ -415,9 +533,11 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - switch misidentification corrected with managed/firewall design
 - terminal_plan.csv exactly derives from canonical model
 - test_coverage.csv exactly derives from canonical model
-- truthful controlled-development release-candidate status
+- truthful controlled native-engineering release-candidate status
 - two Standard Telegram 1 PZD mappings controlled
 - vfd_parameters.csv exactly derives from canonical model
+- vision request identity is immutable while pending
+- vision request is held across OPC UA polling until coherent observation/result
 - vision-interface recovery contract includes #pending := FALSE; #triggered := FALSE
 - vision-interface recovery contract includes ExpectedModelHash
 - vision-interface recovery contract includes ExpectedModelId
@@ -428,9 +548,12 @@ This is deterministic static/data/independent-model validation. It is not TIA, W
 - vision-interface recovery contract includes NOT #TriggerEdge
 - vision-interface recovery contract includes PublicationAck
 - vision-interface recovery contract includes RESULT_STUCK_VALID
+- vision-interface recovery contract includes RequestInProgress
 - vision-interface recovery contract includes SessionEpoch
 - vision-interface recovery contract includes Warning
 - vision-interface recovery contract includes lastIssuedId
+- vision-interface recovery contract includes level-held OPC UA request
+- vision-interface recovery contract includes requestObserved
 - vision-interface recovery contract includes resultMustClear
 - wire numbers unique
 - wire_list.csv exactly derives from canonical model

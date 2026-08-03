@@ -1,4 +1,4 @@
-# Component rationale register - Revision D.1
+# Component rationale register - Revision E
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
@@ -388,7 +388,7 @@ Generated from the controlled canonical model. Software-agent consistency review
 | NVIDIA interface | FILL_2_STATUS | 0 unknown, 1 under, 2 in-range, 3 over | Missing, stale or contradictory contract data prevents product release | Owner NVIDIA; USINT; OPC UA subscribed/published node | Native OPC UA namespace/certificate/reconnect test | Controls/vision owner |
 | NVIDIA interface | INFERENCE_TIME | Measured pipeline time in milliseconds | Missing, stale or contradictory contract data prevents product release | Owner NVIDIA; UDINT; OPC UA subscribed/published node | Native OPC UA namespace/certificate/reconnect test | Controls/vision owner |
 | NVIDIA interface | INSPECTION_ID | Monotonic correlation identifier | Missing, stale or contradictory contract data prevents product release | Owner PLC; UDINT; OPC UA subscribed/published node | Native OPC UA namespace/certificate/reconnect test | Controls/vision owner |
-| NVIDIA interface | INSPECTION_TRIGGER | One-shot request | Missing, stale or contradictory contract data prevents product release | Owner PLC; BOOL; OPC UA subscribed/published node | Native OPC UA namespace/certificate/reconnect test | Controls/vision owner |
+| NVIDIA interface | INSPECTION_TRIGGER | Level-held inspection request; remains true until coherent BUSY observation or terminal result for the immutable session/inspection ID | Missing, stale or contradictory contract data prevents product release | Owner PLC; BOOL; OPC UA subscribed request level; monotonic session/ID is authoritative | Native OPC UA namespace/certificate/reconnect test | Controls/vision owner |
 | NVIDIA interface | LEAK_OR_SPILL_DETECTED | Visible leak/spill indication | Missing, stale or contradictory contract data prevents product release | Owner NVIDIA; BOOL; OPC UA subscribed/published node | Native OPC UA namespace/certificate/reconnect test | Controls/vision owner |
 | NVIDIA interface | LOW_CONFIDENCE | Confidence below validated threshold | Missing, stale or contradictory contract data prevents product release | Owner NVIDIA; BOOL; OPC UA subscribed/published node | Native OPC UA namespace/certificate/reconnect test | Controls/vision owner |
 | NVIDIA interface | PLC_HEARTBEAT | Monotonic heartbeat counter | Missing, stale or contradictory contract data prevents product release | Owner PLC; UDINT; OPC UA subscribed/published node | Native OPC UA namespace/certificate/reconnect test | Controls/vision owner |

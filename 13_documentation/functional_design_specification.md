@@ -1,4 +1,4 @@
-# Functional design specification
+# Functional design specification - Revision E
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
@@ -23,3 +23,7 @@ The machine indexes exactly two bottles, proves conveyor stopped, closes the gat
 ## Recovery rules
 
 Reset clears eligible latches only. Power or communication recovery sets a recovery-required condition and returns to STOPPED; a new reset release and new Start edge are mandatory. Held product requires supervised physical removal and a disposition sequence. Reset cannot accept uncertain quality.
+
+## Revision-E PLC-edge request transport
+
+The Inspect step creates one immutable `(session epoch, inspection ID)` transaction and holds its request level until the edge is coherently BUSY or an exact terminal result is received. Polling, reconnect or a repeated coordinator request cannot allocate a second ID. Result acceptance remains a PLC decision; a quality reject enters controlled product disposition, while communications/identity/model/integrity faults decommand the process and prevent transfer. Recovery never restarts a cycle automatically.

@@ -1,6 +1,6 @@
 signal,data_type,owner,meaning,transport,timeout_ms
 VISION_ENABLE,BOOL,PLC,Enable inspection service,OPC UA subscribed/published node,0
-INSPECTION_TRIGGER,BOOL,PLC,One-shot request,OPC UA subscribed/published node,0
+INSPECTION_TRIGGER,BOOL,PLC,Level-held inspection request; remains true until coherent BUSY observation or terminal result for the immutable session/inspection ID,OPC UA subscribed request level; monotonic session/ID is authoritative,0
 INSPECTION_ID,UDINT,PLC,Monotonic correlation identifier,OPC UA subscribed/published node,0
 RECIPE_ID,UINT,PLC,Active recipe identifier,OPC UA subscribed/published node,0
 EXPECTED_BOTTLES,USINT,PLC,Expected count; fixed at 2 for production,OPC UA subscribed/published node,0
