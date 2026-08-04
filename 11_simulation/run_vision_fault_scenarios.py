@@ -14,7 +14,7 @@ results = run_all()
 rows = [result.as_row() for result in results]
 
 with (OUT / "vision_fault_results.csv").open("w", encoding="utf-8", newline="") as stream:
-    writer = csv.DictWriter(stream, fieldnames=list(rows[0]))
+    writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator="\n")
     writer.writeheader()
     writer.writerows(rows)
 

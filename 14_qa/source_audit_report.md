@@ -14,4 +14,6 @@ The first GitHub clean-clone reproduction of candidate a036620c5332997647625b510
 
 The next GitHub clean-clone reproduction of corrected candidate 9abc5d71024f42b07a680aac6b430e6945b4068a exposed a separate release-hygiene defect: FreeCAD's embedded Python cached the native verification script inside the controlled tree despite the parent bytecode environment setting. The reproduction workflow now executes a controlled copy from a unique system-temporary directory while binding the authoritative project root explicitly, then verifies and removes only that checked temporary directory. Native evidence still writes to the controlled paths and must remain byte-identical.
 
+The subsequent GitHub clean-clone reproduction of candidate 647e545b13ca9759563138fbc44857263950392b reached the final clean-state assertion and exposed a line-ending mismatch in the structured vision-fault CSV: Python's default CSV dialect emitted CRLF while the controlled Git policy requires LF. The generator now sets an explicit LF line terminator, aligning generated working bytes with the authoritative Git blob and preventing platform-default newline drift.
+
 THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL.
