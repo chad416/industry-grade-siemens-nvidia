@@ -10,5 +10,5 @@
 - [x] Revision-E FCStd/exchange native evidence remains controlled and unchanged.
 - [x] Exact-hash QET native reopen/export evidence is controlled; PARTIAL visual/xref status remains explicit.
 - [x] 26-sheet workbook and six-page PDF rebuild deterministically and have complete rendered review sets.
-- [ ] Final Revision-F manifest/commit/push/fresh-clone reproduction and upstream alignment are recorded.
+- [x] Candidate f6e9f3b1e928a2e04d21913caac2547469b0f647 was pushed and reproduced from a fresh GitHub clone with 425/425 manifest entries, zero discrepancies and a clean final worktree.
 - [ ] Native Siemens, real dataset/model/runtime, site electrical, physical and qualified-safety gates are closed externally.

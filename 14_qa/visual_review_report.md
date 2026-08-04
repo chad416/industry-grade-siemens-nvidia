@@ -8,7 +8,7 @@ A software-agent visual review inspected the complete rendered sets. This is not
 
 | Artifact | Rendered/inspected | Result |
 |---|---:|---|
-| Engineering workbook | 26/26 sheets | PASS: consistent navy/blue style, formula-error scan clean, readable wrapping and no visible clipping; summary shows 2 PASS / 8 PARTIAL / 11 BLOCKED / 1 OPEN |
+| Engineering workbook | 26/26 sheets | PASS: consistent navy/blue style, formula-error scan clean, readable wrapping and no visible clipping; summary shows 3 PASS / 7 PARTIAL / 11 BLOCKED / 1 OPEN |
 | Release-evidence PDF | 6/6 pages | PASS: titles, tables, margins, footer/page numbers, safety and NVIDIA non-safety wording are readable |
 | Revision-E CAD general arrangement | 4/4 pages | PASS for retained native evidence; provisional assumptions remain visible |
 | Revision-E mounting-plate PDF | 2/2 pages | PASS for retained native evidence; dimensioned layout and 30-hole register are readable |

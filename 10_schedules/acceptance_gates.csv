@@ -20,4 +20,4 @@ gate,acceptance_gate,status,evidence_or_blocker
 19,PLC-NVIDIA failure tests,PARTIAL,"Source, edge, durable-audit, encrypted OPC UA and interface tests pass locally; native SCL enum binding, production S7/Jetson endpoint and physical timing remain unverified"
 20,FAT/SAT/commissioning,OPEN,"Controlled procedures issued; no FAT, SAT or commissioning was executed"
 21,Qualified safety activities,BLOCKED,"Project-specific qualified machinery-safety engineering, verification and validation are external and not performed"
-22,Manifest independently verifies,PARTIAL,Manifest and clean-clone release-integrity gate closes only after the final Revision-F commit is pushed and reproduced
+22,Manifest independently verifies,PASS,"Published candidate f6e9f3b1e928a2e04d21913caac2547469b0f647 reproduced from GitHub with 425/425 manifest entries, zero discrepancies and final Git-clean assertion"

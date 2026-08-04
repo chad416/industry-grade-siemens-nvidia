@@ -127,7 +127,7 @@ def _gate_rows(model: dict, root: Path) -> list[dict]:
         "17": ("BLOCKED", "Training/evaluation tooling is ready; no approved dataset, training run, model or defensible production metrics exist"),
         "18": ("BLOCKED", "DeepStream 9.1/TAO 7.0.1 policy is documented; CUDA/TAO/TensorRT/DeepStream/Docker and target hardware are absent"),
         "19": ("PARTIAL", "Source, edge, durable-audit, encrypted OPC UA and interface tests pass locally; native SCL enum binding, production S7/Jetson endpoint and physical timing remain unverified"),
-        "22": ("PARTIAL", "Manifest and clean-clone release-integrity gate closes only after the final Revision-F commit is pushed and reproduced"),
+        "22": ("PASS", "Published candidate f6e9f3b1e928a2e04d21913caac2547469b0f647 reproduced from GitHub with 425/425 manifest entries, zero discrepancies and final Git-clean assertion"),
     }
     for row in rows:
         key = str(row["gate"])
@@ -339,7 +339,7 @@ No short-circuit rating, coordination, voltage-drop, thermal, cable-ampacity, SC
 
 | Artifact | Rendered/inspected | Result |
 |---|---:|---|
-| Engineering workbook | 26/26 sheets | PASS: consistent navy/blue style, formula-error scan clean, readable wrapping and no visible clipping; summary shows 2 PASS / 8 PARTIAL / 11 BLOCKED / 1 OPEN |
+| Engineering workbook | 26/26 sheets | PASS: consistent navy/blue style, formula-error scan clean, readable wrapping and no visible clipping; summary shows 3 PASS / 7 PARTIAL / 11 BLOCKED / 1 OPEN |
 | Release-evidence PDF | 6/6 pages | PASS: titles, tables, margins, footer/page numbers, safety and NVIDIA non-safety wording are readable |
 | Revision-E CAD general arrangement | 4/4 pages | PASS for retained native evidence; provisional assumptions remain visible |
 | Revision-E mounting-plate PDF | 2/2 pages | PASS for retained native evidence; dimensioned layout and 30-hole register are readable |
@@ -352,7 +352,7 @@ The workbook and release PDF were each rebuilt twice with identical normalized S
 
     _write(root, "14_qa/final_gate_review.md", _doc("Final locally achievable gate review - Revision F", f"""Revision F implements the locally achievable NVIDIA source, deterministic integration and standalone electrical-delta work while preserving Revision-D.1 Git-object authority and the Revision-E native CAD baseline. The exact controlled QET hash reopens and exports natively, but its overall gate remains PARTIAL because an automatic linked cross-reference graph is unsupported and folio 25 has one clipped in-body statement.
 
-Current gate totals are **2 PASS, 8 PARTIAL, 11 BLOCKED and 1 OPEN**. PASS applies only to native FCStd reopen and STEP/IGES/DXF reimport. Canonical/electrical reconciliation and PLC-NVIDIA failure testing remain PARTIAL because the standalone delta is not in every authority and native/production endpoint behavior remains external. Release-manifest gate 22 remains PARTIAL until final committed/pushed bytes reproduce from GitHub.
+Current gate totals are **3 PASS, 7 PARTIAL, 11 BLOCKED and 1 OPEN**. PASS applies to native FCStd reopen, STEP/IGES/DXF reimport and the published-candidate release-integrity reproduction. Canonical/electrical reconciliation and PLC-NVIDIA failure testing remain PARTIAL because the standalone delta is not in every authority and native/production endpoint behavior remains external.
 
 Native TIA/WinCC/Startdrive/PLCSIM, site-dependent electrical calculations, real dataset/model/target NVIDIA runtime, FAT/SAT/commissioning and qualified machinery-safety activities remain external blockers. Construction, production deployment, CE/regulatory conformity, model performance and physical acceptance are not claimed.
 
@@ -373,8 +373,8 @@ Native TIA/WinCC/Startdrive/PLCSIM, site-dependent electrical calculations, real
 | QET exact-hash native verifier | 19/19 PASS | Reopen/export/hash/page metadata; overall gate PARTIAL |
 | FreeCAD native verifier | 80/80 PASS | 165 objects, 148 controlled solids, STEP/IGES/DXF and 30 holes |
 | Workbook render stability | 16/16 PASS | Temp-staged candidates; semantic hash binding; exact entry set/dimensions; isolated threshold and update controls |
-| Workbook | 26 sheets; 12 stored formula cells; zero formula-error matches | Two builds SHA-256 `F7B326032B630B551B87A2882BB65FFD3867A250C2BF7AACD047B54F2B31534A` |
-| Release PDF | 6 pages | Two builds SHA-256 `DF06D0C5E5C19E567FF277EB84B9284295C4BF2944FAD38172186A9827BED702` |
+| Workbook | 26 sheets; 12 stored formula cells; zero formula-error matches | Two builds SHA-256 `FD0E55C47091AD2749D8B963182E5A33B99E2836DBD5B4F066ECF667A06D9B0D` |
+| Release PDF | 6 pages | Two builds SHA-256 `A8D43926FD64FD4FF1B337D040059F84C306A803380664C043E27E698ADA5175` |
 
 Final manifest, release-integrity, authoritative-snapshot determinism and post-push fresh-clone results are recorded separately after candidate freeze/commit. No software-agent record constitutes qualified-human approval.
 
@@ -468,6 +468,7 @@ Reviewers are software agents, not qualified-human approvers. {AI_BOUNDARY}"""))
         {"review_record_id":"RR-F-005","reviewer_task":"/root/rev_f_final_audit_controls_ai","review_type":"Final independent controls/NVIDIA software-agent re-audit","scope":"Corrected PLC-edge behavior, secure OPC UA transport supervision, timeout/rearm concurrency, behavioral-output byte determinism, malformed terminal results, evidence classification and release hygiene","method":"Read-only adversarial source/test re-review after the GitHub clean-clone watchdog and CSV newline findings; 99/86/17 regression, ten secure asyncua cases, 28 behavioral scenarios and 96-check Revision-F verification","evidence_sha256":_digest(root,["07_nvidia_vision/edge_service/opcua_adapter.py","07_nvidia_vision/edge_service/tests/test_opcua_adapter.py","11_simulation/run_vision_fault_scenarios.py","11_simulation/outputs/vision_fault_results.csv","14_qa/executed_test_report.md","scripts/verify_revision_f.py"]),"limitations":"No native Siemens, production PLC/Jetson endpoint, real dataset/model/runtime, physical test or qualified-human approval","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"ACCEPT FOR CORRECTED-CANDIDATE REFREEZE INCLUDING LF-NORMALIZED BEHAVIORAL EVIDENCE; P0 0, P1 0"},
         {"review_record_id":"RR-F-006","reviewer_task":"/root/rev_f_final_audit_release_electrical","review_type":"Final independent release/electrical software-agent re-audit","scope":"Corrected release integrity, QET/FreeCAD boundaries, schedules, workbook/PDF, evidence hashes, terminology and blocker truthfulness","method":"Read-only adversarial reconciliation, namespace-aware workbook formula scan, rendered-artifact re-review and focused FreeCAD cache-containment refreeze review","evidence_sha256":_digest(root,["10_schedules/FC01_engineering_schedules.xlsx","release/FC01_release_evidence.pdf","14_qa/visual_review_report.md","03_electrical/revision_f_nvidia_electrical_delta.md","scripts/reproduce_validation.ps1","scripts/verify_freecad_revision_e.py","scripts/revision_f_generator.py"]),"limitations":"No Revision-F native QET/CAD delta incorporation, site electrical inputs, physical construction test, qualified electrical/safety review or final post-push evidence at audit time","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"ACCEPT FOR CORRECTED-CANDIDATE REFREEZE INCLUDING FREECAD CACHE CONTAINMENT; P0 0, P1 0; external gates remain blocked or partial"},
         {"review_record_id":"RR-F-007","reviewer_task":"/root/rev_f_render_stability_review","review_type":"Independent workbook-render release-integrity software-agent re-audit","scope":"Clean-clone workbook raster nondeterminism, semantic binding, exact artifact-set closure and verification-only behavior","method":"Read-only adversarial code review, live baseline-hash reconciliation, Node syntax/diff checks and 16-case executable known-defect/boundary regression review","evidence_sha256":_digest(root,["scripts/build_workbook.mjs","scripts/workbook_render_stability.mjs","scripts/test_workbook_render_stability.mjs","scripts/reproduce_validation.ps1","14_qa/workbook_render_baseline.json"]),"limitations":"Software-agent review of deterministic release controls; no qualified-human document approval and no substitute for final published-SHA clean-clone execution","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"ACCEPT FOR INTEGRATION AND FINAL CLEAN-CLONE REPRODUCTION; P0 0, P1 0, P2 0"},
+        {"review_record_id":"RR-F-008","reviewer_task":"/root","review_type":"Post-push clean-clone release-control execution","scope":"Published Revision-F candidate Git object, authoritative manifest, complete reproduction and upstream alignment","method":"Fresh GitHub clone outside OneDrive at f6e9f3b1e928a2e04d21913caac2547469b0f647; complete reproduce_validation.ps1 execution with locked runtimes and final clean-state assertion","evidence_sha256":_digest(root,["14_qa/post_push_reproduction.md","release/manifest.json","14_qa/executed_test_report.md","14_qa/determinism_report.md"]),"limitations":"Configuration-management execution by the lead software agent; attestation commit is reverified after publication; no qualified-human, native Siemens, production model/runtime, physical or safety approval","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"PASS FOR REVISION-F RELEASE-INTEGRITY GATE — 425/425 manifest, 716/716 integrity, 551/551 validator and complete clean-clone workflow passed with zero discrepancy"},
     ]
     for row in revision_f_reviews:
         reviews = _append_row(reviews, "review_record_id", row["review_record_id"], row)
@@ -479,7 +480,7 @@ Reviewers are software agents, not qualified-human approvers. {AI_BOUNDARY}"""))
 - [x] Revision-E FCStd/exchange native evidence remains controlled and unchanged.
 - [x] Exact-hash QET native reopen/export evidence is controlled; PARTIAL visual/xref status remains explicit.
 - [x] 26-sheet workbook and six-page PDF rebuild deterministically and have complete rendered review sets.
-- [ ] Final Revision-F manifest/commit/push/fresh-clone reproduction and upstream alignment are recorded.
+- [x] Candidate f6e9f3b1e928a2e04d21913caac2547469b0f647 was pushed and reproduced from a fresh GitHub clone with 425/425 manifest entries, zero discrepancies and a clean final worktree.
 - [ ] Native Siemens, real dataset/model/runtime, site electrical, physical and qualified-safety gates are closed externally."""))
 
     rationale_register = (root / "00_project_control/component_rationale_register.md").read_text(encoding="utf-8")
@@ -501,9 +502,30 @@ Reviewers are software agents, not qualified-human approvers. {AI_BOUNDARY}"""))
     )
     _write(root, "AGENTS.md", agents)
 
-    _write(root, "14_qa/post_push_reproduction.md", _doc("Post-push fresh-clone reproduction - Revision F", """Status: **PENDING FINAL REVISION-F PUSH**.
+    _write(root, "14_qa/post_push_reproduction.md", _doc("Post-push fresh-clone reproduction - Revision F", """Status: **PASS FOR PUBLISHED CANDIDATE**.
 
-The previous Revision-E published evidence remains available in Git history. This controlled file is intentionally replaced so the current release cannot inherit a stale SHA or result. After the candidate is pushed, record the exact branch/SHA, fresh-clone path, manifest/integrity/validator/test counts, workbook/PDF hashes, upstream equality and final clean state; then issue the attestation commit and reverify it."""))
+- Branch: `codex/revision-f-nvidia-readiness`
+- Published candidate SHA: `f6e9f3b1e928a2e04d21913caac2547469b0f647`
+- Fresh GitHub clone: `C:\\Users\\chand\\.codex\\visualizations\\2026\\08\\03\\019fc8d7-e8d3-7483-a168-ac0985d9921a\\revision-f-postpush-f6e9f3b`
+- Complete workflow duration: 661.5 seconds
+- Manifest: 425 listed / 425 actual; 0 missing, unlisted, unexpected or discrepant
+- Release integrity: 716/716
+- Deterministic controlled text/source outputs: 283; 0 missing, extra or mismatched
+- Simulator/Siemens/source/native contracts: 99/99
+- NVIDIA edge/OPC UA: 86/86, including certificate-backed asyncua integration
+- PLC-AI interface harness: 17/17
+- Timed scenarios: 32; exactly one intended normal release
+- Vision behavioral fault injections: 28; exactly one intended release and zero unsafe outputs
+- Engineering validator: 551/551
+- Revision-F verifier: 96/96
+- Workbook render-stability regression: 16/16
+- QET Revision-E source checks: 24/24; Revision-F exact-hash native verifier: 19/19
+- FreeCAD native verifier: 80/80; 165 objects, 148 controlled solids, zero invalid shapes and 30 mounting holes
+- Workbook SHA-256: `F7B326032B630B551B87A2882BB65FFD3867A250C2BF7AACD047B54F2B31534A`
+- Release PDF SHA-256: `DF06D0C5E5C19E567FF277EB84B9284295C4BF2944FAD38172186A9827BED702`
+- Final candidate clone state: clean; local HEAD equals its upstream GitHub branch SHA
+
+This is release-control evidence by a software agent, not qualified-human engineering approval. Native Siemens, production NVIDIA/model, site electrical, physical, commissioning and machinery-safety gates remain blocked or partial exactly as recorded. The subsequent attestation commit changes controlled status/evidence only and is independently reverified after publication."""))
 
     docs = _read_csv(root / "00_project_control/document_register.csv")
     additions = [

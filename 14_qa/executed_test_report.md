@@ -19,8 +19,8 @@ Execution date: 2026-08-03. Source/design tests use Python 3.12.13; encrypted OP
 | QET exact-hash native verifier | 19/19 PASS | Reopen/export/hash/page metadata; overall gate PARTIAL |
 | FreeCAD native verifier | 80/80 PASS | 165 objects, 148 controlled solids, STEP/IGES/DXF and 30 holes |
 | Workbook render stability | 16/16 PASS | Temp-staged candidates; semantic hash binding; exact entry set/dimensions; isolated threshold and update controls |
-| Workbook | 26 sheets; 12 stored formula cells; zero formula-error matches | Two builds SHA-256 `F7B326032B630B551B87A2882BB65FFD3867A250C2BF7AACD047B54F2B31534A` |
-| Release PDF | 6 pages | Two builds SHA-256 `DF06D0C5E5C19E567FF277EB84B9284295C4BF2944FAD38172186A9827BED702` |
+| Workbook | 26 sheets; 12 stored formula cells; zero formula-error matches | Two builds SHA-256 `FD0E55C47091AD2749D8B963182E5A33B99E2836DBD5B4F066ECF667A06D9B0D` |
+| Release PDF | 6 pages | Two builds SHA-256 `A8D43926FD64FD4FF1B337D040059F84C306A803380664C043E27E698ADA5175` |
 
 Final manifest, release-integrity, authoritative-snapshot determinism and post-push fresh-clone results are recorded separately after candidate freeze/commit. No software-agent record constitutes qualified-human approval.
 
