@@ -1,1 +1,1 @@
-image_id,uri,sha256,provenance,split,production_lot,recipe_id,bottle_sku,annotation_uri,review_status
+image_id,uri,sha256,provenance,split,production_lot,acquisition_session,recipe_id,bottle_sku,annotation_uri,annotation_sha256,review_status,synthetic_or_real,camera_id,lens_id,lighting_id,width_px,height_px

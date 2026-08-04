@@ -1,0 +1,23 @@
+sequenceDiagram
+    participant PLC as S7-1500 PLC
+    participant EDGE as NVIDIA edge service
+    participant CAM as Camera/lighting
+    participant HMI as WinCC Unified
+    PLC->>PLC: Freeze session, ID, recipe, expected identities
+    PLC->>EDGE: INSPECTION_TRIGGER=1 with immutable request
+    EDGE->>EDGE: Validate schema, identity, health and queue
+    EDGE->>CAM: Trigger/acquire using configured exposure
+    CAM-->>EDGE: Frame bound to session/inspection ID
+    EDGE-->>PLC: CAPTURE_ACK + PROCESSING_STATE
+    EDGE->>EDGE: Preprocess, infer, postprocess, policy checks
+    EDGE-->>PLC: Write complete result payload
+    EDGE-->>PLC: RESULT_VALID=1 last
+    PLC->>PLC: Verify ID/session/age/model/dataset/calibration/result
+    alt Exact valid PASS
+        PLC-->>HMI: PASS diagnostic; PLC may authorize transfer
+    else HOLD/FAIL/FAULT/uncertain
+        PLC-->>HMI: HOLD with first-out reason and disposition
+    end
+    PLC-->>EDGE: Exact RESULT_ACK_ID
+    EDGE-->>PLC: Clear RESULT_VALID; preserve audit record
+    Note over PLC,EDGE: Disconnect/restart cannot reuse a prior-session result.

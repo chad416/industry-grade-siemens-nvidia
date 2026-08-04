@@ -1,0 +1,9 @@
+drive,service,direction,pzd,address,plc_binding,data_type,scaling,status
+-U100,CONVEYOR,Drive_to_PLC,1,IW256,DB_Drives.Conveyor.StatusWord1,Word,Bit-coded ZSW1,Native Startdrive/TIA confirmation open
+-U100,CONVEYOR,Drive_to_PLC,2,IW258,DB_Drives.Conveyor.ActualSpeedPzd,Int,16384 equals 100 percent reference speed,Reference speed and native confirmation open
+-U100,CONVEYOR,PLC_to_Drive,1,QW256,DB_Drives.Conveyor.ControlWord1,Word,Bit-coded STW1,PLC sole owner; native confirmation open
+-U100,CONVEYOR,PLC_to_Drive,2,QW258,DB_Drives.Conveyor.SpeedSetpointPzd,Int,16384 equals 100 percent reference speed,PLC sole owner; reference speed open
+-U101,PUMP,Drive_to_PLC,1,IW260,DB_Drives.Pump.StatusWord1,Word,Bit-coded ZSW1,Native Startdrive/TIA confirmation open
+-U101,PUMP,Drive_to_PLC,2,IW262,DB_Drives.Pump.ActualSpeedPzd,Int,16384 equals 100 percent reference speed,Reference speed and native confirmation open
+-U101,PUMP,PLC_to_Drive,1,QW260,DB_Drives.Pump.ControlWord1,Word,Bit-coded STW1,PLC sole owner; native confirmation open
+-U101,PUMP,PLC_to_Drive,2,QW262,DB_Drives.Pump.SpeedSetpointPzd,Int,16384 equals 100 percent reference speed,PLC sole owner; reference speed open

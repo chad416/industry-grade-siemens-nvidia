@@ -1,0 +1,19 @@
+drive,function,controlled_value,engineering_status,required_closure_evidence
+-U100/-U101,Drive family,SINAMICS G120C PN 0.75 kW 6SL3210-1KE12-3UF2,Provisional selection,Confirm actual MLFB/nameplate and catalog support
+-U100/-U101,Primary command source,PROFINET Standard Telegram 1,Design baseline,Native device configuration and hardware compile
+-U100/-U101,PZD length,2 words each direction,Design baseline,Native address and consistency report
+-U100/-U101,Speed scaling,Signed 16384 equals 100 percent reference speed,Design baseline,Confirm p2000/reference speed from motor/load data
+-U100/-U101,Control word stop baseline,W#16#047E when release not permitted,Source-design baseline,Native trace proving no unintended run
+-U100/-U101,Control word run baseline,W#16#047F only when PLC permits run,Source-design baseline,Native trace and negative interlock tests
+-U100/-U101,Fault acknowledgement,STW1 bit 7 pulse only while run request false,Source-design baseline,Native fault/reset test
+-U100,Motor/nameplate,OPEN — conveyor motor data unavailable,Blocked,Approved nameplate and duty/load data
+-U101,Motor/nameplate,OPEN — pump motor and hydraulic data unavailable,Blocked,Approved nameplate pump curve and process duty
+-U100/-U101,Acceleration/deceleration ramps,OPEN,Blocked,Machine dynamics spill risk and stopping-time requirements
+-U100/-U101,Minimum/maximum/reference speed,OPEN,Blocked,Motor/load limits and process validation
+-U100/-U101,Current/torque/thermal limits,OPEN,Blocked,Motor duty and protection coordination
+-U100/-U101,Braking strategy/resistor,OPEN,Blocked,Inertia duty cycle and DC-link assessment
+-U100/-U101,Switching frequency/derating,OPEN,Blocked,Ambient enclosure motor cable and acoustic constraints
+-U100/-U101,Motor identification,NOT EXECUTED,Physical hardware blocked,Actual motor connected and controlled commissioning permit
+-U100/-U101,PROFINET names/IP,-U100 192.168.10.31; -U101 192.168.10.32,Design baseline,Native assignment and device discovery record
+-U100/-U101,STO,External conceptual interface only,Qualified safety design blocked,Project risk assessment safety design verification and validation
+-U100/-U101,Line protection/SCCR/EMC/motor cable,OPEN,Site/electrical inputs blocked,Supply fault level coordination routing and manufacturer selections

@@ -21,7 +21,7 @@
 ## Toolchain and commands
 
 - Authoritative target: **TIA Portal V20**, executable/product version `2000.0.9501.1`; STEP 7 V20 and WinCC V20 components are installed, but usable licence entitlement and native compile remain unproven. TIA Openness V20 assemblies exist, but the current identity is not authorized.
-- Startdrive and PLCSIM/PLCSIM Advanced are not installed. QElectroTech portable baseline is 0.100.1-dev; FreeCAD 1.1.3 is retained as an archive/evidence baseline. NVIDIA runtime target is DeepStream 9.1 on Jetson Orin, but the CUDA/TAO/DeepStream/Omniverse stack is not installed.
+- Startdrive and PLCSIM/PLCSIM Advanced are not installed. QElectroTech portable baseline is 0.100.0+git8590; FreeCAD 1.1.3 is retained as an archive/evidence baseline. NVIDIA runtime target is DeepStream 9.1 on Jetson Orin, but the CUDA/TAO/DeepStream/Omniverse stack is not installed.
 - Build: `python scripts/build_project.py`; simulator: `python -m unittest discover -s 11_simulation/tests -v`; validate: `python scripts/validate_project.py`.
 
 ## Safety and AI boundaries

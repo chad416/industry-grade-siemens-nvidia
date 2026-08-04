@@ -1,4 +1,4 @@
-# FC01 Revision-E OPC UA adapter execution runbook
+# FC01 Revision-F OPC UA adapter execution runbook
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
@@ -18,7 +18,7 @@ Local integration evidence uses asyncua 2.0.1, an ephemeral test CA, Basic256Sha
 4. Run `python -m pip check` and retain the result.
 5. Do not create a virtual environment, cache, log, certificate or private key inside the controlled Git checkout.
 
-The Revision-E test environment used Python 3.12.13 and asyncua 2.0.1. The dependency set is source-controlled, but the target Linux/Jetson environment remains unbuilt and unqualified.
+The controlled dependency baseline uses Python 3.12 and asyncua 2.0.1. The dependency set is source-controlled, but the target Linux/Jetson environment remains unbuilt and unqualified.
 
 ## PKI and identity provisioning
 
@@ -36,9 +36,9 @@ The adapter rejects missing paths, an untrusted/revoked server, a URI mismatch, 
 
 ## Siemens request handshake
 
-Revision-E source implements the preferred transport contract: `FB_VisionInterface` holds `INSPECTION_TRIGGER` high with a stable payload and ID until coherent `VISION_BUSY` observation or a terminal result. `FB_CellMain` prevents a repeated upstream pulse from allocating a different ID while the interface is pending. This closes the one-scan source-design defect, but it is not native evidence.
+Revision-F source implements the preferred transport contract: `FB_VisionInterface` holds `INSPECTION_TRIGGER` high with a stable payload and ID until coherent `VISION_BUSY` observation or a terminal result. `FB_CellMain` prevents a repeated upstream pulse from allocating a different ID while the interface is pending. This closes the one-scan source-design defect, but it is not native evidence.
 
-Import and compile the Revision-E SCL in TIA Portal, then measure the actual S7 OPC UA sampling/publish behavior. Confirm that the edge sees the held request, raises BUSY, the PLC deasserts Trigger only after that observation, and the transaction ID never changes while pending. Revision E's adapter fails closed if it observes an advanced inspection ID without a sampled request level; do not weaken that diagnostic to conceal a native configuration error.
+Import and compile the Revision-F SCL in TIA Portal, then measure the actual S7 OPC UA sampling/publish behavior. Confirm that the edge sees the held request, raises BUSY, the PLC deasserts Trigger only after that observation, and the transaction ID never changes while pending. The adapter fails closed if it observes an advanced ID without a sampled request level; do not weaken that diagnostic to conceal a native configuration error.
 
 ## Local verification
 
@@ -60,7 +60,7 @@ The integration tests use temporary directories and delete their ephemeral keys/
 3. Review the provided systemd hardening directives against the chosen camera/GPU runtime; relax a directive only through a recorded cybersecurity change.
 4. Configure the firewall so the edge initiates OPC UA TCP 4840 only to PLC-A100. Keep `/healthz`, `/readyz` and `/metrics` loopback-only unless an authenticated site monitoring conduit is approved.
 5. Start with machine production disabled. Confirm READY remains low while `VISION_ENABLE` is high and while no controlled model exists.
-6. Verify all 27 resolved NodeIds, types, directions, user access levels and TIA server namespace/export evidence.
+6. Verify all 47 resolved NodeIds, types, directions, user access levels and TIA server namespace/export evidence.
 7. Execute disconnect, PLC restart, edge restart, certificate expiry/revocation, stale heartbeat, wrong ACK, duplicate ID, session regression, timeout and retained-publication tests.
 8. Confirm payload nodes are written before `RESULT_VALID`, remain immutable until exact ACK and are never reused across sessions.
 9. Retain structured logs, metrics, TIA diagnostics, packet-free security evidence, software hashes and test records.
@@ -80,7 +80,7 @@ The integration tests use temporary directories and delete their ephemeral keys/
 3. Preserve the current logs, metrics, package hashes, configuration hash and service-unit hash for the incident record.
 4. Restore the previously reviewed versioned adapter package, complete locked requirements set, `opcua_runtime_config.json`, `service_config.json` and systemd unit as one controlled release. Do not mix versions.
 5. Verify every restored file hash, ownership and least-privilege permission. Revalidate application/user certificate identity, trust/CRL paths and the pinned PLC server certificate.
-6. Cold-start with production disabled and READY low. Resolve and validate all 27 NodeIds, data types, directions and access rights before enabling readiness.
+6. Cold-start with production disabled and READY low. Resolve and validate all 47 NodeIds, data types, directions and access rights before enabling readiness.
 7. Repeat heartbeat-loss, disconnect/reconnect, stale/future/duplicate ID, session regression, wrong acknowledgement, immutable-publication and malformed-data negative tests.
 8. Obtain the required site cybersecurity/operations approval, record the evidence and only then return the edge subsystem to the PLC-controlled enable sequence. No automatic production restart is permitted.
 

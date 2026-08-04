@@ -1,0 +1,19 @@
+object_id,object_type,binding_or_expression,normal_state,abnormal_state,interaction,engineering_note
+FPV_Header,Text,Literal NON-SAFETY QUALITY INSPECTION — PLC RELEASE AUTHORITY,Always visible,Not applicable,None,Persistent ownership boundary
+FPV_Ready,Lamp,STATUS_VISION_READY AND STATUS_VISION_SERVICE_HEALTHY AND STATUS_VISION_CAMERA_HEALTHY AND STATUS_VISION_MODEL_LOADED,Green,Gray/red,None,Read-only consolidated readiness
+FPV_Maintenance,Lamp,STATUS_VISION_MAINTENANCE_MODE OR STATUS_VISION_MAINTENANCE_ACTIVE,Gray,Amber,None,Production inspection disabled
+FPV_RequestId,IO field,STATUS_VISION_INSPECTION_ID,Neutral,Neutral,None,Unsigned decimal
+FPV_CaptureId,IO field,STATUS_VISION_CAPTURE_ACK_ID,Neutral,Red when not equal request ID,None,Exact correlation
+FPV_ResultId,IO field,STATUS_VISION_RESULT_ID,Neutral,Red when RESULT_VALID and not equal request ID,None,Exact correlation
+FPV_Session,IO field,STATUS_VISION_SESSION_EPOCH,Neutral,Red when RESULT_VALID and not equal result session,None,Exact correlation
+FPV_State,Symbolic IO,STATUS_VISION_PROCESSING_STATE,State-list color,Fault state red,None,Use controlled state list
+FPV_Disposition,Symbolic IO,STATUS_VISION_DISPOSITION,PASS green,HOLD/FAIL amber; FAULT/NONE red,None,Raw edge disposition is not PLC release
+FPV_ReasonMask,Text list,STATUS_VISION_REASON_BITS,Zero gray,Any set bit amber/red,None,Render every active bit
+FPV_Confidence,Bar/IO,STATUS_VISION_CONFIDENCE,At or above configured threshold,Below threshold amber,None,Label diagnostic only
+FPV_Age,IO field,STATUS_VISION_RESULT_AGE_MS,At or below configured maximum,Above maximum red,None,Milliseconds
+FPV_Processing,IO field,STATUS_VISION_PROCESSING_TIME_MS,At or below configured maximum,Above maximum red,None,Milliseconds
+FPV_HealthGroup,Grouped lamps,SERVICE/CAMERA/MODEL/HEARTBEAT/QUEUE,All healthy,Any unhealthy red,None,No health flag can force PASS
+FPV_Identity,Grouped text,MODEL_ID/DATASET_ID/CALIBRATION_ID,Exact expected matches,Mismatch red,None,Hash shown on troubleshooting view
+FPV_QualityHold,Lamp,STATUS_QUALITY_HOLD,Gray,Amber/red,None,PLC-derived state
+FPV_DispositionButton,Button,CMD_DISPOSITION_ALLOWED,Enabled only by PLC,Disabled gray,Increment request sequence and pulse request,Supervisor role; physical disposition required
+FPV_DetailNavigation,Button,Open NVIDIA troubleshooting,Enabled,Enabled,Navigation only,Maintenance role for detailed hashes

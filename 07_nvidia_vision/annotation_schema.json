@@ -1,8 +1,46 @@
 {
-  "schema_version": "1.0-draft",
-  "status": "NO DATASET - SCHEMA ONLY",
-  "classes": ["bottle", "bottle_misaligned", "bottle_damage_visible", "liquid_region", "foam", "drip", "spill"],
-  "image_attributes": ["synthetic_or_real", "production_lot", "recipe_id", "bottle_sku", "camera_id", "lens_id", "exposure_us", "light_setting", "true_fill_reference", "glare", "occlusion", "reviewer"],
-  "geometry": {"instances": ["bbox", "polygon"], "fill_line": "two calibrated endpoints per bottle ROI"},
-  "quality": {"double_review_required": true, "disagreement_resolution": "qualified adjudicator", "unknown_label_allowed": true}
+  "schema_version": "2.0-draft",
+  "status": "NO REPRESENTATIVE DATASET - SCHEMA ONLY",
+  "scope": "two-bottle post-fill quality inspection; cap inspection excluded",
+  "classes": [
+    "bottle",
+    "bottle_misaligned",
+    "bottle_damage_visible",
+    "liquid_region",
+    "foam",
+    "drip",
+    "spill"
+  ],
+  "required_image_attributes": [
+    "synthetic_or_real",
+    "production_lot",
+    "acquisition_session",
+    "recipe_id",
+    "bottle_sku",
+    "camera_id",
+    "lens_id",
+    "calibration_id",
+    "lighting_id",
+    "exposure_us",
+    "gain",
+    "true_fill_reference_method",
+    "glare_severity",
+    "foam_severity",
+    "occlusion",
+    "background_id",
+    "reviewer"
+  ],
+  "geometry": {
+    "instances": ["bbox", "polygon"],
+    "fill_line": "two calibrated endpoints per visible bottle ROI",
+    "coordinate_system": "zero-based image pixels",
+    "out_of_frame_policy": "truncate geometry and set occlusion/out_of_frame attributes"
+  },
+  "quality": {
+    "double_review_required_for_test_and_challenge": true,
+    "disagreement_resolution": "authorized domain-review adjudication with history retained",
+    "unknown_label_allowed": true,
+    "ambiguous_samples_must_not_be_forced_to_pass_or_fail": true,
+    "synthetic_samples_cannot_close_production_metrics": true
+  }
 }

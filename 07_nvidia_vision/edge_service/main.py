@@ -1,6 +1,6 @@
 """FC01 edge-service entry point.
 
-No inference backend is supplied in Revision E.  Running this entry point proves
+No production inference backend is supplied in Revision F. Running this entry point proves
 configuration/transport supervision only; VISION_READY remains false until a
 controlled backend is implemented and injected by a later approved change.
 """
@@ -13,7 +13,7 @@ import os
 from pathlib import Path
 import signal
 
-from observability import HealthServer, Metrics, configure_logging
+from observability import DurableJsonlAuditSink, HealthServer, Metrics, configure_logging
 from opcua_adapter import AdapterConfig, OpcUaVisionAdapter
 from service import VisionService
 
@@ -22,7 +22,9 @@ async def run(config_path: Path) -> None:
     raw = json.loads(config_path.read_text(encoding="utf-8"))
     logger = configure_logging(file_path=os.environ.get("FC01_EDGE_LOG_PATH"))
     metrics = Metrics()
-    service = VisionService()  # Deliberately fail-closed: no model/backend exists.
+    audit_path = os.environ.get("FC01_EDGE_AUDIT_PATH")
+    audit_sink = DurableJsonlAuditSink(Path(audit_path)) if audit_path else None
+    service = VisionService(audit_sink=audit_sink)  # Deliberately fail-closed: no model/backend exists.
     adapter = OpcUaVisionAdapter(AdapterConfig.from_files(config_path), service,
                                  metrics=metrics, logger=logger)
     health = HealthServer(raw["health"]["bind"], raw["health"]["port"],

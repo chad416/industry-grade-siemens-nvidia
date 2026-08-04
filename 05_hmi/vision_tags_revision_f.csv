@@ -1,0 +1,61 @@
+name,plc_source,data_type,access,screen,role,engineering_note
+STATUS_VISION_ENABLE,DB_VisionComms.Enable,Bool,Read only,NVIDIA inspection,Operator,PLC-owned production enable
+STATUS_VISION_MAINTENANCE_MODE,DB_VisionComms.MaintenanceMode,Bool,Read only,NVIDIA inspection,Operator,PLC-owned mode; never an edge bypass
+STATUS_VISION_TRIGGER,DB_VisionComms.Trigger,Bool,Read only,NVIDIA inspection,Maintenance,Level-held request
+STATUS_VISION_SESSION_EPOCH,DB_VisionComms.SessionEpoch,UDInt,Read only,NVIDIA inspection,Maintenance,PLC restart/session identity
+STATUS_VISION_INSPECTION_ID,DB_VisionComms.InspectionId,UDInt,Read only,NVIDIA inspection,Operator,PLC request identity
+STATUS_VISION_RECIPE_ID,DB_VisionComms.RecipeId,UInt,Read only,NVIDIA inspection,Operator,Recipe identity frozen for the active request
+STATUS_VISION_EXPECTED_BOTTLES,DB_VisionComms.ExpectedBottles,USInt,Read only,NVIDIA inspection,Operator,Production request requires exactly two bottles
+STATUS_VISION_TARGET_FILL_LEVEL,DB_VisionComms.TargetFillLevel,Real,Read only,NVIDIA inspection,Operator,PLC-owned target frozen for the active request
+STATUS_VISION_PLC_HEARTBEAT,DB_VisionComms.PlcHeartbeat,UDInt,Read only,NVIDIA troubleshooting,Maintenance,Monotonic PLC liveness counter
+STATUS_VISION_CAPTURE_ACK_ID,DB_VisionComms.CaptureAckId,UDInt,Read only,NVIDIA inspection,Operator,Must match active inspection
+STATUS_VISION_RESULT_ACK_ID,DB_VisionComms.ResultAckId,UDInt,Read only,NVIDIA inspection,Maintenance,Transport acknowledgement only
+STATUS_VISION_READY,DB_VisionComms.Ready,Bool,Read only,NVIDIA inspection,Operator,Edge readiness input
+STATUS_VISION_BUSY,DB_VisionComms.Busy,Bool,Read only,NVIDIA inspection,Operator,Edge processing input
+STATUS_VISION_PROCESSING_STATE,DB_VisionComms.ProcessingState,USInt,Read only,NVIDIA inspection,Operator,Use processing-state text list
+STATUS_VISION_SERVICE_HEALTHY,DB_VisionComms.ServiceHealthy,Bool,Read only,NVIDIA inspection,Operator,Edge service health
+STATUS_VISION_CAMERA_HEALTHY,DB_VisionComms.CameraHealthy,Bool,Read only,NVIDIA inspection,Operator,Camera acquisition health
+STATUS_VISION_MODEL_LOADED,DB_VisionComms.ModelLoaded,Bool,Read only,NVIDIA inspection,Operator,Controlled backend loaded
+STATUS_VISION_MAINTENANCE_ACTIVE,DB_VisionComms.MaintenanceActive,Bool,Read only,NVIDIA inspection,Operator,Edge maintenance state
+STATUS_VISION_HEARTBEAT,DB_VisionComms.VisionHeartbeat,UDInt,Read only,NVIDIA troubleshooting,Maintenance,Monotonic edge counter
+STATUS_VISION_QUEUE_DEPTH,DB_VisionComms.QueueDepth,UInt,Read only,NVIDIA troubleshooting,Maintenance,Compared with PLC-approved maximum
+STATUS_VISION_EDGE_DIAGNOSTIC,DB_VisionComms.DiagnosticCode,UDInt,Read only,NVIDIA troubleshooting,Maintenance,Edge first-out diagnostic code
+STATUS_VISION_PLC_DIAGNOSTIC,DB_VisionComms.DiagReason,UInt,Read only,NVIDIA troubleshooting,Operator,Use PLC diagnostic text list
+STATUS_VISION_RESULT_VALID,DB_VisionComms.Result.ResultValid,Bool,Read only,NVIDIA inspection,Operator,Immutable publication flag
+STATUS_VISION_RESULT_ID,DB_VisionComms.Result.ResultId,UDInt,Read only,NVIDIA inspection,Operator,Must match active inspection
+STATUS_VISION_RESULT_SESSION,DB_VisionComms.Result.SessionEpoch,UDInt,Read only,NVIDIA inspection,Operator,Must match PLC session
+STATUS_VISION_DISPOSITION,DB_VisionComms.Result.Disposition,USInt,Read only,NVIDIA inspection,Operator,0 NONE;1 PASS;2 HOLD;3 FAIL;4 FAULT
+STATUS_VISION_REASON_BITS,DB_VisionComms.Result.ReasonBits,DWord,Read only,NVIDIA inspection,Operator,Decode every active bit
+STATUS_VISION_CONFIDENCE,DB_VisionComms.Result.Confidence,Real,Read only,NVIDIA inspection,Operator,Diagnostic 0..1 value
+STATUS_VISION_BOTTLE_1_PASS,DB_VisionComms.Result.Bottle1Pass,Bool,Read only,NVIDIA inspection,Operator,Raw edge result; not release authority
+STATUS_VISION_BOTTLE_2_PASS,DB_VisionComms.Result.Bottle2Pass,Bool,Read only,NVIDIA inspection,Operator,Raw edge result; not release authority
+STATUS_VISION_FILL_1,DB_VisionComms.Result.Fill1Status,USInt,Read only,NVIDIA inspection,Operator,0 unknown;1 under;2 in range;3 over
+STATUS_VISION_FILL_2,DB_VisionComms.Result.Fill2Status,USInt,Read only,NVIDIA inspection,Operator,0 unknown;1 under;2 in range;3 over
+STATUS_VISION_SPILL,DB_VisionComms.Result.LeakOrSpill,Bool,Read only,NVIDIA inspection,Operator,Visible spill/leak indication
+STATUS_VISION_LOW_CONFIDENCE,DB_VisionComms.Result.LowConfidence,Bool,Read only,NVIDIA inspection,Operator,Always blocks PASS
+STATUS_VISION_WARNING,DB_VisionComms.Result.Warning,Bool,Read only,NVIDIA inspection,Operator,Always blocks PASS
+STATUS_VISION_FAULT,DB_VisionComms.Result.Fault,Bool,Read only,NVIDIA inspection,Operator,Always blocks PASS
+STATUS_VISION_RESULT_AGE_MS,DB_VisionComms.ResultAgeMs,UDInt,Read only,NVIDIA inspection,Operator,PLC-derived monotonic transaction age; not OPC UA
+STATUS_VISION_PROCESSING_TIME_MS,DB_VisionComms.Result.ProcessingTimeMs,UDInt,Read only,NVIDIA inspection,Operator,Normative edge processing duration
+STATUS_VISION_INFERENCE_TIME_MS,DB_VisionComms.Result.InferenceTimeMs,UDInt,Read only,NVIDIA troubleshooting,Maintenance,Compatibility alias; must equal processing time
+STATUS_VISION_CAPTURE_UTC_MS,DB_VisionComms.Result.CaptureTimestampUtcMs,ULInt,Read only,NVIDIA troubleshooting,Maintenance,Diagnostic UTC epoch milliseconds
+STATUS_VISION_INFERENCE_UTC_MS,DB_VisionComms.Result.InferenceTimestampUtcMs,ULInt,Read only,NVIDIA troubleshooting,Maintenance,Must not precede capture
+STATUS_VISION_PUBLICATION_UTC_MS,DB_VisionComms.Result.PublicationTimestampUtcMs,ULInt,Read only,NVIDIA troubleshooting,Maintenance,Must not precede inference
+STATUS_VISION_MODEL_ID,DB_VisionComms.Result.ModelId,String[32],Read only,NVIDIA inspection,Operator,Published immutable identity
+STATUS_VISION_MODEL_SHA256,DB_VisionComms.Result.ModelHash,String[64],Read only,NVIDIA troubleshooting,Maintenance,Exact published hash
+STATUS_VISION_DATASET_ID,DB_VisionComms.Result.DatasetId,String[32],Read only,NVIDIA inspection,Operator,Validation baseline identity; no real baseline yet
+STATUS_VISION_CALIBRATION_ID,DB_VisionComms.Result.CalibrationId,String[32],Read only,NVIDIA inspection,Operator,Optics/calibration identity; commissioning open
+CONFIG_VISION_EXPECTED_MODEL_ID,DB_VisionComms.ExpectedModelId,String[32],Read only,NVIDIA troubleshooting,Maintenance,Controlled engineering value; no HMI write
+CONFIG_VISION_EXPECTED_MODEL_SHA256,DB_VisionComms.ExpectedModelHash,String[64],Read only,NVIDIA troubleshooting,Maintenance,Controlled engineering value; no HMI write
+CONFIG_VISION_EXPECTED_DATASET_ID,DB_VisionComms.ExpectedDatasetId,String[32],Read only,NVIDIA troubleshooting,Maintenance,Controlled engineering value; no HMI write
+CONFIG_VISION_EXPECTED_CALIBRATION_ID,DB_VisionComms.ExpectedCalibrationId,String[32],Read only,NVIDIA troubleshooting,Maintenance,Controlled engineering value; no HMI write
+CONFIG_VISION_MINIMUM_CONFIDENCE,DB_VisionComms.MinimumConfidence,Real,Read only,NVIDIA troubleshooting,Maintenance,Controlled engineering value; no HMI write
+CONFIG_VISION_MAXIMUM_RESULT_AGE_MS,DB_VisionComms.MaximumResultAgeMs,UDInt,Read only,NVIDIA troubleshooting,Maintenance,Controlled engineering value; no HMI write
+CONFIG_VISION_MAXIMUM_PROCESSING_TIME_MS,DB_VisionComms.MaximumProcessingTimeMs,UDInt,Read only,NVIDIA troubleshooting,Maintenance,Controlled engineering value; no HMI write
+CONFIG_VISION_MAXIMUM_QUEUE_DEPTH,DB_VisionComms.MaximumQueueDepth,UInt,Read only,NVIDIA troubleshooting,Maintenance,Controlled engineering value; no HMI write
+STATUS_QUALITY_HOLD,DB_HMI.QualityHold,Bool,Read only,NVIDIA inspection,Operator,PLC-derived product hold
+CMD_DISPOSITION_REQUEST,DB_HMI.DispositionRemoved.Request,Bool,Sequenced write,NVIDIA inspection,Supervisor,Only PLC-authorized disposition command
+CMD_DISPOSITION_REQUEST_SEQ,DB_HMI.DispositionRemoved.RequestSeq,UDInt,Increment with request,NVIDIA inspection,Supervisor,Never reuse sequence number
+CMD_DISPOSITION_ACCEPTED_SEQ,DB_HMI.DispositionRemoved.AcceptedSeq,UDInt,Read only,NVIDIA inspection,Supervisor,PLC acceptance evidence
+CMD_DISPOSITION_REJECTED_SEQ,DB_HMI.DispositionRemoved.RejectedSeq,UDInt,Read only,NVIDIA inspection,Supervisor,PLC rejection evidence
+CMD_DISPOSITION_ALLOWED,DB_HMI.DispositionRemoved.Allowed,Bool,Read only,NVIDIA inspection,Supervisor,PLC owns enable condition

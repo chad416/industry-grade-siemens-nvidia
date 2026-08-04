@@ -43,7 +43,9 @@ def run_clean(destination: Path) -> dict[str, str]:
     commands = [
         [sys.executable, "scripts/build_project.py"],
         [sys.executable, "11_simulation/run_scenarios.py"],
+        [sys.executable, "11_simulation/run_vision_fault_scenarios.py"],
         [sys.executable, "scripts/validate_project.py", "--check"],
+        [sys.executable, "scripts/verify_revision_f.py", "--check"],
     ]
     for command in commands:
         subprocess.run(command, cwd=destination, check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
@@ -63,7 +65,7 @@ def run_clean(destination: Path) -> dict[str, str]:
 if untracked_paths():
     raise SystemExit(f"Unexpected files prevent deterministic release build: {untracked_paths()}")
 
-with tempfile.TemporaryDirectory(prefix="fc01-rev-e-determinism-") as temporary:
+with tempfile.TemporaryDirectory(prefix="fc01-rev-f-determinism-") as temporary:
     base = Path(temporary)
     first = run_clean(base / "run_a")
     second = run_clean(base / "run_b")
@@ -73,11 +75,11 @@ extra = sorted(set(second) - set(first))
 mismatched = sorted(path for path in set(first) & set(second) if first[path] != second[path])
 passed = not (missing or extra or mismatched)
 report = [
-    "# Determinism report - Revision E",
+    "# Determinism report - Revision F",
     "",
     "Result: **PASS**" if passed else "Result: **FAIL**",
     "",
-    "Two independent temporary exports of the selected authoritative Git snapshot ran canonical generation, all 32 scenarios and read-only deterministic validation.",
+    "Two independent temporary exports of the selected authoritative Git snapshot ran canonical generation, all 32 process scenarios, all 28 structured behavioral vision fault injections and read-only deterministic validation.",
     "The comparison covers controlled text, CSV, JSON, Siemens SCL, scripts and generated reports. XLSX and PDF binary determinism is checked separately by the standard reproduction workflow.",
     "",
     f"Compared files: {len(first)}",

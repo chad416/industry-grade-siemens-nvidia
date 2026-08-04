@@ -1,0 +1,48 @@
+signal,node_id,scl_type,owner,plc_binding,plc_application_access,transaction_rule
+VISION_ENABLE,ns=3;s=FC01.Vision.VISION_ENABLE,Bool,PLC,DB_VisionComms.Enable,Write by PLC only,False during startup maintenance fault or unapproved configuration
+INSPECTION_TRIGGER,ns=3;s=FC01.Vision.INSPECTION_TRIGGER,Bool,PLC,DB_VisionComms.Trigger,Write by PLC only,Level-held until exact capture acknowledgement or terminal result
+INSPECTION_ID,ns=3;s=FC01.Vision.INSPECTION_ID,UDInt,PLC,DB_VisionComms.InspectionId,Write by PLC only,Strictly monotonic nonzero within session
+RECIPE_ID,ns=3;s=FC01.Vision.RECIPE_ID,UInt,PLC,DB_VisionComms.RecipeId,Write by PLC only,Frozen for active transaction
+EXPECTED_BOTTLES,ns=3;s=FC01.Vision.EXPECTED_BOTTLES,USInt,PLC,DB_VisionComms.ExpectedBottles,Write by PLC only,Production value exactly two
+TARGET_FILL_LEVEL,ns=3;s=FC01.Vision.TARGET_FILL_LEVEL,Real,PLC,DB_VisionComms.TargetFillLevel,Write by PLC only,Frozen for active transaction
+PLC_HEARTBEAT,ns=3;s=FC01.Vision.PLC_HEARTBEAT,UDInt,PLC,DB_VisionComms.PlcHeartbeat,Write by PLC only,Monotonic serial counter
+VISION_READY,ns=3;s=FC01.Vision.VISION_READY,Bool,NVIDIA,DB_VisionComms.Ready,Read by PLC only,False on degraded or unsynchronized edge
+VISION_BUSY,ns=3;s=FC01.Vision.VISION_BUSY,Bool,NVIDIA,DB_VisionComms.Busy,Read by PLC only,True only for active request
+RESULT_VALID,ns=3;s=FC01.Vision.RESULT_VALID,Bool,NVIDIA,DB_VisionComms.Result.ResultValid,Read by PLC only,Written last and held until exact ACK
+RESULT_ID,ns=3;s=FC01.Vision.RESULT_ID,UDInt,NVIDIA,DB_VisionComms.Result.ResultId,Read by PLC only,Exact request ID
+BOTTLE_1_PASS,ns=3;s=FC01.Vision.BOTTLE_1_PASS,Bool,NVIDIA,DB_VisionComms.Result.Bottle1Pass,Read by PLC only,Raw quality field never sole release
+BOTTLE_2_PASS,ns=3;s=FC01.Vision.BOTTLE_2_PASS,Bool,NVIDIA,DB_VisionComms.Result.Bottle2Pass,Read by PLC only,Raw quality field never sole release
+FILL_1_STATUS,ns=3;s=FC01.Vision.FILL_1_STATUS,USInt,NVIDIA,DB_VisionComms.Result.Fill1Status,Read by PLC only,0 unknown 1 under 2 in range 3 over
+FILL_2_STATUS,ns=3;s=FC01.Vision.FILL_2_STATUS,USInt,NVIDIA,DB_VisionComms.Result.Fill2Status,Read by PLC only,0 unknown 1 under 2 in range 3 over
+LEAK_OR_SPILL_DETECTED,ns=3;s=FC01.Vision.LEAK_OR_SPILL_DETECTED,Bool,NVIDIA,DB_VisionComms.Result.LeakOrSpill,Read by PLC only,True blocks PASS
+LOW_CONFIDENCE,ns=3;s=FC01.Vision.LOW_CONFIDENCE,Bool,NVIDIA,DB_VisionComms.Result.LowConfidence,Read by PLC only,True blocks PASS
+VISION_WARNING,ns=3;s=FC01.Vision.VISION_WARNING,Bool,NVIDIA,DB_VisionComms.Result.Warning,Read by PLC only,True blocks PASS
+VISION_FAULT,ns=3;s=FC01.Vision.VISION_FAULT,Bool,NVIDIA,DB_VisionComms.Result.Fault,Read by PLC only,True blocks PASS
+INFERENCE_TIME,ns=3;s=FC01.Vision.INFERENCE_TIME,UDInt,NVIDIA,DB_VisionComms.Result.InferenceTimeMs,Read by PLC only,Compatibility alias equal to PROCESSING_TIME_MS
+VISION_HEARTBEAT,ns=3;s=FC01.Vision.VISION_HEARTBEAT,UDInt,NVIDIA,DB_VisionComms.VisionHeartbeat,Read by PLC only,Monotonic serial counter
+VISION_RESULT_ACK_ID,ns=3;s=FC01.Vision.VISION_RESULT_ACK_ID,UDInt,PLC,DB_VisionComms.ResultAckId,Write by PLC only,Transport ACK for every complete publication
+VISION_SESSION_EPOCH,ns=3;s=FC01.Vision.VISION_SESSION_EPOCH,UDInt,PLC,DB_VisionComms.SessionEpoch,Write by PLC only,Nonzero retained restart/session identity
+VISION_RESULT_SESSION_EPOCH,ns=3;s=FC01.Vision.VISION_RESULT_SESSION_EPOCH,UDInt,NVIDIA,DB_VisionComms.Result.SessionEpoch,Read by PLC only,Exact request session
+VISION_DIAG_REASON,ns=3;s=FC01.Vision.VISION_DIAG_REASON,UInt,PLC,DB_VisionComms.DiagReason,Write by PLC only,PLC first-out interface diagnostic
+VISION_MODEL_ID,ns=3;s=FC01.Vision.VISION_MODEL_ID,String[32],NVIDIA,DB_VisionComms.Result.ModelId,Read by PLC only,Exact immutable result identity
+VISION_MODEL_SHA256,ns=3;s=FC01.Vision.VISION_MODEL_SHA256,String[64],NVIDIA,DB_VisionComms.Result.ModelHash,Read by PLC only,Exact immutable lowercase or controlled-case hash
+MAINTENANCE_MODE,ns=3;s=FC01.Vision.MAINTENANCE_MODE,Bool,PLC,DB_VisionComms.MaintenanceMode,Write by PLC only,No bypass or motion authority
+EXPECTED_DATASET_ID,ns=3;s=FC01.Vision.EXPECTED_DATASET_ID,String[32],PLC,DB_VisionComms.ExpectedDatasetId,Write by PLC only,Retained approved identity and frozen while pending
+EXPECTED_CALIBRATION_ID,ns=3;s=FC01.Vision.EXPECTED_CALIBRATION_ID,String[32],PLC,DB_VisionComms.ExpectedCalibrationId,Write by PLC only,Retained approved identity and frozen while pending
+CAPTURE_ACK_ID,ns=3;s=FC01.Vision.CAPTURE_ACK_ID,UDInt,NVIDIA,DB_VisionComms.CaptureAckId,Read by PLC only,Must equal active inspection ID
+PROCESSING_STATE,ns=3;s=FC01.Vision.PROCESSING_STATE,USInt,NVIDIA,DB_VisionComms.ProcessingState,Read by PLC only,0..5 controlled state
+SERVICE_HEALTHY,ns=3;s=FC01.Vision.SERVICE_HEALTHY,Bool,NVIDIA,DB_VisionComms.ServiceHealthy,Read by PLC only,False blocks production acceptance
+CAMERA_HEALTHY,ns=3;s=FC01.Vision.CAMERA_HEALTHY,Bool,NVIDIA,DB_VisionComms.CameraHealthy,Read by PLC only,False blocks production acceptance
+MODEL_LOADED,ns=3;s=FC01.Vision.MODEL_LOADED,Bool,NVIDIA,DB_VisionComms.ModelLoaded,Read by PLC only,False blocks production acceptance
+MAINTENANCE_ACTIVE,ns=3;s=FC01.Vision.MAINTENANCE_ACTIVE,Bool,NVIDIA,DB_VisionComms.MaintenanceActive,Read by PLC only,True blocks production acceptance
+RESULT_DISPOSITION,ns=3;s=FC01.Vision.RESULT_DISPOSITION,USInt,NVIDIA,DB_VisionComms.Result.Disposition,Read by PLC only,0 NONE 1 PASS 2 HOLD 3 FAIL 4 FAULT
+REASON_BITS,ns=3;s=FC01.Vision.REASON_BITS,DWord,NVIDIA,DB_VisionComms.Result.ReasonBits,Read by PLC only,Bits 16..31 reserved zero
+CONFIDENCE,ns=3;s=FC01.Vision.CONFIDENCE,Real,NVIDIA,DB_VisionComms.Result.Confidence,Read by PLC only,Finite-equivalent bounded 0..1 and thresholded
+DATASET_ID,ns=3;s=FC01.Vision.DATASET_ID,String[32],NVIDIA,DB_VisionComms.Result.DatasetId,Read by PLC only,Exact approved result identity
+CALIBRATION_ID,ns=3;s=FC01.Vision.CALIBRATION_ID,String[32],NVIDIA,DB_VisionComms.Result.CalibrationId,Read by PLC only,Exact approved result identity
+CAPTURE_TIMESTAMP_UTC_MS,ns=3;s=FC01.Vision.CAPTURE_TIMESTAMP_UTC_MS,ULInt,NVIDIA,DB_VisionComms.Result.CaptureTimestampUtcMs,Read by PLC only,Diagnostic ordering only
+INFERENCE_TIMESTAMP_UTC_MS,ns=3;s=FC01.Vision.INFERENCE_TIMESTAMP_UTC_MS,ULInt,NVIDIA,DB_VisionComms.Result.InferenceTimestampUtcMs,Read by PLC only,Not earlier than capture
+PUBLICATION_TIMESTAMP_UTC_MS,ns=3;s=FC01.Vision.PUBLICATION_TIMESTAMP_UTC_MS,ULInt,NVIDIA,DB_VisionComms.Result.PublicationTimestampUtcMs,Read by PLC only,Not earlier than inference
+PROCESSING_TIME_MS,ns=3;s=FC01.Vision.PROCESSING_TIME_MS,UDInt,NVIDIA,DB_VisionComms.Result.ProcessingTimeMs,Read by PLC only,Bounded by PLC policy
+DIAGNOSTIC_CODE,ns=3;s=FC01.Vision.DIAGNOSTIC_CODE,UDInt,NVIDIA,DB_VisionComms.DiagnosticCode,Read by PLC only,Troubleshooting only
+QUEUE_DEPTH,ns=3;s=FC01.Vision.QUEUE_DEPTH,UInt,NVIDIA,DB_VisionComms.QueueDepth,Read by PLC only,Released no-buffering policy requires zero

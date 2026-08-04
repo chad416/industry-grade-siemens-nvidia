@@ -1,4 +1,4 @@
-# Visual artifact review report - Revision E
+# Visual artifact review report - Revision F
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
@@ -8,12 +8,13 @@ A software-agent visual review inspected the complete rendered sets. This is not
 
 | Artifact | Rendered/inspected | Result |
 |---|---:|---|
-| Engineering workbook | 21/21 sheets | PASS: consistent navy/blue tabular style, frozen/table structure, readable wrapping, no visible clipping; summary shows 5 PASS / 4 PARTIAL / 12 BLOCKED / 1 OPEN and exact release boundary |
-| Release-evidence PDF | 5/5 pages | PASS: titles, tables, margins, footer/page numbers and boundary wording readable |
-| Revision-E CAD general arrangement | 4/4 pages | PASS: front, isometric/depth, door and segregation/clearance views readable; provisional assumptions visible |
-| Revision-E mounting-plate PDF | 2/2 pages | PASS: dimensioned layout and 30-hole coordinate register readable; construction boundary visible |
-| Native CAD PNG views | 4/4 views | PASS: front, isometric, segregation and door images open without corruption; provenance is bounded in native evidence |
-| Historical QET baseline PDF | 24/24 pages | PASS for retained historical legibility only; it remains Revision A and is not the current schematic package |
-| Corrected Revision-E QET | 0/26 final-hash folios | BLOCKED: no corrected-hash native reopen/PDF export, so no all-page visual pass is claimed |
+| Engineering workbook | 26/26 sheets | PASS: consistent navy/blue style, formula-error scan clean, readable wrapping and no visible clipping; summary shows 2 PASS / 8 PARTIAL / 11 BLOCKED / 1 OPEN |
+| Release-evidence PDF | 6/6 pages | PASS: titles, tables, margins, footer/page numbers, safety and NVIDIA non-safety wording are readable |
+| Revision-E CAD general arrangement | 4/4 pages | PASS for retained native evidence; provisional assumptions remain visible |
+| Revision-E mounting-plate PDF | 2/2 pages | PASS for retained native evidence; dimensioned layout and 30-hole register are readable |
+| Native CAD PNG views | 4/4 views | PASS; provenance remains bounded in native evidence |
+| Exact-hash native QET export | 26/26 pages | PARTIAL: native reopen/export passed; folio 25 clips one in-body statement and dense schedule pages are small; complete safety text remains readable in the footer |
 
-The release PDF and workbook were rebuilt twice with identical controlled hashes. Contact sheets are controlled for audit navigation; detailed source files remain authoritative.
+The workbook and release PDF were each rebuilt twice with identical normalized SHA-256 hashes. Contact sheets are controlled for audit navigation; detailed native/source files remain authoritative.
+
+THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL.

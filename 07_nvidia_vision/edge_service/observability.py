@@ -8,7 +8,9 @@ from datetime import datetime, timezone
 import json
 import logging
 from logging.handlers import RotatingFileHandler
+import os
 from pathlib import Path
+import threading
 from typing import Callable
 
 
@@ -25,6 +27,7 @@ class JsonFormatter(logging.Formatter):
         for key in (
             "event", "diagnostic_code", "session_epoch", "inspection_id",
             "plc_heartbeat", "attempt", "duration_ms",
+            "configuration_name", "configuration_sha256",
         ):
             value = getattr(record, key, None)
             if value is not None:
@@ -32,6 +35,41 @@ class JsonFormatter(logging.Formatter):
         if record.exc_info:
             document["exception"] = self.formatException(record.exc_info)
         return json.dumps(document, ensure_ascii=True, separators=(",", ":"))
+
+
+class DurableJsonlAuditSink:
+    """Synchronous append+fsync sink required before result publication."""
+
+    def __init__(self, path: Path) -> None:
+        self.path = path.resolve()
+        self.path.parent.mkdir(parents=True, exist_ok=True)
+        self._lock = threading.Lock()
+        self.healthy = False
+        self.probe()
+
+    def _append(self, event: dict) -> None:
+        line = json.dumps(event, ensure_ascii=True, sort_keys=True, separators=(",", ":")) + "\n"
+        with self._lock, self.path.open("a", encoding="utf-8", newline="\n") as stream:
+            stream.write(line)
+            stream.flush()
+            os.fsync(stream.fileno())
+
+    def probe(self) -> bool:
+        try:
+            self._append({"event": "audit_sink_probe", "timestamp_utc": datetime.now(timezone.utc).isoformat()})
+            self.healthy = True
+        except OSError:
+            self.healthy = False
+        return self.healthy
+
+    def write(self, event: dict) -> None:
+        if not self.healthy:
+            raise OSError("durable audit sink is unhealthy")
+        try:
+            self._append(event)
+        except OSError:
+            self.healthy = False
+            raise
 
 
 def configure_logging(*, level: str = "INFO", file_path: str | None = None,

@@ -16,6 +16,11 @@ const sheets = [
   ["alarms.csv", "Alarms"],
   ["vfd_parameters.csv", "VFD Parameters"],
   ["nvidia_interface_tags.csv", "NVIDIA Interface"],
+  ["vision_requirements.csv", "Vision Requirements"],
+  ["vision_fault_matrix.csv", "Vision Fault Matrix"],
+  ["nvidia_electrical_delta.csv", "NVIDIA Electrical"],
+  ["nvidia_version_baseline.csv", "NVIDIA Versions"],
+  ["revision_f_gap_matrix.csv", "Revision-F Gaps"],
   ["network_nodes.csv", "Network Nodes"],
   ["terminal_plan.csv", "Terminal Plan"],
   ["point_to_point_connections.csv", "Point-to-Point"],
@@ -58,6 +63,11 @@ function columnName(index) {
 const proseSheets = new Set([
   "Alarms",
   "NVIDIA Interface",
+  "Vision Requirements",
+  "Vision Fault Matrix",
+  "NVIDIA Electrical",
+  "NVIDIA Versions",
+  "Revision-F Gaps",
   "BOM",
   "Load Budget",
   "Panel Placement",
@@ -115,7 +125,7 @@ summary.getRange("A1:H2").merge();
 summary.getRange("A1").values = [["FC01 - SIEMENS / NVIDIA ENGINEERING SCHEDULES"]];
 summary.getRange("A1:H2").format = { fill: "#12304A", font: { bold: true, color: "#FFFFFF", size: 18 }, verticalAlignment: "center" };
 summary.getRange("A3:H3").merge();
-summary.getRange("A3").values = [["FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION | Revision E | Controlled native-engineering release candidate"]];
+summary.getRange("A3").values = [["FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION | Revision F | NVIDIA implementation-readiness release candidate"]];
 summary.getRange("A3:H3").format = { fill: "#EAF1F5", font: { bold: true, color: "#324B5C", size: 10 }, wrapText: true };
 summary.getRange("A4:H4").merge();
 summary.getRange("A4").values = [["CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."]];
@@ -157,7 +167,7 @@ summary.getRange("B15").formulas = [["=COUNTIF('Acceptance Gates'!C2:C100,\"BLOC
 // release-summary values without depending on cross-sheet recalculation support.
 summary.getRange("B16").formulas = [["=55+24+120+100"]];
 summary.getRange("B17").formulas = [["=(55+24+120+100)/24*1.25"]];
-summary.getRange("D6").values = [["Revision E includes source-tested poll-safe PLC/AI logic, secure asyncua integration and separately controlled native CAD/QET evidence. Native TIA/WinCC/Startdrive/PLCSIM, final site electrical design, trained NVIDIA model, target runtime, FAT/SAT, qualified safety and physical commissioning remain blocked or open exactly as listed. No construction, safety, native compile or model-performance claim is made."]];
+summary.getRange("D6").values = [["Revision F includes a source-tested 47-node fail-closed PLC/AI contract, production-structured edge and dataset tooling, 28 structured behavioral vision fault injections, a controlled electrical delta, secure local asyncua integration and inherited native CAD/QET evidence. The behavioral model is software-only evidence, not PLCSIM, HIL or physical testing. THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL. Native Siemens, real dataset/model, target runtime, site electrical, FAT/SAT, qualified safety and physical commissioning remain blocked or open exactly as listed."]];
 summary.getRange("D6:H15").format = { fill: "#FFF1F1", font: { color: "#642F36", size: 10 }, wrapText: true, verticalAlignment: "center" };
 for (const col of ["D", "E", "F", "G", "H"]) summary.getRange(`${col}5:${col}17`).format.columnWidthPx = 110;
 
@@ -177,4 +187,7 @@ for (const sheet of workbook.worksheets.items) {
 
 const output = await SpreadsheetFile.exportXlsx(workbook);
 await output.save(path.join(scheduleDir, "FC01_engineering_schedules.xlsx"));
+// artifact-tool may spill large inspect output beside the workbook. It is a
+// transient diagnostic, never a controlled release artifact.
+await fs.rm(path.join(scheduleDir, "FC01_engineering_schedules.xlsx.inspect.ndjson"), { force: true });
 console.log(`Saved workbook and ${workbook.worksheets.items.length} sheet renders`);

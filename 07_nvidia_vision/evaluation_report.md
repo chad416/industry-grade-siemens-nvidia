@@ -18,3 +18,5 @@ Model: not trained or delivered. Dataset: not available. Target hardware: not av
 | Model checksum and deployment bundle | Not available |
 
 Acceptance requires traceable results on representative real data. Synthetic results alone cannot close the gate.
+
+`dataset_tool.py evaluate` is available to compute a supplied binary confusion matrix, false-accept rate and false-reject rate without inventing observations. `edge_service/benchmark_harness.py` provides explicitly development-only timing mechanics. Neither tool has been run on a production dataset/model/target in this release.

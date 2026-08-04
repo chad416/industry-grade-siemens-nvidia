@@ -28,8 +28,8 @@ def csv_rows(name: str) -> list[dict]:
 
 
 model = json.loads((ROOT / "00_project_control/canonical_model.json").read_text(encoding="utf-8"))
-ok(model["project"]["revision"] == "E", "canonical revision E")
-ok(model["project"]["status"].startswith("CONTROLLED NATIVE-ENGINEERING RELEASE CANDIDATE"), "truthful controlled native-engineering release-candidate status")
+ok(model["project"]["revision"] == "F", "canonical revision F")
+ok(model["project"]["status"].startswith("CONTROLLED NVIDIA IMPLEMENTATION-READINESS RELEASE CANDIDATE"), "truthful NVIDIA implementation-readiness release-candidate status")
 
 required_dirs = [f"{i:02d}_{name}" for i,name in enumerate(["project_control","requirements","system_architecture","electrical","controls_siemens","hmi","drives","nvidia_vision","digital_twin","panel_cad","schedules","simulation","testing","documentation","qa"])] + ["release"]
 for directory in required_dirs: ok((ROOT / directory).is_dir(), f"required directory {directory}")
@@ -155,9 +155,9 @@ required_scl = {"00_types.scl","DB_Global.scl","FB_HMICommandManager.scl","FB_VF
 actual_scl = {p.name for p in scl_dir.glob("*.scl")}
 ok(required_scl == actual_scl, "exact 15-file Siemens type/FB/DB/OB source inventory present")
 sys.path.insert(0, str(ROOT / "scripts"))
-from revision_d_scl import sources as generated_scl_sources
+from revision_f_scl import sources as generated_scl_sources
 generated_sources = generated_scl_sources()
-ok(set(generated_sources) == required_scl, "revision-D generator owns every authoritative Siemens source")
+ok(set(generated_sources) == required_scl, "revision-F generator owns every authoritative Siemens source")
 for name, generated in sorted(generated_sources.items()):
     ok((scl_dir / name).read_text(encoding="utf-8").rstrip() == generated.rstrip(), f"generated Siemens source parity: {name}")
 for path in sorted(scl_dir.glob("*.scl")):
@@ -264,7 +264,7 @@ attributes = (ROOT / ".gitattributes").read_text(encoding="utf-8")
 for token in ["* text=auto eol=lf","*.qet      -text","*.dxf      -text","*.FCStd    -text","*.step     -text","*.iges     -text","*.xlsx     -text","*.pdf      -text","*.png      -text","*.service  text eol=lf","*.example  text eol=lf","*.log      text eol=lf"]:
     ok(token in attributes, f"explicit Git byte policy includes {token}")
 toolchain_lock = json.loads((ROOT / "release/reproduction_toolchain_lock.json").read_text(encoding="utf-8"))
-ok(toolchain_lock["release"] == "E", "artifact-reproduction toolchain lock is Revision E")
+ok(toolchain_lock["release"] == "F", "artifact-reproduction toolchain lock is Revision F")
 ok(toolchain_lock["python"]["version"] == "3.12.13", "artifact-reproduction Python version is locked")
 ok(toolchain_lock["node"]["packages"]["@oai/artifact-tool"] == "2.8.31", "artifact-tool version is locked")
 ok(toolchain_lock["pdftoppm"]["version"] == "26.05.0", "Poppler renderer version is locked")
@@ -278,7 +278,7 @@ ok("checkout-index" in determinism and "git\", \"archive" in determinism, "deter
 ok("authoritative Git {OPTIONS.source}" not in determinism and "selected authoritative Git snapshot" in determinism, "determinism report is byte-identical for index and HEAD sources")
 determinism_report = (ROOT / "14_qa/determinism_report.md").read_text(encoding="utf-8")
 ok("selected authoritative Git snapshot" in determinism_report and "authoritative Git index bytes" not in determinism_report and "authoritative Git head bytes" not in determinism_report.lower(), "controlled determinism report uses source-neutral authoritative-snapshot wording")
-ok((ROOT / ".github/workflows/revision-e-reproduce.yml").exists(), "fresh-clone Revision-E CI workflow is controlled")
+ok((ROOT / ".github/workflows/revision-f-reproduce.yml").exists(), "fresh-clone Revision-F CI workflow is controlled")
 ok((ROOT / "00_project_control/repository_release_workflow.md").exists() and (ROOT / "14_qa/release_integrity_reproduction.md").exists(), "release-byte and clean-clone evidence documents are controlled")
 ok(all(not (ROOT / "14_qa/pdf_renders" / stale).exists() or not any((ROOT / "14_qa/pdf_renders" / stale).iterdir()) for stale in ["release","release_c"]), "stale pre-Revision-D PDF render directories are empty")
 ok("FS03 / FW4.0" in (ROOT / "04_controls_siemens/cpu_tia_v20_compatibility.md").read_text(encoding="utf-8"), "CPU/TIA V20 firmware baseline documented")
@@ -349,7 +349,7 @@ bad = sorted(p.relative_to(ROOT).as_posix() for p in ROOT.rglob("*") if p.is_fil
 ok(not bad, f"no fabricated native/model artifacts: {bad}")
 
 report = ROOT / "14_qa/automated_validation_report.md"
-lines = ["# Automated validation report — Revision E","",f"Result: **{'PASS' if not errors else 'FAIL'}**","","This is deterministic static/data/independent-model validation. Native QET/FreeCAD results are accepted only through separate controlled reopen/reimport evidence; this report is not TIA, WinCC, Startdrive, PLCSIM or physical proof.","","## Passed checks",""] + [f"- {item}" for item in sorted(checks)]
+lines = ["# Automated validation report — Revision F","",f"Result: **{'PASS' if not errors else 'FAIL'}**","","This is deterministic static/data/independent-model validation. Native QET/FreeCAD results are accepted only through separate controlled reopen/reimport evidence; this report is not TIA, WinCC, Startdrive, PLCSIM, production NVIDIA runtime/model, or physical proof.","","## Passed checks",""] + [f"- {item}" for item in sorted(checks)]
 if errors: lines += ["","## Errors",""] + [f"- {item}" for item in sorted(errors)]
 if not OPTIONS.check:
     report.write_text("\n".join(lines) + "\n", encoding="utf-8", newline="\n")

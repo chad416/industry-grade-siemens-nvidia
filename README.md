@@ -1,11 +1,11 @@
-# FC01 Siemens/NVIDIA compact filling cell - Revision E
+# FC01 Siemens/NVIDIA compact filling cell - Revision F
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-Revision E advances the verified D.1 release-integrity baseline through genuine native engineering where this environment permits it. The controlled release contains a selected-architecture panel model and native verification evidence when its gate record passes, an official QElectroTech 0.100 workstream when its record passes, a poll-safe Siemens-oriented vision request contract, and a production-shaped encrypted OPC UA adapter tested against a real asyncua server/client pair.
+Revision F advances the verified Revision-E native-engineering baseline into NVIDIA implementation readiness. It adds a 47-node typed PLC-AI contract, production-structured acquisition/configuration/model-adapter foundations, dataset and evaluation tooling, durable audit behavior, 28 named structured behavioral fault injections, expanded Siemens/HMI import artifacts, a controlled electrical delta, current NVIDIA version policy and refreshed release evidence.
 
-Run `powershell -ExecutionPolicy Bypass -File scripts/reproduce_validation.ps1` only from a clean clone outside a synchronization folder. The workflow regenerates controlled text/schedules, runs all source/simulator/edge/interface/OPC UA/native-structure checks, compares deterministic workbook/PDF builds, and verifies final committed bytes.
+The PLC remains authoritative for sequence, interlocks, outputs, disposition and transfer. THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL.
 
-No TIA/WinCC compile, Startdrive configuration, PLCSIM result, trained model, AI metric, site electrical calculation, FAT/SAT, physical commissioning, safety validation, construction readiness or qualified-human approval is implied. Consult `14_qa/acceptance_gate_status.md` and `00_project_control/input_request_register.csv` before any continued engineering use.
+Run `powershell -ExecutionPolicy Bypass -File scripts/reproduce_validation.ps1` only from a clean clone outside synchronization folders. No native Siemens compile, representative dataset, trained model, CUDA/TAO/TensorRT/DeepStream execution, GPU latency, physical optics, electrical measurement, FAT/SAT, safety validation or construction readiness is claimed.

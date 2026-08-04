@@ -1,0 +1,29 @@
+{
+  "audit_date": "2026-08-03",
+  "nvidia": {
+    "gpu": "NVIDIA GeForce RTX 5060 Laptop GPU",
+    "driver": "595.95",
+    "memory_mib": 8151,
+    "compute_capability": "12.0",
+    "nvidia_smi": "FOUND",
+    "cuda_toolkit_nvcc": "NOT_FOUND",
+    "tensorrt_trtexec": "NOT_FOUND",
+    "deepstream_app": "NOT_FOUND",
+    "tao_cli": "NOT_FOUND",
+    "docker": "NOT_FOUND",
+    "openusd_usdview": "NOT_FOUND",
+    "omniverse_launcher": "NOT_FOUND",
+    "wsl": "PRESENT_BUT_DISTRIBUTION_ENUMERATION_ACCESS_DENIED",
+    "codex_tao_skill_bank": "NOT_INSTALLED"
+  },
+  "official_version_policy": {
+    "deepstream": "9.1",
+    "jetson_installation_baseline": "JetPack 7.2 GA",
+    "deepstream_jetson_tensorrt": "10.16.1.7",
+    "deepstream_x86_tensorrt": "10.16.0.72",
+    "tao_skill_bank_line": "7.0.1",
+    "generic_tensorrt": "11.1",
+    "policy": "Generic latest TensorRT is not substituted for the selected DeepStream/JetPack compatibility matrix"
+  },
+  "claim_boundary": "No CUDA build, TAO training, ONNX export, TensorRT engine, DeepStream execution, GPU latency, model performance or target-hardware result was executed or claimed."
+}

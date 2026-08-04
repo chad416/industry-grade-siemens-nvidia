@@ -6,6 +6,7 @@ import logging
 import socket
 import sys
 import tempfile
+import threading
 import time
 from pathlib import Path
 import unittest
@@ -31,7 +32,10 @@ from opcua_adapter import (
     ALL_SIGNALS, EDGE_STATUS, EXPECTED_VARIANT_TYPES, PLC_OWNED, RESULT_PAYLOAD,
     AdapterConfig, OpcUaVisionAdapter, RuntimeOptions, SecurityOptions,
 )
-from protocol import InspectionRequest, InspectionResult, ProtocolError
+from protocol import (
+    InspectionRequest, InspectionResult, ProcessingState, ProtocolError,
+    ResultDisposition,
+)
 from service import VisionService
 
 logging.getLogger("asyncua").setLevel(logging.CRITICAL)
@@ -40,6 +44,8 @@ logging.getLogger("asyncuagds.validate").setLevel(logging.CRITICAL)
 
 class ControlledTestBackend:
     controlled_identity = ("TEST-BACKEND-NOT-A-MODEL", "a" * 64)
+    production_authorized = True  # test fixture only; not a deployable backend
+    camera_healthy = True
 
     def __init__(self, delay_s: float = 0.0) -> None:
         self.calls = 0
@@ -52,7 +58,30 @@ class ControlledTestBackend:
         return InspectionResult(
             request.inspection_id, True, True, 2, 2, False, False, False, False,
             25, self.controlled_identity[0], self.controlled_identity[1], request.session_epoch,
+            capture_ack_id=request.inspection_id,
+            processing_state=int(ProcessingState.RESULT_COMPLETE),
+            disposition=int(ResultDisposition.PASS),
+            confidence=0.99,
+            dataset_id=request.expected_dataset_id,
+            calibration_id=request.expected_calibration_id,
+            capture_timestamp_utc_ms=1,
+            inference_timestamp_utc_ms=2,
+            publication_timestamp_utc_ms=2,
+            processing_time_ms=25,
+            service_healthy=True,
+            camera_healthy=True,
+            model_loaded=True,
         )
+
+
+class TestAuditSink:
+    healthy = True
+
+    def probe(self) -> bool:
+        return True
+
+    def write(self, event: dict) -> None:
+        self.last_event = dict(event)
 
 
 class ObservabilityTests(unittest.IsolatedAsyncioTestCase):
@@ -198,7 +227,7 @@ class SecureOpcUaIntegrationTests(unittest.IsolatedAsyncioTestCase):
         obj = await self.server.nodes.objects.add_object(index, "FC01Vision")
         self.server_nodes: dict[str, object] = {}
         default_for_type = {
-            "Boolean": False, "UInt32": 0, "UInt16": 0,
+            "Boolean": False, "UInt64": 0, "UInt32": 0, "UInt16": 0,
             "Byte": 0, "Float": 0.75, "String": "",
         }
         for signal in ALL_SIGNALS:
@@ -211,6 +240,8 @@ class SecureOpcUaIntegrationTests(unittest.IsolatedAsyncioTestCase):
             self.server_nodes[signal] = node
         await self._plc_write("EXPECTED_BOTTLES", 2)
         await self._plc_write("VISION_SESSION_EPOCH", 1)
+        await self._plc_write("EXPECTED_DATASET_ID", "DATASET-TEST")
+        await self._plc_write("EXPECTED_CALIBRATION_ID", "CAL-TEST")
         await self.server.start()
 
         nodes = {signal: self.server_nodes[signal].nodeid.to_string() for signal in ALL_SIGNALS}
@@ -246,7 +277,7 @@ class SecureOpcUaIntegrationTests(unittest.IsolatedAsyncioTestCase):
         return await self.server_nodes[signal].read_value()
 
     async def _adapter(self, backend=None, runtime=None) -> OpcUaVisionAdapter:
-        service = VisionService(backend or ControlledTestBackend())
+        service = VisionService(backend or ControlledTestBackend(), audit_sink=TestAuditSink())
         config = AdapterConfig(self.endpoint, self.config.nodes, self.config.security,
                                runtime or self.runtime)
         adapter = OpcUaVisionAdapter(config, service)
@@ -257,6 +288,14 @@ class SecureOpcUaIntegrationTests(unittest.IsolatedAsyncioTestCase):
     async def test_secure_named_client_endpoint_and_atomic_acknowledged_result(self) -> None:
         backend = ControlledTestBackend()
         adapter = await self._adapter(backend)
+        writes: list[dict] = []
+        original_write = adapter._write_typed
+
+        async def observed_write(values):
+            writes.append(dict(values))
+            await original_write(values)
+
+        adapter._write_typed = observed_write
         endpoints = await self.server.get_endpoints()
         self.assertTrue(endpoints)
         self.assertTrue(all(ep.SecurityMode == ua.MessageSecurityMode.SignAndEncrypt for ep in endpoints))
@@ -279,6 +318,12 @@ class SecureOpcUaIntegrationTests(unittest.IsolatedAsyncioTestCase):
         self.assertEqual(await self._read("RESULT_ID"), 1)
         self.assertEqual(adapter.last_result_write_order[-1], "RESULT_VALID")
         self.assertEqual(tuple(adapter.last_result_write_order[:-1]), RESULT_PAYLOAD)
+        valid_write = next(index for index, values in enumerate(writes)
+                           if values == {"RESULT_VALID": True})
+        terminal_write = max(index for index, values in enumerate(writes[:valid_write])
+                             if values.get("VISION_BUSY") is False
+                             and values.get("PROCESSING_STATE") == int(ProcessingState.RESULT_COMPLETE))
+        self.assertLess(terminal_write, valid_write)
 
         await self._plc_write("INSPECTION_TRIGGER", False)
         await self._plc_write("VISION_RESULT_ACK_ID", 1)
@@ -301,7 +346,7 @@ class SecureOpcUaIntegrationTests(unittest.IsolatedAsyncioTestCase):
         )
         adapter = OpcUaVisionAdapter(
             AdapterConfig(self.endpoint, self.config.nodes, security, self.runtime),
-            VisionService(ControlledTestBackend()),
+            VisionService(ControlledTestBackend(), audit_sink=TestAuditSink()),
         )
         with self.assertRaisesRegex(Exception, "Untrusted|untrusted"):
             await adapter.connect()
@@ -423,6 +468,97 @@ class SecureOpcUaIntegrationTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(adapter.service.state.result_valid)
         self.assertIsNone(adapter.service.published_result)
         self.assertFalse(await self._read("RESULT_VALID"))
+
+    async def test_timeout_blocks_new_session_rearm_until_worker_has_exited(self) -> None:
+        release_worker = threading.Event()
+
+        class BlockingBackend(ControlledTestBackend):
+            def infer(self, request: InspectionRequest) -> InspectionResult:
+                self.calls += 1
+                if self.calls == 1:
+                    release_worker.wait(timeout=2.0)
+                return InspectionResult(
+                    request.inspection_id, True, True, 2, 2, False, False, False, False,
+                    25, self.controlled_identity[0], self.controlled_identity[1], request.session_epoch,
+                    capture_ack_id=request.inspection_id,
+                    processing_state=int(ProcessingState.RESULT_COMPLETE),
+                    disposition=int(ResultDisposition.PASS), confidence=0.99,
+                    dataset_id=request.expected_dataset_id,
+                    calibration_id=request.expected_calibration_id,
+                    capture_timestamp_utc_ms=1, inference_timestamp_utc_ms=2,
+                    publication_timestamp_utc_ms=2, processing_time_ms=25,
+                    service_healthy=True, camera_healthy=True, model_loaded=True,
+                )
+
+        backend = BlockingBackend()
+        runtime = RuntimeOptions(
+            poll_interval_ms=10, connect_timeout_ms=3000, operation_timeout_ms=1000,
+            inference_timeout_ms=20, reconnect_initial_ms=10, reconnect_max_ms=50,
+            reconnect_jitter_ms=0, coherent_snapshot_attempts=3,
+        )
+        adapter = await self._adapter(backend, runtime)
+        for signal, value in (
+            ("VISION_ENABLE", True), ("INSPECTION_TRIGGER", True),
+            ("INSPECTION_ID", 1), ("RECIPE_ID", 1),
+            ("EXPECTED_BOTTLES", 2), ("TARGET_FILL_LEVEL", 0.75),
+            ("PLC_HEARTBEAT", 1),
+        ):
+            await self._plc_write(signal, value)
+        with self.assertRaisesRegex(ProtocolError, "deadline"):
+            await adapter.run_cycle()
+        self.assertIsNotNone(adapter._timed_out_inference)
+        self.assertTrue(adapter.service.state.busy)
+
+        # A serially advanced disabled session must not reset shared state while
+        # the old synchronous backend is still live.
+        for signal, value in (
+            ("VISION_ENABLE", False), ("INSPECTION_TRIGGER", False),
+            ("INSPECTION_ID", 0), ("VISION_SESSION_EPOCH", 2),
+            ("PLC_HEARTBEAT", 2),
+        ):
+            await self._plc_write(signal, value)
+        await adapter.run_cycle()
+        self.assertFalse(adapter.service.state.ready)
+        self.assertTrue(adapter.service.state.busy)
+        self.assertEqual(adapter.service.state.session_epoch, 1)
+
+        # Enabling/triggering the new session while blocked cannot launch a
+        # second backend call or publish a result.
+        for signal, value in (
+            ("VISION_ENABLE", True), ("INSPECTION_TRIGGER", True),
+            ("INSPECTION_ID", 1), ("PLC_HEARTBEAT", 3),
+        ):
+            await self._plc_write(signal, value)
+        await adapter.run_cycle()
+        self.assertEqual(backend.calls, 1)
+        self.assertFalse(await self._read("RESULT_VALID"))
+
+        release_worker.set()
+        for _ in range(100):
+            if adapter._timed_out_inference is None:
+                break
+            await asyncio.sleep(0.01)
+        self.assertIsNone(adapter._timed_out_inference)
+        self.assertFalse(adapter.service.state.ready)
+
+        # Only now may disabled synchronization rearm the new session.
+        for signal, value in (
+            ("VISION_ENABLE", False), ("INSPECTION_TRIGGER", False),
+            ("INSPECTION_ID", 0), ("PLC_HEARTBEAT", 4),
+        ):
+            await self._plc_write(signal, value)
+        await adapter.run_cycle()
+        self.assertTrue(adapter.service.state.ready)
+        self.assertEqual(adapter.service.state.session_epoch, 2)
+
+        for signal, value in (
+            ("VISION_ENABLE", True), ("INSPECTION_TRIGGER", True),
+            ("INSPECTION_ID", 1), ("PLC_HEARTBEAT", 5),
+        ):
+            await self._plc_write(signal, value)
+        await adapter.run_cycle()
+        self.assertEqual(backend.calls, 2)
+        self.assertTrue(await self._read("RESULT_VALID"))
 
 
 if __name__ == "__main__":

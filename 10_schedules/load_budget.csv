@@ -2,7 +2,10 @@ load,voltage,nominal_w,demand_factor,demand_w,basis
 PLC CPU and I/O,24 VDC,55,1.0,55,Preliminary allowance; verify Siemens configuration
 HMI,24 VDC,24,1.0,24,Maximum-current allowance from product data
 "Relays, sensors and solenoids",24 VDC,150,0.8,120,Duty-cycle allowance; inrush not finalized
-Vision edge + camera + lighting,24 VDC,100,1.0,100,Placeholder pending selected carrier/camera
+Vision edge compute allowance,24 VDC,60,1.0,60,Provisional branch -F220; carrier/input/inrush unconfirmed
+Vision camera allowance,24 VDC,12,1.0,12,Provisional branch -F221; PoE not assumed
+Vision lighting allowance,24 VDC,20,1.0,20,Provisional branch -F222; pulse duty/inrush unconfirmed
+Vision service/network allowance,24 VDC,8,1.0,8,Provisional branch -F223; maintenance-only service
 24 VDC subtotal,24 VDC,329,N/A,299,12.458 A demand; 20 A concept leaves 7.542 A (37.71% of rating) unused; minimum 15.573 A for 25% demand margin before inrush/derating
 Conveyor drive,400 VAC,750,1.0,750,Motor nameplate not supplied
 Pump drive,400 VAC,750,1.0,750,Pump curve/motor nameplate not supplied

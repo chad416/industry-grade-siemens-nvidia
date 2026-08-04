@@ -2,19 +2,62 @@ from __future__ import annotations
 
 import sys
 import unittest
+from dataclasses import replace
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
-from protocol import InspectionRequest, InspectionResult, ProtocolError, quality_pass
+from protocol import (
+    InspectionRequest, InspectionResult, ProcessingState, ProtocolError,
+    ResultDisposition, quality_pass,
+)
 from service import VisionService
+
+
+class TestAuditSink:
+    def __init__(self, *, fail: bool = False) -> None:
+        self.healthy = not fail
+        self.fail = fail
+        self.records: list[dict] = []
+
+    def probe(self) -> bool:
+        self.healthy = not self.fail
+        return self.healthy
+
+    def write(self, event: dict) -> None:
+        if self.fail:
+            self.healthy = False
+            raise OSError("injected audit storage failure")
+        self.records.append(dict(event))
 
 
 class ControlledTestBackend:
     controlled_identity = ("TEST-BACKEND-NOT-A-MODEL", "a" * 64)
+    production_authorized = True  # test fixture only; not a deployable backend
 
     def infer(self, request: InspectionRequest) -> InspectionResult:
-        return InspectionResult(request.inspection_id, True, True, 2, 2, False, False, False, False, 25, self.controlled_identity[0], self.controlled_identity[1], request.session_epoch)
+        return controlled_result(request, self.controlled_identity)
+
+
+def controlled_result(request: InspectionRequest, identity: tuple[str, str], **changes) -> InspectionResult:
+    result = InspectionResult(
+        request.inspection_id, True, True, 2, 2, False, False, False, False,
+        25, identity[0], identity[1], request.session_epoch,
+        capture_ack_id=request.inspection_id,
+        processing_state=int(ProcessingState.RESULT_COMPLETE),
+        disposition=int(ResultDisposition.PASS),
+        confidence=0.99,
+        dataset_id=request.expected_dataset_id,
+        calibration_id=request.expected_calibration_id,
+        capture_timestamp_utc_ms=1,
+        inference_timestamp_utc_ms=2,
+        publication_timestamp_utc_ms=2,
+        processing_time_ms=25,
+        service_healthy=True,
+        camera_healthy=True,
+        model_loaded=True,
+    )
+    return replace(result, **changes)
 
 
 class EdgeServiceTests(unittest.TestCase):
@@ -23,7 +66,7 @@ class EdgeServiceTests(unittest.TestCase):
 
     def service(self, backend=None, *, session_epoch: int = 1, observed_inspection_id: int = 0,
                 observed_ack_id: int = 0, observed_plc_heartbeat: int = 0, **kwargs) -> VisionService:
-        service = VisionService(backend or ControlledTestBackend(), **kwargs)
+        service = VisionService(backend or ControlledTestBackend(), audit_sink=TestAuditSink(), **kwargs)
         service.reset(disabled=True, session_epoch=session_epoch,
                       observed_inspection_id=observed_inspection_id,
                       observed_ack_id=observed_ack_id,
@@ -36,7 +79,7 @@ class EdgeServiceTests(unittest.TestCase):
         with self.assertRaises(ProtocolError): service.inspect(self.request())
 
     def test_controlled_backend_stays_not_ready_until_disabled_sync(self) -> None:
-        service = VisionService(ControlledTestBackend())
+        service = VisionService(ControlledTestBackend(), audit_sink=TestAuditSink())
         self.assertFalse(service.state.ready)
         self.assertEqual(service.state.diagnostic_code, "SESSION_SYNC_REQUIRED")
         with self.assertRaisesRegex(ProtocolError, "disabled session synchronization"):
@@ -49,6 +92,21 @@ class EdgeServiceTests(unittest.TestCase):
         result = service.inspect(self.request())
         self.assertTrue(service.state.result_valid)
         self.assertTrue(quality_pass(result))
+
+    def test_durable_audit_failure_blocks_publication_and_requires_recovery(self) -> None:
+        sink = TestAuditSink()
+        service = VisionService(ControlledTestBackend(), audit_sink=sink)
+        service.reset(disabled=True, session_epoch=1)
+        sink.fail = True
+        with self.assertRaisesRegex(ProtocolError, "audit write failed"):
+            service.inspect(self.request())
+        self.assertFalse(service.state.ready)
+        self.assertFalse(service.state.result_valid)
+        self.assertEqual(service.state.diagnostic_code, "AUDIT_STORAGE_FAILURE")
+        sink.fail = False
+        service.reset(disabled=True, session_epoch=1)
+        self.assertTrue(service.state.ready)
+        self.assertEqual(service.inspect(self.request()).result_id, 1)
 
     def test_duplicate_id_is_rejected_and_service_faults_closed(self) -> None:
         service = self.service()
@@ -101,13 +159,13 @@ class EdgeServiceTests(unittest.TestCase):
     def test_non_hexadecimal_controlled_hash_is_rejected(self) -> None:
         class BadIdentityBackend(ControlledTestBackend):
             controlled_identity = ("MODEL-A", "z" * 64)
-        self.assertFalse(VisionService(BadIdentityBackend()).state.ready)
+        self.assertFalse(VisionService(BadIdentityBackend(), audit_sink=TestAuditSink()).state.ready)
 
     def test_result_identity_must_match_backend(self) -> None:
         class SwappingBackend(ControlledTestBackend):
             controlled_identity = ("MODEL-A", "a" * 64)
             def infer(self, request: InspectionRequest) -> InspectionResult:
-                return InspectionResult(request.inspection_id, True, True, 2, 2, False, False, False, False, 25, "MODEL-B", "b" * 64, request.session_epoch)
+                return controlled_result(request, ("MODEL-B", "b" * 64))
         service = self.service(SwappingBackend())
         with self.assertRaises(ProtocolError):
             service.inspect(self.request())
@@ -162,14 +220,17 @@ class EdgeServiceTests(unittest.TestCase):
     def test_warning_bearing_pass_claim_is_rejected(self) -> None:
         class WarningBackend(ControlledTestBackend):
             def infer(self, request: InspectionRequest) -> InspectionResult:
-                return InspectionResult(request.inspection_id, True, True, 2, 2, False, False, True, False, 25, self.controlled_identity[0], self.controlled_identity[1], request.session_epoch)
+                return controlled_result(request, self.controlled_identity, vision_warning=True)
         with self.assertRaisesRegex(ProtocolError, "blocking quality"):
             self.service(WarningBackend()).inspect(self.request())
 
     def test_per_channel_pass_fill_contradiction_is_rejected(self) -> None:
         class ContradictoryBackend(ControlledTestBackend):
             def infer(self, request: InspectionRequest) -> InspectionResult:
-                return InspectionResult(request.inspection_id, True, False, 1, 1, False, False, False, False, 25, self.controlled_identity[0], self.controlled_identity[1], request.session_epoch)
+                return controlled_result(
+                    request, self.controlled_identity,
+                    bottle_2_pass=False, fill_1_status=1, fill_2_status=1,
+                )
         with self.assertRaisesRegex(ProtocolError, "bottle 1"):
             self.service(ContradictoryBackend()).inspect(self.request())
 
@@ -227,7 +288,7 @@ class EdgeServiceTests(unittest.TestCase):
         self.assertEqual(service.state.published_result_id, 2)
 
     def test_reset_rejects_incoherent_plc_counter_snapshot(self) -> None:
-        service = VisionService(ControlledTestBackend())
+        service = VisionService(ControlledTestBackend(), audit_sink=TestAuditSink())
         with self.assertRaisesRegex(ProtocolError, "cannot exceed"):
             service.reset(disabled=True, session_epoch=1,
                           observed_inspection_id=4, observed_ack_id=5)
@@ -356,28 +417,26 @@ class EdgeServiceTests(unittest.TestCase):
     def test_restore_rejects_acked_wrong_session_and_wrong_model_publications(self) -> None:
         service = self.service(observed_inspection_id=7, observed_ack_id=7,
                                observed_plc_heartbeat=7)
-        acked = InspectionResult(7, True, True, 2, 2, False, False, False, False,
-                                 25, "TEST-BACKEND-NOT-A-MODEL", "a" * 64, 1)
+        request = self.request(7, 7, 1)
+        acked = controlled_result(request, ControlledTestBackend.controlled_identity)
         with self.assertRaisesRegex(ProtocolError, "already acknowledged"):
             service.restore_publication(acked)
 
         service = self.service(observed_inspection_id=7, observed_ack_id=6,
                                observed_plc_heartbeat=7)
-        wrong_session = InspectionResult(7, True, True, 2, 2, False, False, False, False,
-                                         25, "TEST-BACKEND-NOT-A-MODEL", "a" * 64, 2)
+        wrong_session = replace(acked, session_epoch=2)
         with self.assertRaisesRegex(ProtocolError, "session"):
             service.restore_publication(wrong_session)
-        wrong_model = InspectionResult(7, True, True, 2, 2, False, False, False, False,
-                                       25, "MODEL-B", "b" * 64, 1)
+        wrong_model = replace(acked, model_id="MODEL-B", model_hash="b" * 64)
         with self.assertRaisesRegex(ProtocolError, "model identity"):
             service.restore_publication(wrong_model)
 
     def test_restore_rejects_contradictory_retained_payload(self) -> None:
         service = self.service(observed_inspection_id=7, observed_ack_id=6,
                                observed_plc_heartbeat=7)
-        contradictory = InspectionResult(
-            7, True, True, 1, 2, False, False, False, False, 25,
-            "TEST-BACKEND-NOT-A-MODEL", "a" * 64, 1,
+        contradictory = replace(
+            controlled_result(self.request(7, 7, 1), ControlledTestBackend.controlled_identity),
+            fill_1_status=1,
         )
         with self.assertRaisesRegex(ProtocolError, "contradicts"):
             service.restore_publication(contradictory)
@@ -451,7 +510,7 @@ class EdgeServiceTests(unittest.TestCase):
             service.inspect(InspectionRequest(0x1_0000_0000, 1, 2, 0.75, 1, 1))
         class LongIdentityBackend(ControlledTestBackend):
             controlled_identity = ("X" * 33, "a" * 64)
-        self.assertFalse(VisionService(LongIdentityBackend()).state.ready)
+        self.assertFalse(VisionService(LongIdentityBackend(), audit_sink=TestAuditSink()).state.ready)
 
     def test_malformed_identity_shapes_and_property_failure_stay_not_ready(self) -> None:
         malformed = [(), ("MODEL",), ("MODEL", "a" * 64, "EXTRA"),
@@ -459,7 +518,7 @@ class EdgeServiceTests(unittest.TestCase):
         for identity in malformed:
             class Backend(ControlledTestBackend):
                 controlled_identity = identity
-            service = VisionService(Backend())
+            service = VisionService(Backend(), audit_sink=TestAuditSink())
             self.assertFalse(service.state.ready)
             self.assertEqual(service.state.diagnostic_code, "NO_CONTROLLED_MODEL")
 
@@ -467,7 +526,7 @@ class EdgeServiceTests(unittest.TestCase):
             @property
             def controlled_identity(self):
                 raise RuntimeError("identity store unavailable")
-        service = VisionService(RaisingBackend())
+        service = VisionService(RaisingBackend(), audit_sink=TestAuditSink())
         self.assertFalse(service.state.ready)
         self.assertEqual(service.state.diagnostic_code, "NO_CONTROLLED_MODEL")
 
@@ -475,7 +534,7 @@ class EdgeServiceTests(unittest.TestCase):
         for model_id in (" ", "MODEL\nINJECT", "MODEL/RELATIVE", "-LEADING"):
             class Backend(ControlledTestBackend):
                 controlled_identity = (model_id, "a" * 64)
-            service = VisionService(Backend())
+            service = VisionService(Backend(), audit_sink=TestAuditSink())
             self.assertFalse(service.state.ready, repr(model_id))
             self.assertEqual(service.state.diagnostic_code, "NO_CONTROLLED_MODEL")
 
@@ -488,7 +547,7 @@ class EdgeServiceTests(unittest.TestCase):
                 if self.reads >= 3:
                     raise RuntimeError("identity store changed during rearm")
                 return ("TEST-BACKEND-NOT-A-MODEL", "a" * 64)
-        service = VisionService(ThirdReadRaises())
+        service = VisionService(ThirdReadRaises(), audit_sink=TestAuditSink())
         service.reset(disabled=True, session_epoch=1)
         self.assertTrue(service.state.ready)
         self.assertEqual(service.backend.reads, 2)
@@ -500,7 +559,7 @@ class EdgeServiceTests(unittest.TestCase):
                 if self.reads >= 2:
                     raise RuntimeError("identity store unavailable during rearm")
                 return ("TEST-BACKEND-NOT-A-MODEL", "a" * 64)
-        service = VisionService(SecondReadRaises())
+        service = VisionService(SecondReadRaises(), audit_sink=TestAuditSink())
         service.reset(disabled=True, session_epoch=1)
         self.assertFalse(service.state.ready)
         self.assertEqual(service.state.diagnostic_code, "NO_CONTROLLED_MODEL")

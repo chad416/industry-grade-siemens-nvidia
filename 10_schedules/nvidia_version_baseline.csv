@@ -1,0 +1,6 @@
+domain,version,platform,status,source
+DeepStream target,9.1,Jetson Orin/Thor or supported x86,OFFICIAL CURRENT; target image not selected,https://docs.nvidia.com/metropolis/deepstream/9.1/text/DS_Release_notes.html
+Jetson installation,JetPack 7.2 GA,Jetson,PLANNING BASELINE,https://docs.nvidia.com/metropolis/deepstream/dev-guide/text/DS_Installation.html
+DeepStream Jetson TensorRT,10.16.1.7,Jetson,PLATFORM-SPECIFIC COMPATIBILITY,https://docs.nvidia.com/metropolis/deepstream/dev-guide/text/DS_Migration_guide.html
+TAO skill bank,7.0.1,Approved Linux/container backend,NOT INSTALLED OR EXECUTED,https://docs.nvidia.com/tao/tao-toolkit/latest/text/release_notes.html
+Generic TensorRT,11.1,Generic supported platforms,CURRENT GENERIC; NOT JETSON TARGET EVIDENCE,https://docs.nvidia.com/deeplearning/tensorrt/latest/getting-started/release-notes-11/11.1.0.html

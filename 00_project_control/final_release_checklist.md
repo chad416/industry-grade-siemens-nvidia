@@ -1,17 +1,14 @@
-# Final release checklist - Revision E
+# Final release checklist - Revision F
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-- [x] Revision-E canonical schedules regenerate from controlled owners.
-- [x] All 15 Siemens SCL exports retain generator parity and poll-safe request contracts.
-- [x] Encrypted real asyncua test-server/client integration is controlled.
-- [x] Selected-architecture Revision-E FCStd/exchange artifacts and verification evidence are controlled when their record passes.
-- [x] Corrected 26-folio QET source reconciles tags, addresses, terminals and cables.
-- [ ] Corrected final QET hash reopens, exports and receives all-page/cross-reference review.
-- [ ] Native TIA V20/WinCC/Startdrive projects open and compile; PLCSIM traces pass.
-- [ ] Site electrical calculations, qualified safety validation, real AI model/target execution, FAT and SAT pass.
-- [x] Published candidate `b9633c6255fe34e48a1be34afe5024935f48651e` manifest, clean worktree, upstream SHA and fresh GitHub-clone reproduction passed; repeat for the final attestation commit before handoff.
-
-Unchecked items block construction, production deployment or physical acceptance; they are not missing success claims.
+- [x] Revision-F canonical schedules regenerate from controlled owners.
+- [x] 47-node PLC-AI map reconciles across canonical, Siemens bindings, HMI, edge CSV/JSON and tests.
+- [x] 32 process cases and 28 structured vision behavioral injections execute with fail-closed invariants.
+- [x] Revision-E FCStd/exchange native evidence remains controlled and unchanged.
+- [x] Exact-hash QET native reopen/export evidence is controlled; PARTIAL visual/xref status remains explicit.
+- [x] 26-sheet workbook and six-page PDF rebuild deterministically and have complete rendered review sets.
+- [ ] Final Revision-F manifest/commit/push/fresh-clone reproduction and upstream alignment are recorded.
+- [ ] Native Siemens, real dataset/model/runtime, site electrical, physical and qualified-safety gates are closed externally.

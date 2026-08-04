@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fc01:vision:model-bundle:v1",
+  "title": "FC01 Controlled Vision Model Bundle",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["model_id", "model_sha256", "dataset_id", "calibration_id", "approval_status", "input_contract", "output_contract"],
+  "properties": {
+    "model_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,31}$"},
+    "model_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "dataset_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,31}$"},
+    "calibration_id": {"type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,31}$"},
+    "approval_status": {"enum": ["DEVELOPMENT", "REJECTED", "APPROVED"]},
+    "input_contract": {"type": "object"},
+    "output_contract": {"type": "object"}
+  }
+}

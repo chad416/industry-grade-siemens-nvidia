@@ -23,7 +23,7 @@ def require(actual: str, expected: str, label: str) -> None:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Verify the exact Revision-E artifact-reproduction toolchain")
+    parser = argparse.ArgumentParser(description="Verify the exact Revision-F artifact-reproduction toolchain")
     parser.add_argument("--node", required=True, type=Path)
     parser.add_argument("--node-modules", required=True, type=Path)
     parser.add_argument("--pdftoppm", required=True, type=Path)

@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:fc01:vision:service-config:v3",
+  "title": "FC01 Vision OPC UA Contract Configuration",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "namespace_version", "opcua_endpoint", "security_policy", "anonymous_access", "signal_count", "nodes"],
+  "properties": {
+    "status": {"type": "string", "minLength": 1},
+    "namespace_version": {"const": "FC01.Vision.v3"},
+    "opcua_endpoint": {"type": "string", "pattern": "^opc\\.tcp://[^/@:]+:[0-9]+(?:/.*)?$"},
+    "security_policy": {"const": "Basic256Sha256/SignAndEncrypt"},
+    "anonymous_access": {"const": false},
+    "expected_bottles": {"type": "integer", "const": 2},
+    "request_timeout_ms": {"type": "integer", "minimum": 1, "maximum": 60000},
+    "heartbeat_timeout_ms": {"type": "integer", "minimum": 1, "maximum": 60000},
+    "signal_count": {"const": 47},
+    "node_map": {"type": "string", "minLength": 1},
+    "result_atomicity": {"type": "string", "minLength": 1},
+    "ack_semantics": {"type": "string", "minLength": 1},
+    "session_rearm": {"type": "string", "minLength": 1},
+    "certificate_policy": {"type": "string", "minLength": 1},
+    "durable_event_sink": {"type": "string", "minLength": 1},
+    "model_bundle": {"type": ["null", "string"]},
+    "nodes": {
+      "type": "object",
+      "minProperties": 47,
+      "maxProperties": 47,
+      "additionalProperties": {"type": "string", "pattern": "^ns=[0-9]+;s=FC01\\.Vision\\.[A-Z0-9_]+$"}
+    }
+  }
+}
