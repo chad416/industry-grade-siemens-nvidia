@@ -2102,7 +2102,7 @@
       "status": "Implemented in reviewable sources; native Siemens verification blocked",
       "design_artifact": "11_simulation/filling_cell_simulator.py; 11_simulation/tests",
       "test_ids": "TC-001..TC-032",
-      "evidence": "32 deterministic process scenarios plus 99 source/simulator/native-contract tests, 28 deterministic vision-fault scenarios, 85 edge-service tests and 17 interface-harness tests; see the executed report"
+      "evidence": "32 deterministic process scenarios plus 99 source/simulator/native-contract tests, 28 deterministic vision-fault scenarios, 86 edge-service tests and 17 interface-harness tests; see the executed report"
     },
     {
       "requirement_id": "SYS-023",

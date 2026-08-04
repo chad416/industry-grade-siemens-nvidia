@@ -432,7 +432,16 @@ class OpcUaVisionAdapter:
         client = Client(
             self.config.endpoint,
             timeout=self.config.runtime.operation_timeout_ms / 1000,
-            watchdog_intervall=max(self.config.runtime.poll_interval_ms / 1000, 0.05),
+            # The asyncua watchdog performs a real server-state request and uses
+            # this value as that request's timeout. Tying it to the fast PLC
+            # scan/poll interval can therefore declare a healthy encrypted
+            # session dead while certificate or other requests are in flight.
+            # Give transport supervision at least the configured OPC UA
+            # operation budget (and asyncua's one-second default floor).
+            watchdog_intervall=max(
+                self.config.runtime.operation_timeout_ms / 1000,
+                1.0,
+            ),
             auto_reconnect=False,
         )
         client.name = "FC01 Vision Edge OPC UA Client"

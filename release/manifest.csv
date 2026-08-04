@@ -4,7 +4,7 @@ path,bytes,sha256,category,role,revision,gate_status,blocker
 .gitignore,80,8ce0a10a2d9b4184830cf7967d4e6635e53e629cabafcdbf94dbe6a70c590dd8,Repository control,Controlled artifact,F,PASS,
 00_project_control/acceptance_gates.csv,3735,e90d100075de45612af53ebb774a3c34df8e9beb2737d1a6d48974cf4170a604,Project control,Controlled artifact,F,PASS,
 00_project_control/agent_ownership.csv,397,9be29c9e6ed3ee7e90d2ed5636be76765d7624ec14148f64aceeabf913918214,Project control,Controlled artifact,F,PASS,
-00_project_control/canonical_model.json,568234,a39738094c84b0b8fc1768256f8dbee4781e314b5d08bf9331e778293ed4df04,Project control,Controlled artifact,F,PASS,
+00_project_control/canonical_model.json,568234,98040549be7d3b97b97090de8095627d22729c24f90898cd60c8f763c3b6863d,Project control,Controlled artifact,F,PASS,
 00_project_control/component_rationale_register.md,112595,f618e53fd1f9323211856e01ab3dcf93c510ff46ee6783239e4cd7ff2f7f1ae1,Project control,Controlled artifact,F,PASS,
 00_project_control/decision_register.csv,4204,45d3aa4ee62cf26bfe20a42a4c18713dcc089342a1c2673aa4486bd99d51f5a0,Project control,Controlled artifact,F,PASS,
 00_project_control/delivery_plan.md,1444,449f1c60662cf31a16645938b245310fc4a1c0eb91e2d6350a2b6f5cec248c25,Project control,Controlled artifact,F,PASS,
@@ -96,7 +96,7 @@ path,bytes,sha256,category,role,revision,gate_status,blocker
 07_nvidia_vision/edge_service/deployment/fc01-vision-edge.service,895,5f673cd064f2c896520c825083a59ee4fc19b85878e2de82dcbf4dc1f1c057fd,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
 07_nvidia_vision/edge_service/main.py,2280,a1af297773390f21dfa5665826ecbdf8312f3735e9aefcb15f8301dee8efb2bf,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
 07_nvidia_vision/edge_service/observability.py,8167,46ed69512272df59acdae24601d770bb4777f9491653b01e9842cf77d861d3bf,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
-07_nvidia_vision/edge_service/opcua_adapter.py,43254,1456f67f4dc20da26fa23d14a710e080bf318161b7c677ea09d513401363ea40,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
+07_nvidia_vision/edge_service/opcua_adapter.py,43760,8defcfff91ff0311d5947e1aeaa3a9fe025c89f66a2d0519ba097c13248e1a3e,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
 07_nvidia_vision/edge_service/opcua_adapter_runbook.md,8441,c64f2c2a29388d344f869cacf55fc56ca3d0df0b4271fc945b46aa0f6754ba77,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
 07_nvidia_vision/edge_service/opcua_runtime_config.json,1550,18af4c8431232b63e9259e08fe1b8649671e0af7fdd9dcb964d521bcae580460,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
 07_nvidia_vision/edge_service/protocol.py,12355,01d098620b94c294380c5b88ab557e338b62979253eef64827d53d0d4aaf9901,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
@@ -104,7 +104,7 @@ path,bytes,sha256,category,role,revision,gate_status,blocker
 07_nvidia_vision/edge_service/service.py,23511,56d45ca68dfaca51ca7be224d06692c1c22cc0a20783c63f583f8de2cfa4244f,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
 07_nvidia_vision/edge_service/service_config.json,4397,8bd377a7782377c036a5882bdd51885bb0448fdb2d6ecbc37015e3e5f19133dd,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
 07_nvidia_vision/edge_service/service_config.schema.json,1532,cfb34fe56e03d9a49c5580bd3a990d42a4ab01b4afdd0301744e0fe9fa53713e,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
-07_nvidia_vision/edge_service/tests/test_opcua_adapter.py,26269,6ec6233d2b367d640694f59917d4c0a40fe60353682f4dc104a2c0221e66af45,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
+07_nvidia_vision/edge_service/tests/test_opcua_adapter.py,26682,ee6e8d7a4b15fa9be7847787747e8f9ab6408088135ec2a3bc7349f2bdb1df2a,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
 07_nvidia_vision/edge_service/tests/test_revision_e_operational_docs.py,1164,60c7cadb9c74d913d8fda713e3a34b8aaa447d760b1f828f6a93508798dc82bb,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
 07_nvidia_vision/edge_service/tests/test_revision_f_readiness.py,16335,7265ebfa5a135990126b72053f567c091562b9a82a4e6c9ab3787ceab9bcc8d4,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
 07_nvidia_vision/edge_service/tests/test_service.py,27944,eba9c78dbcd68ce5c833b64a22de7cba5ecc961fc0e0aab06afba0963b7d0d00,Vision,"Locally tested source, secure OPC UA adapter and deployment specification",F,PARTIAL,"Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
@@ -147,7 +147,7 @@ path,bytes,sha256,category,role,revision,gate_status,blocker
 09_panel_cad/revision_e/native_verification.json,12826,62eb7ea6629b47e3d57f3b43130d5975cb23a3564f2be5014d1c2c8f5a32b428,Panel CAD,Revision-E native panel source/export/evidence,F,PASS,FreeCAD reopen/reimport evidence is controlled separately from construction/site approval
 09_panel_cad/revision_e/revision_e_panel_placement.csv,46307,a9cc29a15bf096c7b01ee5c7f5971cec26df89fba14c07b1091d836cea137007,Panel CAD,Revision-E native panel source/export/evidence,F,PASS,FreeCAD reopen/reimport evidence is controlled separately from construction/site approval
 09_panel_cad/revision_e/segregation_zones.png,40417,fcc1163c6e21131d7e64639ef56f6a8e1fe78c0e99b19094e64c4186b1127e32,Panel CAD,Revision-E native panel source/export/evidence,F,PASS,FreeCAD reopen/reimport evidence is controlled separately from construction/site approval
-10_schedules/FC01_engineering_schedules.xlsx,130915,73f585830c32640b7f771babb1194b2fd0b0bab6e8cfe3128187e63e90cf763b,Schedules,Controlled artifact,F,PASS,
+10_schedules/FC01_engineering_schedules.xlsx,130983,f7b326032b630b551b87a2882bb65ffd3867a250c2bf7aacd047b54f2b31534a,Schedules,Controlled artifact,F,PASS,
 10_schedules/acceptance_gates.csv,3735,e90d100075de45612af53ebb774a3c34df8e9beb2737d1a6d48974cf4170a604,Schedules,Controlled artifact,F,PASS,
 10_schedules/alarms.csv,6501,fe638efafe0481e5c15e738ce7f0689137138bce8f6b467b93bceb6e21ae807b,Schedules,Controlled artifact,F,PASS,
 10_schedules/bom.csv,8947,40a9bfce77fc8f4a3eade2c006bf5ff3450e9bf4e72e6846afa8f0fbe943a47a,Schedules,Controlled artifact,F,PASS,
@@ -165,7 +165,7 @@ path,bytes,sha256,category,role,revision,gate_status,blocker
 10_schedules/panel_placement.csv,4338,93137b8ac3a4c66d07966e35150bb6dcca85070e34244e4a9a41f5606c8239bd,Schedules,Controlled artifact,F,PASS,
 10_schedules/plc_io.csv,7058,e0142bad48531f8c2ab7b01209aa883d7cc43c6b8dbff35186df61786560aca5,Schedules,Controlled artifact,F,PASS,
 10_schedules/point_to_point_connections.csv,31804,0f39ba1cfb37f4cdf8bdacc1afdc5cdfd90c7b6c574205ba813048921329631a,Schedules,Controlled artifact,F,PASS,
-10_schedules/requirements_traceability.csv,16664,8ae47f7f89b27a62d4012ef3481fa7278cf266fe7ae14050c859536f1a860517,Schedules,Controlled artifact,F,PASS,
+10_schedules/requirements_traceability.csv,16664,8dedf5e6f53549e595fce82e664e19ac17379bbc0f263527679c1189fbc199b6,Schedules,Controlled artifact,F,PASS,
 10_schedules/revision_f_gap_matrix.csv,5093,017e239cf2c8d2d98710c3877f5b7e65882dc60114d682d0630ce8a9d5a93b99,Schedules,Controlled artifact,F,PASS,
 10_schedules/siemens_hardware.csv,3718,0c0f976e7244176e4fdc756eb9a4ad69954f598ecabababb4411fc2e1010b7c1,Schedules,Controlled artifact,F,PASS,
 10_schedules/terminal_plan.csv,20788,fc6a1a5fa33de4f9bfe0b954cbb6d877e155ecabe70802ac34d589c5d8813924,Schedules,Controlled artifact,F,PASS,
@@ -249,7 +249,7 @@ path,bytes,sha256,category,role,revision,gate_status,blocker
 14_qa/automated_validation_report.md,32316,dddd4452da3faa0c8150463a9290cb668e66f1b35c7117d44bba9755fa8c78b8,QA,Controlled artifact,F,PASS,
 14_qa/design_review_checklist.md,1405,f3a986146bd7238f220b9c00e9e65365d847049b22bf815ceb3bcdad5314a452,QA,Controlled artifact,F,PASS,
 14_qa/determinism_report.md,542,6638de3ccfd184491c1d056e337e1b5ff773700255ec6b7e13b7c5e575b5bb6a,QA,Controlled artifact,F,PASS,
-14_qa/executed_test_report.md,2553,8e2b03a464bfd6f6814bb68063929c829f62f534cf21e9d8e44cc6ba01453eae,QA,Controlled artifact,F,PASS,
+14_qa/executed_test_report.md,2580,0b37770445fb721feac83bcbfb39b56508ecb900645ccd6774abbe26309c6c3c,QA,Controlled artifact,F,PASS,
 14_qa/final_gate_review.md,1719,4c9b62aa427cf140e31a8dc99482462b3fa913a1abd5d0ba78168caff926131a,QA,Controlled artifact,F,PASS,
 14_qa/pdf_contact_sheets/cad-general-arrangement-contact-01.png,276712,d7dd777041c5935a61e2c002cc90623cb72bc139866080ef421dabcd86db1fc3,QA,Controlled artifact,F,PASS,
 14_qa/pdf_contact_sheets/cad-mounting-plate-contact-01.png,168519,73f02eaa6e33dccc4a29fbd34d4ce6c0e816636f96d5b1c9ef7035f68473854c,QA,Controlled artifact,F,PASS,
@@ -262,7 +262,7 @@ path,bytes,sha256,category,role,revision,gate_status,blocker
 14_qa/pdf_contact_sheets/qet-revision-f-contact-03.png,176904,bff90f93e551ec55cb52a78e7dcb840a7ca9a6da169ee55388296222150529f4,QA,Controlled artifact,F,PASS,
 14_qa/pdf_contact_sheets/qet-revision-f-contact-04.png,233966,ce4f7b08603036699ba6c5626a86d3fd11d1ca711e79bb88f357228b3f0601b7,QA,Controlled artifact,F,PASS,
 14_qa/pdf_contact_sheets/qet-revision-f-contact-05.png,109103,63930d4cb552d210206922a2d9544f98e87d9b7b1ff3fdac1456828acaa9fd24,QA,Controlled artifact,F,PASS,
-14_qa/pdf_contact_sheets/release-evidence-contact-01.png,354398,1ed2df11cd6f9d440bf350fa964cd2b6db7a8e277ba8f4921f2930bb858ad407,QA,Controlled artifact,F,PASS,
+14_qa/pdf_contact_sheets/release-evidence-contact-01.png,354437,bc1d6fc0ffd8d18cd778a3a6398eb929e69d93b1752cddf40a74cc157a014225,QA,Controlled artifact,F,PASS,
 14_qa/pdf_renders/cad_general_arrangement/page-1.png,589912,912ca92326602f35a0627b828fcb10b55ddbc522da2afcdafef124be02d8ad57,QA,Controlled artifact,F,PASS,
 14_qa/pdf_renders/cad_general_arrangement/page-2.png,684188,68b00fd9757f6d043d12aa8c7dbc06423457cdae8dd4d0de0e71c1844f3cdd3c,QA,Controlled artifact,F,PASS,
 14_qa/pdf_renders/cad_general_arrangement/page-3.png,325398,2fde1970e62b53a3c1948d4f19b49b728139965cb075899291754381a8475b39,QA,Controlled artifact,F,PASS,
@@ -308,7 +308,7 @@ path,bytes,sha256,category,role,revision,gate_status,blocker
 14_qa/pdf_renders/release_f/page-3.png,148009,992a2c0b2fe125b154abd29abd61496e54998b9eda1cffb218dddeb1b776cd75,QA,Controlled artifact,F,PASS,
 14_qa/pdf_renders/release_f/page-4.png,160212,cc6e13def41dce2c0c8b8ab76ddabcf2345e0ea8b80b6e70d43d2f3f5ee5514d,QA,Controlled artifact,F,PASS,
 14_qa/pdf_renders/release_f/page-5.png,145781,92423237f7fd7e0d4db6d429edc8c5340f415696f47a3bd84a34120e914783b5,QA,Controlled artifact,F,PASS,
-14_qa/pdf_renders/release_f/page-6.png,186524,94cc39f2b524e2007cbb414ab0c226df7f86aca8b220c688a9062dbe2c86a235,QA,Controlled artifact,F,PASS,
+14_qa/pdf_renders/release_f/page-6.png,186320,1d7f3e77f945c7a89dd085da0307de5ec02c701dc0cc2c9d870bf7e0f4e4da83,QA,Controlled artifact,F,PASS,
 14_qa/post_push_reproduction.md,818,a76390791c9ebbbbd321734a08ea491a0adb64b71a92241b1c6024ccfc0ebde9,QA,Controlled artifact,F,PASS,
 14_qa/qet_revision_f_rendered/page-01.png,99376,9c18f0d6bcb495cabe6c5dd954ee23326f400041e366705ff1b65e2e28a1e9d5,QA,Controlled artifact,F,PASS,
 14_qa/qet_revision_f_rendered/page-02.png,113227,ad2502a89ef9f9fe639106635082a12a508c83bc047cc9656d95e678f1c9d529,QA,Controlled artifact,F,PASS,
@@ -338,24 +338,24 @@ path,bytes,sha256,category,role,revision,gate_status,blocker
 14_qa/qet_revision_f_rendered/page-26.png,239308,ea2dcbba33c5895854ea6c3f2b9afdba4e5337ed82eb4835a0917422e464fb62,QA,Controlled artifact,F,PASS,
 14_qa/qet_revision_f_visual_review.md,4249,16c487136f8eeeeab2dbde8a2955157eb58dda84069e06440b4b1f9c7650a651,QA,Controlled artifact,F,PASS,
 14_qa/release_integrity_reproduction.md,1995,fc4341696d9d533c640345ddbb3c5c1a6c23589a883ea8d0ec643f90e8609d06,QA,Controlled artifact,F,PASS,
-14_qa/review_records.csv,16528,620c490b7e44132869fecc498ea024ed0e797ddabf82973650149c52dc4dbcd1,QA,Controlled artifact,F,PASS,
+14_qa/review_records.csv,16654,6f722763fe4a39e1448082975c9061f7419b407b69852cfa85cad13948fb5005,QA,Controlled artifact,F,PASS,
 14_qa/revision_f_verification_report.md,6932,31d8507f9aa55e082696d0e1a9b76c83e7290a77b9db0c3b00610b9f0cd36805,QA,Controlled artifact,F,PASS,
-14_qa/source_audit_report.md,1670,f6c0dc29bd1fa4e92fcc89b65c24060c6ded84780987792c7e5a03a000ad5b4a,QA,Controlled artifact,F,PASS,
+14_qa/source_audit_report.md,2189,d1d5d586771f5ef0933bbc940594ab434ff0d45ff60f33b35d2cca76ccea0e19,QA,Controlled artifact,F,PASS,
 14_qa/toolchain_audit.md,1165,949b5ff7baa8640d723503219206889600eb6c665e517807a990a62658fbb03a,QA,Controlled artifact,F,PASS,
 14_qa/validation_matrix.md,1272,4a52b77530779a987fea9e32c621e4ccb07a8c8671aa4ef1eaadf89eeff2af11,QA,Controlled artifact,F,PASS,
 14_qa/visual_review_report.md,1837,a1dd697a93896ae1b0e0668782c7fdc62c6caf8f776063cc18bff8e0acc2353d,QA,Controlled artifact,F,PASS,
 14_qa/workbook_contact_sheets/workbook-contact-01.png,381128,ba7d58b3b0a90f48117053c28bc1dffbc197c429263a0df84b68afb8fb25b6f0,QA,Controlled artifact,F,PASS,
-14_qa/workbook_contact_sheets/workbook-contact-02.png,350738,c7dbe38e832667fd0cb9fe6e14990705834f59b7f52d0d58fe01518d78130c68,QA,Controlled artifact,F,PASS,
+14_qa/workbook_contact_sheets/workbook-contact-02.png,351292,0628cb9696bc57480a4efd2aaade2d92241ed0b156c11622af69e7a7cdad3602,QA,Controlled artifact,F,PASS,
 14_qa/workbook_contact_sheets/workbook-contact-03.png,363815,0654d683c968ae04931454ac7ef56133b63ff1382871c875a9dc904b06155a29,QA,Controlled artifact,F,PASS,
 14_qa/workbook_contact_sheets/workbook-contact-04.png,437904,5f9415df7335d5b2b90d50c1b68bbbe48d6863b9d30cb95a00bc5633af8c8c33,QA,Controlled artifact,F,PASS,
-14_qa/workbook_contact_sheets/workbook-contact-05.png,512572,dc10c982d51390e3864e54e2478b27c3cc06a0fb4b9c6319d38936aee8170e1d,QA,Controlled artifact,F,PASS,
+14_qa/workbook_contact_sheets/workbook-contact-05.png,515993,960a85c6cee37720844143a0e25175c37748c5a526edf3d15c53aae943cfd128,QA,Controlled artifact,F,PASS,
 14_qa/workbook_contact_sheets/workbook-contact-06.png,406929,a12538ae81741d97fe43fdc1188dae4fdb2c5563feafe8f59bd71f2f71df95bd,QA,Controlled artifact,F,PASS,
-14_qa/workbook_contact_sheets/workbook-contact-07.png,367548,ee01784f8c61bfdef22c67820b53b521aeb3697b1605b013c57fa3e83962d8ad,QA,Controlled artifact,F,PASS,
+14_qa/workbook_contact_sheets/workbook-contact-07.png,380168,048319ee27bff7637709fbfd565bcdfe3e32bc482903e0fe0fde1739589b63af,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/acceptance-gates.png,213294,71e086262b0792b82f2c532f74be840d0f6312dce2a63f4bf63e511979494e9b,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/alarms.png,330839,f367bc49e5b8b66182b7118ef20e95857686a222653790895843a3afa0b6431e,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/bom.png,513233,45e99d1137ad5521ac2c8813447a939edd53e823b68dd6f49dd6afda3d1d0b99,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/cable-schedule.png,202139,d6a73b1b92676b2922a517cfed619c7136c49a846666c8a6b88e59f59cb56bf9,QA,Controlled artifact,F,PASS,
-14_qa/workbook_renders/document-register.png,212038,a1e7e30e57323a1b545408ec558e04f44ab15e79c528faed14aa192aacf23672,QA,Controlled artifact,F,PASS,
+14_qa/workbook_renders/document-register.png,215276,fedea1c0204dcf03947707f2a3a9919cb583bf9ce291496be860b48e3fdd33e8,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/drive-pzd.png,71755,c5647b30c003e5d8369a7e6a0066879d4af654eeaed32047eebe4734ede604dd,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/hmi-tags.png,504838,addf64a776e362e3b580fb1a485593035ff68fb579f6d51e712c66ef6c0c51f4,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/input-requests.png,303392,5943c6c9d18bf5a0fc615ec3f4ca1bd15dd2cf541b2660b42b6faa5a83da0708,QA,Controlled artifact,F,PASS,
@@ -368,18 +368,18 @@ path,bytes,sha256,category,role,revision,gate_status,blocker
 14_qa/workbook_renders/plc-i-o.png,449150,44764ba80c359dc96205f77e4a6c44220723118e50ea61b4c5034a021e7ebec6,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/point-to-point.png,1451400,51b47d290d2b492ebb67202306cfb70f9afa9e843bef4ff7e781fad22aa6ec0c,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/release-summary.png,91834,2fc01b586c6fa5350f76861c651a9825a75556c492226fd2c91312a2e9d64771,QA,Controlled artifact,F,PASS,
-14_qa/workbook_renders/requirements-trace.png,731904,99ee50736f67fd5c67bf9072bfeb831fdd8ed698483df64d80d12cd027bdbb3a,QA,Controlled artifact,F,PASS,
+14_qa/workbook_renders/requirements-trace.png,754446,38506ba483fa933e972b12656dae5125b96b66ccfd3f0c3664aae547871a0a2c,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/revision-f-gaps.png,265558,8132521ec6cb9883e92608763ff0cc7766d3438e959c94c11a798e3b8b7fadac,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/siemens-hardware.png,164574,b77742446f6ba6f2a478119544788fc2b3ef44a1e51910aa04b9ac5d987c3548,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/terminal-plan.png,954096,c0a3b23449d16f0f3384e5818fb41d9b0f3c992ea4cf4a641edd1f89b9f9c89f,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/test-coverage.png,1110945,a2823607d11d9cf347fcb527e59c6d54154a7f00e32a2c3dd621cc784db6795f,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/vfd-parameters.png,39252,1d0c8415189927d8bc84a2d770e9cd55b141b1742e3c949835296eb8674f76f4,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/vision-fault-matrix.png,261110,2c52d3be051422a804a09f602bce11df32ab63ecc6a9d105e27ebf69b7a1de7d,QA,Controlled artifact,F,PASS,
-14_qa/workbook_renders/vision-requirements.png,348837,2bec88c238a23bba09dddbc553063d8b9e083a371d7457209ea64f8a28be6f3e,QA,Controlled artifact,F,PASS,
+14_qa/workbook_renders/vision-requirements.png,371590,dd5ba4547d1af4f27603be3f82879f39b1535529e7e6c48b6353d3c09ae94a27,QA,Controlled artifact,F,PASS,
 14_qa/workbook_renders/wire-list.png,1451400,51b47d290d2b492ebb67202306cfb70f9afa9e843bef4ff7e781fad22aa6ec0c,QA,Controlled artifact,F,PASS,
 AGENTS.md,2968,c274308e6178d0766f8633c7b08a692bc1911b523dcfeb2a1f11a4263017d756,Repository control,Controlled artifact,F,PASS,
 README.md,1451,43e44449330ed88ef699cab9f6c0a2d6c71a16864ccac5b2d3045e2588eb799d,Repository control,Controlled artifact,F,PASS,
-release/FC01_release_evidence.pdf,86829,b3c38b310ebb504beadc7bca871d9537a2a87075a71023c3c97dd40d75ea96fb,Release,Controlled artifact,F,PASS,
+release/FC01_release_evidence.pdf,86830,df06d0c5e5c19e567ff277eb84b9284295c4bf2944fad38172186a9827bed702,Release,Controlled artifact,F,PASS,
 release/RELEASE_NOTES.md,1222,a788788736c785c69ed758741dca6b05534c87a36d2bd9ad00e5cc40594a4d5c,Release,Controlled artifact,F,PASS,
 release/python_runtime_sbom.csv,1455,1acd662de04cde35d45f0f522ea5b25793e830af0efec6148ede6162f46076f5,Release,Controlled artifact,F,PASS,
 release/reproduction_toolchain_lock.json,1573,a394253d191921f7ce545aee6b9cdde48cdfaa7b6911a78dd052ca8c93830f23,Release,Controlled artifact,F,PASS,
@@ -389,7 +389,7 @@ scripts/build_contact_sheets.py,1091,4e2fa9bf5ca7af2efa54fdbd4fe1ea8b538966c7c6f
 scripts/build_manifest.py,2086,ef4446dd5ae6acb2d59bd44f162f6ada0fa9e3548db281e6b3a0ecf7cb3e4ece,Reproduction,Controlled artifact,F,PASS,
 scripts/build_pdf_contact_sheets.py,1653,e99cb52d927dcfa9f2ac1a31f5602c25db1b51a80576f82ec01802329f5bc9c1,Reproduction,Controlled artifact,F,PASS,
 scripts/build_project.py,73579,8c8099a3d7c758b61fba57c9f2b9ca1e287ae2638f7045770108ce079ea1a575,Reproduction,Controlled artifact,F,PASS,
-scripts/build_release_pdf.py,15561,272b635fa9f1dc7a37027fe793f5b1a02ab4847979005b77be266f1a8bd25a96,Reproduction,Controlled artifact,F,PASS,
+scripts/build_release_pdf.py,15562,c849c10b68efcccc279221879d2de857f62d185305445bfea2a36f86f271cfe9,Reproduction,Controlled artifact,F,PASS,
 scripts/build_workbook.mjs,10243,23affe5bd07295c15b2e8321b501bb84880855c6728051579226e05531b21381,Reproduction,Controlled artifact,F,PASS,
 scripts/check_determinism.py,4402,a7dfa08b6ab00702c5465e9a589d653fb907fd03d07fd694b05ec8ba187cda38,Reproduction,Controlled artifact,F,PASS,
 scripts/freecad_revision_e.py,69367,2773db0b06be7f9131e5ae7a41d4c6bd5ef996d6d45f9d838a59a98320b069ce,Reproduction,Controlled artifact,F,PASS,
@@ -401,7 +401,7 @@ scripts/reproduce_validation.ps1,10731,af12f2fd3d96590ee47640b9dcff0867fe109bc2d
 scripts/revision_d_generator.py,129580,9b9bb1a9479d213c6626b32221d1daa12d358203cc9ef1b3e736d1616095c67c,Reproduction,Controlled artifact,F,PASS,
 scripts/revision_d_scl.py,68877,7253364f53f1d185d60a3d5c4237163731a81a9dbb15caa27e69908ae7492cb2,Reproduction,Controlled artifact,F,PASS,
 scripts/revision_e_generator.py,62319,a803e2d1a486b1fa1708c03f5afe9a1ced2057f1bf76409cd22a3ca114caf7a6,Reproduction,Controlled artifact,F,PASS,
-scripts/revision_f_generator.py,53695,caf7709fe8affaddca8f17cd62955a149692af98ad676347eef0e2312e59e1b5,Reproduction,Controlled artifact,F,PASS,
+scripts/revision_f_generator.py,60912,fe9d959757721754d1ac281481051a75b4e3e229896797da3263868b6837b761,Reproduction,Controlled artifact,F,PASS,
 scripts/revision_f_nvidia.py,1035,4a024d0c886f44c2a7c77111285411f8c5224b1d334737f8528500a3c23d2aeb,Reproduction,Controlled artifact,F,PASS,
 scripts/revision_f_nvidia_templates/dataset_annotation_guide.md,1747,2900429d0a1b90e6a9f42fc56619522d244e4038921fedecbd94d8fab3a187dc,Reproduction,Controlled artifact,F,PASS,
 scripts/revision_f_nvidia_templates/edge_service/service_config.json,4397,8bd377a7782377c036a5882bdd51885bb0448fdb2d6ecbc37015e3e5f19133dd,Reproduction,Controlled artifact,F,PASS,

@@ -10,4 +10,6 @@ The edge foundation executes its bounded configuration schema, records the runti
 
 Native TIA/WinCC/Startdrive/PLCSIM, production PLC/Jetson/PKI, representative data, trained model, target CUDA/TensorRT/DeepStream/TAO runtime, physical optics, site electrical inputs and qualified safety review remain external.
 
+The first GitHub clean-clone reproduction of candidate a036620c5332997647625b510675345a33a16261 exposed an intermittent secure-session disconnect: asyncua transport supervision was incorrectly tied to the 10 ms PLC poll cadence and used a 50 ms server-state probe timeout. Revision F now gives the transport watchdog at least the configured OPC UA operation budget and a one-second floor. The added regression check plus eight repeated two-test secure runs and the complete 86-test edge suite passed after correction.
+
 THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL.

@@ -9,7 +9,7 @@ Execution date: 2026-08-03. Source/design tests use Python 3.12.13; encrypted OP
 | Workstream | Exact result | Evidence boundary |
 |---|---:|---|
 | Simulator/Siemens/source/native contracts | 99/99 PASS | Includes inherited contracts plus eleven Revision-F behavioral fault-injection tests |
-| NVIDIA edge service | 85/85 PASS | Includes 9/9 certificate-backed local asyncua cases; synthetic endpoint |
+| NVIDIA edge service | 86/86 PASS | Includes 10/10 certificate-backed local asyncua cases; synthetic endpoint |
 | PLC-AI interface harness | 17/17 PASS | Deterministic composed 47-node acceptance model |
 | Process scenarios | 32/32 PASS | Exactly one normal release; no invariant violation/automatic restart |
 | Vision behavioral fault injections | 28/28 PASS | Exactly one normal pass releases; outputs decommanded; no automatic restart; software-only evidence |
@@ -18,8 +18,8 @@ Execution date: 2026-08-03. Source/design tests use Python 3.12.13; encrypted OP
 | QET source / dedicated contracts | 24/24 and 6/6 PASS | Corrected source contracts |
 | QET exact-hash native verifier | 19/19 PASS | Reopen/export/hash/page metadata; overall gate PARTIAL |
 | FreeCAD native verifier | 80/80 PASS | 165 objects, 148 controlled solids, STEP/IGES/DXF and 30 holes |
-| Workbook | 26 sheets; zero formula-error matches | Two builds SHA-256 `73F585830C32640B7F771BABB1194B2FD0B0BAB6E8CFE3128187E63E90CF763B` |
-| Release PDF | 6 pages | Two builds SHA-256 `B3C38B310EBB504BEADC7BCA871D9537A2A87075A71023C3C97DD40D75EA96FB` |
+| Workbook | 26 sheets; 12 stored formula cells; zero formula-error matches | Two builds SHA-256 `F7B326032B630B551B87A2882BB65FFD3867A250C2BF7AACD047B54F2B31534A` |
+| Release PDF | 6 pages | Two builds SHA-256 `DF06D0C5E5C19E567FF277EB84B9284295C4BF2944FAD38172186A9827BED702` |
 
 Final manifest, release-integrity, authoritative-snapshot determinism and post-push fresh-clone results are recorded separately after candidate freeze/commit. No software-agent record constitutes qualified-human approval.
 

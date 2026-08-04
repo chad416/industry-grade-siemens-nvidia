@@ -331,6 +331,17 @@ class SecureOpcUaIntegrationTests(unittest.IsolatedAsyncioTestCase):
         self.assertFalse(await self._read("RESULT_VALID"))
         self.assertFalse(adapter.service.state.result_valid)
 
+    async def test_transport_watchdog_uses_operation_budget_not_scan_period(self) -> None:
+        adapter = await self._adapter()
+        self.assertGreaterEqual(
+            adapter.client._watchdog_intervall,
+            self.runtime.operation_timeout_ms / 1000,
+        )
+        self.assertGreater(
+            adapter.client._watchdog_intervall,
+            self.runtime.poll_interval_ms / 1000,
+        )
+
     async def test_untrusted_server_certificate_is_rejected(self) -> None:
         empty_trust = Path(self.temp.name) / "empty-trust"
         empty_trust.mkdir()

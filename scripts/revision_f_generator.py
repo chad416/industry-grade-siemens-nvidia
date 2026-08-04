@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 
 from revision_d_generator import NOTICE, SAFETY, _csv, _doc, _rationales, _write
+from revision_e_generator import _append_row, _digest
 
 
 REVISION = "F"
@@ -170,7 +171,7 @@ def apply_revision_f(root: Path) -> None:
         if row["requirement_id"] == "SYS-022":
             row["evidence"] = (
                 "32 deterministic process scenarios plus 99 source/simulator/native-contract tests, "
-                "28 deterministic vision-fault scenarios, 85 edge-service tests and 17 interface-harness tests; "
+                "28 deterministic vision-fault scenarios, 86 edge-service tests and 17 interface-harness tests; "
                 "see the executed report"
             )
     model["requirements"] = requirements
@@ -360,7 +361,7 @@ Native TIA/WinCC/Startdrive/PLCSIM, site-dependent electrical calculations, real
 | Workstream | Exact result | Evidence boundary |
 |---|---:|---|
 | Simulator/Siemens/source/native contracts | 99/99 PASS | Includes inherited contracts plus eleven Revision-F behavioral fault-injection tests |
-| NVIDIA edge service | 85/85 PASS | Includes 9/9 certificate-backed local asyncua cases; synthetic endpoint |
+| NVIDIA edge service | 86/86 PASS | Includes 10/10 certificate-backed local asyncua cases; synthetic endpoint |
 | PLC-AI interface harness | 17/17 PASS | Deterministic composed 47-node acceptance model |
 | Process scenarios | 32/32 PASS | Exactly one normal release; no invariant violation/automatic restart |
 | Vision behavioral fault injections | 28/28 PASS | Exactly one normal pass releases; outputs decommanded; no automatic restart; software-only evidence |
@@ -369,8 +370,8 @@ Native TIA/WinCC/Startdrive/PLCSIM, site-dependent electrical calculations, real
 | QET source / dedicated contracts | 24/24 and 6/6 PASS | Corrected source contracts |
 | QET exact-hash native verifier | 19/19 PASS | Reopen/export/hash/page metadata; overall gate PARTIAL |
 | FreeCAD native verifier | 80/80 PASS | 165 objects, 148 controlled solids, STEP/IGES/DXF and 30 holes |
-| Workbook | 26 sheets; zero formula-error matches | Two builds SHA-256 `73F585830C32640B7F771BABB1194B2FD0B0BAB6E8CFE3128187E63E90CF763B` |
-| Release PDF | 6 pages | Two builds SHA-256 `B3C38B310EBB504BEADC7BCA871D9537A2A87075A71023C3C97DD40D75EA96FB` |
+| Workbook | 26 sheets; 12 stored formula cells; zero formula-error matches | Two builds SHA-256 `F7B326032B630B551B87A2882BB65FFD3867A250C2BF7AACD047B54F2B31534A` |
+| Release PDF | 6 pages | Two builds SHA-256 `DF06D0C5E5C19E567FF277EB84B9284295C4BF2944FAD38172186A9827BED702` |
 
 Final manifest, release-integrity, authoritative-snapshot determinism and post-push fresh-clone results are recorded separately after candidate freeze/commit. No software-agent record constitutes qualified-human approval.
 
@@ -381,6 +382,8 @@ Final manifest, release-integrity, authoritative-snapshot determinism and post-p
 The edge foundation executes its bounded configuration schema, records the runtime/contract/schema SHA-256 values in structured logs, requires an append/flush/fsync inspection-audit write before result publication, publishes terminal state before RESULT_VALID, rejects active recipe/context change and excessive clock discontinuity, and keeps the unimplemented ONNX/recorded-input path permanently unauthorized. Dataset split/hash/leakage checks, evaluation math, local health/metrics and certificate-backed asyncua tests are controlled. Synthetic fixtures prove plumbing only.
 
 Native TIA/WinCC/Startdrive/PLCSIM, production PLC/Jetson/PKI, representative data, trained model, target CUDA/TensorRT/DeepStream/TAO runtime, physical optics, site electrical inputs and qualified safety review remain external.
+
+The first GitHub clean-clone reproduction of candidate a036620c5332997647625b510675345a33a16261 exposed an intermittent secure-session disconnect: asyncua transport supervision was incorrectly tied to the 10 ms PLC poll cadence and used a 50 ms server-state probe timeout. Revision F now gives the transport watchdog at least the configured OPC UA operation budget and a one-second floor. The added regression check plus eight repeated two-test secure runs and the complete 86-test edge suite passed after correction.
 
 {AI_BOUNDARY}"""))
 
@@ -446,6 +449,19 @@ Reviewers are software agents, not qualified-human approvers. {AI_BOUNDARY}"""))
             body = body.replace(marker, "").strip()
         body = "\n".join(line for line in body.splitlines() if line.strip() != ">")
         _write(root, relative, _doc(title, f"{body}\n\n{AI_BOUNDARY}"))
+
+    reviews = _read_csv(root / "14_qa/review_records.csv")
+    revision_f_reviews = [
+        {"review_record_id":"RR-F-001","reviewer_task":"/root/rev_f_nvidia_impl","review_type":"NVIDIA implementation workstream software-agent record","scope":"47-node OPC UA contract, production-structured edge service, dataset/evaluation tooling and deployment controls","method":"Bounded source implementation plus unit, protocol, ten certificate-backed asyncua and negative-behavior tests","evidence_sha256":_digest(root,["07_nvidia_vision/edge_service/opcua_adapter.py","07_nvidia_vision/edge_service/service.py","07_nvidia_vision/edge_service/protocol.py","07_nvidia_vision/edge_service/tests/test_opcua_adapter.py","07_nvidia_vision/edge_service/tests/test_service.py","07_nvidia_vision/edge_service/tests/test_revision_f_readiness.py"]),"limitations":"Authoring workstream; no production S7/Jetson endpoint, representative dataset, trained model, target runtime, physical test or qualified cybersecurity approval","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"IMPLEMENTED AND LOCALLY TESTED; production endpoint, model/runtime, physical and human gates remain blocked"},
+        {"review_record_id":"RR-F-002","reviewer_task":"/root/rev_f_siemens_hmi","review_type":"Siemens/HMI implementation workstream software-agent record","scope":"Revision-F PLC interface, SCL source contracts, OPC UA symbol bindings, HMI tags/alarms and native runbooks","method":"Bounded source implementation and static/source-contract regression","evidence_sha256":_digest(root,["scripts/revision_f_scl.py","04_controls_siemens/scl/FB_VisionInterface.scl","04_controls_siemens/scl/FB_CellMain.scl","04_controls_siemens/plc_nvidia_interface_revision_f.md","05_hmi/hmi_tags.csv","05_hmi/alarms.csv"]),"limitations":"Authoring workstream; no native TIA/WinCC compile, Startdrive, PLCSIM, hardware or qualified controls-engineer approval","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"IMPLEMENTED AND SOURCE-TESTED; native Siemens and human gates remain blocked"},
+        {"review_record_id":"RR-F-003","reviewer_task":"/root/rev_f_qet_native","review_type":"QElectroTech/electrical workstream software-agent record","scope":"Exact-hash QET reopen/export evidence and standalone NVIDIA electrical delta reconciliation","method":"Native QET reopen/export evidence review plus schedule and rendered-page checks","evidence_sha256":_digest(root,["03_electrical/revision_f_native_qet/native_reopen_export_evidence.json","03_electrical/revision_f_nvidia_electrical_delta.md","10_schedules/nvidia_electrical_delta.csv","scripts/verify_qet_revision_f.py"]),"limitations":"Authoring/review workstream; Revision-F delta is not incorporated into canonical QET/CAD/BOM/terminal/cable authorities; folio 25 clipping and automatic cross-reference limitation remain","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"NATIVE REOPEN/EXPORT VERIFIED; overall electrical/QET gate remains PARTIAL"},
+        {"review_record_id":"RR-F-004","reviewer_task":"/root","review_type":"Lead systems integration software-agent record","scope":"Cross-workstream integration, generator authority, behavioral fault injection, workbook/PDF and release controls","method":"Central reconciliation, clean-clone counterexample correction, deterministic builds, visual inspection and complete local regression","evidence_sha256":_digest(root,["scripts/revision_f_generator.py","scripts/verify_revision_f.py","scripts/validate_project.py","14_qa/executed_test_report.md","14_qa/source_audit_report.md"]),"limitations":"Lead authored/integrated changes; not independent review, qualified-human approval, native Siemens, production model/runtime or physical evidence","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"INTEGRATED AND LOCALLY VERIFIED; external native, physical, model and human gates remain open"},
+        {"review_record_id":"RR-F-005","reviewer_task":"/root/rev_f_final_audit_controls_ai","review_type":"Final independent controls/NVIDIA software-agent re-audit","scope":"Corrected PLC-edge behavior, secure OPC UA transport supervision, timeout/rearm concurrency, malformed terminal results, evidence classification and release hygiene","method":"Read-only adversarial source/test re-review after the GitHub clean-clone watchdog finding; 99/86/17 regression, ten secure asyncua cases and 96-check Revision-F verification","evidence_sha256":_digest(root,["07_nvidia_vision/edge_service/opcua_adapter.py","07_nvidia_vision/edge_service/tests/test_opcua_adapter.py","14_qa/executed_test_report.md","scripts/verify_revision_f.py"]),"limitations":"No native Siemens, production PLC/Jetson endpoint, real dataset/model/runtime, physical test or qualified-human approval","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"ACCEPT FOR CORRECTED-CANDIDATE FREEZE AFTER CACHE CLEANUP AND INDEX-AUTHORITY VERIFICATION; P0 0, P1 0"},
+        {"review_record_id":"RR-F-006","reviewer_task":"/root/rev_f_final_audit_release_electrical","review_type":"Final independent release/electrical software-agent re-audit","scope":"Corrected release integrity, QET/FreeCAD boundaries, schedules, workbook/PDF, evidence hashes, terminology and blocker truthfulness","method":"Read-only adversarial reconciliation, namespace-aware workbook formula scan and rendered-artifact re-review after the GitHub clean-clone watchdog finding","evidence_sha256":_digest(root,["10_schedules/FC01_engineering_schedules.xlsx","release/FC01_release_evidence.pdf","14_qa/visual_review_report.md","03_electrical/revision_f_nvidia_electrical_delta.md","scripts/revision_f_generator.py"]),"limitations":"No Revision-F native QET/CAD delta incorporation, site electrical inputs, physical construction test, qualified electrical/safety review or final post-push evidence at audit time","actual_qualification":"Software agent; not an identified qualified human engineer","human_approval_required":"Yes","disposition":"ACCEPT FOR CORRECTED-CANDIDATE MANIFEST FREEZE; P0 0, P1 0; external gates remain blocked or partial"},
+    ]
+    for row in revision_f_reviews:
+        reviews = _append_row(reviews, "review_record_id", row["review_record_id"], row)
+    _csv(root, "14_qa/review_records.csv", reviews)
 
     _write(root, "00_project_control/final_release_checklist.md", _doc("Final release checklist - Revision F", """- [x] Revision-F canonical schedules regenerate from controlled owners.
 - [x] 47-node PLC-AI map reconciles across canonical, Siemens bindings, HMI, edge CSV/JSON and tests.
