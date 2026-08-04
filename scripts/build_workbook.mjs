@@ -1,12 +1,16 @@
+import crypto from "node:crypto";
 import fs from "node:fs/promises";
+import os from "node:os";
 import path from "node:path";
 import { SpreadsheetFile, Workbook } from "@oai/artifact-tool";
+import { installControlledRender, verifyControlledRenderSet } from "./workbook_render_stability.mjs";
 
 const root = process.cwd();
 const scheduleDir = path.join(root, "10_schedules");
 const previewDir = path.join(root, "14_qa", "workbook_renders");
-await fs.rm(previewDir, { recursive: true, force: true });
+const renderBaselinePath = path.join(root, "14_qa", "workbook_render_baseline.json");
 await fs.mkdir(previewDir, { recursive: true });
+const updateControlledRenders = process.env.FC01_UPDATE_WORKBOOK_RENDERS === "1";
 
 const sheets = [
   ["siemens_hardware.csv", "Siemens Hardware"],
@@ -35,6 +39,39 @@ const sheets = [
   ["acceptance_gates.csv", "Acceptance Gates"],
   ["document_register.csv", "Document Register"],
 ];
+
+function sha256(buffer) {
+  return crypto.createHash("sha256").update(buffer).digest("hex");
+}
+
+const authoritativeInputs = crypto.createHash("sha256");
+for (const [file] of sheets) {
+  authoritativeInputs.update(file, "utf8");
+  authoritativeInputs.update("\0");
+  authoritativeInputs.update(await fs.readFile(path.join(scheduleDir, file)));
+  authoritativeInputs.update("\0");
+}
+const currentRenderSemantics = {
+  schema_version: 1,
+  authoritative_inputs_sha256: authoritativeInputs.digest("hex"),
+  workbook_builder_sha256: sha256(await fs.readFile(path.join(root, "scripts", "build_workbook.mjs"))),
+};
+let approvedRenderSemantics = null;
+try {
+  approvedRenderSemantics = JSON.parse(await fs.readFile(renderBaselinePath, "utf8"));
+} catch (error) {
+  if (error.code !== "ENOENT") throw error;
+}
+const semanticsApproved =
+  approvedRenderSemantics?.schema_version === currentRenderSemantics.schema_version &&
+  approvedRenderSemantics?.authoritative_inputs_sha256 === currentRenderSemantics.authoritative_inputs_sha256 &&
+  approvedRenderSemantics?.workbook_builder_sha256 === currentRenderSemantics.workbook_builder_sha256;
+if (!semanticsApproved && !updateControlledRenders) {
+  throw new Error(
+    "Controlled workbook render semantics are missing or stale. Review the authoritative CSV/builder change and candidate renders, " +
+    "then set FC01_UPDATE_WORKBOOK_RENDERS=1 to authorize a new baseline."
+  );
+}
 
 // IEC 81346 designations intentionally begin with "=".  Protect those CSV
 // fields from being interpreted as spreadsheet formulas while retaining the
@@ -179,10 +216,29 @@ if (formulaErrors.ndjson.includes('"kind":"match"')) {
   throw new Error("Workbook formula-error scan found one or more invalid cells");
 }
 
-for (const sheet of workbook.worksheets.items) {
-  const preview = await workbook.render({ sheetName: sheet.name, autoCrop: "all", scale: 1, format: "png" });
-  const safe = sheet.name.replace(/[^A-Za-z0-9]+/g, "-").replace(/^-|-$/g, "").toLowerCase();
-  await fs.writeFile(path.join(previewDir, `${safe}.png`), new Uint8Array(await preview.arrayBuffer()));
+const candidatePreviewDir = await fs.mkdtemp(path.join(os.tmpdir(), "fc01-workbook-renders-"));
+const expectedRenderNames = [];
+try {
+  for (const sheet of workbook.worksheets.items) {
+    const preview = await workbook.render({ sheetName: sheet.name, autoCrop: "all", scale: 1, format: "png" });
+    const safe = sheet.name.replace(/[^A-Za-z0-9]+/g, "-").replace(/^-|-$/g, "").toLowerCase();
+    const fileName = `${safe}.png`;
+    expectedRenderNames.push(fileName);
+    const candidatePath = path.join(candidatePreviewDir, fileName);
+    const controlledPath = path.join(previewDir, fileName);
+    await fs.writeFile(candidatePath, new Uint8Array(await preview.arrayBuffer()));
+    const result = await installControlledRender(candidatePath, controlledPath, {
+      update: updateControlledRenders,
+      allowTolerance: semanticsApproved,
+    });
+    console.log(`Workbook render ${fileName}: ${result.message}`);
+  }
+  await verifyControlledRenderSet(previewDir, expectedRenderNames, { update: updateControlledRenders });
+  if (updateControlledRenders) {
+    await fs.writeFile(renderBaselinePath, `${JSON.stringify(currentRenderSemantics, null, 2)}\n`, "utf8");
+  }
+} finally {
+  await fs.rm(candidatePreviewDir, { recursive: true, force: true });
 }
 
 const output = await SpreadsheetFile.exportXlsx(workbook);

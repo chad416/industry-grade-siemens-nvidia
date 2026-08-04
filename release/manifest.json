@@ -4,7 +4,7 @@
   "status": "PROFESSIONAL CONTROLLED ENGINEERING-DEVELOPMENT PACKAGE",
   "generated": "2026-08-03",
   "byte_source": "Git index (staged authoritative bytes)",
-  "file_count": 422,
+  "file_count": 425,
   "files": [
     {
       "path": ".gitattributes",
@@ -78,8 +78,8 @@
     },
     {
       "path": "00_project_control/decision_register.csv",
-      "bytes": 4204,
-      "sha256": "45d3aa4ee62cf26bfe20a42a4c18713dcc089342a1c2673aa4486bd99d51f5a0",
+      "bytes": 4728,
+      "sha256": "0acfb10114226893daf0fb05054b6ac8d9267067f3860c6f1e4ef2ad33bfb00a",
       "category": "Project control",
       "role": "Controlled artifact",
       "revision": "F",
@@ -128,8 +128,8 @@
     },
     {
       "path": "00_project_control/engineering_change_register.csv",
-      "bytes": 8519,
-      "sha256": "664d82d6cb6bdbb20d34b3571c447358680148cbcb0be047a64a13ca5f74ac65",
+      "bytes": 9394,
+      "sha256": "1970a55ff0480985a12391c46010456f419cc1904764d1d371c864b29c84c0d5",
       "category": "Project control",
       "role": "Controlled artifact",
       "revision": "F",
@@ -178,8 +178,8 @@
     },
     {
       "path": "00_project_control/repository_release_workflow.md",
-      "bytes": 3542,
-      "sha256": "e7dea41a99f5d0eba8a903cc1c40e0e03b350691b7d6f011a1732457837d1107",
+      "bytes": 4496,
+      "sha256": "b27f25221cd21ea938cf712c6373343c2fbb6c791b0f37216b589ad323c7c22c",
       "category": "Project control",
       "role": "Controlled artifact",
       "revision": "F",
@@ -2499,7 +2499,7 @@
     {
       "path": "14_qa/determinism_report.md",
       "bytes": 542,
-      "sha256": "6638de3ccfd184491c1d056e337e1b5ff773700255ec6b7e13b7c5e575b5bb6a",
+      "sha256": "6c90a48ab903b6bd135f85b4ef6f6a7ace009a25d11bbabf7a4045922d7fe667",
       "category": "QA",
       "role": "Controlled artifact",
       "revision": "F",
@@ -2508,8 +2508,8 @@
     },
     {
       "path": "14_qa/executed_test_report.md",
-      "bytes": 2580,
-      "sha256": "0b37770445fb721feac83bcbfb39b56508ecb900645ccd6774abbe26309c6c3c",
+      "bytes": 2739,
+      "sha256": "040d0a27bfc9ee8eec7a49ac2170fac6ed5ab5d791d815cdd9609e6c4621e6b1",
       "category": "QA",
       "role": "Controlled artifact",
       "revision": "F",
@@ -3398,8 +3398,8 @@
     },
     {
       "path": "14_qa/review_records.csv",
-      "bytes": 16759,
-      "sha256": "c36205a515c74a5a5aae0e1570217edea5d1d9bd0b8582cb6ad162acb42c5fb1",
+      "bytes": 17519,
+      "sha256": "763489714de49d933a73e01dd56e37d667afbcd1771b127f397c5f482cd04d5b",
       "category": "QA",
       "role": "Controlled artifact",
       "revision": "F",
@@ -3418,8 +3418,8 @@
     },
     {
       "path": "14_qa/source_audit_report.md",
-      "bytes": 3250,
-      "sha256": "120755eaea43edff83ea0ad02dae1f6f7dfad69dad2fd0375b54485461017f45",
+      "bytes": 4407,
+      "sha256": "3d054e1a10353feb5b747147233c206146efa24a2453fdc70ed72953f45b2903",
       "category": "QA",
       "role": "Controlled artifact",
       "revision": "F",
@@ -3520,6 +3520,16 @@
       "path": "14_qa/workbook_contact_sheets/workbook-contact-07.png",
       "bytes": 380168,
       "sha256": "048319ee27bff7637709fbfd565bcdfe3e32bc482903e0fe0fde1739589b63af",
+      "category": "QA",
+      "role": "Controlled artifact",
+      "revision": "F",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "14_qa/workbook_render_baseline.json",
+      "bytes": 224,
+      "sha256": "5b4889ee69cc1e6f8b5204117a0e161842b58477aa8580ef699f1e1f4b1ba692",
       "category": "QA",
       "role": "Controlled artifact",
       "revision": "F",
@@ -3918,8 +3928,8 @@
     },
     {
       "path": "scripts/build_workbook.mjs",
-      "bytes": 10243,
-      "sha256": "23affe5bd07295c15b2e8321b501bb84880855c6728051579226e05531b21381",
+      "bytes": 12831,
+      "sha256": "1c674e0dd6a03688e68e26eb1b4b77219b69b490c3a5b0331b9828d3437ea9d8",
       "category": "Reproduction",
       "role": "Controlled artifact",
       "revision": "F",
@@ -3988,8 +3998,8 @@
     },
     {
       "path": "scripts/reproduce_validation.ps1",
-      "bytes": 12180,
-      "sha256": "149b4bb593ad625a65c2ce9db6df97a7d3268e80f43bc3cdd2c8cecca96244e5",
+      "bytes": 12424,
+      "sha256": "bc5d179da9eecf55967aee8f04a967f9076f072712cb2d33f88b275a5ee5f228",
       "category": "Reproduction",
       "role": "Controlled artifact",
       "revision": "F",
@@ -4028,8 +4038,8 @@
     },
     {
       "path": "scripts/revision_f_generator.py",
-      "bytes": 62247,
-      "sha256": "5a28e564f2a927e00c38934f8cb8ea4eee9043848f508b46f906f7d0d0cf4c0f",
+      "bytes": 67276,
+      "sha256": "863006fc421247c01a45a24a7cba467c530c2ff39e7265b10acc31fc37ac450f",
       "category": "Reproduction",
       "role": "Controlled artifact",
       "revision": "F",
@@ -4157,6 +4167,16 @@
       "blocker": ""
     },
     {
+      "path": "scripts/test_workbook_render_stability.mjs",
+      "bytes": 4917,
+      "sha256": "d2e7d54bae3240e9728f7a56129f3a8785d568df13f551bf905117807a865e2e",
+      "category": "Reproduction",
+      "role": "Controlled artifact",
+      "revision": "F",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
       "path": "scripts/validate_project.py",
       "bytes": 38736,
       "sha256": "1db8b1c5d0bab2b9caf7aea53ea3a942c04bf610c475858e04578d2060f42593",
@@ -4220,6 +4240,16 @@
       "path": "scripts/verify_revision_f.py",
       "bytes": 15344,
       "sha256": "83f759ddc55a17d6782f6d89e806d4ebead9ad2097900931b1aae57a68cb8d95",
+      "category": "Reproduction",
+      "role": "Controlled artifact",
+      "revision": "F",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "scripts/workbook_render_stability.mjs",
+      "bytes": 5591,
+      "sha256": "f78d009011770ee805403e35a0c8c753aaae7dbd830887d3da496090d5b0652b",
       "category": "Reproduction",
       "role": "Controlled artifact",
       "revision": "F",

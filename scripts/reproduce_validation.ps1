@@ -82,6 +82,9 @@ function Assert-CleanGitState {
 
 Push-Location $ProjectRoot
 try {
+    if ($env:FC01_UPDATE_WORKBOOK_RENDERS -eq '1') {
+        throw 'Release reproduction is verification-only; unset FC01_UPDATE_WORKBOOK_RENDERS before running it'
+    }
     # Integrity preflight occurs before any generation or removal.
     Assert-CleanGitState
     Invoke-Native $Python 'scripts\verify_manifest.py' '--source' 'head' '--require-clean'
@@ -126,6 +129,7 @@ try {
     if (Test-Path -LiteralPath $BuildJunction) { throw "Unexpected node_modules path exists before workbook build: $BuildJunction" }
     New-Item -ItemType Junction -Path $BuildJunction -Target $NodeModules | Out-Null
     try {
+        Invoke-Native $Node 'scripts\test_workbook_render_stability.mjs'
         Invoke-Native $Node 'scripts\build_workbook.mjs'
         Invoke-Native $Python 'scripts\normalize_xlsx.py'
         $WorkbookHash1 = (Get-FileHash -Algorithm SHA256 '10_schedules\FC01_engineering_schedules.xlsx').Hash

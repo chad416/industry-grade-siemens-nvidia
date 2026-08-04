@@ -18,6 +18,7 @@ Execution date: 2026-08-03. Source/design tests use Python 3.12.13; encrypted OP
 | QET source / dedicated contracts | 24/24 and 6/6 PASS | Corrected source contracts |
 | QET exact-hash native verifier | 19/19 PASS | Reopen/export/hash/page metadata; overall gate PARTIAL |
 | FreeCAD native verifier | 80/80 PASS | 165 objects, 148 controlled solids, STEP/IGES/DXF and 30 holes |
+| Workbook render stability | 16/16 PASS | Temp-staged candidates; semantic hash binding; exact entry set/dimensions; isolated threshold and update controls |
 | Workbook | 26 sheets; 12 stored formula cells; zero formula-error matches | Two builds SHA-256 `F7B326032B630B551B87A2882BB65FFD3867A250C2BF7AACD047B54F2B31534A` |
 | Release PDF | 6 pages | Two builds SHA-256 `DF06D0C5E5C19E567FF277EB84B9284295C4BF2944FAD38172186A9827BED702` |
 
