@@ -11,9 +11,12 @@ import csv
 import hashlib
 import json
 import math
+import os
 from pathlib import Path
 import re
 import sys
+
+sys.dont_write_bytecode = True
 
 import FreeCAD as App
 import Import
@@ -28,7 +31,7 @@ SAFETY = (
     "DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. "
     "NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."
 )
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(os.environ["FC01_PROJECT_ROOT"]).resolve() if os.environ.get("FC01_PROJECT_ROOT") else Path(__file__).resolve().parents[1]
 OUT = ROOT / "09_panel_cad" / "revision_e"
 FCSTD = OUT / "FC01_control_panel_revision_e.FCStd"
 STEP = OUT / "FC01_control_panel_revision_e.step"

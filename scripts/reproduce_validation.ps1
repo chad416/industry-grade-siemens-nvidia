@@ -98,7 +98,29 @@ try {
     Invoke-Native $OpcUaPython '-m' 'unittest' 'discover' '-s' '07_nvidia_vision\edge_service\tests' '-v'
     Push-Location '07_nvidia_vision'
     try { Invoke-Native $Python '-m' 'unittest' '-v' 'test_plc_interface_harness.py' } finally { Pop-Location }
-    Invoke-Native $FreeCADCmd 'scripts\verify_freecad_revision_e.py'
+    # FreeCAD's embedded Python can cache the executed script even when the
+    # parent process sets PYTHONDONTWRITEBYTECODE. Execute a controlled copy
+    # outside the release tree and point it back to the authoritative project
+    # root so native verification cannot leave __pycache__ in the candidate.
+    $TempRoot = [IO.Path]::GetFullPath([IO.Path]::GetTempPath()).TrimEnd('\') + '\'
+    $FreeCADVerifyTemp = Join-Path $TempRoot ("fc01-freecad-verify-" + [Guid]::NewGuid().ToString('N'))
+    New-Item -ItemType Directory -Path $FreeCADVerifyTemp | Out-Null
+    $FreeCADVerifyScript = Join-Path $FreeCADVerifyTemp 'verify_freecad_revision_e.py'
+    $PreviousProjectRoot = $env:FC01_PROJECT_ROOT
+    try {
+        Copy-Item -LiteralPath 'scripts\verify_freecad_revision_e.py' -Destination $FreeCADVerifyScript
+        $env:FC01_PROJECT_ROOT = $ProjectRoot
+        Invoke-Native $FreeCADCmd $FreeCADVerifyScript
+    }
+    finally {
+        if ($null -eq $PreviousProjectRoot) { Remove-Item Env:FC01_PROJECT_ROOT -ErrorAction SilentlyContinue }
+        else { $env:FC01_PROJECT_ROOT = $PreviousProjectRoot }
+        $ResolvedTemp = [IO.Path]::GetFullPath($FreeCADVerifyTemp)
+        if (-not $ResolvedTemp.StartsWith($TempRoot, [StringComparison]::OrdinalIgnoreCase)) {
+            throw "Refusing to remove FreeCAD verification temp path outside the system temp directory: $ResolvedTemp"
+        }
+        if (Test-Path -LiteralPath $ResolvedTemp) { Remove-Item -LiteralPath $ResolvedTemp -Recurse -Force }
+    }
     Invoke-Native $Python 'scripts\check_determinism.py' '--source' 'head'
 
     if (Test-Path -LiteralPath $BuildJunction) { throw "Unexpected node_modules path exists before workbook build: $BuildJunction" }
