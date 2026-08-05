@@ -8,18 +8,24 @@ from __future__ import annotations
 
 import asyncio
 from dataclasses import dataclass
+import hashlib
 import json
 import logging
 import os
 from pathlib import Path
 import random
+import re
 import threading
 import time
 from typing import Any
 from urllib.parse import urlparse
+import zlib
 
 from observability import HealthSnapshot, Metrics
-from protocol import InspectionRequest, InspectionResult, ProtocolError, UINT32_MAX, heartbeat_advance
+from protocol import (
+    InspectionRequest, InspectionResult, ProcessingState, ProtocolError,
+    UINT32_MAX, heartbeat_advance,
+)
 from service import VisionService
 
 try:  # The source-only D.1 tests still run without the optional OPC UA stack.
@@ -40,16 +46,32 @@ PLC_OWNED = (
     "VISION_ENABLE", "INSPECTION_TRIGGER", "INSPECTION_ID", "RECIPE_ID",
     "EXPECTED_BOTTLES", "TARGET_FILL_LEVEL", "PLC_HEARTBEAT",
     "VISION_RESULT_ACK_ID", "VISION_SESSION_EPOCH", "VISION_DIAG_REASON",
+    "MAINTENANCE_MODE", "EXPECTED_DATASET_ID", "EXPECTED_CALIBRATION_ID",
 )
-EDGE_STATUS = ("VISION_READY", "VISION_BUSY", "VISION_HEARTBEAT")
+EDGE_STATUS = (
+    "VISION_READY", "VISION_BUSY", "VISION_HEARTBEAT", "CAPTURE_ACK_ID",
+    "PROCESSING_STATE", "SERVICE_HEALTHY", "CAMERA_HEALTHY", "MODEL_LOADED",
+    "MAINTENANCE_ACTIVE",
+)
 RESULT_PAYLOAD = (
     "RESULT_ID", "BOTTLE_1_PASS", "BOTTLE_2_PASS", "FILL_1_STATUS",
     "FILL_2_STATUS", "LEAK_OR_SPILL_DETECTED", "LOW_CONFIDENCE",
     "VISION_WARNING", "VISION_FAULT", "INFERENCE_TIME",
     "VISION_RESULT_SESSION_EPOCH", "VISION_MODEL_ID", "VISION_MODEL_SHA256",
+    "RESULT_DISPOSITION", "REASON_BITS", "CONFIDENCE", "DATASET_ID",
+    "CALIBRATION_ID", "CAPTURE_TIMESTAMP_UTC_MS", "INFERENCE_TIMESTAMP_UTC_MS",
+    "PUBLICATION_TIMESTAMP_UTC_MS", "PROCESSING_TIME_MS", "DIAGNOSTIC_CODE",
+    "QUEUE_DEPTH",
 )
 RESULT_VALID = "RESULT_VALID"
 ALL_SIGNALS = PLC_OWNED + EDGE_STATUS + (RESULT_VALID,) + RESULT_PAYLOAD
+
+
+def edge_diagnostic_code(token: str) -> int:
+    """Stable UInt32 transport value for an ASCII diagnostic token."""
+    if token in {"", "OK"}:
+        return 0
+    return zlib.crc32(token.encode("ascii", "strict")) & UINT32_MAX
 
 # UA VariantType names are used here so the module remains importable when the
 # optional asyncua dependency is absent.
@@ -67,8 +89,67 @@ EXPECTED_VARIANT_TYPES = {
     "VISION_HEARTBEAT": "UInt32", "VISION_RESULT_ACK_ID": "UInt32",
     "VISION_SESSION_EPOCH": "UInt32", "VISION_RESULT_SESSION_EPOCH": "UInt32",
     "VISION_DIAG_REASON": "UInt16", "VISION_MODEL_ID": "String",
-    "VISION_MODEL_SHA256": "String",
+    "VISION_MODEL_SHA256": "String", "MAINTENANCE_MODE": "Boolean",
+    "EXPECTED_DATASET_ID": "String", "EXPECTED_CALIBRATION_ID": "String",
+    "CAPTURE_ACK_ID": "UInt32", "PROCESSING_STATE": "Byte",
+    "SERVICE_HEALTHY": "Boolean", "CAMERA_HEALTHY": "Boolean",
+    "MODEL_LOADED": "Boolean", "MAINTENANCE_ACTIVE": "Boolean",
+    "RESULT_DISPOSITION": "Byte", "REASON_BITS": "UInt32",
+    "CONFIDENCE": "Float", "DATASET_ID": "String",
+    "CALIBRATION_ID": "String", "CAPTURE_TIMESTAMP_UTC_MS": "UInt64",
+    "INFERENCE_TIMESTAMP_UTC_MS": "UInt64", "PUBLICATION_TIMESTAMP_UTC_MS": "UInt64",
+    "PROCESSING_TIME_MS": "UInt32", "DIAGNOSTIC_CODE": "UInt32",
+    "QUEUE_DEPTH": "UInt16",
 }
+
+
+def _validate_contract_document(document: dict[str, Any], schema: dict[str, Any]) -> None:
+    """Enforce the controlled service-config schema without a runtime package.
+
+    The released schema intentionally uses a small JSON-Schema subset. Keeping
+    this validator dependency-free avoids a second validator implementation on
+    the target while still making required/unknown/type/const/range/pattern and
+    node-count rules executable.
+    """
+    properties = schema["properties"]
+    required = set(schema["required"])
+    missing = sorted(required - set(document))
+    unknown = sorted(set(document) - set(properties))
+    if missing or (schema.get("additionalProperties") is False and unknown):
+        raise ValueError(f"service configuration schema mismatch: missing={missing}, unknown={unknown}")
+    for key, value in document.items():
+        rule = properties[key]
+        if "const" in rule and value != rule["const"]:
+            raise ValueError(f"service configuration {key} differs from its schema constant")
+        declared = rule.get("type")
+        valid_type = {
+            "string": isinstance(value, str),
+            "integer": type(value) is int,
+            "object": isinstance(value, dict),
+            "null": value is None,
+        }
+        if declared:
+            alternatives = declared if isinstance(declared, list) else [declared]
+            if not any(valid_type.get(item, False) for item in alternatives):
+                raise ValueError(f"service configuration {key} has the wrong schema type")
+        if isinstance(value, str):
+            if len(value) < rule.get("minLength", 0):
+                raise ValueError(f"service configuration {key} is too short")
+            if rule.get("pattern") and re.fullmatch(rule["pattern"], value) is None:
+                raise ValueError(f"service configuration {key} does not match its schema pattern")
+        if type(value) is int and not rule.get("const"):
+            if value < rule.get("minimum", value) or value > rule.get("maximum", value):
+                raise ValueError(f"service configuration {key} is outside its schema range")
+        if isinstance(value, dict):
+            if len(value) < rule.get("minProperties", 0) or len(value) > rule.get("maxProperties", len(value)):
+                raise ValueError(f"service configuration {key} has the wrong property count")
+            child = rule.get("additionalProperties")
+            if isinstance(child, dict):
+                for child_key, child_value in value.items():
+                    if child.get("type") == "string" and not isinstance(child_value, str):
+                        raise ValueError(f"service configuration {key}.{child_key} has the wrong type")
+                    if child.get("pattern") and re.fullmatch(child["pattern"], child_value) is None:
+                        raise ValueError(f"service configuration {key}.{child_key} has an invalid value")
 
 
 @dataclass(frozen=True)
@@ -81,12 +162,14 @@ class RuntimeOptions:
     reconnect_max_ms: int = 5_000
     reconnect_jitter_ms: int = 100
     coherent_snapshot_attempts: int = 3
+    clock_step_tolerance_ms: int = 250
 
     def validate(self) -> None:
         for name in (
             "poll_interval_ms", "connect_timeout_ms", "operation_timeout_ms",
             "inference_timeout_ms", "reconnect_initial_ms", "reconnect_max_ms",
             "coherent_snapshot_attempts",
+            "clock_step_tolerance_ms",
         ):
             if type(getattr(self, name)) is not int or getattr(self, name) <= 0:
                 raise ValueError(f"{name} must be a positive integer")
@@ -132,12 +215,20 @@ class AdapterConfig:
     nodes: dict[str, str]
     security: SecurityOptions
     runtime: RuntimeOptions
+    configuration_hashes: tuple[tuple[str, str], ...] = ()
 
     @classmethod
     def from_files(cls, runtime_config_path: Path) -> "AdapterConfig":
         data = json.loads(runtime_config_path.read_text(encoding="utf-8"))
         contract_path = runtime_config_path.parent / data["contract_config"]
         contract = json.loads(contract_path.read_text(encoding="utf-8"))
+        schema_path = contract_path.with_name("service_config.schema.json")
+        schema = json.loads(schema_path.read_text(encoding="utf-8"))
+        _validate_contract_document(contract, schema)
+        if contract.get("namespace_version") != "FC01.Vision.v3":
+            raise ValueError("runtime requires the FC01.Vision.v3 namespace")
+        if contract.get("signal_count") != len(ALL_SIGNALS):
+            raise ValueError("declared signal count differs from the implemented contract")
         env_names = data["security"]["environment"]
 
         def env_path(key: str) -> Path:
@@ -159,7 +250,11 @@ class AdapterConfig:
             mode=data["security"]["mode"],
         )
         runtime = RuntimeOptions(**data["runtime"])
-        config = cls(contract["opcua_endpoint"], dict(contract["nodes"]), security, runtime)
+        hashes = tuple(
+            (path.name, hashlib.sha256(path.read_bytes()).hexdigest())
+            for path in (runtime_config_path, contract_path, schema_path)
+        )
+        config = cls(contract["opcua_endpoint"], dict(contract["nodes"]), security, runtime, hashes)
         config.validate()
         return config
 
@@ -172,7 +267,7 @@ class AdapterConfig:
         if set(self.nodes) != set(ALL_SIGNALS):
             missing = sorted(set(ALL_SIGNALS) - set(self.nodes))
             extra = sorted(set(self.nodes) - set(ALL_SIGNALS))
-            raise ValueError(f"node map differs from the 27-signal contract: missing={missing}, extra={extra}")
+            raise ValueError(f"node map differs from the {len(ALL_SIGNALS)}-signal contract: missing={missing}, extra={extra}")
         if len(set(self.nodes.values())) != len(self.nodes):
             raise ValueError("node map contains duplicate NodeIds")
         self.runtime.validate()
@@ -211,6 +306,10 @@ class PlcSnapshot:
     def result_valid(self) -> bool:
         return self.values["RESULT_VALID"]
 
+    @property
+    def maintenance_mode(self) -> bool:
+        return self.values["MAINTENANCE_MODE"]
+
     def retained_result(self) -> InspectionResult:
         return InspectionResult(
             result_id=self.values["RESULT_ID"],
@@ -226,7 +325,48 @@ class PlcSnapshot:
             model_id=self.values["VISION_MODEL_ID"],
             model_hash=self.values["VISION_MODEL_SHA256"],
             session_epoch=self.values["VISION_RESULT_SESSION_EPOCH"],
+            capture_ack_id=self.values["CAPTURE_ACK_ID"],
+            processing_state=self.values["PROCESSING_STATE"],
+            disposition=self.values["RESULT_DISPOSITION"],
+            reason_bits=self.values["REASON_BITS"],
+            confidence=self.values["CONFIDENCE"],
+            dataset_id=self.values["DATASET_ID"],
+            calibration_id=self.values["CALIBRATION_ID"],
+            capture_timestamp_utc_ms=self.values["CAPTURE_TIMESTAMP_UTC_MS"],
+            inference_timestamp_utc_ms=self.values["INFERENCE_TIMESTAMP_UTC_MS"],
+            publication_timestamp_utc_ms=self.values["PUBLICATION_TIMESTAMP_UTC_MS"],
+            processing_time_ms=self.values["PROCESSING_TIME_MS"],
+            service_healthy=self.values["SERVICE_HEALTHY"],
+            camera_healthy=self.values["CAMERA_HEALTHY"],
+            model_loaded=self.values["MODEL_LOADED"],
+            maintenance_active=self.values["MAINTENANCE_ACTIVE"],
+            diagnostic_code=self.values["DIAGNOSTIC_CODE"],
+            queue_depth=self.values["QUEUE_DEPTH"],
         )
+
+
+def _validate_active_request_context(
+    request: InspectionRequest,
+    snapshot: PlcSnapshot,
+    monotonic_elapsed_ms: int,
+    wall_elapsed_ms: int,
+    clock_step_tolerance_ms: int,
+) -> None:
+    immutable = {
+        "inspection_id": snapshot.inspection_id,
+        "session_epoch": snapshot.session_epoch,
+        "recipe_id": snapshot.values["RECIPE_ID"],
+        "expected_bottles": snapshot.values["EXPECTED_BOTTLES"],
+        "target_fill_level": snapshot.values["TARGET_FILL_LEVEL"],
+        "expected_dataset_id": snapshot.values["EXPECTED_DATASET_ID"],
+        "expected_calibration_id": snapshot.values["EXPECTED_CALIBRATION_ID"],
+        "maintenance_mode": snapshot.maintenance_mode,
+    }
+    changed = sorted(name for name, value in immutable.items() if getattr(request, name) != value)
+    if changed:
+        raise ProtocolError("active request context changed: " + ",".join(changed))
+    if abs(wall_elapsed_ms - monotonic_elapsed_ms) > clock_step_tolerance_ms:
+        raise ProtocolError("wall-clock discontinuity exceeded the controlled tolerance")
 
 
 class OpcUaVisionAdapter:
@@ -234,7 +374,7 @@ class OpcUaVisionAdapter:
 
     def __init__(self, config: AdapterConfig, service: VisionService, *,
                  metrics: Metrics | None = None, logger: logging.Logger | None = None,
-                 clock_ms=None) -> None:
+                 clock_ms=None, wall_clock_ms=None) -> None:
         config.validate()
         if Client is None:
             raise RuntimeError("asyncua is not installed; use requirements-opcua.txt")
@@ -243,13 +383,22 @@ class OpcUaVisionAdapter:
         self.metrics = metrics or Metrics()
         self.logger = logger or logging.getLogger("fc01.vision.edge")
         self.clock_ms = clock_ms or (lambda: time.monotonic_ns() // 1_000_000)
+        self.wall_clock_ms = wall_clock_ms or (lambda: time.time_ns() // 1_000_000)
         self.client: Client | None = None
         self.nodes: dict[str, Any] = {}
         self.connected = False
         self._trigger_consumed_id = 0
+        self._capture_ack_id = 0
+        self._maintenance_active = False
         self._timed_out_inference: asyncio.Task | None = None
         self._last_result_write_order: list[str] = []
         self._set_metrics()
+        for name, digest in self.config.configuration_hashes:
+            self.logger.info(
+                "controlled configuration loaded",
+                extra={"event": "configuration_loaded", "configuration_name": name,
+                       "configuration_sha256": digest},
+            )
 
     @property
     def last_result_write_order(self) -> tuple[str, ...]:
@@ -283,7 +432,16 @@ class OpcUaVisionAdapter:
         client = Client(
             self.config.endpoint,
             timeout=self.config.runtime.operation_timeout_ms / 1000,
-            watchdog_intervall=max(self.config.runtime.poll_interval_ms / 1000, 0.05),
+            # The asyncua watchdog performs a real server-state request and uses
+            # this value as that request's timeout. Tying it to the fast PLC
+            # scan/poll interval can therefore declare a healthy encrypted
+            # session dead while certificate or other requests are in flight.
+            # Give transport supervision at least the configured OPC UA
+            # operation budget (and asyncua's one-second default floor).
+            watchdog_intervall=max(
+                self.config.runtime.operation_timeout_ms / 1000,
+                1.0,
+            ),
             auto_reconnect=False,
         )
         client.name = "FC01 Vision Edge OPC UA Client"
@@ -341,14 +499,28 @@ class OpcUaVisionAdapter:
             self._set_metrics()
 
     async def _validate_nodes(self) -> None:
-        for signal in ALL_SIGNALS:
-            node = self.nodes[signal]
-            variant_type = await self._bounded(node.read_data_type_as_variant_type())
+        ordered_nodes = [self.nodes[signal] for signal in ALL_SIGNALS]
+        data_types = await self._bounded(self.client.read_attributes(
+            ordered_nodes, attr=ua.AttributeIds.DataType,
+        ))
+        access_levels = await self._bounded(self.client.read_attributes(
+            ordered_nodes, attr=ua.AttributeIds.UserAccessLevel,
+        ))
+        for signal, data_value, access_value in zip(ALL_SIGNALS, data_types, access_levels, strict=True):
+            data_value.StatusCode.check()
+            access_value.StatusCode.check()
+            if data_value.Value is None or access_value.Value is None:
+                raise ProtocolError(f"{signal} is missing DataType or UserAccessLevel metadata")
+            data_type_node_id = data_value.Value.Value
+            try:
+                variant_type = ua.VariantType(data_type_node_id.Identifier)
+            except (TypeError, ValueError) as exc:
+                raise ProtocolError(f"{signal} does not use a supported built-in scalar type") from exc
             if variant_type.name != EXPECTED_VARIANT_TYPES[signal]:
                 raise ProtocolError(
                     f"{signal} has UA type {variant_type.name}, expected {EXPECTED_VARIANT_TYPES[signal]}"
                 )
-            access = await self._bounded(node.get_user_access_level())
+            access = ua.AccessLevel.parse_bitfield(access_value.Value.Value)
             if ua.AccessLevel.CurrentRead not in access:
                 raise ProtocolError(f"named OPC UA identity cannot read {signal}")
             if signal in PLC_OWNED and ua.AccessLevel.CurrentWrite in access:
@@ -359,10 +531,10 @@ class OpcUaVisionAdapter:
 
     def _validate_value_types(self, values: dict[str, Any]) -> None:
         python_types = {
-            "Boolean": bool, "UInt32": int, "UInt16": int, "Byte": int,
+            "Boolean": bool, "UInt64": int, "UInt32": int, "UInt16": int, "Byte": int,
             "Float": float, "String": str,
         }
-        bounds = {"UInt32": UINT32_MAX, "UInt16": 0xFFFF, "Byte": 0xFF}
+        bounds = {"UInt64": 0xFFFFFFFFFFFFFFFF, "UInt32": UINT32_MAX, "UInt16": 0xFFFF, "Byte": 0xFF}
         for signal, value in values.items():
             variant_name = EXPECTED_VARIANT_TYPES[signal]
             expected = python_types[variant_name]
@@ -372,7 +544,7 @@ class OpcUaVisionAdapter:
                 raise ProtocolError(f"{signal} value is outside {variant_name} bounds")
 
     async def _read_snapshot(self) -> PlcSnapshot:
-        signals = PLC_OWNED + (RESULT_VALID,) + RESULT_PAYLOAD
+        signals = ALL_SIGNALS
         raw = await self._bounded(self.client.read_values([self.nodes[name] for name in signals]))
         values = dict(zip(signals, raw, strict=True))
         self._validate_value_types(values)
@@ -380,8 +552,10 @@ class OpcUaVisionAdapter:
 
     async def read_coherent_snapshot(self) -> PlcSnapshot:
         stable = (
-            "VISION_ENABLE", "INSPECTION_ID", "VISION_RESULT_ACK_ID",
-            "VISION_SESSION_EPOCH", "RESULT_VALID",
+            "VISION_ENABLE", "INSPECTION_TRIGGER", "INSPECTION_ID", "RECIPE_ID",
+            "EXPECTED_BOTTLES", "TARGET_FILL_LEVEL", "VISION_RESULT_ACK_ID",
+            "VISION_SESSION_EPOCH", "MAINTENANCE_MODE", "EXPECTED_DATASET_ID",
+            "EXPECTED_CALIBRATION_ID", "RESULT_VALID",
         )
         for _ in range(self.config.runtime.coherent_snapshot_attempts):
             first = await self._read_snapshot()
@@ -410,6 +584,15 @@ class OpcUaVisionAdapter:
         ))
 
     async def _synchronize_if_disabled(self, snapshot: PlcSnapshot) -> bool:
+        if self._timed_out_inference is not None:
+            # asyncio cannot cancel the underlying synchronous to_thread call.
+            # Keep the old request visibly BUSY/not-ready and prohibit reset,
+            # session advance or rearm until that worker has actually exited.
+            self.service.state.ready = False
+            self.service.state.busy = True
+            self.service.state.fault = "timed-out inference worker is still terminating"
+            self.service.state.diagnostic_code = "INFERENCE_TIMEOUT"
+            return False
         if snapshot.enabled:
             self.service.state.ready = False
             self.service.state.warning = "AWAITING VISION_ENABLE LOW FOR SESSION SYNCHRONIZATION"
@@ -466,16 +649,36 @@ class OpcUaVisionAdapter:
         return True
 
     async def _publish_status(self) -> None:
+        backend = self.service.backend
+        camera_healthy = bool(getattr(backend, "camera_healthy", False)) if backend is not None else False
+        model_loaded = self.service._validated_identity is not None
+        if self.service.state.fault:
+            processing_state = ProcessingState.FAULT
+        elif self.service.state.result_valid:
+            processing_state = ProcessingState.RESULT_COMPLETE
+        elif self.service.state.busy:
+            processing_state = ProcessingState.PROCESSING
+        elif self.service.state.ready:
+            processing_state = ProcessingState.READY
+        else:
+            processing_state = ProcessingState.NOT_READY
         status = {
             "VISION_READY": bool(self.service.state.ready and self.connected),
             "VISION_BUSY": bool(self.service.state.busy),
             "VISION_HEARTBEAT": self.service.state.vision_heartbeat,
+            "CAPTURE_ACK_ID": self._capture_ack_id,
+            "PROCESSING_STATE": int(processing_state),
+            "SERVICE_HEALTHY": bool(self.connected and not self.service.state.fault),
+            "CAMERA_HEALTHY": camera_healthy,
+            "MODEL_LOADED": model_loaded,
+            "MAINTENANCE_ACTIVE": self._maintenance_active,
         }
         # WARNING and FAULT are inspection payload fields while RESULT_VALID is
         # high; transport faults are instead conveyed by READY low and heartbeat.
         if not self.service.state.result_valid:
             status["VISION_WARNING"] = bool(self.service.state.warning)
             status["VISION_FAULT"] = bool(self.service.state.fault)
+            status["DIAGNOSTIC_CODE"] = edge_diagnostic_code(self.service.state.diagnostic_code)
         await self._write_typed(status)
         self._set_metrics()
 
@@ -494,6 +697,17 @@ class OpcUaVisionAdapter:
             "VISION_RESULT_SESSION_EPOCH": result.session_epoch,
             "VISION_MODEL_ID": result.model_id,
             "VISION_MODEL_SHA256": result.model_hash,
+            "RESULT_DISPOSITION": result.disposition,
+            "REASON_BITS": result.reason_bits,
+            "CONFIDENCE": result.confidence,
+            "DATASET_ID": result.dataset_id,
+            "CALIBRATION_ID": result.calibration_id,
+            "CAPTURE_TIMESTAMP_UTC_MS": result.capture_timestamp_utc_ms,
+            "INFERENCE_TIMESTAMP_UTC_MS": result.inference_timestamp_utc_ms,
+            "PUBLICATION_TIMESTAMP_UTC_MS": result.publication_timestamp_utc_ms,
+            "PROCESSING_TIME_MS": result.processing_time_ms,
+            "DIAGNOSTIC_CODE": result.diagnostic_code,
+            "QUEUE_DEPTH": result.queue_depth,
         }
         self._last_result_write_order = list(payload)
         await self._write_typed(payload)
@@ -532,6 +746,16 @@ class OpcUaVisionAdapter:
                        "diagnostic_code": "INFERENCE_TIMEOUT"},
             )
             self.metrics.increment("late_backend_completions_discarded_total")
+        finally:
+            if self._timed_out_inference is task:
+                # The worker has now finished all shared VisionService state
+                # mutation. Preserve the deadline first-out and allow only a
+                # subsequent disabled synchronization to rearm the service.
+                self._timed_out_inference = None
+                self.service.state.busy = False
+                self.service.state.ready = False
+                self.service.state.fault = "inference deadline exceeded; late publication prohibited"
+                self.service.state.diagnostic_code = "INFERENCE_TIMEOUT"
 
     async def _reconcile_publication(self, snapshot: PlcSnapshot) -> None:
         if not self.service.state.result_valid:
@@ -559,6 +783,7 @@ class OpcUaVisionAdapter:
         if not self.connected or self.client is None:
             raise RuntimeError("OPC UA adapter is not connected")
         snapshot = await self.read_coherent_snapshot()
+        self._maintenance_active = snapshot.maintenance_mode
         now_ms = self.clock_ms()
         self.service.tick(snapshot.plc_heartbeat, now_ms, snapshot.session_epoch)
 
@@ -593,16 +818,42 @@ class OpcUaVisionAdapter:
                 target_fill_level=snapshot.values["TARGET_FILL_LEVEL"],
                 plc_heartbeat=snapshot.plc_heartbeat,
                 session_epoch=snapshot.session_epoch,
+                maintenance_mode=snapshot.maintenance_mode,
+                expected_dataset_id=snapshot.values["EXPECTED_DATASET_ID"],
+                expected_calibration_id=snapshot.values["EXPECTED_CALIBRATION_ID"],
             )
             self._trigger_consumed_id = snapshot.inspection_id
+            self._capture_ack_id = snapshot.inspection_id
             self.service.state.busy = True
             await self._publish_status()
+            request_monotonic_ms = self.clock_ms()
+            request_wall_ms = self.wall_clock_ms()
             try:
                 result = await self._run_inference(request)
+                post_snapshot = await self.read_coherent_snapshot()
+                try:
+                    _validate_active_request_context(
+                        request, post_snapshot,
+                        self.clock_ms() - request_monotonic_ms,
+                        self.wall_clock_ms() - request_wall_ms,
+                        self.config.runtime.clock_step_tolerance_ms,
+                    )
+                except ProtocolError as exc:
+                    code = "CLOCK_DISCONTINUITY" if "clock" in str(exc) else "REQUEST_CONTEXT_CHANGED"
+                    self.service._fault(code, str(exc), invalidate_publication=True,
+                                        inspection_id=request.inspection_id,
+                                        plc_heartbeat=request.plc_heartbeat)
+                    raise
+                # The PLC rejects BUSY+RESULT_VALID and requires terminal state
+                # 4 before accepting a publication. Complete that status
+                # transition before RESULT_VALID can become observable.
+                self.service.state.busy = False
+                await self._publish_status()
                 await self._publish_result(result)
                 self.metrics.increment("inspections_total")
             finally:
-                self.service.state.busy = False
+                if self._timed_out_inference is None or self._timed_out_inference.done():
+                    self.service.state.busy = False
 
         await self._publish_status()
 

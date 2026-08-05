@@ -1,8 +1,8 @@
-# Automated validation report — Revision E
+# Automated validation report — Revision F
 
 Result: **PASS**
 
-This is deterministic static/data/independent-model validation. Native QET/FreeCAD results are accepted only through separate controlled reopen/reimport evidence; this report is not TIA, WinCC, Startdrive, PLCSIM or physical proof.
+This is deterministic static/data/independent-model validation. Native QET/FreeCAD results are accepted only through separate controlled reopen/reimport evidence; this report is not TIA, WinCC, Startdrive, PLCSIM, production NVIDIA runtime/model, or physical proof.
 
 ## Passed checks
 
@@ -46,7 +46,7 @@ This is deterministic static/data/independent-model validation. Native QET/FreeC
 - all writable HMI tags use DB_HMI command requests
 - analog/HSC shields scheduled
 - artifact-reproduction Python version is locked
-- artifact-reproduction toolchain lock is Revision E
+- artifact-reproduction toolchain lock is Revision F
 - artifact-tool version is locked
 - balanced DATA_BLOCK endings: DB_CellMain.scl
 - balanced DATA_BLOCK endings: DB_Global.scl
@@ -88,7 +88,7 @@ This is deterministic static/data/independent-model validation. Native QET/FreeC
 - cable_schedule.csv exactly derives from canonical model
 - canonical cell inputs are normalized and consumed: []
 - canonical major-device coordinates, envelopes and clearances match the native Revision-E placement schedule
-- canonical revision E
+- canonical revision F
 - capper external/handshake faults map to alarm 1402
 - capper reset requires all diagnosed causes cleared
 - command arbitration separated from output mapper
@@ -187,7 +187,7 @@ This is deterministic static/data/independent-model validation. Native QET/FreeC
 - fill-channel implements tAnalogNoFlow
 - fill-channel implements tPulseMissing
 - fill-channel implements tValveClose
-- fresh-clone Revision-E CI workflow is controlled
+- fresh-clone Revision-F CI workflow is controlled
 - generated Siemens source parity: 00_types.scl
 - generated Siemens source parity: DB_CellMain.scl
 - generated Siemens source parity: DB_Global.scl
@@ -424,7 +424,7 @@ This is deterministic static/data/independent-model validation. Native QET/FreeC
 - required directory release
 - requirements_traceability.csv exactly derives from canonical model
 - retained FreeCAD GUI views have exact executable/version/hash provenance and a limited final-model claim
-- revision-D generator owns every authoritative Siemens source
+- revision-F generator owns every authoritative Siemens source
 - root calls Alarm exactly once
 - root calls Capper exactly once
 - root calls Clamp exactly once
@@ -533,7 +533,7 @@ This is deterministic static/data/independent-model validation. Native QET/FreeC
 - switch misidentification corrected with managed/firewall design
 - terminal_plan.csv exactly derives from canonical model
 - test_coverage.csv exactly derives from canonical model
-- truthful controlled native-engineering release-candidate status
+- truthful NVIDIA implementation-readiness release-candidate status
 - two Standard Telegram 1 PZD mappings controlled
 - vfd_parameters.csv exactly derives from canonical model
 - vision request identity is immutable while pending

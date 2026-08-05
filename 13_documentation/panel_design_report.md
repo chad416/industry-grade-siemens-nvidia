@@ -1,4 +1,4 @@
-# Panel design report - Revision E
+# Panel design report - Revision F
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
@@ -6,14 +6,14 @@
 
 ## Native layout basis
 
-The current package contains a genuine FreeCAD 1.1.3 selected-architecture assembly in an 800 x 800 x 300 mm provisional enclosure with a 750 x 750 x 3 mm drilled mounting plate. It includes enclosure/door, DIN rails, ducts, main and 24 V protection envelopes, 24 VDC supply, CPU/DI/DQ/AI/TM Count modules, MTP700 door representation, two G120C PN FSA envelopes, managed switch, firewall, relay bank, terminal/PE/shield infrastructure and a controlled provisional NVIDIA edge-compute envelope. Reference designations follow the `=FC01+CP01-...` structure.
+The inherited Revision-E FreeCAD 1.1.3 selected-architecture assembly remains the current natively reopened CAD authority: 800 x 800 x 300 mm provisional enclosure, drilled mounting plate, separated drive/power/control/network zones, Siemens PLC/I/O/HMI/drive envelopes and a provisional NVIDIA edge-compute envelope.
 
-The native schedule places heat-producing drives in the separated left zone and reserves 80 mm top / 100 mm bottom keep-outs based on the controlled Siemens catalog assumption. PLC, network/vision, control-power, relay/protection, terminal and PE zones are spatially separated. Ducts identify mains/drive, control and network routing. HMI/isolator door geometry, terminal access, service access, spare I/O space and the provisional edge envelope are explicitly represented.
+## Revision-F electrical delta boundary
 
-## Native verification boundary
-
-When `09_panel_cad/revision_e/native_verification.json` reports PASS, the final FCStd has been independently reopened by FreeCADCmd, controlled shapes checked, STEP reimported as solids, IGES reimported as valid bounded face geometry, and DXF structure/hole coordinates reconciled to the 30-hole schedule. STEP is the solid-retention exchange proof; no IGES solid-retention claim is made. The general-arrangement and mounting-plate PDFs and four major views retain explicit provenance.
+`03_electrical/revision_f_nvidia_electrical_delta.md` reserves provisional protected edge, camera, lighting and service branches plus unique C200-C206 power/network cable identifiers. It is a standalone delta and has not been incorporated into the native FCStd, QET, canonical BOM, terminal/cable/P2P or panel-placement authorities. Gate 14 therefore remains PARTIAL.
 
 ## Open construction inputs
 
-Enclosure series/IP, final protective devices, 24 V branch-protection family, relay/terminal accessories, NVIDIA carrier/cooling, cable entry/glands, duct fill, thermal rise, PE/bonding, EMC, short-circuit rating, vendor drilling, site clearances and qualified-human construction review remain open. The CAD gate is dimensional/native engineering evidence only, not fabrication authorization.
+Selected carrier/camera/light hardware, enclosure series/IP, branch protection, cable entry, duct fill, thermal rise, PE/bonding, EMC, fault-current/SCCR data, vendor drilling, site clearances and qualified-human review remain open.
+
+THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL.

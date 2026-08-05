@@ -1,15 +1,32 @@
 document_id,title,path,revision,owner,status
-DOC-001,Repository overview,README.md,E,Lead systems engineer,Controlled
-DOC-002,Canonical model,00_project_control/canonical_model.json,E,Lead systems engineer,Controlled
-DOC-003,Functional design specification,13_documentation/functional_design_specification.md,E,Controls engineer,Controlled; native compile open
-DOC-004,Software design specification,13_documentation/software_design_specification.md,E,Controls engineer,Controlled; native compile open
-DOC-005,PLC-NVIDIA interface control,02_system_architecture/interface_control_document.md,E,Controls/vision,Controlled; production endpoint open
-DOC-006,Panel design report,13_documentation/panel_design_report.md,E,Electrical/panel,Controlled assumptions; construction open
-DOC-007,Electrical calculation report,13_documentation/electrical_calculation_report.md,E,Electrical,Provisional; site inputs open
-DOC-008,Acceptance gate status,14_qa/acceptance_gate_status.md,E,Independent V&V,Controlled
-DOC-009,Engineering workbook,10_schedules/FC01_engineering_schedules.xlsx,E,Lead systems engineer,Controlled generated artifact
-DOC-010,Release evidence PDF,release/FC01_release_evidence.pdf,E,Lead systems engineer,Controlled generated artifact
-DOC-011,Release manifest,release/manifest.json,E,Configuration management,Frozen after all content
-DOC-012,Native panel verification,09_panel_cad/revision_e/native_verification.json,E,Panel engineer,Native gate evidence
-DOC-013,Native QET verification,03_electrical/revision_e/native_verification.json,E,Electrical engineer,Native gate evidence when present
-DOC-014,Post-push fresh-clone reproduction,14_qa/post_push_reproduction.md,E,Configuration management,Published-candidate release-integrity evidence
+DOC-001,Repository overview,README.md,F,Lead systems engineer,Controlled
+DOC-002,Canonical model,00_project_control/canonical_model.json,F,Lead systems engineer,Controlled
+DOC-003,Functional design specification,13_documentation/functional_design_specification.md,F,Controls engineer,Controlled; native compile open
+DOC-004,Software design specification,13_documentation/software_design_specification.md,F,Controls engineer,Controlled; native compile open
+DOC-005,PLC-NVIDIA interface control,02_system_architecture/interface_control_document.md,F,Controls/vision,Controlled; production endpoint open
+DOC-006,Panel design report,13_documentation/panel_design_report.md,F,Electrical/panel,Controlled assumptions; construction open
+DOC-007,Electrical calculation report,13_documentation/electrical_calculation_report.md,F,Electrical,Provisional; site inputs open
+DOC-008,Acceptance gate status,14_qa/acceptance_gate_status.md,F,Independent V&V,Controlled
+DOC-009,Engineering workbook,10_schedules/FC01_engineering_schedules.xlsx,F,Lead systems engineer,Controlled generated artifact
+DOC-010,Release evidence PDF,release/FC01_release_evidence.pdf,F,Lead systems engineer,Controlled generated artifact
+DOC-011,Release manifest,release/manifest.json,F,Configuration management,Frozen after all content
+DOC-012,Native panel verification,09_panel_cad/revision_e/native_verification.json,F,Panel engineer,Native gate evidence
+DOC-013,Native QET verification,03_electrical/revision_e/native_verification.json,F,Electrical engineer,Native gate evidence when present
+DOC-014,Post-push fresh-clone reproduction,14_qa/post_push_reproduction.md,F,Configuration management,Published-candidate release-integrity evidence
+DOC-015,Revision-F vision integration architecture,02_system_architecture/revision_f_vision_integration_architecture.md,F,Systems/vision,Controlled
+DOC-016,Revision-F NVIDIA electrical delta,03_electrical/revision_f_nvidia_electrical_delta.md,F,Electrical,Provisional; native delta open
+DOC-017,Revision-F requirements gap matrix,00_project_control/revision_f_requirements_gap_matrix.csv,F,Lead systems,Controlled
+DOC-018,Revision-F vision fault matrix,11_simulation/vision_fault_scenarios.json,F,Verification,Structured behavioral fault-injection model
+DOC-019,NVIDIA version compatibility,13_documentation/nvidia_version_compatibility.md,F,Vision,Official sources checked
+DOC-020,AI commissioning procedure,12_testing/AI_commissioning_procedure.md,F,Vision/controls,Issued; not executed
+DOC-021,AI fault-injection procedure,12_testing/AI_fault_injection_procedure.md,F,Verification,Issued; software-only behavioral fault injection executed
+DOC-022,AI maintenance backup and rollback,13_documentation/ai_maintenance_backup.md,F,Vision/OT,Controlled
+DOC-023,AI troubleshooting guide,13_documentation/ai_troubleshooting_guide.md,F,Vision/maintenance,Controlled
+DOC-024,Dataset and model engineering specification,07_nvidia_vision/dataset_model_engineering_specification.md,F,Vision/quality,Controlled; real data open
+DOC-025,PLC-AI interface v3,07_nvidia_vision/plc_ai_interface_v3.md,F,Controls/vision,Controlled; native endpoint open
+DOC-026,Vision architecture trade study,07_nvidia_vision/vision_architecture_trade_study.md,F,Systems/vision,Controlled assumptions
+DOC-027,QET exact-hash native evidence,03_electrical/revision_f_native_qet/native_reopen_export_evidence.json,F,Electrical,PARTIAL overall gate
+DOC-028,QET native export,03_electrical/revision_f_native_qet/FC01_revision_e_native_export.pdf,F,Electrical,Native 26-page export; PARTIAL review
+DOC-029,Python runtime SBOM,release/python_runtime_sbom.csv,F,Configuration management,Controlled inventory
+DOC-030,Third-party licence review,release/third_party_licence_review.md,F,Configuration management,Engineering inventory; legal approval open
+DOC-031,Revision-F verification report,14_qa/revision_f_verification_report.md,F,Independent verification,Software-agent evidence

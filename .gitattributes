@@ -1,4 +1,4 @@
-# Revision E controlled byte policy.
+# Revision F controlled byte policy.
 #
 # Source and document text is canonical LF in both the Git object database and
 # every checkout. Native engineering, exchange, Office, PDF, image and archive

@@ -1,0 +1,7 @@
+alarm_id,trigger_source,class,message,operator_response,reset_condition
+1501,DB_HMI.FirstOutAlarm==1501,Vision fault,Vision not ready,Confirm production is stopped; check service/camera/model/maintenance status and secure OPC UA link,PLC cause cleared and controlled reset accepted
+1502,DB_HMI.FirstOutAlarm==1502,Vision fault,Vision result timeout,Hold the affected product; check processing state/queue/heartbeat and clear any retained publication,PLC cause cleared publication low and controlled reset accepted
+1503,DB_HMI.FirstOutAlarm==1503,Vision fault,Vision stale or mismatched transaction,Do not release product; compare session request capture result and ACK IDs then resynchronize while disabled,Exact IDs/session restored publication low and controlled reset accepted
+1504,DB_HMI.FirstOutAlarm==1504,Quality hold,Vision blocking quality result,Inspect all active reason bits and perform controlled product disposition; acknowledgement is not release,Product physically dispositioned and PLC sequenced disposition accepted
+1505,DB_HMI.FirstOutAlarm==1505,Communications fault,Vision heartbeat lost,Stop relying on the edge result; restore secure communication and verify advancing counters,Heartbeat advances within timeout and controlled reset accepted
+1506,DB_HMI.FirstOutAlarm==1506,Vision protocol fault,Vision interface contradiction or identity fault,Review PLC diagnostic enumeration edge diagnostic code health identities timing and reason bits; no bypass,Cause cleared immutable publication low and controlled reset accepted

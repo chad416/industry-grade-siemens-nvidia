@@ -1,11 +1,13 @@
-# Final locally achievable gate review - Revision E
+# Final locally achievable gate review - Revision F
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
 > CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-The integrated candidate closes native FreeCAD and local encrypted OPC UA implementation gates while preserving Revision-D.1 Git-object authority. The corrected QET is controlled and statically reconciled but its final hash was not reopened/exported, so native schematic and all-page review gates remain partial/blocked. No software-agent review is represented as qualified-human approval.
+Revision F implements the locally achievable NVIDIA source, deterministic integration and standalone electrical-delta work while preserving Revision-D.1 Git-object authority and the Revision-E native CAD baseline. The exact controlled QET hash reopens and exports natively, but its overall gate remains PARTIAL because an automatic linked cross-reference graph is unsupported and folio 25 has one clipped in-body statement.
 
-Current gate totals are **5 PASS, 4 PARTIAL, 12 BLOCKED and 1 OPEN**. PASS applies to canonical reconciliation, native FCStd reopen, STEP/IGES/DXF reimport, local PLC-NVIDIA failure testing and release integrity after published-candidate clean-clone reproduction. PARTIAL applies to requirements ownership, hardware/catalog confirmation, QET source/native evidence and final BOM/panel construction reconciliation.
+Current gate totals are **3 PASS, 7 PARTIAL, 11 BLOCKED and 1 OPEN**. PASS applies to native FCStd reopen, STEP/IGES/DXF reimport and the published-candidate release-integrity reproduction. Canonical/electrical reconciliation and PLC-NVIDIA failure testing remain PARTIAL because the standalone delta is not in every authority and native/production endpoint behavior remains external.
 
-Native Siemens, site-dependent electrical calculations, real dataset/model/target NVIDIA runtime, FAT/SAT/commissioning and qualified machinery-safety activities remain explicit blockers. Construction, production deployment, CE/regulatory conformity and physical acceptance are not claimed.
+Native TIA/WinCC/Startdrive/PLCSIM, site-dependent electrical calculations, real dataset/model/target NVIDIA runtime, FAT/SAT/commissioning and qualified machinery-safety activities remain external blockers. Construction, production deployment, CE/regulatory conformity, model performance and physical acceptance are not claimed.
+
+THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL.

@@ -1,4 +1,4 @@
-# Repository and release-byte workflow - Revision E
+# Repository and release-byte workflow - Revision F
 
 > FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
 
@@ -29,3 +29,11 @@ Never repair a release by editing manifest hashes. Reproduce the mismatch agains
 ## Revision-E native-application discipline
 
 Author native files only in a disposable non-synchronized engineering clone. Disable native backup/autosave output inside controlled directories and reject `FCBak`, lock, cache, temporary or recovery artifacts. Native-source/exchange binaries are exact-byte Git objects; generators may rebuild only explicitly deterministic source/report artifacts. Stage the frozen engineering content before manifest generation, verify index bytes, commit, then verify HEAD bytes from a clean clone outside OneDrive. If OneDrive resurrects superseded paths, abandon that checkout for release work rather than hiding or manifesting them.
+
+## Revision-F NVIDIA/native discipline
+
+The 47-node transport, Siemens source templates and NVIDIA generator overlays must regenerate byte-identically before manifest freeze. Native applications write only to explicit controlled evidence directories and must not leave locks, caches or autosaves. QET reopen/export evidence is accepted only at the recorded exact source hash. Synthetic fixtures cannot authorize production READY or support model-performance claims. THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL.
+
+## Controlled workbook raster evidence
+
+Workbook PNGs are human-review evidence derived from the normalized XLSX, not independent engineering authorities. Candidate renders are created under the system temporary directory and compared with the reviewed Git baselines. Tolerance is unavailable unless the aggregate authoritative-CSV and workbook-builder SHA-256 values match the controlled semantic baseline. Missing, unexpected, non-regular, dimension-changed or material render drift fails. Retention is permitted only when drift is no more than 16 pixels, occupies a bounding box no larger than 64 pixels and represents no more than 5e-6 of the image; the normalized workbook, source CSVs and final Git clean-state checks still have to match exactly. Intentional baseline replacement requires `FC01_UPDATE_WORKBOOK_RENDERS=1` after visual review; the reproduction entry point rejects that variable because verification must never mutate the baseline.

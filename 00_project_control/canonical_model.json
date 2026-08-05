@@ -1,11 +1,12 @@
 {
   "project": {
     "id": "FC01",
-    "revision": "E",
+    "revision": "F",
     "date": "2026-08-03",
     "notice": "FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION",
     "safety_boundary": "CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.",
-    "status": "CONTROLLED NATIVE-ENGINEERING RELEASE CANDIDATE; CONSTRUCTION, DEPLOYMENT, NATIVE SIEMENS, PHYSICAL AND QUALIFIED ACCEPTANCE GATES REMAIN EXPLICIT"
+    "status": "CONTROLLED NVIDIA IMPLEMENTATION-READINESS RELEASE CANDIDATE; NATIVE SIEMENS, REAL DATA/MODEL, SITE, PHYSICAL AND QUALIFIED GATES REMAIN OPEN",
+    "nvidia_non_safety_boundary": "THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL."
   },
   "states": [
     "UNINITIALIZED",
@@ -1030,216 +1031,564 @@
       "data_type": "BOOL",
       "owner": "PLC",
       "meaning": "Enable inspection service",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_ENABLE",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
     },
     {
       "signal": "INSPECTION_TRIGGER",
       "data_type": "BOOL",
       "owner": "PLC",
       "meaning": "Level-held inspection request; remains true until coherent BUSY observation or terminal result for the immutable session/inspection ID",
-      "transport": "OPC UA subscribed request level; monotonic session/ID is authoritative",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.INSPECTION_TRIGGER",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
     },
     {
       "signal": "INSPECTION_ID",
       "data_type": "UDINT",
       "owner": "PLC",
       "meaning": "Monotonic correlation identifier",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.INSPECTION_ID",
+      "timeout_ms": 0,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
     },
     {
       "signal": "RECIPE_ID",
       "data_type": "UINT",
       "owner": "PLC",
       "meaning": "Active recipe identifier",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.RECIPE_ID",
+      "timeout_ms": 0,
+      "opcua_type": "UInt16",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
     },
     {
       "signal": "EXPECTED_BOTTLES",
       "data_type": "USINT",
       "owner": "PLC",
       "meaning": "Expected count; fixed at 2 for production",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.EXPECTED_BOTTLES",
+      "timeout_ms": 0,
+      "opcua_type": "Byte",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
     },
     {
       "signal": "TARGET_FILL_LEVEL",
       "data_type": "REAL",
       "owner": "PLC",
       "meaning": "Normalized visible target",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.TARGET_FILL_LEVEL",
+      "timeout_ms": 0,
+      "opcua_type": "Float",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
     },
     {
       "signal": "PLC_HEARTBEAT",
       "data_type": "UDINT",
       "owner": "PLC",
       "meaning": "Monotonic heartbeat counter",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.PLC_HEARTBEAT",
+      "timeout_ms": 0,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
     },
     {
       "signal": "VISION_READY",
       "data_type": "BOOL",
       "owner": "NVIDIA",
       "meaning": "Pipeline and model ready",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_READY",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "VISION_BUSY",
       "data_type": "BOOL",
       "owner": "NVIDIA",
       "meaning": "Request in progress",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_BUSY",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "RESULT_VALID",
       "data_type": "BOOL",
       "owner": "NVIDIA",
       "meaning": "Result payload is complete",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 1000
+      "transport": "OPC UA ns=3;s=FC01.Vision.RESULT_VALID",
+      "timeout_ms": 1000,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "RESULT_ID",
       "data_type": "UDINT",
       "owner": "NVIDIA",
       "meaning": "Echoed correlation identifier",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.RESULT_ID",
+      "timeout_ms": 0,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "BOTTLE_1_PASS",
       "data_type": "BOOL",
       "owner": "NVIDIA",
       "meaning": "Bottle 1 quality decision",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.BOTTLE_1_PASS",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "BOTTLE_2_PASS",
       "data_type": "BOOL",
       "owner": "NVIDIA",
       "meaning": "Bottle 2 quality decision",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.BOTTLE_2_PASS",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "FILL_1_STATUS",
       "data_type": "USINT",
       "owner": "NVIDIA",
       "meaning": "0 unknown, 1 under, 2 in-range, 3 over",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.FILL_1_STATUS",
+      "timeout_ms": 0,
+      "opcua_type": "Byte",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "FILL_2_STATUS",
       "data_type": "USINT",
       "owner": "NVIDIA",
       "meaning": "0 unknown, 1 under, 2 in-range, 3 over",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.FILL_2_STATUS",
+      "timeout_ms": 0,
+      "opcua_type": "Byte",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "LEAK_OR_SPILL_DETECTED",
       "data_type": "BOOL",
       "owner": "NVIDIA",
       "meaning": "Visible leak/spill indication",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.LEAK_OR_SPILL_DETECTED",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "LOW_CONFIDENCE",
       "data_type": "BOOL",
       "owner": "NVIDIA",
       "meaning": "Confidence below validated threshold",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.LOW_CONFIDENCE",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "VISION_WARNING",
       "data_type": "BOOL",
       "owner": "NVIDIA",
       "meaning": "Degraded but communicating",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_WARNING",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "VISION_FAULT",
       "data_type": "BOOL",
       "owner": "NVIDIA",
       "meaning": "Blocking internal fault",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_FAULT",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "INFERENCE_TIME",
       "data_type": "UDINT",
       "owner": "NVIDIA",
       "meaning": "Measured pipeline time in milliseconds",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.INFERENCE_TIME",
+      "timeout_ms": 0,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "VISION_HEARTBEAT",
       "data_type": "UDINT",
       "owner": "NVIDIA",
       "meaning": "Monotonic heartbeat counter",
-      "transport": "OPC UA subscribed/published node",
-      "timeout_ms": 1000
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_HEARTBEAT",
+      "timeout_ms": 1000,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "VISION_RESULT_ACK_ID",
       "data_type": "UDINT",
       "owner": "PLC",
       "meaning": "Acknowledges the immutable published result; edge clears RESULT_VALID only on exact match",
-      "transport": "OPC UA subscribed node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_RESULT_ACK_ID",
+      "timeout_ms": 0,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
     },
     {
       "signal": "VISION_SESSION_EPOCH",
       "data_type": "UDINT",
       "owner": "PLC",
       "meaning": "PLC startup/session correlation; reconnect must not replay a prior-session release",
-      "transport": "OPC UA subscribed node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_SESSION_EPOCH",
+      "timeout_ms": 0,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
     },
     {
       "signal": "VISION_RESULT_SESSION_EPOCH",
       "data_type": "UDINT",
       "owner": "NVIDIA",
       "meaning": "Echoes the request session epoch in the immutable result; PLC rejects cross-session publication",
-      "transport": "OPC UA published result payload",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_RESULT_SESSION_EPOCH",
+      "timeout_ms": 0,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "VISION_DIAG_REASON",
       "data_type": "UINT",
       "owner": "PLC",
       "meaning": "First-out PLC interface diagnostic enumeration",
-      "transport": "OPC UA published node",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_DIAG_REASON",
+      "timeout_ms": 0,
+      "opcua_type": "UInt16",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
     },
     {
       "signal": "VISION_MODEL_ID",
       "data_type": "STRING[32]",
       "owner": "NVIDIA",
       "meaning": "Controlled model identifier included in the atomic result",
-      "transport": "OPC UA published result payload",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_MODEL_ID",
+      "timeout_ms": 0,
+      "opcua_type": "String",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     },
     {
       "signal": "VISION_MODEL_SHA256",
       "data_type": "STRING[64]",
       "owner": "NVIDIA",
       "meaning": "Exact controlled model SHA-256 included in the atomic result",
-      "transport": "OPC UA published result payload",
-      "timeout_ms": 0
+      "transport": "OPC UA ns=3;s=FC01.Vision.VISION_MODEL_SHA256",
+      "timeout_ms": 0,
+      "opcua_type": "String",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "MAINTENANCE_MODE",
+      "data_type": "BOOL",
+      "owner": "PLC",
+      "meaning": "Permission-scoped maintenance request; never quality acceptance or actuator bypass",
+      "transport": "OPC UA ns=3;s=FC01.Vision.MAINTENANCE_MODE",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
+    },
+    {
+      "signal": "EXPECTED_DATASET_ID",
+      "data_type": "STRING[32]",
+      "owner": "PLC",
+      "meaning": "Approved validation/dataset baseline expected for the active recipe",
+      "transport": "OPC UA ns=3;s=FC01.Vision.EXPECTED_DATASET_ID",
+      "timeout_ms": 0,
+      "opcua_type": "String",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
+    },
+    {
+      "signal": "EXPECTED_CALIBRATION_ID",
+      "data_type": "STRING[32]",
+      "owner": "PLC",
+      "meaning": "Approved optics/calibration identity expected for the active recipe",
+      "transport": "OPC UA ns=3;s=FC01.Vision.EXPECTED_CALIBRATION_ID",
+      "timeout_ms": 0,
+      "opcua_type": "String",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "PLC writes request/configuration; immutable while active",
+      "invalid_action": "Edge refuses request and remains not ready/faulted"
+    },
+    {
+      "signal": "CAPTURE_ACK_ID",
+      "data_type": "UDINT",
+      "owner": "NVIDIA",
+      "meaning": "Inspection ID whose image acquisition has been accepted",
+      "transport": "OPC UA ns=3;s=FC01.Vision.CAPTURE_ACK_ID",
+      "timeout_ms": 0,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "PROCESSING_STATE",
+      "data_type": "USINT",
+      "owner": "NVIDIA",
+      "meaning": "0 not ready; 1 ready; 2 capture acknowledged; 3 processing; 4 complete; 5 fault",
+      "transport": "OPC UA ns=3;s=FC01.Vision.PROCESSING_STATE",
+      "timeout_ms": 0,
+      "opcua_type": "Byte",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "SERVICE_HEALTHY",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Edge process, configuration, storage and watchdog health",
+      "transport": "OPC UA ns=3;s=FC01.Vision.SERVICE_HEALTHY",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "CAMERA_HEALTHY",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Camera connection/acquisition health; not optical-quality proof",
+      "transport": "OPC UA ns=3;s=FC01.Vision.CAMERA_HEALTHY",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "MODEL_LOADED",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Configured model adapter loaded with approved identity",
+      "transport": "OPC UA ns=3;s=FC01.Vision.MODEL_LOADED",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "MAINTENANCE_ACTIVE",
+      "data_type": "BOOL",
+      "owner": "NVIDIA",
+      "meaning": "Edge is in controlled maintenance state and cannot publish production PASS",
+      "transport": "OPC UA ns=3;s=FC01.Vision.MAINTENANCE_ACTIVE",
+      "timeout_ms": 0,
+      "opcua_type": "Boolean",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "RESULT_DISPOSITION",
+      "data_type": "USINT",
+      "owner": "NVIDIA",
+      "meaning": "0 none; 1 pass; 2 hold; 3 fail; 4 fault",
+      "transport": "OPC UA ns=3;s=FC01.Vision.RESULT_DISPOSITION",
+      "timeout_ms": 0,
+      "opcua_type": "Byte",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "REASON_BITS",
+      "data_type": "DWORD",
+      "owner": "NVIDIA",
+      "meaning": "Structured quality/fault reason mask; PASS requires zero",
+      "transport": "OPC UA ns=3;s=FC01.Vision.REASON_BITS",
+      "timeout_ms": 0,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "CONFIDENCE",
+      "data_type": "REAL",
+      "owner": "NVIDIA",
+      "meaning": "Normalized quality confidence; threshold remains PLC/recipe controlled",
+      "transport": "OPC UA ns=3;s=FC01.Vision.CONFIDENCE",
+      "timeout_ms": 0,
+      "opcua_type": "Float",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "DATASET_ID",
+      "data_type": "STRING[32]",
+      "owner": "NVIDIA",
+      "meaning": "Validation/dataset baseline identity bound to the result",
+      "transport": "OPC UA ns=3;s=FC01.Vision.DATASET_ID",
+      "timeout_ms": 0,
+      "opcua_type": "String",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "CALIBRATION_ID",
+      "data_type": "STRING[32]",
+      "owner": "NVIDIA",
+      "meaning": "Optics/calibration identity bound to the result",
+      "transport": "OPC UA ns=3;s=FC01.Vision.CALIBRATION_ID",
+      "timeout_ms": 0,
+      "opcua_type": "String",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "CAPTURE_TIMESTAMP_UTC_MS",
+      "data_type": "ULINT",
+      "owner": "NVIDIA",
+      "meaning": "Diagnostic UTC image-acquisition timestamp in milliseconds",
+      "transport": "OPC UA ns=3;s=FC01.Vision.CAPTURE_TIMESTAMP_UTC_MS",
+      "timeout_ms": 0,
+      "opcua_type": "UInt64",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "INFERENCE_TIMESTAMP_UTC_MS",
+      "data_type": "ULINT",
+      "owner": "NVIDIA",
+      "meaning": "Diagnostic UTC inference-completion timestamp in milliseconds",
+      "transport": "OPC UA ns=3;s=FC01.Vision.INFERENCE_TIMESTAMP_UTC_MS",
+      "timeout_ms": 0,
+      "opcua_type": "UInt64",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "PUBLICATION_TIMESTAMP_UTC_MS",
+      "data_type": "ULINT",
+      "owner": "NVIDIA",
+      "meaning": "Diagnostic UTC immutable-publication timestamp in milliseconds",
+      "transport": "OPC UA ns=3;s=FC01.Vision.PUBLICATION_TIMESTAMP_UTC_MS",
+      "timeout_ms": 0,
+      "opcua_type": "UInt64",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "PROCESSING_TIME_MS",
+      "data_type": "UDINT",
+      "owner": "NVIDIA",
+      "meaning": "Measured capture-to-publication processing time",
+      "transport": "OPC UA ns=3;s=FC01.Vision.PROCESSING_TIME_MS",
+      "timeout_ms": 1000,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "DIAGNOSTIC_CODE",
+      "data_type": "UDINT",
+      "owner": "NVIDIA",
+      "meaning": "Edge first-out diagnostic code independent of PLC VISION_DIAG_REASON",
+      "transport": "OPC UA ns=3;s=FC01.Vision.DIAGNOSTIC_CODE",
+      "timeout_ms": 0,
+      "opcua_type": "UInt32",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
+    },
+    {
+      "signal": "QUEUE_DEPTH",
+      "data_type": "UINT",
+      "owner": "NVIDIA",
+      "meaning": "Bounded inspection queue depth; saturation fails closed",
+      "transport": "OPC UA ns=3;s=FC01.Vision.QUEUE_DEPTH",
+      "timeout_ms": 0,
+      "opcua_type": "UInt16",
+      "byte_order": "OPC UA typed scalar; no application byte swapping",
+      "update_rule": "Edge writes payload before RESULT_VALID; immutable until exact ACK",
+      "invalid_action": "PLC rejects publication and enters deterministic HOLD/FAULT"
     }
   ],
   "alarms": [
@@ -1753,7 +2102,7 @@
       "status": "Implemented in reviewable sources; native Siemens verification blocked",
       "design_artifact": "11_simulation/filling_cell_simulator.py; 11_simulation/tests",
       "test_ids": "TC-001..TC-032",
-      "evidence": "32 deterministic scenarios plus 88 source/simulator/native-contract tests, 59 edge-service tests and 15 interface-harness tests; see the executed report"
+      "evidence": "32 deterministic process scenarios plus 99 source/simulator/native-contract tests, 28 deterministic vision-fault scenarios, 86 edge-service tests and 17 interface-harness tests; see the executed report"
     },
     {
       "requirement_id": "SYS-023",
@@ -1769,7 +2118,7 @@
       "requirement": "Provide backup, restore and release-manifest procedure",
       "verification": "Review + deterministic simulation where applicable",
       "status": "Implemented in reviewable sources; native Siemens verification blocked",
-      "design_artifact": "13_documentation/backup_restore.md; scripts/build_manifest.py; scripts/verify_manifest.py",
+      "design_artifact": "13_documentation/backup_recovery.md; scripts/build_manifest.py; scripts/verify_manifest.py",
       "test_ids": "PROC-RESTORE-OPEN; MANIFEST-VERIFY-001",
       "evidence": "restore execution remains open; final deterministic manifest verification required"
     },
@@ -1781,6 +2130,186 @@
       "design_artifact": "04_controls_siemens/scl/FB_MachineCoordinator.scl; 13_documentation/functional_design_specification.md",
       "test_ids": "TC-025; TC-026",
       "evidence": "low-confidence/failed-bottle traces enter HOLDING pending disposition"
+    },
+    {
+      "requirement_id": "SYS-026",
+      "requirement": "Keep NVIDIA non-safety and unable to command actuators or bypass PLC interlocks",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "02_system_architecture/revision_f_vision_integration_architecture.md",
+      "test_ids": "VFS-002; VFS-004",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-027",
+      "requirement": "Support camera, recorded-directory and explicitly synthetic non-production acquisition adapters",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "07_nvidia_vision/edge_service",
+      "test_ids": "EDGE-PIPELINE",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-028",
+      "requirement": "Validate versioned configuration schema, reject unknown keys and publish configuration hashes",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "07_nvidia_vision/edge_service",
+      "test_ids": "EDGE-CONFIG",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-029",
+      "requirement": "Correlate capture acknowledgement and processing state to the immutable inspection identity",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "04_controls_siemens/scl/FB_VisionInterface.scl; 07_nvidia_vision/edge_service",
+      "test_ids": "EDGE-V3; SCL-V3",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-030",
+      "requirement": "Publish explicit PASS HOLD FAIL or FAULT disposition with structured reason bits",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "02_system_architecture/interface_control_document.md",
+      "test_ids": "EDGE-V3; SCL-V3",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-031",
+      "requirement": "Bind model, dataset and calibration identities to each accepted result",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "07_nvidia_vision/plc_ai_interface_v3.md",
+      "test_ids": "EDGE-V3",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-032",
+      "requirement": "Provide diagnostic UTC timestamps while retaining PLC monotonic timing as acceptance authority",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "02_system_architecture/revision_f_vision_integration_architecture.md",
+      "test_ids": "EDGE-V3; VFS-020",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-033",
+      "requirement": "Expose service, camera, model, maintenance, queue and diagnostic health",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "05_hmi; 07_nvidia_vision/plc_ai_node_map.csv",
+      "test_ids": "EDGE-V3; HMI-V3",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-034",
+      "requirement": "Fail closed when durable inspection audit records cannot be written",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "07_nvidia_vision/edge_service",
+      "test_ids": "EDGE-AUDIT; VFS-021",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-035",
+      "requirement": "Version and hash dataset records and split by production lot to prevent leakage",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "07_nvidia_vision",
+      "test_ids": "DATASET-TOOLS",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-036",
+      "requirement": "Provide reproducible evaluation, FAR/FRR, threshold and latency tooling without fabricated results",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "07_nvidia_vision",
+      "test_ids": "EVAL-TOOLS",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-037",
+      "requirement": "Define optical resolution, exposure, motion-blur, glare, focus and calibration acceptance methods",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "07_nvidia_vision; 12_testing/AI_commissioning_procedure.md",
+      "test_ids": "DOC-LINK",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-038",
+      "requirement": "Apply least-privilege certificate-based OPC UA across the controlled quality zone",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "13_documentation/network_cybersecurity.md",
+      "test_ids": "OPCUA-INTEGRATION",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-039",
+      "requirement": "Retain bounded deployment rollback and independent model/configuration/calibration identities",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "13_documentation/ai_maintenance_backup.md",
+      "test_ids": "DOC-LINK",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-040",
+      "requirement": "Do not retain raw production images by default and require an approved retention/privacy policy",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "02_system_architecture/revision_f_vision_integration_architecture.md",
+      "test_ids": "DOC-LINK",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-041",
+      "requirement": "Reserve separately protected edge, camera, lighting and maintenance electrical branches",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "03_electrical/revision_f_nvidia_electrical_delta.md",
+      "test_ids": "NED-CHECK",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-042",
+      "requirement": "Reject queue saturation, concurrent transaction reuse and results for unknown IDs",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "11_simulation/vision_fault_scenarios.json",
+      "test_ids": "EDGE-V3; VFS-012; VFS-025",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-043",
+      "requirement": "Invalidate an active inspection on recipe change or unacceptable clock discontinuity",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "07_nvidia_vision/edge_service/opcua_adapter.py; 11_simulation/vision_fault_scenarios.json",
+      "test_ids": "EDGE-V3; VFS-019; VFS-020",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-044",
+      "requirement": "Require explicit recovery and a new start following PLC or edge restart",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "11_simulation/revision_f_vision_sil.py",
+      "test_ids": "VFS-017; VFS-018; VFS-027",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
+    },
+    {
+      "requirement_id": "SYS-045",
+      "requirement": "Keep flow and level instrumentation as the primary deterministic filling measurement",
+      "verification": "Review plus deterministic source tests and structured behavioral fault injection where applicable",
+      "status": "Implemented locally where possible; external native/data/hardware acceptance remains explicit",
+      "design_artifact": "02_system_architecture/revision_f_vision_integration_architecture.md",
+      "test_ids": "ARCH-OWNER",
+      "evidence": "Revision-F controlled source, schedule, test and review records"
     }
   ],
   "tests": [
@@ -1790,7 +2319,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Exactly one pair releases only after independent fill completion, matched passing vision result and capper completion; no invariant violation",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/normal_two_bottle_cycle.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/normal_two_bottle_cycle.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-002",
@@ -1798,7 +2328,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject single missing bottle; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/single_missing_bottle.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/single_missing_bottle.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-003",
@@ -1806,7 +2337,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject both bottles missing; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/both_bottles_missing.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/both_bottles_missing.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-004",
@@ -1814,7 +2346,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject bottle sensor stuck on; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/bottle_sensor_stuck_on.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/bottle_sensor_stuck_on.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-005",
@@ -1822,7 +2355,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject bottle sensor stuck off; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/bottle_sensor_stuck_off.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/bottle_sensor_stuck_off.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-006",
@@ -1830,7 +2364,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject gate timeout; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/gate_timeout.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/gate_timeout.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-007",
@@ -1838,7 +2373,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject clamp timeout; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/clamp_timeout.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/clamp_timeout.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-008",
@@ -1846,7 +2382,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject contradictory actuator feedback; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/contradictory_actuator_feedback.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/contradictory_actuator_feedback.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-009",
@@ -1854,7 +2391,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject flow channel no pulse; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/flow_channel_no_pulse.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/flow_channel_no_pulse.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-010",
@@ -1862,7 +2400,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject flow analog pulse disagreement; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/flow_analog_pulse_disagreement.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/flow_analog_pulse_disagreement.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-011",
@@ -1870,7 +2409,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject underfill; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/underfill.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/underfill.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-012",
@@ -1878,7 +2418,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject overfill; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/overfill.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/overfill.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-013",
@@ -1886,7 +2427,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject valve fails to close; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/valve_fails_to_close.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/valve_fails_to_close.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-014",
@@ -1894,7 +2436,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject pump vfd fault; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/pump_vfd_fault.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/pump_vfd_fault.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-015",
@@ -1902,7 +2445,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject conveyor vfd fault; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/conveyor_vfd_fault.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/conveyor_vfd_fault.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-016",
@@ -1910,7 +2454,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject air pressure loss; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/air_pressure_loss.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/air_pressure_loss.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-017",
@@ -1918,7 +2463,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject product supply loss; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/product_supply_loss.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/product_supply_loss.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-018",
@@ -1926,7 +2472,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject capper not ready; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/capper_not_ready.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/capper_not_ready.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-019",
@@ -1934,7 +2481,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject capper busy timeout; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/capper_busy_timeout.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/capper_busy_timeout.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-020",
@@ -1942,7 +2490,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject capper fault; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/capper_fault.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/capper_fault.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-021",
@@ -1950,7 +2499,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject hmi communications loss; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/hmi_communications_loss.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/hmi_communications_loss.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-022",
@@ -1958,7 +2508,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject vision not ready; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/vision_not_ready.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/vision_not_ready.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-023",
@@ -1966,7 +2517,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject vision result timeout; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/vision_result_timeout.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/vision_result_timeout.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-024",
@@ -1974,7 +2526,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject stale inspection id; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/stale_inspection_id.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/stale_inspection_id.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-025",
@@ -1982,7 +2535,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject low confidence inspection; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/low_confidence_inspection.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/low_confidence_inspection.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-026",
@@ -1990,7 +2544,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject one bottle fails; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/one_bottle_fails.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/one_bottle_fails.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-027",
@@ -1998,7 +2553,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject vision heartbeat loss; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/vision_heartbeat_loss.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/vision_heartbeat_loss.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-028",
@@ -2006,7 +2562,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject plc heartbeat loss; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/plc_heartbeat_loss.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/plc_heartbeat_loss.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-029",
@@ -2014,7 +2571,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject power loss during filling; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/power_loss_during_filling.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/power_loss_during_filling.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-030",
@@ -2022,7 +2580,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject power restoration; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/power_restoration.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/power_restoration.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-031",
@@ -2030,7 +2589,8 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject reset no restart; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/reset_no_restart.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/reset_no_restart.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
     },
     {
       "test_id": "TC-032",
@@ -2038,7 +2598,368 @@
       "method": "Deterministic Python simulation",
       "expected": "Inject manual mode interlocks; no product release, pump/valves decommand on first-out condition, controlled HOLD/FAULT outcome and no automatic restart",
       "native_plcsim": "INDEPENDENT PYTHON PASS; NATIVE PLCSIM NOT RUN",
-      "evidence": "11_simulation/outputs/traces/manual_mode_interlocks.csv; 11_simulation/outputs/scenario_results.csv"
+      "evidence": "11_simulation/outputs/traces/manual_mode_interlocks.csv; 11_simulation/outputs/scenario_results.csv",
+      "test_type": "DETERMINISTIC_PROCESS_SIMULATOR"
+    },
+    {
+      "test_id": "VFS-001",
+      "scenario": "normal_pass",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "READY; no process-output command; no automatic restart; diagnostic NONE",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-002",
+      "scenario": "valid_fail",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic QUALITY_FAIL",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-003",
+      "scenario": "hold_result",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic QUALITY_HOLD",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-004",
+      "scenario": "ai_timeout",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic RESULT_TIMEOUT",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-005",
+      "scenario": "heartbeat_loss",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic EDGE_HEARTBEAT_LOSS",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-006",
+      "scenario": "camera_disconnected",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic CAMERA_DISCONNECTED",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-007",
+      "scenario": "model_unavailable",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic MODEL_UNAVAILABLE",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-008",
+      "scenario": "low_confidence",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic LOW_CONFIDENCE",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-009",
+      "scenario": "malformed_result",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic MALFORMED_RESULT",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-010",
+      "scenario": "stale_result_id",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic STALE_RESULT_ID",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-011",
+      "scenario": "duplicate_result",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic DUPLICATE_RESULT",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-012",
+      "scenario": "future_unknown_id",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic FUTURE_RESULT_ID",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-013",
+      "scenario": "delayed_after_timeout",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic LATE_RESULT",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-014",
+      "scenario": "reordered_messages",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic PUBLICATION_ORDER_FAULT",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-015",
+      "scenario": "opcua_disconnect",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic OPCUA_DISCONNECTED",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-016",
+      "scenario": "opcua_reconnection",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic RECONNECT_RECONCILIATION",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-017",
+      "scenario": "edge_service_restart",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic EDGE_RESTART",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-018",
+      "scenario": "plc_restart",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "STOPPED; no process-output command; no automatic restart; diagnostic PLC_SESSION_CHANGED",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-019",
+      "scenario": "recipe_change_during_inspection",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic RECIPE_CHANGED",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-020",
+      "scenario": "clock_discontinuity",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic CLOCK_DISCONTINUITY",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-021",
+      "scenario": "log_storage_failure",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic AUDIT_STORAGE_FAILURE",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-022",
+      "scenario": "corrupt_configuration",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic CONFIG_INVALID",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-023",
+      "scenario": "invalid_model_hash",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic MODEL_HASH_MISMATCH",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-024",
+      "scenario": "excessive_latency",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic LATENCY_EXCEEDED",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-025",
+      "scenario": "queue_saturation",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic QUEUE_SATURATION",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-026",
+      "scenario": "operator_bypass_request",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "HOLDING; no process-output command; no automatic restart; diagnostic BYPASS_REQUESTED",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-027",
+      "scenario": "recovery_after_fault",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "STOPPED; no process-output command; no automatic restart; diagnostic RECOVERY_COMPLETE",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "VFS-028",
+      "scenario": "contradictory_result",
+      "method": "Revision-F deterministic structured behavioral fault injection",
+      "expected": "FAULTED; no process-output command; no automatic restart; diagnostic RESULT_CONTRADICTION",
+      "native_plcsim": "NOT RUN",
+      "evidence": "11_simulation/outputs/vision_fault_results.csv",
+      "test_type": "BEHAVIORAL_FAULT_INJECTION_MODEL"
+    },
+    {
+      "test_id": "EDGE-PIPELINE",
+      "scenario": "Acquisition/preprocessing authorization boundaries",
+      "method": "Python unit tests",
+      "expected": "Recorded input is hash-bound/exactly-once and cannot authorize production READY",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "07_nvidia_vision/edge_service/tests/test_revision_f_readiness.py",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
+    },
+    {
+      "test_id": "EDGE-CONFIG",
+      "scenario": "Configuration schema and hash publication",
+      "method": "Python unit/static tests",
+      "expected": "Unknown keys rejected; runtime/contract/schema SHA-256 values are structured-log fields",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "07_nvidia_vision/edge_service/tests/test_revision_f_readiness.py; 07_nvidia_vision/edge_service/opcua_adapter.py",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
+    },
+    {
+      "test_id": "EDGE-V3",
+      "scenario": "47-node edge contract",
+      "method": "Python unit and encrypted OPC UA integration tests",
+      "expected": "Type/owner/node parity, exact identity, terminal-before-valid ordering and fail-closed behavior",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "07_nvidia_vision/edge_service/tests",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
+    },
+    {
+      "test_id": "SCL-V3",
+      "scenario": "Revision-F PLC source contract",
+      "method": "Static Siemens source contracts",
+      "expected": "Additive interface, PLC ownership and fail-closed guards present; native compile remains blocked",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "11_simulation/tests/test_revision_d1_siemens_contracts.py",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
+    },
+    {
+      "test_id": "EDGE-AUDIT",
+      "scenario": "Durable audit interlock",
+      "method": "Injected storage-failure unit test",
+      "expected": "fsync-backed write is required before publication; failure holds RESULT_VALID low and requires reset",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "07_nvidia_vision/edge_service/tests/test_service.py",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
+    },
+    {
+      "test_id": "DATASET-TOOLS",
+      "scenario": "Dataset hash/split/leakage controls",
+      "method": "Python unit tests",
+      "expected": "Manifest hashes, grouped splits and leakage rejection execute without claiming a dataset",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "07_nvidia_vision/edge_service/tests/test_revision_f_readiness.py",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
+    },
+    {
+      "test_id": "EVAL-TOOLS",
+      "scenario": "Evaluation tooling",
+      "method": "Python unit tests",
+      "expected": "FAR/FRR arithmetic and invalid-score rejection execute on synthetic fixtures only",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "07_nvidia_vision/edge_service/tests/test_revision_f_readiness.py",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
+    },
+    {
+      "test_id": "DOC-LINK",
+      "scenario": "Controlled engineering method",
+      "method": "Document/traceability review",
+      "expected": "Method and blocker are linked; procedure execution remains external",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "00_project_control/document_register.csv",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
+    },
+    {
+      "test_id": "OPCUA-INTEGRATION",
+      "scenario": "Certificate-backed OPC UA integration",
+      "method": "Local asyncua server/client integration tests",
+      "expected": "Basic256Sha256 SignAndEncrypt and named X.509 user path pass locally",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "07_nvidia_vision/edge_service/tests/test_opcua_adapter.py",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
+    },
+    {
+      "test_id": "HMI-V3",
+      "scenario": "HMI contract coverage",
+      "method": "Static source-parity verification",
+      "expected": "All 47 transport bindings have a read-only HMI diagnostic source; native WinCC compile remains blocked",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "05_hmi/vision_tags_revision_f.csv",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
+    },
+    {
+      "test_id": "NED-CHECK",
+      "scenario": "NVIDIA electrical delta",
+      "method": "CSV/document consistency verification",
+      "expected": "Ten provisional records, unique cables, 100 W allowance and standalone-delta boundary reconcile",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "10_schedules/nvidia_electrical_delta.csv",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
+    },
+    {
+      "test_id": "ARCH-OWNER",
+      "scenario": "PLC/edge ownership boundary",
+      "method": "Architecture/source review",
+      "expected": "PLC retains sequence, filling measurement, disposition and hazardous-output authority",
+      "native_plcsim": "NOT APPLICABLE OR NOT RUN",
+      "evidence": "02_system_architecture/revision_f_vision_integration_architecture.md",
+      "test_type": "SOURCE_OR_INTEGRATION_VERIFICATION"
     }
   ],
   "network": [
@@ -8838,12 +9759,36 @@
       "basis": "Duty-cycle allowance; inrush not finalized"
     },
     {
-      "load": "Vision edge + camera + lighting",
+      "load": "Vision edge compute allowance",
       "voltage": "24 VDC",
-      "nominal_w": 100,
+      "nominal_w": 60,
       "demand_factor": 1.0,
-      "demand_w": 100,
-      "basis": "Placeholder pending selected carrier/camera"
+      "demand_w": 60,
+      "basis": "Provisional branch -F220; carrier/input/inrush unconfirmed"
+    },
+    {
+      "load": "Vision camera allowance",
+      "voltage": "24 VDC",
+      "nominal_w": 12,
+      "demand_factor": 1.0,
+      "demand_w": 12,
+      "basis": "Provisional branch -F221; PoE not assumed"
+    },
+    {
+      "load": "Vision lighting allowance",
+      "voltage": "24 VDC",
+      "nominal_w": 20,
+      "demand_factor": 1.0,
+      "demand_w": 20,
+      "basis": "Provisional branch -F222; pulse duty/inrush unconfirmed"
+    },
+    {
+      "load": "Vision service/network allowance",
+      "voltage": "24 VDC",
+      "nominal_w": 8,
+      "demand_factor": 1.0,
+      "demand_w": 8,
+      "basis": "Provisional branch -F223; maintenance-only service"
     },
     {
       "load": "24 VDC subtotal",
@@ -9109,48 +10054,57 @@
     },
     {
       "request_id": "IR-023",
-      "required_input": "24 V branch load currents, inrush profiles and selected protection-device data",
-      "owner": "Electrical/vendor",
-      "blocks": "PSU transient margin and branch protection coordination",
+      "required_input": "Maximum line speed, bottle/carrier geometry and available camera working envelope",
+      "owner": "Machine/process owner",
+      "blocks": "Final camera count, FOV, pixels/mm and motion-blur design",
       "status": "OPEN",
-      "date_requested": "2026-08-02",
-      "evidence_required": "Approved source document or native evidence"
+      "date_requested": "2026-08-03",
+      "evidence_required": "Approved drawings, timing study and representative product samples"
     },
     {
       "request_id": "IR-024",
-      "required_input": "Enclosure material/size/IP, ambient/altitude/solar exposure and verified device loss data",
-      "owner": "Site/mechanical/vendor",
-      "blocks": "Panel thermal assessment and fan/filter selection",
+      "required_input": "Representative labeled multi-lot bottle/liquid/foam/glare/spill dataset",
+      "owner": "Quality/process owner",
+      "blocks": "Model training, threshold selection and performance claims",
       "status": "OPEN",
-      "date_requested": "2026-08-02",
-      "evidence_required": "Approved source document or native evidence"
+      "date_requested": "2026-08-03",
+      "evidence_required": "Controlled dataset manifest, labels, lot/session metadata and approval"
     },
     {
       "request_id": "IR-025",
-      "required_input": "Approved terminal family, jumpers, test/disconnect, PE and spare-position policy",
-      "owner": "Electrical owner",
-      "blocks": "Terminal quantity, width, bridges and placement release",
+      "required_input": "Selected industrial Jetson carrier, camera, lens, lighting, enclosure and target software image",
+      "owner": "Vision/electrical owner",
+      "blocks": "Procurement, thermal/electrical finalization and target runtime validation",
       "status": "OPEN",
-      "date_requested": "2026-08-02",
-      "evidence_required": "Approved source document or native evidence"
+      "date_requested": "2026-08-03",
+      "evidence_required": "Approved vendor data, lifecycle, compatibility and environmental records"
     },
     {
       "request_id": "IR-026",
-      "required_input": "Approved PE/FE/0 V/MANA bonding and EMC-zone/shield termination policy",
-      "owner": "Site electrical/EMC authority",
-      "blocks": "Bonding topology and shield/return release",
+      "required_input": "Site PKI, authenticated time, log retention, privacy and vulnerability-response policy",
+      "owner": "OT cybersecurity owner",
+      "blocks": "Production OPC UA trust and audit deployment",
       "status": "OPEN",
-      "date_requested": "2026-08-02",
-      "evidence_required": "Approved source document or native evidence"
+      "date_requested": "2026-08-03",
+      "evidence_required": "Approved certificates, rules, retention and incident workflow"
     },
     {
       "request_id": "IR-027",
-      "required_input": "Source transformer/impedance and component interrupt/SCCR data",
-      "owner": "Site electrical engineer",
-      "blocks": "Prospective fault current and assembly SCCR assessment",
+      "required_input": "Confirmed edge/camera/light loads, inrush, routes, ambient and protection coordination",
+      "owner": "Electrical/site engineer",
+      "blocks": "Final vision branch protection, cables, voltage drop and thermal release",
       "status": "OPEN",
-      "date_requested": "2026-08-02",
-      "evidence_required": "Approved source document or native evidence"
+      "date_requested": "2026-08-03",
+      "evidence_required": "Manufacturer data, site conditions and approved calculations"
+    },
+    {
+      "request_id": "IR-028",
+      "required_input": "Quality cost/risk basis and approved false-accept/false-reject acceptance limits",
+      "owner": "Quality/process owner",
+      "blocks": "Threshold selection and model promotion",
+      "status": "OPEN",
+      "date_requested": "2026-08-03",
+      "evidence_required": "Approved acceptance protocol and product-disposition economics"
     }
   ],
   "acceptance_gates": [
@@ -9158,13 +10112,13 @@
       "gate": 1,
       "acceptance_gate": "Requirements/interfaces traceable",
       "status": "PARTIAL",
-      "evidence_or_blocker": "Controlled model, native-workstream schedules and tests are traceable; identified requirements-owner approval is absent"
+      "evidence_or_blocker": "Revision-F requirements and evidence are traceable; identified owner approval remains absent"
     },
     {
       "gate": 2,
       "acceptance_gate": "Canonical model reconciles schedules",
-      "status": "PASS",
-      "evidence_or_blocker": "Revision-E deterministic validator and source/schedule/native-evidence contracts pass; see current automated report for exact count"
+      "status": "PARTIAL",
+      "evidence_or_blocker": "Core canonical/interface schedules reconcile; the standalone Revision-F NVIDIA electrical delta is internally consistent but is not yet incorporated into canonical BOM/terminal/cable/P2P/QET/CAD authorities"
     },
     {
       "gate": 3,
@@ -9188,13 +10142,13 @@
       "gate": 6,
       "acceptance_gate": "PLC compiles zero errors",
       "status": "BLOCKED",
-      "evidence_or_blocker": "67 source/simulator contracts pass at Revision-E authoring time; TIA V20 compile was not run"
+      "evidence_or_blocker": "Expanded import-ready SCL/source contracts pass locally; native TIA V20 compile was not run"
     },
     {
       "gate": 7,
       "acceptance_gate": "HMI compiles zero errors",
       "status": "BLOCKED",
-      "evidence_or_blocker": "WinCC V20 components exist but no authorized/licensed native HMI project or compile is proven"
+      "evidence_or_blocker": "Expanded HMI definitions are source-controlled; native WinCC Unified compile/usability review was not run"
     },
     {
       "gate": 8,
@@ -9212,13 +10166,13 @@
       "gate": 10,
       "acceptance_gate": "Revision-E QET reopens and reconciles",
       "status": "PARTIAL",
-      "evidence_or_blocker": "Corrected 26-folio QET source BCA022BE0B9F65AA061F9731C1EE0BD0399947F04C94EE596D4AD231BB47AAD5 passes 24/24 static and 6/6 contract checks; exact corrected hash was not natively reopened/exported, so native reconciliation remains partial"
+      "evidence_or_blocker": "Exact controlled Revision-E QET hash reopened natively with 26/26 folios; automatic cross-reference resolution remains unsupported"
     },
     {
       "gate": 11,
       "acceptance_gate": "Schematics export and all-page visual review",
-      "status": "BLOCKED",
-      "evidence_or_blocker": "Native QET PDF export was not completed and only sampled folios were inspected; all-page visual and native cross-reference review remain blocked"
+      "status": "PARTIAL",
+      "evidence_or_blocker": "Native 26-page PDF export completed; all pages were reviewed, with one clipped in-body statement on folio 25 and dense text noted"
     },
     {
       "gate": 12,
@@ -9236,7 +10190,7 @@
       "gate": 14,
       "acceptance_gate": "Full BOM/panel layout reconcile",
       "status": "PARTIAL",
-      "evidence_or_blocker": "Revision-E native layout covers selected architecture and controlled provisional envelopes; final carrier, terminal/relay families, vendor clearances, thermal and construction inputs remain open"
+      "evidence_or_blocker": "Revision-E panel CAD remains natively verified; Revision-F electrical delta uses provisional carrier/camera/light envelopes and is not incorporated into QET/CAD"
     },
     {
       "gate": 15,
@@ -9248,25 +10202,25 @@
       "gate": 16,
       "acceptance_gate": "Real NVIDIA dataset controlled",
       "status": "BLOCKED",
-      "evidence_or_blocker": "No representative labeled project dataset or golden/negative image sets were supplied"
+      "evidence_or_blocker": "Dataset tooling, schema, collection matrix and leakage-safe split checks are ready; no representative labeled dataset exists"
     },
     {
       "gate": 17,
       "acceptance_gate": "Genuine model training/evaluation",
       "status": "BLOCKED",
-      "evidence_or_blocker": "No controlled dataset, training run, evaluated model, ONNX export or defensible metrics exist"
+      "evidence_or_blocker": "Training/evaluation tooling is ready; no approved dataset, training run, model or defensible production metrics exist"
     },
     {
       "gate": 18,
       "acceptance_gate": "TensorRT/DeepStream target runtime",
       "status": "BLOCKED",
-      "evidence_or_blocker": "No selected industrial Jetson carrier/runtime image; CUDA Toolkit, TensorRT, DeepStream and TAO are absent locally"
+      "evidence_or_blocker": "DeepStream 9.1/TAO 7.0.1 policy is documented; CUDA/TAO/TensorRT/DeepStream/Docker and target hardware are absent"
     },
     {
       "gate": 19,
       "acceptance_gate": "PLC-NVIDIA failure tests",
-      "status": "PASS",
-      "evidence_or_blocker": "Source/simulator, edge-service, interface-harness and real asyncua encrypted server/client integration tests pass; production PLC/Jetson endpoint validation remains outside this local gate"
+      "status": "PARTIAL",
+      "evidence_or_blocker": "Source, edge, durable-audit, encrypted OPC UA and interface tests pass locally; native SCL enum binding, production S7/Jetson endpoint and physical timing remain unverified"
     },
     {
       "gate": 20,
@@ -9284,7 +10238,7 @@
       "gate": 22,
       "acceptance_gate": "Manifest independently verifies",
       "status": "PASS",
-      "evidence_or_blocker": "Published candidate b9633c6255fe34e48a1be34afe5024935f48651e was cloned afresh from GitHub outside OneDrive and passed the complete HEAD workflow: manifest 310/310 with zero discrepancies, integrity 534/534, validator 551/551, all tests/native checks, deterministic artifacts and clean state"
+      "evidence_or_blocker": "Published candidate f6e9f3b1e928a2e04d21913caac2547469b0f647 reproduced from GitHub with 425/425 manifest entries, zero discrepancies and final Git-clean assertion"
     }
   ],
   "rationales": [
@@ -12650,7 +13604,7 @@
       "key": "BOTTLE_1_PASS",
       "purpose": "Bottle 1 quality decision",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.BOTTLE_1_PASS",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12659,7 +13613,70 @@
       "key": "BOTTLE_2_PASS",
       "purpose": "Bottle 2 quality decision",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.BOTTLE_2_PASS",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "CALIBRATION_ID",
+      "purpose": "Optics/calibration identity bound to the result",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; STRING[32]; OPC UA ns=3;s=FC01.Vision.CALIBRATION_ID",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "CAMERA_HEALTHY",
+      "purpose": "Camera connection/acquisition health; not optical-quality proof",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.CAMERA_HEALTHY",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "CAPTURE_ACK_ID",
+      "purpose": "Inspection ID whose image acquisition has been accepted",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; UDINT; OPC UA ns=3;s=FC01.Vision.CAPTURE_ACK_ID",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "CAPTURE_TIMESTAMP_UTC_MS",
+      "purpose": "Diagnostic UTC image-acquisition timestamp in milliseconds",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; ULINT; OPC UA ns=3;s=FC01.Vision.CAPTURE_TIMESTAMP_UTC_MS",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "CONFIDENCE",
+      "purpose": "Normalized quality confidence; threshold remains PLC/recipe controlled",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; REAL; OPC UA ns=3;s=FC01.Vision.CONFIDENCE",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "DATASET_ID",
+      "purpose": "Validation/dataset baseline identity bound to the result",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; STRING[32]; OPC UA ns=3;s=FC01.Vision.DATASET_ID",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "DIAGNOSTIC_CODE",
+      "purpose": "Edge first-out diagnostic code independent of PLC VISION_DIAG_REASON",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; UDINT; OPC UA ns=3;s=FC01.Vision.DIAGNOSTIC_CODE",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12668,7 +13685,25 @@
       "key": "EXPECTED_BOTTLES",
       "purpose": "Expected count; fixed at 2 for production",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner PLC; USINT; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner PLC; USINT; OPC UA ns=3;s=FC01.Vision.EXPECTED_BOTTLES",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "EXPECTED_CALIBRATION_ID",
+      "purpose": "Approved optics/calibration identity expected for the active recipe",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner PLC; STRING[32]; OPC UA ns=3;s=FC01.Vision.EXPECTED_CALIBRATION_ID",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "EXPECTED_DATASET_ID",
+      "purpose": "Approved validation/dataset baseline expected for the active recipe",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner PLC; STRING[32]; OPC UA ns=3;s=FC01.Vision.EXPECTED_DATASET_ID",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12677,7 +13712,7 @@
       "key": "FILL_1_STATUS",
       "purpose": "0 unknown, 1 under, 2 in-range, 3 over",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; USINT; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; USINT; OPC UA ns=3;s=FC01.Vision.FILL_1_STATUS",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12686,7 +13721,7 @@
       "key": "FILL_2_STATUS",
       "purpose": "0 unknown, 1 under, 2 in-range, 3 over",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; USINT; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; USINT; OPC UA ns=3;s=FC01.Vision.FILL_2_STATUS",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12695,7 +13730,16 @@
       "key": "INFERENCE_TIME",
       "purpose": "Measured pipeline time in milliseconds",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; UDINT; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; UDINT; OPC UA ns=3;s=FC01.Vision.INFERENCE_TIME",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "INFERENCE_TIMESTAMP_UTC_MS",
+      "purpose": "Diagnostic UTC inference-completion timestamp in milliseconds",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; ULINT; OPC UA ns=3;s=FC01.Vision.INFERENCE_TIMESTAMP_UTC_MS",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12704,7 +13748,7 @@
       "key": "INSPECTION_ID",
       "purpose": "Monotonic correlation identifier",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner PLC; UDINT; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner PLC; UDINT; OPC UA ns=3;s=FC01.Vision.INSPECTION_ID",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12713,7 +13757,7 @@
       "key": "INSPECTION_TRIGGER",
       "purpose": "Level-held inspection request; remains true until coherent BUSY observation or terminal result for the immutable session/inspection ID",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner PLC; BOOL; OPC UA subscribed request level; monotonic session/ID is authoritative",
+      "selection_or_evidence_basis": "Owner PLC; BOOL; OPC UA ns=3;s=FC01.Vision.INSPECTION_TRIGGER",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12722,7 +13766,7 @@
       "key": "LEAK_OR_SPILL_DETECTED",
       "purpose": "Visible leak/spill indication",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.LEAK_OR_SPILL_DETECTED",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12731,7 +13775,34 @@
       "key": "LOW_CONFIDENCE",
       "purpose": "Confidence below validated threshold",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.LOW_CONFIDENCE",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "MAINTENANCE_ACTIVE",
+      "purpose": "Edge is in controlled maintenance state and cannot publish production PASS",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.MAINTENANCE_ACTIVE",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "MAINTENANCE_MODE",
+      "purpose": "Permission-scoped maintenance request; never quality acceptance or actuator bypass",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner PLC; BOOL; OPC UA ns=3;s=FC01.Vision.MAINTENANCE_MODE",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "MODEL_LOADED",
+      "purpose": "Configured model adapter loaded with approved identity",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.MODEL_LOADED",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12740,7 +13811,52 @@
       "key": "PLC_HEARTBEAT",
       "purpose": "Monotonic heartbeat counter",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner PLC; UDINT; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner PLC; UDINT; OPC UA ns=3;s=FC01.Vision.PLC_HEARTBEAT",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "PROCESSING_STATE",
+      "purpose": "0 not ready; 1 ready; 2 capture acknowledged; 3 processing; 4 complete; 5 fault",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; USINT; OPC UA ns=3;s=FC01.Vision.PROCESSING_STATE",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "PROCESSING_TIME_MS",
+      "purpose": "Measured capture-to-publication processing time",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; UDINT; OPC UA ns=3;s=FC01.Vision.PROCESSING_TIME_MS",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "PUBLICATION_TIMESTAMP_UTC_MS",
+      "purpose": "Diagnostic UTC immutable-publication timestamp in milliseconds",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; ULINT; OPC UA ns=3;s=FC01.Vision.PUBLICATION_TIMESTAMP_UTC_MS",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "QUEUE_DEPTH",
+      "purpose": "Bounded inspection queue depth; saturation fails closed",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; UINT; OPC UA ns=3;s=FC01.Vision.QUEUE_DEPTH",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "REASON_BITS",
+      "purpose": "Structured quality/fault reason mask; PASS requires zero",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; DWORD; OPC UA ns=3;s=FC01.Vision.REASON_BITS",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12749,7 +13865,16 @@
       "key": "RECIPE_ID",
       "purpose": "Active recipe identifier",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner PLC; UINT; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner PLC; UINT; OPC UA ns=3;s=FC01.Vision.RECIPE_ID",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "RESULT_DISPOSITION",
+      "purpose": "0 none; 1 pass; 2 hold; 3 fail; 4 fault",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; USINT; OPC UA ns=3;s=FC01.Vision.RESULT_DISPOSITION",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12758,7 +13883,7 @@
       "key": "RESULT_ID",
       "purpose": "Echoed correlation identifier",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; UDINT; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; UDINT; OPC UA ns=3;s=FC01.Vision.RESULT_ID",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12767,7 +13892,16 @@
       "key": "RESULT_VALID",
       "purpose": "Result payload is complete",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.RESULT_VALID",
+      "open_verification": "Native OPC UA namespace/certificate/reconnect test",
+      "owner": "Controls/vision owner"
+    },
+    {
+      "category": "NVIDIA interface",
+      "key": "SERVICE_HEALTHY",
+      "purpose": "Edge process, configuration, storage and watchdog health",
+      "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.SERVICE_HEALTHY",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12776,7 +13910,7 @@
       "key": "TARGET_FILL_LEVEL",
       "purpose": "Normalized visible target",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner PLC; REAL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner PLC; REAL; OPC UA ns=3;s=FC01.Vision.TARGET_FILL_LEVEL",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12785,7 +13919,7 @@
       "key": "VISION_BUSY",
       "purpose": "Request in progress",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.VISION_BUSY",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12794,7 +13928,7 @@
       "key": "VISION_DIAG_REASON",
       "purpose": "First-out PLC interface diagnostic enumeration",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner PLC; UINT; OPC UA published node",
+      "selection_or_evidence_basis": "Owner PLC; UINT; OPC UA ns=3;s=FC01.Vision.VISION_DIAG_REASON",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12803,7 +13937,7 @@
       "key": "VISION_ENABLE",
       "purpose": "Enable inspection service",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner PLC; BOOL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner PLC; BOOL; OPC UA ns=3;s=FC01.Vision.VISION_ENABLE",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12812,7 +13946,7 @@
       "key": "VISION_FAULT",
       "purpose": "Blocking internal fault",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.VISION_FAULT",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12821,7 +13955,7 @@
       "key": "VISION_HEARTBEAT",
       "purpose": "Monotonic heartbeat counter",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; UDINT; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; UDINT; OPC UA ns=3;s=FC01.Vision.VISION_HEARTBEAT",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12830,7 +13964,7 @@
       "key": "VISION_MODEL_ID",
       "purpose": "Controlled model identifier included in the atomic result",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; STRING[32]; OPC UA published result payload",
+      "selection_or_evidence_basis": "Owner NVIDIA; STRING[32]; OPC UA ns=3;s=FC01.Vision.VISION_MODEL_ID",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12839,7 +13973,7 @@
       "key": "VISION_MODEL_SHA256",
       "purpose": "Exact controlled model SHA-256 included in the atomic result",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; STRING[64]; OPC UA published result payload",
+      "selection_or_evidence_basis": "Owner NVIDIA; STRING[64]; OPC UA ns=3;s=FC01.Vision.VISION_MODEL_SHA256",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12848,7 +13982,7 @@
       "key": "VISION_READY",
       "purpose": "Pipeline and model ready",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.VISION_READY",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12857,7 +13991,7 @@
       "key": "VISION_RESULT_ACK_ID",
       "purpose": "Acknowledges the immutable published result; edge clears RESULT_VALID only on exact match",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner PLC; UDINT; OPC UA subscribed node",
+      "selection_or_evidence_basis": "Owner PLC; UDINT; OPC UA ns=3;s=FC01.Vision.VISION_RESULT_ACK_ID",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12866,7 +14000,7 @@
       "key": "VISION_RESULT_SESSION_EPOCH",
       "purpose": "Echoes the request session epoch in the immutable result; PLC rejects cross-session publication",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; UDINT; OPC UA published result payload",
+      "selection_or_evidence_basis": "Owner NVIDIA; UDINT; OPC UA ns=3;s=FC01.Vision.VISION_RESULT_SESSION_EPOCH",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12875,7 +14009,7 @@
       "key": "VISION_SESSION_EPOCH",
       "purpose": "PLC startup/session correlation; reconnect must not replay a prior-session release",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner PLC; UDINT; OPC UA subscribed node",
+      "selection_or_evidence_basis": "Owner PLC; UDINT; OPC UA ns=3;s=FC01.Vision.VISION_SESSION_EPOCH",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     },
@@ -12884,7 +14018,7 @@
       "key": "VISION_WARNING",
       "purpose": "Degraded but communicating",
       "failure_detected_or_controlled": "Missing, stale or contradictory contract data prevents product release",
-      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA subscribed/published node",
+      "selection_or_evidence_basis": "Owner NVIDIA; BOOL; OPC UA ns=3;s=FC01.Vision.VISION_WARNING",
       "open_verification": "Native OPC UA namespace/certificate/reconnect test",
       "owner": "Controls/vision owner"
     }

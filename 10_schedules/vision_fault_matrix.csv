@@ -1,0 +1,29 @@
+scenario,stimulus,injection,expected_state,diagnostic,result_class,identity_policy,recovery
+normal_pass,"Fresh correlated PASS with healthy camera, model and heartbeats",{},READY,NONE,PASS,EXACT,NONE
+valid_fail,Fresh correlated quality FAIL,{'result_class': 'FAIL'},HOLDING,QUALITY_FAIL,FAIL,EXACT,OPERATOR_DISPOSITION
+hold_result,Fresh correlated HOLD result,{'result_class': 'HOLD'},HOLDING,QUALITY_HOLD,HOLD,EXACT,OPERATOR_DISPOSITION
+ai_timeout,No terminal result before PLC deadline,"{'result_present': False, 'deadline_expired': True}",HOLDING,RESULT_TIMEOUT,INVALID,EXACT,CLEAR_CAUSE_RESET_NEW_REQUEST
+heartbeat_loss,Edge heartbeat age exceeds limit,{'heartbeat_ok': False},FAULTED,EDGE_HEARTBEAT_LOSS,INVALID,EXACT,RESTORE_HEARTBEAT_RESET_NEW_REQUEST
+camera_disconnected,Camera health false during request,{'camera_ok': False},FAULTED,CAMERA_DISCONNECTED,INVALID,EXACT,RESTORE_CAMERA_RECALIBRATE_RESET
+model_unavailable,Configured model is not loaded,{'model_loaded': False},FAULTED,MODEL_UNAVAILABLE,INVALID,EXACT,LOAD_APPROVED_MODEL_RESET
+low_confidence,Quality score below controlled threshold,{'confidence_ok': False},HOLDING,LOW_CONFIDENCE,INVALID,EXACT,OPERATOR_DISPOSITION
+malformed_result,"Payload type, range or completeness violation",{'payload_valid': False},FAULTED,MALFORMED_RESULT,INVALID,EXACT,CORRECT_EDGE_FAULT_RESET_NEW_REQUEST
+stale_result_id,Result ID precedes active inspection ID,{'identity_status': 'STALE'},HOLDING,STALE_RESULT_ID,INVALID,STALE,ACK_CLEAR_RESET_NEW_REQUEST
+duplicate_result,Previously acknowledged transaction is republished,{'identity_status': 'DUPLICATE'},HOLDING,DUPLICATE_RESULT,INVALID,DUPLICATE,ACK_CLEAR_RESET_NEW_REQUEST
+future_unknown_id,Result ID exceeds active inspection ID,{'identity_status': 'FUTURE'},FAULTED,FUTURE_RESULT_ID,INVALID,FUTURE,CLEAR_EDGE_STATE_RESET_NEW_SESSION
+delayed_after_timeout,Terminal result arrives after timeout disposition,"{'deadline_expired': True, 'identity_status': 'STALE'}",HOLDING,LATE_RESULT,INVALID,STALE,ACK_CLEAR_RESET_NEW_REQUEST
+reordered_messages,RESULT_VALID arrives before complete immutable payload,{'publication_order_valid': False},FAULTED,PUBLICATION_ORDER_FAULT,INVALID,EXACT,CORRECT_EDGE_FAULT_RESET_NEW_REQUEST
+opcua_disconnect,Secure OPC UA session disconnects during request,{'opcua_connected': False},FAULTED,OPCUA_DISCONNECTED,INVALID,EXACT,RECONNECT_RECONCILE_RESET
+opcua_reconnection,Transport reconnects with no coherent retained publication,"{'reconnect_event': True, 'reconnect_coherent': False}",HOLDING,RECONNECT_RECONCILIATION,INVALID,EXACT,DISABLED_SYNC_NEW_REQUEST
+edge_service_restart,Edge process restarts with an active request,{'edge_restarted': True},HOLDING,EDGE_RESTART,INVALID,EXACT,RESTORE_OR_INVALIDATE_PUBLICATION_RESET
+plc_restart,PLC session epoch advances during inspection,{'identity_status': 'SESSION_CHANGED'},STOPPED,PLC_SESSION_CHANGED,INVALID,SESSION_CHANGED,DISABLED_SYNC_EXPLICIT_START
+recipe_change_during_inspection,Recipe ID changes before terminal result,{'recipe_unchanged': False},HOLDING,RECIPE_CHANGED,INVALID,EXACT,ABORT_CLEAR_NEW_REQUEST
+clock_discontinuity,UTC source jumps outside allowed tolerance,{'clock_stable': False},HOLDING,CLOCK_DISCONTINUITY,INVALID,EXACT,RESTORE_TIME_SYNC_RESET_NEW_REQUEST
+log_storage_failure,Required audit record cannot be durably written,{'audit_storage_ok': False},FAULTED,AUDIT_STORAGE_FAILURE,INVALID,EXACT,RESTORE_STORAGE_RESET
+corrupt_configuration,Configuration schema or signature validation fails,{'configuration_valid': False},FAULTED,CONFIG_INVALID,INVALID,EXACT,RESTORE_APPROVED_CONFIG_RESTART
+invalid_model_hash,Loaded model SHA-256 differs from approved identity,{'model_hash_valid': False},FAULTED,MODEL_HASH_MISMATCH,INVALID,EXACT,ROLLBACK_APPROVED_MODEL_RESET
+excessive_latency,Processing latency exceeds controlled deadline,{'latency_ok': False},HOLDING,LATENCY_EXCEEDED,INVALID,EXACT,INVESTIGATE_PERFORMANCE_RESET_NEW_REQUEST
+queue_saturation,Inspection queue depth exceeds configured bound,{'queue_within_limit': False},FAULTED,QUEUE_SATURATION,INVALID,EXACT,DRAIN_OR_RESTART_RESET
+operator_bypass_request,Operator requests maintenance bypass,{'bypass_requested': True},HOLDING,BYPASS_REQUESTED,INVALID,EXACT,AUTHORIZED_DISPOSITION_ONLY
+recovery_after_fault,Cause clears and reset is accepted,{'recovery_completed': True},STOPPED,RECOVERY_COMPLETE,INVALID,EXACT,EXPLICIT_NEW_START
+contradictory_result,"PASS is combined with warning, fault, spill or invalid fill status",{'contradictory': True},FAULTED,RESULT_CONTRADICTION,INVALID,EXACT,CORRECT_EDGE_FAULT_RESET_NEW_REQUEST

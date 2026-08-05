@@ -14,7 +14,7 @@ ROOT = Path(__file__).resolve().parents[2]
 SCL = ROOT / "04_controls_siemens" / "scl"
 sys.path.insert(0, str(ROOT / "scripts"))
 
-from revision_d_scl import sources  # noqa: E402
+from revision_f_scl import sources  # noqa: E402
 
 
 class RevisionEVisionRequestContracts(unittest.TestCase):

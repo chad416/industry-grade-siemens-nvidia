@@ -1,0 +1,36 @@
+list,value,symbol,display_text,severity
+PROCESSING_STATE,0,NOT_READY,Not ready,Fault
+PROCESSING_STATE,1,READY,Ready,Normal
+PROCESSING_STATE,2,CAPTURE_ACKNOWLEDGED,Capture acknowledged,Information
+PROCESSING_STATE,3,PROCESSING,Processing,Information
+PROCESSING_STATE,4,RESULT_COMPLETE,Result complete,Information
+PROCESSING_STATE,5,VISION_PROCESSING_FAULT,Processing fault,Fault
+RESULT_DISPOSITION,0,NONE,No valid disposition,Fault
+RESULT_DISPOSITION,1,PASS,Pass,Normal
+RESULT_DISPOSITION,2,HOLD,Hold,Warning
+RESULT_DISPOSITION,3,FAIL,Fail,Warning
+RESULT_DISPOSITION,4,VISION_DISPOSITION_FAULT,Inspection fault,Fault
+PLC_DIAGNOSTIC,0,VISION_OK,PLC transaction accepted,Normal
+PLC_DIAGNOSTIC,1,READY_TIMEOUT,Vision readiness timeout,Fault
+PLC_DIAGNOSTIC,2,RESULT_TIMEOUT,Vision result timeout,Fault
+PLC_DIAGNOSTIC,3,RESULT_ID_MISMATCH,Result ID mismatch,Fault
+PLC_DIAGNOSTIC,4,QUALITY_BLOCK,Quality hold/reject disposition,Warning
+PLC_DIAGNOSTIC,5,HEARTBEAT_LOSS,Vision heartbeat lost,Fault
+PLC_DIAGNOSTIC,6,INTERFACE_CONTRADICTION,Interface contradiction,Fault
+PLC_DIAGNOSTIC,7,RESULT_STUCK_VALID,Result publication did not clear,Fault
+PLC_DIAGNOSTIC,8,NON_MONOTONIC_REQUEST,Inspection ID not monotonic,Fault
+PLC_DIAGNOSTIC,9,SESSION_MISMATCH,Session mismatch,Fault
+PLC_DIAGNOSTIC,10,MODEL_MISMATCH,Model identity mismatch,Fault
+PLC_DIAGNOSTIC,11,CAPTURE_ACK_MISMATCH,Capture acknowledgement mismatch,Fault
+PLC_DIAGNOSTIC,12,PROCESSING_STATE_INVALID,Processing state invalid,Fault
+PLC_DIAGNOSTIC,13,DISPOSITION_CONTRADICTION,Disposition contradicts payload,Fault
+PLC_DIAGNOSTIC,14,RESULT_METRICS_INVALID,Result metrics invalid or out of bounds,Fault
+PLC_DIAGNOSTIC,15,DATASET_MISMATCH,Dataset baseline mismatch,Fault
+PLC_DIAGNOSTIC,16,CALIBRATION_MISMATCH,Calibration identity mismatch,Fault
+PLC_DIAGNOSTIC,17,SERVICE_UNHEALTHY,Edge service unhealthy,Fault
+PLC_DIAGNOSTIC,18,CAMERA_UNHEALTHY,Camera unhealthy,Fault
+PLC_DIAGNOSTIC,19,MODEL_NOT_LOADED,Controlled model not loaded,Fault
+PLC_DIAGNOSTIC,20,MAINTENANCE_ACTIVE,Edge maintenance active,Warning
+PLC_DIAGNOSTIC,21,QUEUE_SATURATED,Inspection queue saturated,Fault
+PLC_DIAGNOSTIC,22,TIMESTAMP_INVALID,Timestamp ordering invalid,Fault
+PLC_DIAGNOSTIC,23,REASON_CODE_INVALID,Reason mask invalid,Fault

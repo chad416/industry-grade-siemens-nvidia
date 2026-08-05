@@ -23,6 +23,28 @@ class VisionResult:
     session_epoch: int = 1
     model_id: str = "TEST-BACKEND-NOT-A-MODEL"
     model_hash: str = "a" * 64
+    capture_ack_id: int = 0
+    processing_state: int = 4
+    disposition: int = 1
+    reason_bits: int = 0
+    confidence: float = 0.99
+    dataset_id: str = "DATASET-TEST"
+    calibration_id: str = "CAL-TEST"
+    capture_timestamp_utc_ms: int = 1
+    inference_timestamp_utc_ms: int = 2
+    publication_timestamp_utc_ms: int = 3
+    processing_time_ms: int = 25
+    inference_time_ms: int = 25
+    service_healthy: bool = True
+    camera_healthy: bool = True
+    model_loaded: bool = True
+    maintenance_active: bool = False
+    diagnostic_code: int = 0
+    queue_depth: int = 0
+
+    def __post_init__(self) -> None:
+        if self.capture_ack_id == 0:
+            object.__setattr__(self, "capture_ack_id", self.result_id)
 
 
 class VisionContract:
@@ -41,6 +63,10 @@ class VisionContract:
         self.result_must_clear = False
         self.result_ack_id = 0
         self.expected_model = ("TEST-BACKEND-NOT-A-MODEL", "a" * 64)
+        self.expected_dataset_id = "DATASET-TEST"
+        self.expected_calibration_id = "CAL-TEST"
+        self.minimum_confidence = 0.75
+        self.maximum_queue_depth = 1
 
     def trigger(self, inspection_id: int, now_ms: int, ready: bool, busy: bool, session_epoch: int = 1) -> str:
         if session_epoch != self.session_epoch:
@@ -112,6 +138,15 @@ class VisionContract:
         accepted = (result.bottle_1_pass and result.bottle_2_pass and
                     result.fill_1_status == 2 and result.fill_2_status == 2 and
                     not result.leak_or_spill and not result.low_confidence and not result.warning and not result.fault and
+                    result.capture_ack_id == self.result_ack_id and result.processing_state == 4 and
+                    result.disposition == 1 and result.reason_bits == 0 and
+                    self.minimum_confidence <= result.confidence <= 1.0 and
+                    result.dataset_id == self.expected_dataset_id and
+                    result.calibration_id == self.expected_calibration_id and
+                    0 < result.capture_timestamp_utc_ms <= result.inference_timestamp_utc_ms <= result.publication_timestamp_utc_ms and
+                    result.processing_time_ms == result.inference_time_ms and
+                    result.service_healthy and result.camera_healthy and result.model_loaded and
+                    not result.maintenance_active and result.queue_depth <= self.maximum_queue_depth and
                     (result.model_id, result.model_hash.lower()) == (self.expected_model[0], self.expected_model[1].lower()))
         return "PASS" if accepted else "HOLD_QUALITY"
 

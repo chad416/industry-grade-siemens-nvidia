@@ -1,5 +1,5 @@
 {
-  "status": "REVISION-E PRODUCTION-SHAPED CONFIGURATION - SITE PKI AND PLC ENDPOINT NOT COMMISSIONED",
+  "status": "REVISION-F IMPLEMENTATION-READY CONFIGURATION - SITE PKI, CAMERA, MODEL AND PLC ENDPOINT NOT COMMISSIONED",
   "contract_config": "service_config.json",
   "security": {
     "policy": "Basic256Sha256",
@@ -24,7 +24,8 @@
     "reconnect_initial_ms": 250,
     "reconnect_max_ms": 5000,
     "reconnect_jitter_ms": 100,
-    "coherent_snapshot_attempts": 3
+    "coherent_snapshot_attempts": 3,
+    "clock_step_tolerance_ms": 250
   },
   "health": {
     "bind": "127.0.0.1",

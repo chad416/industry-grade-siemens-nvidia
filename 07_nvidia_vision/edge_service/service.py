@@ -1,12 +1,13 @@
 """Fail-closed edge-service core.
 
-The Revision-E OPC UA adapter is implemented separately; a real inference backend is
+The Revision-F OPC UA adapter is implemented separately; a real inference backend is
 still deliberately not claimed.  Until a controlled model bundle is loaded,
 ``ready`` remains false and no inspection is accepted.
 """
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, fields, replace
+import struct
 import time
 from typing import Callable, Protocol
 
@@ -24,8 +25,16 @@ from protocol import (
 
 class Backend(Protocol):
     @property
+    def production_authorized(self) -> bool: ...
+    @property
     def controlled_identity(self) -> tuple[str, str] | None: ...
     def infer(self, request: InspectionRequest) -> InspectionResult: ...
+
+
+class AuditSink(Protocol):
+    healthy: bool
+    def probe(self) -> bool: ...
+    def write(self, event: dict) -> None: ...
 
 
 @dataclass
@@ -48,11 +57,12 @@ class ServiceState:
 
 
 class VisionService:
-    def __init__(self, backend: Backend | None = None, heartbeat_timeout_ms: int = HEARTBEAT_TIMEOUT_MS, inference_timeout_ms: int = 1000, clock_ms=None) -> None:
+    def __init__(self, backend: Backend | None = None, heartbeat_timeout_ms: int = HEARTBEAT_TIMEOUT_MS, inference_timeout_ms: int = 1000, clock_ms=None, audit_sink: AuditSink | None = None) -> None:
         self.backend = backend
         self.heartbeat_timeout_ms = heartbeat_timeout_ms
         self.inference_timeout_ms = inference_timeout_ms
         self.clock_ms = clock_ms or (lambda: time.monotonic_ns() // 1_000_000)
+        self.audit_sink = audit_sink
         self.state = ServiceState()
         self.events: list[dict] = []
         self.session_identity: tuple[str, str] | None = None
@@ -65,6 +75,18 @@ class VisionService:
         self._refresh_backend_readiness()
 
     def _refresh_backend_readiness(self) -> None:
+        if self.backend is not None and getattr(self.backend, "production_authorized", False) is not True:
+            self._validated_identity = None
+            self.state.ready = False
+            self.state.warning = "DEVELOPMENT OR SYNTHETIC BACKEND PROHIBITED"
+            self.state.diagnostic_code = "DEVELOPMENT_BACKEND_PROHIBITED"
+            return
+        if self.backend is not None and (self.audit_sink is None or not self.audit_sink.healthy):
+            self._validated_identity = None
+            self.state.ready = False
+            self.state.warning = "DURABLE AUDIT SINK REQUIRED"
+            self.state.diagnostic_code = "AUDIT_SINK_REQUIRED"
+            return
         try:
             identity = self.backend.controlled_identity if self.backend is not None else None
             self._validated_identity = validate_model_identity(identity)
@@ -148,6 +170,8 @@ class VisionService:
         self.state.last_plc_heartbeat = observed_plc_heartbeat
         self.state.heartbeat_last_change_ms = None
         self.state.fault = ""
+        if self.audit_sink is not None:
+            self.audit_sink.probe()
         self._refresh_backend_readiness()
         if self.state.ready:
             self.session_identity = self._validated_identity
@@ -236,7 +260,13 @@ class VisionService:
                 if not observed_result_valid or observed_result is None:
                     raise ProtocolError("outstanding publication disappeared before exact acknowledgement")
                 if observed_result != self.published_result:
-                    raise ProtocolError("outstanding publication changed during transport reconnect")
+                    changed = [field.name for field in fields(InspectionResult)
+                               if getattr(observed_result, field.name)
+                               != getattr(self.published_result, field.name)]
+                    raise ProtocolError(
+                        "outstanding publication changed during transport reconnect: "
+                        + ",".join(changed)
+                    )
         elif observed_result_valid:
             raise ProtocolError("unexpected server-side publication requires cold restart reconciliation")
 
@@ -345,21 +375,48 @@ class VisionService:
         start_ms = self.clock_ms()
         try:
             result = self.backend.infer(request)
+            # OPC UA Float is IEEE-754 binary32. Canonicalize before validation
+            # and retention so reconnect comparison is exact after UA roundtrip.
+            result = replace(result, confidence=struct.unpack(
+                "!f", struct.pack("!f", float(result.confidence)),
+            )[0])
             elapsed_ms = self.clock_ms() - start_ms
             if cancellation_requested is not None and cancellation_requested():
                 raise ProtocolError("inference deadline cancellation requested; delayed result discarded")
             if elapsed_ms >= self.inference_timeout_ms:
                 raise ProtocolError("inference deadline exceeded; delayed result discarded")
             validate_result(request, result, expected_identity)
+            audit_event = {
+                "event": "inspection_result_accepted_for_publication",
+                "session_epoch": request.session_epoch,
+                "inspection_id": result.result_id,
+                "plc_heartbeat": request.plc_heartbeat,
+                "duration_ms": elapsed_ms,
+                "model_id": result.model_id,
+                "model_hash": result.model_hash,
+                "disposition": result.disposition,
+                "reason_bits": result.reason_bits,
+                "dataset_id": result.dataset_id,
+                "calibration_id": result.calibration_id,
+            }
+            try:
+                if self.audit_sink is None:
+                    raise OSError("durable audit sink is not configured")
+                self.audit_sink.write(audit_event)
+            except OSError as exc:
+                self._fault("AUDIT_STORAGE_FAILURE", str(exc), invalidate_publication=True,
+                            inspection_id=request.inspection_id, plc_heartbeat=request.plc_heartbeat)
+                raise ProtocolError("durable inspection audit write failed") from exc
             self.state.last_inspection_id = request.inspection_id
             self.state.last_accepted_plc_heartbeat = request.plc_heartbeat
             self.state.result_valid = True
             self.state.published_result_id = result.result_id
             self.published_result = result
-            self.events.append({"event":"result_published","session_epoch":request.session_epoch,"inspection_id":result.result_id,"plc_heartbeat":request.plc_heartbeat,"duration_ms":elapsed_ms,"model_id":result.model_id,"model_hash":result.model_hash})
+            self.events.append(audit_event)
             return result
         except Exception as exc:
-            self._fault("INSPECTION_FAILED", str(exc), inspection_id=request.inspection_id, plc_heartbeat=request.plc_heartbeat)
+            if self.state.diagnostic_code != "AUDIT_STORAGE_FAILURE":
+                self._fault("INSPECTION_FAILED", str(exc), inspection_id=request.inspection_id, plc_heartbeat=request.plc_heartbeat)
             raise
         finally:
             self.state.busy = False

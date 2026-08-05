@@ -1,6 +1,7 @@
 param()
 
 $ErrorActionPreference = 'Stop'
+$env:PYTHONDONTWRITEBYTECODE = '1'
 $ProjectRoot = Split-Path -Parent $PSScriptRoot
 $KnownRuntime = Join-Path ([Environment]::GetFolderPath('UserProfile')) '.cache\codex-runtimes\codex-primary-runtime\dependencies'
 
@@ -81,6 +82,9 @@ function Assert-CleanGitState {
 
 Push-Location $ProjectRoot
 try {
+    if ($env:FC01_UPDATE_WORKBOOK_RENDERS -eq '1') {
+        throw 'Release reproduction is verification-only; unset FC01_UPDATE_WORKBOOK_RENDERS before running it'
+    }
     # Integrity preflight occurs before any generation or removal.
     Assert-CleanGitState
     Invoke-Native $Python 'scripts\verify_manifest.py' '--source' 'head' '--require-clean'
@@ -90,17 +94,42 @@ try {
 
     Invoke-Native $Python 'scripts\build_project.py'
     Invoke-Native $Python 'scripts\verify_qet_revision_e.py'
+    if (Test-Path -LiteralPath 'scripts\verify_qet_revision_f.py') { Invoke-Native $Python 'scripts\verify_qet_revision_f.py' }
     Invoke-Native $Python '-m' 'unittest' 'discover' '-s' '11_simulation\tests' '-v'
     Invoke-Native $Python '11_simulation\run_scenarios.py'
+    Invoke-Native $Python '11_simulation\run_vision_fault_scenarios.py'
     Invoke-Native $OpcUaPython '-m' 'unittest' 'discover' '-s' '07_nvidia_vision\edge_service\tests' '-v'
     Push-Location '07_nvidia_vision'
     try { Invoke-Native $Python '-m' 'unittest' '-v' 'test_plc_interface_harness.py' } finally { Pop-Location }
-    Invoke-Native $FreeCADCmd 'scripts\verify_freecad_revision_e.py'
+    # FreeCAD's embedded Python can cache the executed script even when the
+    # parent process sets PYTHONDONTWRITEBYTECODE. Execute a controlled copy
+    # outside the release tree and point it back to the authoritative project
+    # root so native verification cannot leave __pycache__ in the candidate.
+    $TempRoot = [IO.Path]::GetFullPath([IO.Path]::GetTempPath()).TrimEnd('\') + '\'
+    $FreeCADVerifyTemp = Join-Path $TempRoot ("fc01-freecad-verify-" + [Guid]::NewGuid().ToString('N'))
+    New-Item -ItemType Directory -Path $FreeCADVerifyTemp | Out-Null
+    $FreeCADVerifyScript = Join-Path $FreeCADVerifyTemp 'verify_freecad_revision_e.py'
+    $PreviousProjectRoot = $env:FC01_PROJECT_ROOT
+    try {
+        Copy-Item -LiteralPath 'scripts\verify_freecad_revision_e.py' -Destination $FreeCADVerifyScript
+        $env:FC01_PROJECT_ROOT = $ProjectRoot
+        Invoke-Native $FreeCADCmd $FreeCADVerifyScript
+    }
+    finally {
+        if ($null -eq $PreviousProjectRoot) { Remove-Item Env:FC01_PROJECT_ROOT -ErrorAction SilentlyContinue }
+        else { $env:FC01_PROJECT_ROOT = $PreviousProjectRoot }
+        $ResolvedTemp = [IO.Path]::GetFullPath($FreeCADVerifyTemp)
+        if (-not $ResolvedTemp.StartsWith($TempRoot, [StringComparison]::OrdinalIgnoreCase)) {
+            throw "Refusing to remove FreeCAD verification temp path outside the system temp directory: $ResolvedTemp"
+        }
+        if (Test-Path -LiteralPath $ResolvedTemp) { Remove-Item -LiteralPath $ResolvedTemp -Recurse -Force }
+    }
     Invoke-Native $Python 'scripts\check_determinism.py' '--source' 'head'
 
     if (Test-Path -LiteralPath $BuildJunction) { throw "Unexpected node_modules path exists before workbook build: $BuildJunction" }
     New-Item -ItemType Junction -Path $BuildJunction -Target $NodeModules | Out-Null
     try {
+        Invoke-Native $Node 'scripts\test_workbook_render_stability.mjs'
         Invoke-Native $Node 'scripts\build_workbook.mjs'
         Invoke-Native $Python 'scripts\normalize_xlsx.py'
         $WorkbookHash1 = (Get-FileHash -Algorithm SHA256 '10_schedules\FC01_engineering_schedules.xlsx').Hash
@@ -124,17 +153,24 @@ try {
     $PdfHash2 = (Get-FileHash -Algorithm SHA256 'release\FC01_release_evidence.pdf').Hash
     if ($PdfHash1 -ne $PdfHash2) { throw "Release PDF is not binary deterministic: $PdfHash1 != $PdfHash2" }
 
-    Reset-GeneratedDirectory '14_qa\pdf_renders\release_e'
-    Invoke-Native $Pdftoppm '-png' '-r' '140' 'release\FC01_release_evidence.pdf' '14_qa\pdf_renders\release_e\page'
-    $ReleasePages = @(Get-ChildItem '14_qa\pdf_renders\release_e' -File | Sort-Object Name | ForEach-Object Name)
-    $ExpectedReleasePages = @(1..5 | ForEach-Object { "page-$_.png" })
-    if (Compare-Object $ExpectedReleasePages $ReleasePages) { throw 'Release PDF render set is not exactly pages 1 through 5' }
+    Reset-GeneratedDirectory '14_qa\pdf_renders\release_f'
+    Invoke-Native $Pdftoppm '-png' '-r' '140' 'release\FC01_release_evidence.pdf' '14_qa\pdf_renders\release_f\page'
+    $ReleasePages = @(Get-ChildItem '14_qa\pdf_renders\release_f' -File | Sort-Object Name | ForEach-Object Name)
+    $ExpectedReleasePages = @(1..6 | ForEach-Object { "page-$_.png" })
+    if (Compare-Object $ExpectedReleasePages $ReleasePages) { throw 'Release PDF render set is not exactly pages 1 through 6' }
 
     Reset-GeneratedDirectory '14_qa\pdf_renders\qet_baseline'
     Invoke-Native $Pdftoppm '-png' '-r' '140' '03_electrical\native_baseline\filling_cell_schematics.pdf' '14_qa\pdf_renders\qet_baseline\page'
     $QetPages = @(Get-ChildItem '14_qa\pdf_renders\qet_baseline' -File | Sort-Object Name | ForEach-Object Name)
     $ExpectedQetPages = @(1..24 | ForEach-Object { "page-{0:D2}.png" -f $_ })
     if (Compare-Object $ExpectedQetPages $QetPages) { throw 'QET baseline PDF render set is not exactly pages 01 through 24' }
+
+    Reset-GeneratedDirectory '14_qa\qet_revision_f_rendered'
+    Invoke-Native $Pdftoppm '-png' '-r' '144' '03_electrical\revision_f_native_qet\FC01_revision_e_native_export.pdf' '14_qa\qet_revision_f_rendered\page'
+    $QetRevisionFPages = @(Get-ChildItem '14_qa\qet_revision_f_rendered' -File | Sort-Object Name | ForEach-Object Name)
+    $ExpectedQetRevisionFPages = @(1..26 | ForEach-Object { "page-{0:D2}.png" -f $_ })
+    if (Compare-Object $ExpectedQetRevisionFPages $QetRevisionFPages) { throw 'Revision-F QET render set is not exactly pages 01 through 26' }
+    Invoke-Native $Python 'scripts\verify_qet_revision_f.py'
 
     Reset-GeneratedDirectory '14_qa\pdf_renders\cad_general_arrangement'
     Invoke-Native $Pdftoppm '-png' '-r' '140' '09_panel_cad\revision_e\FC01_general_arrangement_revision_e.pdf' '14_qa\pdf_renders\cad_general_arrangement\page'
@@ -150,6 +186,7 @@ try {
     Invoke-Native $Python 'scripts\build_pdf_contact_sheets.py'
 
     Invoke-Native $Python 'scripts\validate_project.py'
+    Invoke-Native $Python 'scripts\verify_revision_f.py'
     Assert-CleanGitState
     Invoke-Native $Python 'scripts\verify_manifest.py' '--source' 'head' '--require-clean'
     Write-Output "reproduction_result=PASS source=HEAD workbook_sha256=$WorkbookHash2 pdf_sha256=$PdfHash2"

@@ -1,12 +1,13 @@
 {
   "schema_version": 1,
-  "release": "E",
+  "release": "F",
   "python": {
     "version": "3.12.13",
     "executable_sha256": "3c6a206b7d93cca823934a83732220dcffd413fd1036d9fb82eebb64599cf7f3",
     "packages": {
       "Pillow": "12.2.0",
-      "reportlab": "4.4.9"
+      "reportlab": "4.4.9",
+      "pypdf": "6.10.0"
     }
   },
   "node": {

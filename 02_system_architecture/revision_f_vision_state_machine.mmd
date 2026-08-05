@@ -1,0 +1,24 @@
+stateDiagram-v2
+    [*] --> DISABLED
+    DISABLED --> SYNCHRONIZING: PLC enable + secure session
+    SYNCHRONIZING --> READY: identities/config/camera/model healthy
+    READY --> ACQUIRING: exact new session + inspection ID
+    ACQUIRING --> PROCESSING: capture acknowledged
+    PROCESSING --> PUBLISHED: complete immutable result
+    PUBLISHED --> READY: exact PLC acknowledgement
+    ACQUIRING --> FAULTED: camera/timeout/config fault
+    PROCESSING --> FAULTED: model/latency/storage/queue fault
+    PUBLISHED --> FAULTED: payload mutation/wrong acknowledgement
+    READY --> DEGRADED_HOLD: low confidence/quality hold request
+    DEGRADED_HOLD --> SYNCHRONIZING: cause cleared + explicit reset
+    FAULTED --> SYNCHRONIZING: cause cleared + explicit reset
+    SYNCHRONIZING --> DISABLED: PLC disable or session invalid
+    READY --> DISABLED: PLC disable
+    note right of PUBLISHED
+      Result is payload-first, RESULT_VALID-last,
+      immutable until exact acknowledgement.
+    end note
+    note right of FAULTED
+      No edge state commands motion.
+      PLC holds product and owns recovery.
+    end note

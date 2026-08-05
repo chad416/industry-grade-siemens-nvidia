@@ -1,4 +1,4 @@
-"""Single Revision-E controlled-file inclusion and classification policy."""
+"""Single Revision-F controlled-file inclusion and classification policy."""
 from __future__ import annotations
 
 import os
@@ -8,7 +8,7 @@ EXCLUDED_NAMES = {"manifest.json", "manifest.csv", ".DS_Store"}
 EXCLUDED_DIRS = {".git", "__pycache__", "node_modules", ".cache", ".pytest_cache", ".determinism", "tmp"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".tmp"}
 FIELDS = ["path","bytes","sha256","category","role","revision","gate_status","blocker"]
-REVISION = "E"
+REVISION = "F"
 FORBIDDEN_PATHS = {
     "scripts/revision_c_generator.py",
     "scripts/revision_c_scl.py",
@@ -63,10 +63,14 @@ def classify(rel: str) -> tuple[str, str, str, str]:
         return category,"Quarantined historical native baseline","OPEN","Historical Revision-A evidence only; never current design authority"
     if rel.startswith("03_electrical/revision_e/"):
         return category,"Revision-E native electrical source/export/evidence","PARTIAL","Native QET gate status is controlled by the acceptance record; site electrical and qualified review remain open"
+    if rel.startswith("03_electrical/revision_f_native_qet/"):
+        return category,"Revision-F exact-hash QET reopen/export evidence","PARTIAL","Native reopen/export passed; folio-25 visual clipping and automatic cross-reference evidence remain open"
+    if rel == "03_electrical/revision_f_nvidia_electrical_delta.md" or rel == "10_schedules/nvidia_electrical_delta.csv":
+        return category,"Revision-F provisional NVIDIA electrical delta","PARTIAL","Selected devices, native QET/CAD incorporation, site calculations and qualified review remain open"
     if rel.startswith("09_panel_cad/revision_e/"):
         return category,"Revision-E native panel source/export/evidence","PASS","FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     if top in {"04_controls_siemens","05_hmi","06_drives"}:
-        return category,"Revision-E import-ready design source/specification","OPEN","Native compile/configuration not executed"
+        return category,"Revision-F import-ready design source/specification","OPEN","Native compile/configuration not executed"
     if top == "07_nvidia_vision":
         return category,"Locally tested source, secure OPC UA adapter and deployment specification","PARTIAL","Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     if top == "08_digital_twin":

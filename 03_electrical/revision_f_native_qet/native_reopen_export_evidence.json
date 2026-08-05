@@ -1,0 +1,98 @@
+{
+  "release": "Revision F native QElectroTech evidence",
+  "status": "PARTIAL",
+  "controlled_source": {
+    "path": "03_electrical/revision_e/FC01_revision_e.qet",
+    "sha256_before_and_after": "BCA022BE0B9F65AA061F9731C1EE0BD0399947F04C94EE596D4AD231BB47AAD5",
+    "bytes": 666536,
+    "modified_by_workstream": false
+  },
+  "tool": {
+    "product": "QElectroTech",
+    "version": "0.100.0+git8590",
+    "executable": "C:/Users/chand/AppData/Local/Temp/qelectrotech-0.100.0+git8590-portable/qelectrotech-0.100.0+git8590-x86-win64-readytouse/bin/qelectrotech.exe",
+    "executable_sha256": "FCC3465825CC6F1BF3997D9C8054858E647A2038C8C01B7A3335A914106DE926",
+    "distribution": "Recorded official Windows 64-bit ready-to-use package",
+    "pdf_creator_metadata": "QElectroTech 0.100.0",
+    "pdf_producer_metadata": "Qt 5.15.18"
+  },
+  "launch": {
+    "working_directory": "C:/Users/chand/AppData/Local/Temp/qelectrotech-0.100.0+git8590-portable/qelectrotech-0.100.0+git8590-x86-win64-readytouse",
+    "arguments": "-platform windows:fontengine=freetype --common-elements-dir=<package>/elements --common-tbt-dir=<package>/titleblocks --lang-dir=<package>/lang --config-dir=C:/Users/chand/AppData/Local/Temp/fc01-qet-revision-f-final-native2 --data-dir=C:/Users/chand/AppData/Local/Temp/fc01-qet-revision-f-final-native2 -style plastique <repo>/03_electrical/revision_e/FC01_revision_e.qet",
+    "method": "Windows UI Automation opened the command-line source, observed the project tree, invoked the QElectroTech Export in pdf workflow, selected Check all, verified 26 of 26 folio checkboxes On, used the native Windows save dialog, and waited for a non-empty PDF before hashing.",
+    "isolation": "Configuration and data were directed to a temporary directory outside the repository. The controlled QET source was not saved or overwritten."
+  },
+  "native_reopen": {
+    "status": "PASS",
+    "observed_project": "Project 'FC01 Compact Filling-Cell Electrical Design Package - Revision E : <repo>/03_electrical/revision_e/FC01_revision_e.qet'",
+    "observed_folio_count": 26,
+    "folio_tree": [
+      "1/26 - Cover and controlled revision status",
+      "2/26 - Drawing index",
+      "3/26 - Design basis, legend and reference designations",
+      "4/26 - Single-line incoming power distribution",
+      "5/26 - Main distribution and branch protection",
+      "6/26 - 24 VDC PELV distribution",
+      "7/26 - S7-1500 rack and module allocation",
+      "8/26 - PLC digital inputs I0.0-I1.7",
+      "9/26 - PLC digital inputs I2.0-I3.7 and spares",
+      "10/26 - PLC digital outputs Q0.0-Q1.7",
+      "11/26 - PLC digital outputs Q2.0-Q3.7 and spares",
+      "12/26 - Analog inputs and shield termination",
+      "13/26 - TM Count high-speed pulse inputs",
+      "14/26 - Conveyor G120C power and PROFINET control",
+      "15/26 - Pump G120C power and PROFINET control",
+      "16/26 - Motor cables, PE and shield termination",
+      "17/26 - PROFINET and OT network architecture",
+      "18/26 - HMI and NVIDIA inspection interface",
+      "19/26 - Solenoid valves and interposing relays",
+      "20/26 - Field sensors, flow and level instrumentation",
+      "21/26 - Stack light, local stations and capper interface",
+      "22/26 - Terminal strips X100 and X101",
+      "23/26 - Terminal strips X102/X103, power, common and shields",
+      "24/26 - Cable schedule and external field connections",
+      "25/26 - Conceptual safety interface and boundaries",
+      "26/26 - Spare capacity, BOM coverage and open inputs"
+    ],
+    "session_note": "The portable session also restored a superseded temporary candidate as read-only. It was not edited or used as release authority; the command-line project path above was the controlled reopen target."
+  },
+  "native_pdf_export": {
+    "status": "PASS",
+    "path": "03_electrical/revision_f_native_qet/FC01_revision_e_native_export.pdf",
+    "sha256": "2453FFA3BF5C0CC69CA07C20405DF6CD4B3B909420876B3A143AEF34EC38103A",
+    "bytes": 131866,
+    "pages": 26,
+    "page_size": "A4 landscape, 842 x 595 pt",
+    "encrypted": false,
+    "pdf_version": "1.4",
+    "independent_page_count_tools": ["Poppler pdfinfo", "pypdf"]
+  },
+  "revision_f_delta_incorporation": {
+    "status": "BLOCKED",
+    "evidence": "The native reopen/export is the exact controlled Revision-E QET source and does not contain the standalone Revision-F NVIDIA electrical delta.",
+    "required_closure": "Incorporate and reconcile the delta across canonical data, BOM, terminals, cables, point-to-point wiring, panel CAD and a new Revision-F native QET source; then reopen the exact final hash, export and repeat all-page review.",
+    "claim_boundary": "PASS applies only to exact-hash Revision-E native reopen and export. Revision-F electrical incorporation remains PARTIAL as a standalone delta and is not construction-ready."
+  },
+  "cross_references": {
+    "status": "BLOCKED",
+    "evidence": "The reopened source contains QET xref display templates, but all 11 embedded element definitions are link_type=simple and no master/slave or linked-element relation was found. A native automatic cross-reference-resolution claim is therefore unsupported.",
+    "boundary": "The native reopen/export proves file compatibility and rendering, not an implemented automatic cross-reference graph."
+  },
+  "visual_review": {
+    "status": "PARTIAL",
+    "rendered_pages_reviewed": 26,
+    "render_directory": "14_qa/qet_revision_f_rendered",
+    "result": "All 26 pages rendered and were visually inspected. Folio numbering, borders, title blocks and main content were present. No diagram/table overlap was observed on corrected folios 13, 17, 22 or 26.",
+    "finding": "On folio 25, the long in-body conceptual-safety statement is clipped at the right boundary after 'REGUL'. The full safety statement remains present in the red footer, but the clipping prevents a clean all-page visual PASS. Dense schedule text on folios 22-24 and 26 is very small at A4 scale."
+  },
+  "gate_disposition": {
+    "exact_hash_native_reopen": "PASS",
+    "exact_hash_native_pdf_export": "PASS",
+    "all_page_visual_review": "PARTIAL",
+    "automatic_cross_reference_resolution": "BLOCKED",
+    "revision_f_nvidia_electrical_delta_incorporation": "BLOCKED",
+    "overall_native_qet_gate": "PARTIAL",
+    "construction_readiness": "NOT CLAIMED"
+  },
+  "safety_boundary": "CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."
+}

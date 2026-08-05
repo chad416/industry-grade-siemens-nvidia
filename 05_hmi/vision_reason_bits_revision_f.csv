@@ -1,0 +1,17 @@
+bit,mask,symbol,operator_text,required_action
+0,16#00000001,BOTTLE_MISSING,Bottle missing,Hold product and inspect carrier/bottle presentation
+1,16#00000002,MISALIGNED,Bottle misaligned,Hold product and inspect guide/fixture alignment
+2,16#00000004,UNDERFILL,Visible underfill,Hold or reject under approved quality procedure
+3,16#00000008,OVERFILL,Visible overfill,Hold or reject and inspect filling process
+4,16#00000010,SEVERE_FOAM,Severe foam or abnormal fill,Hold product for controlled disposition
+5,16#00000020,SPILL_OR_LEAK,Visible spill or leak,Stop/hold as PLC logic requires and inspect equipment
+6,16#00000040,LOW_CONFIDENCE,Confidence below approved threshold,Hold product; do not treat as PASS
+7,16#00000080,CAMERA_UNHEALTHY,Camera unhealthy,Correct camera/power/link/focus condition before reset
+8,16#00000100,MODEL_UNAVAILABLE,Controlled model unavailable,Restore approved bundle and verify hashes
+9,16#00000200,TIMEOUT_OR_LATE,Timeout or late result,Clear publication and restart transaction only per PLC recovery
+10,16#00000400,MALFORMED_OR_CONTRADICTORY,Malformed or contradictory result,Capture diagnostic evidence and correct edge contract
+11,16#00000800,IDENTITY_MISMATCH,Model/dataset/calibration mismatch,Restore approved identities; no operator override
+12,16#00001000,CORRELATION_ERROR,Session/ID stale duplicate or future,Clear retained publication and resynchronize disabled
+13,16#00002000,COMMUNICATIONS_OR_HEARTBEAT,Communications or heartbeat fault,Restore secure OPC UA session and verify counters
+14,16#00004000,QUEUE_SATURATED,Inspection queue saturated,Stop new production requests and diagnose throughput
+15,16#00008000,RECIPE_CHANGED,Recipe changed during inspection,Hold product and repeat under controlled recipe

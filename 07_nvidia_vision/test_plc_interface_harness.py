@@ -1,7 +1,13 @@
 import unittest
 from plc_interface_harness import VisionContract, VisionResult
-from protocol import InspectionRequest, InspectionResult
+from protocol import InspectionRequest, InspectionResult, ProcessingState, ResultDisposition
 from service import VisionService
+
+
+class _TestAuditSink:
+    healthy = True
+    def probe(self): return True
+    def write(self, event): self.last_event = dict(event)
 
 
 class ContractTests(unittest.TestCase):
@@ -25,6 +31,24 @@ class ContractTests(unittest.TestCase):
         for result in [VisionResult(True, 14, True, True, fault=True), VisionResult(True, 14, True, False), VisionResult(True, 14, True, True, warning=True)]:
             c = VisionContract(); c.trigger(14, 0, True, False)
             self.assertEqual(c.evaluate(100, True, 1, result), "HOLD_QUALITY")
+
+    def test_revision_f_additive_health_identity_and_state_are_mandatory(self):
+        invalid = [
+            VisionResult(True, 20, True, True, capture_ack_id=19),
+            VisionResult(True, 20, True, True, processing_state=3),
+            VisionResult(True, 20, True, True, disposition=2, reason_bits=1),
+            VisionResult(True, 20, True, True, dataset_id="WRONG"),
+            VisionResult(True, 20, True, True, service_healthy=False),
+            VisionResult(True, 20, True, True, queue_depth=2),
+        ]
+        for result in invalid:
+            with self.subTest(result=result):
+                c = VisionContract(); c.trigger(20, 0, True, False)
+                self.assertEqual(c.evaluate(100, True, 1, result), "HOLD_QUALITY")
+
+    def test_revision_f_terminal_result_accepts_only_complete_contract(self):
+        c = VisionContract(); c.trigger(21, 0, True, False)
+        self.assertEqual(c.evaluate(100, True, 1, VisionResult(True, 21, True, True)), "PASS")
 
     def test_heartbeat_loss(self):
         c = VisionContract(); c.trigger(15, 0, True, False); c.evaluate(1, True, 7, None)
@@ -82,13 +106,25 @@ class ContractTests(unittest.TestCase):
     def test_rejected_delayed_publication_is_acked_cleared_and_rearmed(self):
         class Backend:
             controlled_identity = ("TEST-BACKEND-NOT-A-MODEL", "a" * 64)
+            production_authorized = True  # interface-test fixture only
             def infer(self, request):
                 return InspectionResult(request.inspection_id, True, True, 2, 2,
                                         False, False, False, False, 1,
                                         self.controlled_identity[0], self.controlled_identity[1],
-                                        request.session_epoch)
+                                        request.session_epoch,
+                                        capture_ack_id=request.inspection_id,
+                                        processing_state=int(ProcessingState.RESULT_COMPLETE),
+                                        disposition=int(ResultDisposition.PASS),
+                                        confidence=0.99,
+                                        capture_timestamp_utc_ms=1,
+                                        inference_timestamp_utc_ms=2,
+                                        publication_timestamp_utc_ms=2,
+                                        processing_time_ms=1,
+                                        service_healthy=True,
+                                        camera_healthy=True,
+                                        model_loaded=True)
 
-        edge = VisionService(Backend())
+        edge = VisionService(Backend(), audit_sink=_TestAuditSink())
         edge.reset(disabled=True, session_epoch=1)
         published = edge.inspect(InspectionRequest(1, 1, 2, 0.75, 1, 1))
 
