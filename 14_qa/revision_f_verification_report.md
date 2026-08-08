@@ -2,9 +2,9 @@
 
 Result: **PASS**
 
-> FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+> FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION.
 
-> CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
+> CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE/UKCA CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
 THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL.
 
@@ -63,11 +63,11 @@ This is software-agent static, source and deterministic structured behavioral fa
 - all 20 Revision-F additive transport signals are controlled
 - all vision behavioral injection results leave process outputs decommanded
 - annotation schema explicitly states that representative data are absent
-- artifact toolchain lock identifies Revision F
+- artifact toolchain lock identifies Revision F or its controlled Revision-G successor
 - benchmark harness cannot be presented as target performance
 - canonical and schedule contract rows match exactly
 - canonical load split reconciles to the 100 W allowance
-- canonical model identifies Revision F
+- canonical model identifies Revision F or its controlled Revision-G successor
 - configuration schema executes and hashes are structured-log fields
 - controlled dataset manifest remains empty and makes no data claim
 - development backend cannot authorize production readiness

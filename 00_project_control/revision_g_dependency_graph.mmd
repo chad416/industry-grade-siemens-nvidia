@@ -1,0 +1,16 @@
+flowchart TD
+  A[Revision-F verified Git baseline] --> G0[G0 cloud and execution foundation]
+  G0 --> CRED[One controlled cloud approval]
+  CRED --> WVM[Windows engineering environment]
+  CRED --> GPU[Linux GPU environment]
+  WVM --> LIC[Siemens licences and Openness authorization]
+  LIC --> G1[G1 native TIA, WinCC, Startdrive and PLCSIM]
+  GPU --> DATA[Representative controlled dataset]
+  DATA --> G2[G2 train, evaluate, export and target inference]
+  G1 --> G3A[G3A commissioning documentation]
+  G2 --> G3A
+  SITE[Site and equipment inputs] --> G3A
+  G3A --> G3B[G3B physical FAT, SAT and commissioning]
+  QUAL[Qualified electrical and machinery-safety personnel] --> G3C[G3C qualified review]
+  G3B --> RELEASE[Industry validation decision]
+  G3C --> RELEASE

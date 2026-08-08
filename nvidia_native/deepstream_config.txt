@@ -1,0 +1,11 @@
+# TEMPLATE ONLY - DO NOT EXECUTE WITHOUT APPROVED DIGEST/MODEL
+[application]
+enable-perf-measurement=1
+perf-measurement-interval-sec=5
+
+[primary-gie]
+enable=0
+# model-engine-file must be generated on the intended compatible architecture.
+
+[sink0]
+enable=0

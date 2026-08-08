@@ -1,0 +1,42 @@
+{
+  "automation_license_manager": {
+    "installed": true,
+    "licence_entitlement": "UNPROVEN - no key data collected",
+    "version": "6.2 SP1 / 602.100.0.34"
+  },
+  "captured_utc": "2026-08-08T20:48:00Z",
+  "host_scope": "Local Windows host through Codex sandbox identity; inventory only",
+  "native_execution": "NOT RUN - authorization/licence gate",
+  "openness": {
+    "active_identity_authorized": false,
+    "evidence": "Active identity is CodexSandboxOffline and is not a member of Siemens TIA Openness",
+    "file_version": "2000.0.9501.1",
+    "installed": true,
+    "v20_assembly": "C:/Program Files/Siemens/Automation/Portal V20/PublicAPI/V20/Siemens.Engineering.dll"
+  },
+  "plcsim": {
+    "installed": false
+  },
+  "plcsim_advanced": {
+    "installed": false
+  },
+  "portal": {
+    "file_version": "2000.0.9501.1",
+    "installed": true,
+    "path": "C:/Program Files/Siemens/Automation/Portal V20/Bin/Siemens.Automation.Portal.exe",
+    "sha256": "4ab4c76cfa956956187b4e1401dd11eed3473fe60ca121c13698f6918da4354f"
+  },
+  "startdrive": {
+    "installed": false
+  },
+  "step7_v20": {
+    "installed": true,
+    "licence": "UNPROVEN",
+    "registry_version": "20.00.0000"
+  },
+  "wincc_v20": {
+    "installed": true,
+    "licence": "UNPROVEN",
+    "registry_version": "20.00.0000"
+  }
+}

@@ -1,0 +1,6 @@
+terraform {
+  backend "gcs" {
+    bucket = "replace-with-approved-restricted-state-bucket"
+    prefix = "fc01/revision-g"
+  }
+}

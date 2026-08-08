@@ -563,10 +563,12 @@ from revision_e_generator import apply_revision_e
 from revision_f_generator import apply_revision_f
 from revision_f_scl import apply_revision_f_scl
 from revision_f_nvidia import apply_revision_f_nvidia
+from revision_g_generator import apply_revision_g
 
 apply_revision_d(ROOT)
 apply_revision_e(ROOT)
 apply_revision_f(ROOT)
 apply_revision_f_scl(ROOT)
 apply_revision_f_nvidia(ROOT)
+apply_revision_g(ROOT)
 print(f"Built controlled project sources under {ROOT}")

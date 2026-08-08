@@ -1,0 +1,12 @@
+schema: FC01.training.v1
+status: BLOCKED_NO_APPROVED_DATASET
+seed: 41601
+task: multi_attribute_quality_inspection
+framework: NVIDIA_TAO_7_PLANNING_BASELINE
+architecture: UNSELECTED
+dataset_manifest: nvidia_native/dataset_manifest.csv
+split_policy: grouped_by_production_lot_and_acquisition_session
+epochs: null
+batch_size: null
+precision: FP16_CANDIDATE_NOT_EXECUTED
+output_dir: MUST_BE_OUTSIDE_GIT

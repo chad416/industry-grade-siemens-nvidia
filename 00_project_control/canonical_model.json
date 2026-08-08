@@ -1,11 +1,11 @@
 {
   "project": {
     "id": "FC01",
-    "revision": "F",
-    "date": "2026-08-03",
-    "notice": "FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION",
-    "safety_boundary": "CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.",
-    "status": "CONTROLLED NVIDIA IMPLEMENTATION-READINESS RELEASE CANDIDATE; NATIVE SIEMENS, REAL DATA/MODEL, SITE, PHYSICAL AND QUALIFIED GATES REMAIN OPEN",
+    "revision": "G",
+    "date": "2026-08-08",
+    "notice": "FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION.",
+    "safety_boundary": "CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE/UKCA CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.",
+    "status": "CONTROLLED NVIDIA IMPLEMENTATION-READINESS RELEASE CANDIDATE - REVISION G CLOUD/NATIVE-EXECUTION READY; NATIVE SIEMENS, REAL DATA/MODEL, SITE, PHYSICAL AND QUALIFIED GATES REMAIN OPEN",
     "nvidia_non_safety_boundary": "THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL."
   },
   "states": [
@@ -186,7 +186,7 @@
       "width_mm": 35,
       "height_mm": 147,
       "depth_mm": 127,
-      "status": "SELECTED NETWORK BASELINE — native configuration and site policy open",
+      "status": "SELECTED NETWORK BASELINE \u2014 native configuration and site policy open",
       "source_url": "https://mall.industry.siemens.com/mall/en/oeii/Catalog/Product?SiepCountryCode=OE&mlfb=6GK5615-0AA01-2AA2",
       "source_accessed": "2026-08-02",
       "full_designation": "=FC01+CP01-FW100"
@@ -203,7 +203,7 @@
       "width_mm": 115,
       "height_mm": 165,
       "depth_mm": 80,
-      "status": "TBD — NOT PROCUREMENT OR CONSTRUCTION DATA; confirm industrial carrier, thermal solution, EMC and lifecycle",
+      "status": "TBD \u2014 NOT PROCUREMENT OR CONSTRUCTION DATA; confirm industrial carrier, thermal solution, EMC and lifecycle",
       "source_url": "https://developer.nvidia.com/deepstream-sdk",
       "source_accessed": "2026-08-02",
       "full_designation": "=FC01+CP01-PC200"
@@ -921,7 +921,7 @@
       "module": "-A104",
       "channel": "0",
       "device": "-FT100",
-      "description": "Flow channel 1 instantaneous 4–20 mA",
+      "description": "Flow channel 1 instantaneous 4\u201320 mA",
       "safe_default": "0",
       "classification": "Standard control"
     },
@@ -932,7 +932,7 @@
       "module": "-A104",
       "channel": "1",
       "device": "-FT101",
-      "description": "Flow channel 2 instantaneous 4–20 mA",
+      "description": "Flow channel 2 instantaneous 4\u201320 mA",
       "safe_default": "0",
       "classification": "Standard control"
     },
@@ -1971,7 +1971,7 @@
     },
     {
       "requirement_id": "SYS-008",
-      "requirement": "Scale and diagnose two 4–20 mA flow channels",
+      "requirement": "Scale and diagnose two 4\u201320 mA flow channels",
       "verification": "Review + deterministic simulation where applicable",
       "status": "Implemented in reviewable sources; native Siemens verification blocked",
       "design_artifact": "04_controls_siemens/scl/FB_FillChannel.scl; 10_schedules/plc_io.csv",
@@ -9495,7 +9495,7 @@
       "side_clearance_mm": 0,
       "heat_w": "TBD",
       "dimension_basis": "Official Siemens product data; simplified rectangular selected-device envelope",
-      "placement_status": "SELECTED BASELINE — native TIA catalog/configuration and accessory confirmation open",
+      "placement_status": "SELECTED BASELINE \u2014 native TIA catalog/configuration and accessory confirmation open",
       "full_designation": "=FC01+CP01-A100"
     },
     {
@@ -9513,7 +9513,7 @@
       "side_clearance_mm": 0,
       "heat_w": "TBD",
       "dimension_basis": "Official Siemens product data; simplified rectangular selected-device envelope",
-      "placement_status": "SELECTED BASELINE — native TIA catalog/configuration and accessory confirmation open",
+      "placement_status": "SELECTED BASELINE \u2014 native TIA catalog/configuration and accessory confirmation open",
       "full_designation": "=FC01+CP01-A101"
     },
     {
@@ -9531,7 +9531,7 @@
       "side_clearance_mm": 0,
       "heat_w": "TBD",
       "dimension_basis": "Official Siemens product data; simplified rectangular selected-device envelope",
-      "placement_status": "SELECTED BASELINE — native TIA catalog/configuration and accessory confirmation open",
+      "placement_status": "SELECTED BASELINE \u2014 native TIA catalog/configuration and accessory confirmation open",
       "full_designation": "=FC01+CP01-A102"
     },
     {
@@ -9549,7 +9549,7 @@
       "side_clearance_mm": 0,
       "heat_w": "TBD",
       "dimension_basis": "Official Siemens product data; simplified rectangular selected-device envelope",
-      "placement_status": "SELECTED BASELINE — native TIA catalog/configuration and accessory confirmation open",
+      "placement_status": "SELECTED BASELINE \u2014 native TIA catalog/configuration and accessory confirmation open",
       "full_designation": "=FC01+CP01-A103"
     },
     {
@@ -9567,7 +9567,7 @@
       "side_clearance_mm": 0,
       "heat_w": "TBD",
       "dimension_basis": "Official Siemens product data; simplified rectangular selected-device envelope",
-      "placement_status": "SELECTED BASELINE — native TIA catalog/configuration and accessory confirmation open",
+      "placement_status": "SELECTED BASELINE \u2014 native TIA catalog/configuration and accessory confirmation open",
       "full_designation": "=FC01+CP01-A104"
     },
     {
@@ -9585,7 +9585,7 @@
       "side_clearance_mm": 0,
       "heat_w": "TBD",
       "dimension_basis": "Official Siemens envelope/cutout: outer 214 x 158 x 63.6 mm; cutout 198.3 x 142 mm",
-      "placement_status": "SELECTED BASELINE — native WinCC project/compile and door reinforcement open",
+      "placement_status": "SELECTED BASELINE \u2014 native WinCC project/compile and door reinforcement open",
       "full_designation": "=FC01+CP01-H100"
     },
     {
@@ -9639,7 +9639,7 @@
       "side_clearance_mm": 5,
       "heat_w": "TBD",
       "dimension_basis": "Official Siemens technical data; controlled 5 mm lateral layout-clearance assumption; confirm against order-number installation data",
-      "placement_status": "SELECTED NETWORK BASELINE — native configuration and site policy open",
+      "placement_status": "SELECTED NETWORK BASELINE \u2014 native configuration and site policy open",
       "full_designation": "=FC01+CP01-SW100"
     },
     {
@@ -9657,7 +9657,7 @@
       "side_clearance_mm": 5,
       "heat_w": "TBD",
       "dimension_basis": "Siemens S615/S615 EEC operating instructions; variant CAx confirmation open; controlled 5 mm lateral layout-clearance assumption; confirm against order-number installation data",
-      "placement_status": "SELECTED NETWORK BASELINE — native configuration and site policy open",
+      "placement_status": "SELECTED NETWORK BASELINE \u2014 native configuration and site policy open",
       "full_designation": "=FC01+CP01-FW100"
     },
     {
@@ -9674,8 +9674,8 @@
       "bottom_clearance_mm": 25,
       "side_clearance_mm": 5,
       "heat_w": "TBD",
-      "dimension_basis": "CONTROLLED ARCHITECTURE-ONLY ENVELOPE ASSUMPTION — carrier, cooling kit and interfaces not selected",
-      "placement_status": "TBD — NOT PROCUREMENT OR CONSTRUCTION DATA; confirm industrial carrier, thermal solution, EMC and lifecycle",
+      "dimension_basis": "CONTROLLED ARCHITECTURE-ONLY ENVELOPE ASSUMPTION \u2014 carrier, cooling kit and interfaces not selected",
+      "placement_status": "TBD \u2014 NOT PROCUREMENT OR CONSTRUCTION DATA; confirm industrial carrier, thermal solution, EMC and lifecycle",
       "full_designation": "=FC01+CP01-PC200"
     },
     {
@@ -9693,7 +9693,7 @@
       "side_clearance_mm": 0,
       "heat_w": "TBD",
       "dimension_basis": "Controlled provisional bar envelope; section and fixing hardware open",
-      "placement_status": "TBD — PE sizing, bonding points and fault-current basis required",
+      "placement_status": "TBD \u2014 PE sizing, bonding points and fault-current basis required",
       "full_designation": "=FC01+CP01-PE100"
     },
     {
@@ -9729,7 +9729,7 @@
       "side_clearance_mm": 0,
       "heat_w": "TBD",
       "dimension_basis": "Controlled routing envelope; duct family and fill calculation open",
-      "placement_status": "PROVISIONAL — VERIFY DUCT FILL, bend radius, conductor count and EMC separation",
+      "placement_status": "PROVISIONAL \u2014 VERIFY DUCT FILL, bend radius, conductor count and EMC separation",
       "full_designation": "=FC01+CP01-WD100"
     }
   ],
@@ -10109,136 +10109,136 @@
   ],
   "acceptance_gates": [
     {
-      "gate": 1,
+      "gate": "1",
       "acceptance_gate": "Requirements/interfaces traceable",
       "status": "PARTIAL",
-      "evidence_or_blocker": "Revision-F requirements and evidence are traceable; identified owner approval remains absent"
+      "evidence_or_blocker": "Revision-G requirements, execution gates and evidence are traceable; owner and qualified-human approvals remain absent"
     },
     {
-      "gate": 2,
+      "gate": "2",
       "acceptance_gate": "Canonical model reconciles schedules",
       "status": "PARTIAL",
-      "evidence_or_blocker": "Core canonical/interface schedules reconcile; the standalone Revision-F NVIDIA electrical delta is internally consistent but is not yet incorporated into canonical BOM/terminal/cable/P2P/QET/CAD authorities"
+      "evidence_or_blocker": "Core authorities reconcile; the Revision-F NVIDIA electrical delta remains provisional and outside final QET/CAD/construction authorities"
     },
     {
-      "gate": 3,
+      "gate": "3",
       "acceptance_gate": "Siemens hardware baseline confirmed",
       "status": "PARTIAL",
-      "evidence_or_blocker": "V20/FW4.0 source baseline and selected envelopes documented; authorized native catalog confirmation and delivered-state evidence remain open"
+      "evidence_or_blocker": "TIA V20/Openness installation is inventoried exactly; authorized native catalog confirmation and delivered hardware remain open"
     },
     {
-      "gate": 4,
+      "gate": "4",
       "acceptance_gate": "Native TIA project opens",
       "status": "BLOCKED",
-      "evidence_or_blocker": "No genuine AP20 project; active identity is not TIA Engineer/Openness-authorized and V20 entitlement is unproven"
+      "evidence_or_blocker": "TIA V20 exists but no licensed/Openness-authorized session or genuine AP20 project was available"
     },
     {
-      "gate": 5,
+      "gate": "5",
       "acceptance_gate": "Native TIA archive restores",
       "status": "BLOCKED",
-      "evidence_or_blocker": "No genuine ZAP20 archive exists; native authorized project creation/restoration was not available"
+      "evidence_or_blocker": "No genuine ZAP20 archive exists; no native archive was fabricated"
     },
     {
-      "gate": 6,
+      "gate": "6",
       "acceptance_gate": "PLC compiles zero errors",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Expanded import-ready SCL/source contracts pass locally; native TIA V20 compile was not run"
+      "evidence_or_blocker": "99 Siemens/source/simulator contract tests pass; native TIA compile was not run"
     },
     {
-      "gate": 7,
+      "gate": "7",
       "acceptance_gate": "HMI compiles zero errors",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Expanded HMI definitions are source-controlled; native WinCC Unified compile/usability review was not run"
+      "evidence_or_blocker": "HMI definitions are controlled; native WinCC Unified compile/usability review was not run"
     },
     {
-      "gate": 8,
+      "gate": "8",
       "acceptance_gate": "Startdrive configured/reviewed",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Startdrive is not installed; motor, pump and site inputs are also missing"
+      "evidence_or_blocker": "Startdrive is absent and motor/pump/site data remain unconfirmed"
     },
     {
-      "gate": 9,
+      "gate": "9",
       "acceptance_gate": "PLCSIM traces pass",
       "status": "BLOCKED",
-      "evidence_or_blocker": "PLCSIM/PLCSIM Advanced are not installed; deterministic Python evidence is explicitly independent"
+      "evidence_or_blocker": "PLCSIM/PLCSIM Advanced are absent; Python evidence is independent and explicitly non-native"
     },
     {
-      "gate": 10,
+      "gate": "10",
       "acceptance_gate": "Revision-E QET reopens and reconciles",
       "status": "PARTIAL",
-      "evidence_or_blocker": "Exact controlled Revision-E QET hash reopened natively with 26/26 folios; automatic cross-reference resolution remains unsupported"
+      "evidence_or_blocker": "Inherited exact-hash 26-folio QET reopen remains valid; executable was not found for a new Revision-G execution and automatic cross-references remain unsupported"
     },
     {
-      "gate": 11,
+      "gate": "11",
       "acceptance_gate": "Schematics export and all-page visual review",
       "status": "PARTIAL",
-      "evidence_or_blocker": "Native 26-page PDF export completed; all pages were reviewed, with one clipped in-body statement on folio 25 and dense text noted"
+      "evidence_or_blocker": "Inherited 26-page native export was reviewed; folio 25 clipping/density limitation remains open"
     },
     {
-      "gate": 12,
+      "gate": "12",
       "acceptance_gate": "Revision-E FCStd reopens",
       "status": "PASS",
-      "evidence_or_blocker": "FreeCADCmd independently reopened 165 objects / 148 controlled solids; STEP retained 148 solids; IGES retained bounded face geometry; DXF entities and 30 scheduled holes reconciled"
+      "evidence_or_blocker": "FreeCADCmd 1.1.3 re-executed in Revision G: 165 objects, 148 solids, zero invalid shapes"
     },
     {
-      "gate": 13,
+      "gate": "13",
       "acceptance_gate": "STEP/IGES/DXF reimport",
       "status": "PASS",
-      "evidence_or_blocker": "FreeCADCmd independently reopened 165 objects / 148 controlled solids; STEP retained 148 solids; IGES retained bounded face geometry; DXF entities and 30 scheduled holes reconciled"
+      "evidence_or_blocker": "Revision-G FreeCAD execution reimported STEP/IGES/DXF and reconciled 30 mounting holes"
     },
     {
-      "gate": 14,
+      "gate": "14",
       "acceptance_gate": "Full BOM/panel layout reconcile",
       "status": "PARTIAL",
-      "evidence_or_blocker": "Revision-E panel CAD remains natively verified; Revision-F electrical delta uses provisional carrier/camera/light envelopes and is not incorporated into QET/CAD"
+      "evidence_or_blocker": "Revision-E CAD remains natively verified; final selected vision envelopes and electrical delta incorporation remain open"
     },
     {
-      "gate": 15,
+      "gate": "15",
       "acceptance_gate": "Electrical calculations confirmed",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Supply, earthing, fault current, motors/pump, cable routes, installation method, ambient and enclosure/site requirements remain unconfirmed"
+      "evidence_or_blocker": "Supply, earthing, fault current, motor/pump, routes, installation, ambient and enclosure inputs remain absent"
     },
     {
-      "gate": 16,
+      "gate": "16",
       "acceptance_gate": "Real NVIDIA dataset controlled",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Dataset tooling, schema, collection matrix and leakage-safe split checks are ready; no representative labeled dataset exists"
+      "evidence_or_blocker": "Dataset acquisition/labeling/schema tooling is controlled; representative real data is absent"
     },
     {
-      "gate": 17,
+      "gate": "17",
       "acceptance_gate": "Genuine model training/evaluation",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Training/evaluation tooling is ready; no approved dataset, training run, model or defensible production metrics exist"
+      "evidence_or_blocker": "Training/evaluation configuration is ready; no approved dataset, training run, model or metric exists"
     },
     {
-      "gate": 18,
+      "gate": "18",
       "acceptance_gate": "TensorRT/DeepStream target runtime",
       "status": "BLOCKED",
-      "evidence_or_blocker": "DeepStream 9.1/TAO 7.0.1 policy is documented; CUDA/TAO/TensorRT/DeepStream/Docker and target hardware are absent"
+      "evidence_or_blocker": "RTX 5060 driver query passed; CUDA, Docker, TAO, TensorRT, DeepStream and target Jetson/cloud runtime are absent"
     },
     {
-      "gate": 19,
+      "gate": "19",
       "acceptance_gate": "PLC-NVIDIA failure tests",
       "status": "PARTIAL",
-      "evidence_or_blocker": "Source, edge, durable-audit, encrypted OPC UA and interface tests pass locally; native SCL enum binding, production S7/Jetson endpoint and physical timing remain unverified"
+      "evidence_or_blocker": "Fail-closed edge/OPC UA/harness/synthetic-authorization tests pass; production S7/Jetson endpoint and physical timing remain unverified"
     },
     {
-      "gate": 20,
+      "gate": "20",
       "acceptance_gate": "FAT/SAT/commissioning",
       "status": "OPEN",
-      "evidence_or_blocker": "Controlled procedures issued; no FAT, SAT or commissioning was executed"
+      "evidence_or_blocker": "G3A procedures and blank records are issued; no FAT, SAT or commissioning measurement was executed"
     },
     {
-      "gate": 21,
+      "gate": "21",
       "acceptance_gate": "Qualified safety activities",
       "status": "BLOCKED",
-      "evidence_or_blocker": "Project-specific qualified machinery-safety engineering, verification and validation are external and not performed"
+      "evidence_or_blocker": "Conceptual boundary and handoff exist; qualified machinery-safety/electrical verification and validation were not performed"
     },
     {
-      "gate": 22,
+      "gate": "22",
       "acceptance_gate": "Manifest independently verifies",
-      "status": "PASS",
-      "evidence_or_blocker": "Published candidate f6e9f3b1e928a2e04d21913caac2547469b0f647 reproduced from GitHub with 425/425 manifest entries, zero discrepancies and final Git-clean assertion"
+      "status": "PARTIAL",
+      "evidence_or_blocker": "Revision-G candidate manifest, final commit and post-push fresh-clone reproduction are pending release freeze"
     }
   ],
   "rationales": [
@@ -11325,7 +11325,7 @@
     {
       "category": "PLC channel",
       "key": "FLOW_1_MA_RAW",
-      "purpose": "Flow channel 1 instantaneous 4–20 mA",
+      "purpose": "Flow channel 1 instantaneous 4\u201320 mA",
       "failure_detected_or_controlled": "Detects or controls the named function; spares remain de-energized",
       "selection_or_evidence_basis": "AI IW64 on -A104 0",
       "open_verification": "Native hardware assignment, diagnostics and checkout",
@@ -11343,7 +11343,7 @@
     {
       "category": "PLC channel",
       "key": "FLOW_2_MA_RAW",
-      "purpose": "Flow channel 2 instantaneous 4–20 mA",
+      "purpose": "Flow channel 2 instantaneous 4\u201320 mA",
       "failure_detected_or_controlled": "Detects or controls the named function; spares remain de-energized",
       "selection_or_evidence_basis": "AI IW66 on -A104 1",
       "open_verification": "Native hardware assignment, diagnostics and checkout",

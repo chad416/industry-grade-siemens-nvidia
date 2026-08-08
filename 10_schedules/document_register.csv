@@ -30,3 +30,17 @@ DOC-028,QET native export,03_electrical/revision_f_native_qet/FC01_revision_e_na
 DOC-029,Python runtime SBOM,release/python_runtime_sbom.csv,F,Configuration management,Controlled inventory
 DOC-030,Third-party licence review,release/third_party_licence_review.md,F,Configuration management,Engineering inventory; legal approval open
 DOC-031,Revision-F verification report,14_qa/revision_f_verification_report.md,F,Independent verification,Software-agent evidence
+DOC-G-001,Revision-G charter,00_project_control/revision_g_charter.md,G,Lead systems,Controlled
+DOC-G-002,Revision-G gap matrix,00_project_control/revision_g_gap_matrix.csv,G,Lead systems,Controlled
+DOC-G-003,Secure cloud architecture,cloud/architecture.md,G,Cloud security,Controlled
+DOC-G-004,Cloud Terraform source,cloud/terraform/README.md,G,Cloud security,Controlled
+DOC-G-005,Siemens native report,siemens_native/native_execution_report.md,G,Controls,Controlled
+DOC-G-006,NVIDIA native report,nvidia_native/native_execution_report.md,G,Vision,Controlled
+DOC-G-007,Commissioning package,commissioning/README.md,G,Commissioning,Controlled
+DOC-G-008,Revision-G limitations,release/REVISION_G_KNOWN_LIMITATIONS.md,G,Release,Controlled
+DOC-G-009,Revision-G evidence PDF,release/FC01_release_evidence.pdf,G,Release,Controlled
+DOC-G-010,Revision-G engineering workbook,10_schedules/FC01_engineering_schedules.xlsx,G,Release,Controlled
+DOC-G-011,Revision-G adversarial self-audit,14_qa/revision_g_audit_report.md,G,Release,Controlled
+DOC-G-012,NVIDIA model/runtime evidence status,nvidia_native/model_card.md,G,Vision,Controlled
+DOC-G-013,Qualified safety-review preparation,commissioning/qualified_review_handoff.md,G,Safety boundary,Controlled
+DOC-G-014,Cloud plan status,cloud/plan_status.md,G,Cloud security,Controlled

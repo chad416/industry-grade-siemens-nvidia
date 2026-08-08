@@ -1,0 +1,9 @@
+project_id              = "replace-with-approved-project-id"
+billing_account_id      = null
+artifact_bucket_name    = "replace-with-globally-unique-approved-bucket"
+admin_principals        = ["group:approved-cloud-admins@example.invalid"]
+operator_principals     = ["group:approved-fc01-operators@example.invalid"]
+monitoring_notification_channels = []
+monthly_budget_amount   = 250
+create_windows_vm       = false
+create_gpu_vm           = false

@@ -1,4 +1,4 @@
-"""Single Revision-F controlled-file inclusion and classification policy."""
+"""Single Revision-G controlled-file inclusion and classification policy."""
 from __future__ import annotations
 
 import os
@@ -8,7 +8,7 @@ EXCLUDED_NAMES = {"manifest.json", "manifest.csv", ".DS_Store"}
 EXCLUDED_DIRS = {".git", "__pycache__", "node_modules", ".cache", ".pytest_cache", ".determinism", "tmp"}
 EXCLUDED_SUFFIXES = {".pyc", ".pyo", ".tmp"}
 FIELDS = ["path","bytes","sha256","category","role","revision","gate_status","blocker"]
-REVISION = "F"
+REVISION = "G"
 FORBIDDEN_PATHS = {
     "scripts/revision_c_generator.py",
     "scripts/revision_c_scl.py",
@@ -16,6 +16,7 @@ FORBIDDEN_PATHS = {
 FORBIDDEN_PREFIXES = (
     "14_qa/pdf_renders/release/",
     "14_qa/pdf_renders/release_c/",
+    "14_qa/pdf_renders/release_f/",
 )
 
 
@@ -57,7 +58,8 @@ def classify(rel: str) -> tuple[str, str, str, str]:
         "00_project_control":"Project control","01_requirements":"Requirements","02_system_architecture":"Architecture",
         "03_electrical":"Electrical design","04_controls_siemens":"Siemens sources","05_hmi":"HMI","06_drives":"Drives",
         "07_nvidia_vision":"Vision","08_digital_twin":"Digital twin","09_panel_cad":"Panel CAD","10_schedules":"Schedules",
-        "11_simulation":"Simulation","12_testing":"Testing","13_documentation":"Documentation","14_qa":"QA","release":"Release","scripts":"Reproduction"
+        "11_simulation":"Simulation","12_testing":"Testing","13_documentation":"Documentation","14_qa":"QA","release":"Release","scripts":"Reproduction",
+        "cloud":"Cloud execution","siemens_native":"Siemens native execution","nvidia_native":"NVIDIA native execution","commissioning":"Commissioning",".github":"CI control"
     }.get(top, "Repository control")
     if rel.startswith("03_electrical/native_baseline/") or rel.startswith("09_panel_cad/native_baseline/"):
         return category,"Quarantined historical native baseline","OPEN","Historical Revision-A evidence only; never current design authority"
@@ -77,4 +79,17 @@ def classify(rel: str) -> tuple[str, str, str, str]:
         return category,"Architecture/source","OPEN","Real dataset/target runtime unavailable"
     if top == "11_simulation":
         return category,"Independent design evidence","PASS","Not Siemens/physical evidence"
+    if top == "cloud":
+        return category,"Disabled-by-default reviewable cloud source","PARTIAL","Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    if top == "siemens_native":
+        return category,"Native access inventory and exact handoff","BLOCKED","TIA/WinCC licence and Openness authorization are unproven; Startdrive and PLCSIM are absent"
+    if top == "nvidia_native":
+        blocked_names = {"dataset_manifest.csv", "training_config.yaml", "evaluation_config.yaml", "model_card.md", "confusion_matrix_status.md", "latency_results_status.md"}
+        if PurePosixPath(rel).name in blocked_names:
+            return category,"Data/model/runtime execution prerequisite","BLOCKED","Representative data, trained model and target CUDA/TensorRT/DeepStream runtime are absent"
+        return category,"Source-tested fail-closed execution prerequisite","PARTIAL","Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    if top == "commissioning":
+        if PurePosixPath(rel).suffix.lower() == ".csv" and ("record" in PurePosixPath(rel).name or PurePosixPath(rel).name in {"io_checkout.csv", "punch_list.csv", "as_built_redline_register.csv"}):
+            return category,"Controlled blank execution record","OPEN","No physical measurement, tester, witness or signature exists"
+        return category,"Commissioning and qualified-review preparation","PARTIAL","Physical execution and qualified electrical/machinery-safety review remain open"
     return category,"Controlled artifact","PASS",""

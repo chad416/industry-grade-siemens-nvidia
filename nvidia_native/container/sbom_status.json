@@ -1,0 +1,6 @@
+{
+  "status": "NOT_GENERATED",
+  "reason": "No approved container runtime/base digest was available",
+  "required_tool": "syft or equivalent on the approved Linux build host",
+  "production_claim": false
+}

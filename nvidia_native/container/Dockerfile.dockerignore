@@ -1,0 +1,7 @@
+.git
+**/__pycache__
+**/*.pyc
+release
+14_qa
+09_panel_cad
+03_electrical

@@ -1,0 +1,11 @@
+schema: FC01.evaluation.v1
+status: BLOCKED_NO_MODEL_OR_TEST_SET
+primary_risk: false_pass
+required_outputs:
+  - per_class_precision_recall_f1
+  - confusion_matrices
+  - false_accept_and_false_reject_analysis
+  - robustness_by_lighting_position_fill_and_lot
+  - threshold_selection_with_untouched_test_set
+  - end_to_end_latency_on_target
+automatic_pass_policy: prohibited_until_formally_approved

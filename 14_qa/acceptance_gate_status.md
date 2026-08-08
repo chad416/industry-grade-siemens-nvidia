@@ -1,28 +1,28 @@
-# Acceptance gate status - Revision F
+# Acceptance gate status - Revision G
 
-> FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION
+> FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION.
 
-> CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
+> CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE/UKCA CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.
 
-- Gate 1: **PARTIAL** - Requirements/interfaces traceable: Revision-F requirements and evidence are traceable; identified owner approval remains absent
-- Gate 2: **PARTIAL** - Canonical model reconciles schedules: Core canonical/interface schedules reconcile; the standalone Revision-F NVIDIA electrical delta is internally consistent but is not yet incorporated into canonical BOM/terminal/cable/P2P/QET/CAD authorities
-- Gate 3: **PARTIAL** - Siemens hardware baseline confirmed: V20/FW4.0 source baseline and selected envelopes documented; authorized native catalog confirmation and delivered-state evidence remain open
-- Gate 4: **BLOCKED** - Native TIA project opens: No genuine AP20 project; active identity is not TIA Engineer/Openness-authorized and V20 entitlement is unproven
-- Gate 5: **BLOCKED** - Native TIA archive restores: No genuine ZAP20 archive exists; native authorized project creation/restoration was not available
-- Gate 6: **BLOCKED** - PLC compiles zero errors: Expanded import-ready SCL/source contracts pass locally; native TIA V20 compile was not run
-- Gate 7: **BLOCKED** - HMI compiles zero errors: Expanded HMI definitions are source-controlled; native WinCC Unified compile/usability review was not run
-- Gate 8: **BLOCKED** - Startdrive configured/reviewed: Startdrive is not installed; motor, pump and site inputs are also missing
-- Gate 9: **BLOCKED** - PLCSIM traces pass: PLCSIM/PLCSIM Advanced are not installed; deterministic Python evidence is explicitly independent
-- Gate 10: **PARTIAL** - Revision-E QET reopens and reconciles: Exact controlled Revision-E QET hash reopened natively with 26/26 folios; automatic cross-reference resolution remains unsupported
-- Gate 11: **PARTIAL** - Schematics export and all-page visual review: Native 26-page PDF export completed; all pages were reviewed, with one clipped in-body statement on folio 25 and dense text noted
-- Gate 12: **PASS** - Revision-E FCStd reopens: FreeCADCmd independently reopened 165 objects / 148 controlled solids; STEP retained 148 solids; IGES retained bounded face geometry; DXF entities and 30 scheduled holes reconciled
-- Gate 13: **PASS** - STEP/IGES/DXF reimport: FreeCADCmd independently reopened 165 objects / 148 controlled solids; STEP retained 148 solids; IGES retained bounded face geometry; DXF entities and 30 scheduled holes reconciled
-- Gate 14: **PARTIAL** - Full BOM/panel layout reconcile: Revision-E panel CAD remains natively verified; Revision-F electrical delta uses provisional carrier/camera/light envelopes and is not incorporated into QET/CAD
-- Gate 15: **BLOCKED** - Electrical calculations confirmed: Supply, earthing, fault current, motors/pump, cable routes, installation method, ambient and enclosure/site requirements remain unconfirmed
-- Gate 16: **BLOCKED** - Real NVIDIA dataset controlled: Dataset tooling, schema, collection matrix and leakage-safe split checks are ready; no representative labeled dataset exists
-- Gate 17: **BLOCKED** - Genuine model training/evaluation: Training/evaluation tooling is ready; no approved dataset, training run, model or defensible production metrics exist
-- Gate 18: **BLOCKED** - TensorRT/DeepStream target runtime: DeepStream 9.1/TAO 7.0.1 policy is documented; CUDA/TAO/TensorRT/DeepStream/Docker and target hardware are absent
-- Gate 19: **PARTIAL** - PLC-NVIDIA failure tests: Source, edge, durable-audit, encrypted OPC UA and interface tests pass locally; native SCL enum binding, production S7/Jetson endpoint and physical timing remain unverified
-- Gate 20: **OPEN** - FAT/SAT/commissioning: Controlled procedures issued; no FAT, SAT or commissioning was executed
-- Gate 21: **BLOCKED** - Qualified safety activities: Project-specific qualified machinery-safety engineering, verification and validation are external and not performed
-- Gate 22: **PASS** - Manifest independently verifies: Published candidate f6e9f3b1e928a2e04d21913caac2547469b0f647 reproduced from GitHub with 425/425 manifest entries, zero discrepancies and final Git-clean assertion
+- Gate 1: **PARTIAL** - Requirements/interfaces traceable: Revision-G requirements, execution gates and evidence are traceable; owner and qualified-human approvals remain absent
+- Gate 2: **PARTIAL** - Canonical model reconciles schedules: Core authorities reconcile; the Revision-F NVIDIA electrical delta remains provisional and outside final QET/CAD/construction authorities
+- Gate 3: **PARTIAL** - Siemens hardware baseline confirmed: TIA V20/Openness installation is inventoried exactly; authorized native catalog confirmation and delivered hardware remain open
+- Gate 4: **BLOCKED** - Native TIA project opens: TIA V20 exists but no licensed/Openness-authorized session or genuine AP20 project was available
+- Gate 5: **BLOCKED** - Native TIA archive restores: No genuine ZAP20 archive exists; no native archive was fabricated
+- Gate 6: **BLOCKED** - PLC compiles zero errors: 99 Siemens/source/simulator contract tests pass; native TIA compile was not run
+- Gate 7: **BLOCKED** - HMI compiles zero errors: HMI definitions are controlled; native WinCC Unified compile/usability review was not run
+- Gate 8: **BLOCKED** - Startdrive configured/reviewed: Startdrive is absent and motor/pump/site data remain unconfirmed
+- Gate 9: **BLOCKED** - PLCSIM traces pass: PLCSIM/PLCSIM Advanced are absent; Python evidence is independent and explicitly non-native
+- Gate 10: **PARTIAL** - Revision-E QET reopens and reconciles: Inherited exact-hash 26-folio QET reopen remains valid; executable was not found for a new Revision-G execution and automatic cross-references remain unsupported
+- Gate 11: **PARTIAL** - Schematics export and all-page visual review: Inherited 26-page native export was reviewed; folio 25 clipping/density limitation remains open
+- Gate 12: **PASS** - Revision-E FCStd reopens: FreeCADCmd 1.1.3 re-executed in Revision G: 165 objects, 148 solids, zero invalid shapes
+- Gate 13: **PASS** - STEP/IGES/DXF reimport: Revision-G FreeCAD execution reimported STEP/IGES/DXF and reconciled 30 mounting holes
+- Gate 14: **PARTIAL** - Full BOM/panel layout reconcile: Revision-E CAD remains natively verified; final selected vision envelopes and electrical delta incorporation remain open
+- Gate 15: **BLOCKED** - Electrical calculations confirmed: Supply, earthing, fault current, motor/pump, routes, installation, ambient and enclosure inputs remain absent
+- Gate 16: **BLOCKED** - Real NVIDIA dataset controlled: Dataset acquisition/labeling/schema tooling is controlled; representative real data is absent
+- Gate 17: **BLOCKED** - Genuine model training/evaluation: Training/evaluation configuration is ready; no approved dataset, training run, model or metric exists
+- Gate 18: **BLOCKED** - TensorRT/DeepStream target runtime: RTX 5060 driver query passed; CUDA, Docker, TAO, TensorRT, DeepStream and target Jetson/cloud runtime are absent
+- Gate 19: **PARTIAL** - PLC-NVIDIA failure tests: Fail-closed edge/OPC UA/harness/synthetic-authorization tests pass; production S7/Jetson endpoint and physical timing remain unverified
+- Gate 20: **OPEN** - FAT/SAT/commissioning: G3A procedures and blank records are issued; no FAT, SAT or commissioning measurement was executed
+- Gate 21: **BLOCKED** - Qualified safety activities: Conceptual boundary and handoff exist; qualified machinery-safety/electrical verification and validation were not performed
+- Gate 22: **PARTIAL** - Manifest independently verifies: Revision-G candidate manifest, final commit and post-push fresh-clone reproduction are pending release freeze

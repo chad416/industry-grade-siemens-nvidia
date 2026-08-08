@@ -1,18 +1,18 @@
 {
   "project": "FC01",
-  "revision": "F",
+  "revision": "G",
   "status": "PROFESSIONAL CONTROLLED ENGINEERING-DEVELOPMENT PACKAGE",
-  "generated": "2026-08-03",
+  "generated": "2026-08-08",
   "byte_source": "Git index (staged authoritative bytes)",
-  "file_count": 425,
+  "file_count": 504,
   "files": [
     {
       "path": ".gitattributes",
-      "bytes": 1418,
-      "sha256": "d67d7d06a0cc1f4579f95f87d1e50ce7b5a95ece43d269c1fbcabbe3a8e9bc20",
+      "bytes": 1468,
+      "sha256": "7249ebb23e2cb395661c105ece76679b07d2f86f16030ca177f9599336b72d9f",
       "category": "Repository control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -20,9 +20,19 @@
       "path": ".github/workflows/revision-f-reproduce.yml",
       "bytes": 2809,
       "sha256": "0c3466528ea89e7463bb01346dc1c09e310788dc36085fdb040af04570748c72",
-      "category": "Repository control",
+      "category": "CI control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": ".github/workflows/revision-g-reproduce.yml",
+      "bytes": 2948,
+      "sha256": "df5e31fbc49f29d2466a014349294876d678cb9d7edfe387ec0fd86035781f81",
+      "category": "CI control",
+      "role": "Controlled artifact",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -32,17 +42,17 @@
       "sha256": "8ce0a10a2d9b4184830cf7967d4e6635e53e629cabafcdbf94dbe6a70c590dd8",
       "category": "Repository control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "00_project_control/acceptance_gates.csv",
-      "bytes": 3779,
-      "sha256": "384521f43389dc47460126da5508e93735b7dfb7c57a77a061592455e3044a24",
+      "bytes": 3268,
+      "sha256": "5a17ce2751d499e7020b55a2ad28cb0f41dbf941b12b042f27eda8a94a0d4edc",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -52,17 +62,17 @@
       "sha256": "9be29c9e6ed3ee7e90d2ed5636be76765d7624ec14148f64aceeabf913918214",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "00_project_control/canonical_model.json",
-      "bytes": 568276,
-      "sha256": "31e7d6d49e71aa71337b2150d804a9e6c00672f6345f0eca436ea912b8c1c153",
+      "bytes": 567914,
+      "sha256": "c0eaa9ddb78a33053dd314056521292f487e08a64bea8003fb256d0b0c12a7a1",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -72,7 +82,7 @@
       "sha256": "f618e53fd1f9323211856e01ab3dcf93c510ff46ee6783239e4cd7ff2f7f1ae1",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -82,7 +92,7 @@
       "sha256": "0acfb10114226893daf0fb05054b6ac8d9267067f3860c6f1e4ef2ad33bfb00a",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -92,7 +102,7 @@
       "sha256": "449f1c60662cf31a16645938b245310fc4a1c0eb91e2d6350a2b6f5cec248c25",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -102,17 +112,17 @@
       "sha256": "e983eacbe4940a78564fb246cc5c719b8dfd74b7be5ed310c55a101c1af5a3d3",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "00_project_control/design_basis.md",
-      "bytes": 1146,
-      "sha256": "f929e50d621329dbe0627e02641e045f98668be0d9014c8ac6bfd7bbe939cab0",
+      "bytes": 1148,
+      "sha256": "c6bf5e0f660c4702acd1de10bf6cd099f7f98dfda3f2cff468dfebce2d6a6248",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -122,7 +132,7 @@
       "sha256": "cd6d59bb37f3484bd8ab3b45558b236dc245c8d992e1558dae2de8eb7b2b5287",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -132,7 +142,7 @@
       "sha256": "1970a55ff0480985a12391c46010456f419cc1904764d1d371c864b29c84c0d5",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -142,7 +152,7 @@
       "sha256": "98a2f779c7418aac5b5e91b33520e8560105f8554302d4ca1b67b6d42e0a3eb7",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -152,7 +162,7 @@
       "sha256": "4ffa5c9542914c0b7080326676ba28c9eee6810dd4f3606b7e1d77c28554fd0e",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -162,7 +172,7 @@
       "sha256": "b1eebb8ed403445f381e4b1c6cce14c9f81f66cb40da798c2a96fa1a88e16bff",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -172,7 +182,7 @@
       "sha256": "fc9be57c8ce6ce12dd603a244bc642dcd16318d148b34f40a450618aed6a6ecb",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -182,7 +192,7 @@
       "sha256": "b27f25221cd21ea938cf712c6373343c2fbb6c791b0f37216b589ad323c7c22c",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -192,7 +202,7 @@
       "sha256": "017e239cf2c8d2d98710c3877f5b7e65882dc60114d682d0630ce8a9d5a93b99",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -202,17 +212,87 @@
       "sha256": "cab01855c882d920f73fb666f187fdf93d1ecbb7e131214b9828369d731887f3",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "00_project_control/revision_g_change_register.csv",
+      "bytes": 1439,
+      "sha256": "d43168dd36817ac1bea7c5020f2f7507bdfc629f7e959199bea6a82318fa372d",
+      "category": "Project control",
+      "role": "Controlled artifact",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "00_project_control/revision_g_charter.md",
+      "bytes": 1330,
+      "sha256": "250013581505523d80137ac3dd7631ac0ece9cf039b6a2fc2d1cbee24204a4ba",
+      "category": "Project control",
+      "role": "Controlled artifact",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "00_project_control/revision_g_decision_log.md",
+      "bytes": 1800,
+      "sha256": "47bbedf45245d62529bdaa21ec9652756442453ef7c62aa457c7f64d51a22330",
+      "category": "Project control",
+      "role": "Controlled artifact",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "00_project_control/revision_g_dependency_graph.mmd",
+      "bytes": 766,
+      "sha256": "422a13a503f14e9294362cd5af0ea0836a4f4b71390df796a516e3ffaebd9450",
+      "category": "Project control",
+      "role": "Controlled artifact",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "00_project_control/revision_g_external_handoffs.md",
+      "bytes": 2467,
+      "sha256": "4e9219b230a6a82d4aaef64c1458692786c17e10d27dac9590709911248e3258",
+      "category": "Project control",
+      "role": "Controlled artifact",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "00_project_control/revision_g_gap_matrix.csv",
+      "bytes": 5924,
+      "sha256": "38d416778c6e4dce413a2bc0cbac1600ad90d09b5da9c79d2b9036f24ca2251e",
+      "category": "Project control",
+      "role": "Controlled artifact",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "00_project_control/revision_g_gate_status.md",
+      "bytes": 1782,
+      "sha256": "c9375fc0b7ff40fbf20f4145449619a6e76aeb55983cf184f57032b6757a9661",
+      "category": "Project control",
+      "role": "Controlled artifact",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "00_project_control/revision_history.csv",
-      "bytes": 1149,
-      "sha256": "12e31e6362f9ecb53e4051c55b28569778efa861c846831455604742212148e8",
+      "bytes": 1373,
+      "sha256": "2ec8f80ed1fa45ec9bc8db3ea76b20795a27cfc8f235cc0a1c59a4fb22203cfa",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -222,7 +302,7 @@
       "sha256": "a115662cd89015608f21600c1571801cc1022225be3a2c5baa2f33194ede4613",
       "category": "Project control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -232,7 +312,7 @@
       "sha256": "2b9bb5f52f55d1dad53a4eb93a70c2038ed45fb533444b0cadcf7a063054b19d",
       "category": "Requirements",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -242,7 +322,7 @@
       "sha256": "68308a102b40406a0990503acd4620ab995f538842d64d1e8e9abe84193bef93",
       "category": "Requirements",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -252,7 +332,7 @@
       "sha256": "3227abc599e46b75a6c80d45e57b1d31c94f4a854de460beae137c82f0a03a5e",
       "category": "Requirements",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -262,7 +342,7 @@
       "sha256": "2851125a0dec8d042ef4326dfe69172e48dc65b05127f22e0d2ae8939f807ebe",
       "category": "Architecture",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -272,7 +352,7 @@
       "sha256": "0238de2539822fd7c0aecffd3eae934599c6bf2ec6177e95f65d74148647ebde",
       "category": "Architecture",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -282,7 +362,7 @@
       "sha256": "97ad1ae637f1419b403b6bd29fb3e5ff749d3dd67869ea65c9d55835ccbca2aa",
       "category": "Architecture",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -292,7 +372,7 @@
       "sha256": "272c3acd207c58db9654c8a33c9374f39733147ba479b50083e600aa236abecf",
       "category": "Architecture",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -302,7 +382,7 @@
       "sha256": "db245fab3965e2b58489110167c6860dd9dfe147958967df16e80c444a51c4a8",
       "category": "Architecture",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -312,7 +392,7 @@
       "sha256": "7c594cccaac0b570e6faadefdc650b1fdf7ed80b9e231214cfe08ca114d93643",
       "category": "Architecture",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -322,7 +402,7 @@
       "sha256": "686f5a77e20a5ff93d6478650b71b7055bd5696dcfd7326108985afea5e8de1d",
       "category": "Architecture",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -332,7 +412,7 @@
       "sha256": "03f6a1ba1c469dc87137b6b05bc492c25c7c324deaa39d34adff43d009f5e30a",
       "category": "Architecture",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -342,7 +422,7 @@
       "sha256": "d3b0129b550a41bd131b9801e40748e6c928af2a66ee8f3b7592b01c2c15a858",
       "category": "Electrical design",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -352,7 +432,7 @@
       "sha256": "1f94405b10b3a156300161921e3e6910e35237bad68c3ba11f516a7cb9be1b3f",
       "category": "Electrical design",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -362,7 +442,7 @@
       "sha256": "d817036497afbf0f48379da4dbce81cd1d7b7cca28bfc8341d5b437d2421660b",
       "category": "Electrical design",
       "role": "Quarantined historical native baseline",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Historical Revision-A evidence only; never current design authority"
     },
@@ -372,7 +452,7 @@
       "sha256": "77391ee282cc2c35f5f69b5c9262a076a9606a736e203b209a13dc00be61bd62",
       "category": "Electrical design",
       "role": "Quarantined historical native baseline",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Historical Revision-A evidence only; never current design authority"
     },
@@ -382,7 +462,7 @@
       "sha256": "bca022be0b9f65aa061f9731c1ee0bd0399947f04c94ee596d4ad231bb47aad5",
       "category": "Electrical design",
       "role": "Revision-E native electrical source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Native QET gate status is controlled by the acceptance record; site electrical and qualified review remain open"
     },
@@ -392,7 +472,7 @@
       "sha256": "7cac8cf8f914f074761853054840d0a3acf45af6581efad165cb5274b46e3532",
       "category": "Electrical design",
       "role": "Revision-E native electrical source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Native QET gate status is controlled by the acceptance record; site electrical and qualified review remain open"
     },
@@ -402,7 +482,7 @@
       "sha256": "ec51f3c04de76471cecbe59191a293975aaa0cf17ea7ce70f3eb4c27e919ce7a",
       "category": "Electrical design",
       "role": "Revision-E native electrical source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Native QET gate status is controlled by the acceptance record; site electrical and qualified review remain open"
     },
@@ -412,7 +492,7 @@
       "sha256": "dc4de919784549cac1b5f0ddb41422aa6bf0f2c54b32f27d0008b62e821b2efa",
       "category": "Electrical design",
       "role": "Revision-E native electrical source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Native QET gate status is controlled by the acceptance record; site electrical and qualified review remain open"
     },
@@ -422,7 +502,7 @@
       "sha256": "65a0d94503a3e26cbb7b293d218ba53f1efeadbd87d2ffe83f64411ab14ec48b",
       "category": "Electrical design",
       "role": "Revision-E native electrical source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Native QET gate status is controlled by the acceptance record; site electrical and qualified review remain open"
     },
@@ -432,7 +512,7 @@
       "sha256": "2453ffa3bf5c0cc69ca07c20405df6cd4b3b909420876b3a143aef34ec38103a",
       "category": "Electrical design",
       "role": "Revision-F exact-hash QET reopen/export evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Native reopen/export passed; folio-25 visual clipping and automatic cross-reference evidence remain open"
     },
@@ -442,7 +522,7 @@
       "sha256": "fb205ba6b41371cc9f5b0c38050744bf8474d42fd0ab457270cd4dadaface10f",
       "category": "Electrical design",
       "role": "Revision-F exact-hash QET reopen/export evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Native reopen/export passed; folio-25 visual clipping and automatic cross-reference evidence remain open"
     },
@@ -452,7 +532,7 @@
       "sha256": "222bb90f9360ea180d04bf732f43a13dde1b9939ee09bd390bd2cddaa67d6629",
       "category": "Electrical design",
       "role": "Revision-F provisional NVIDIA electrical delta",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Selected devices, native QET/CAD incorporation, site calculations and qualified review remain open"
     },
@@ -462,7 +542,7 @@
       "sha256": "61427122fc3739d3164321b24851b5ad9445b0d899777889e1e7a9820e1a776a",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -472,7 +552,7 @@
       "sha256": "ff7742be7ca2046dca17fea673c547da8792f660f97ccffddef6aff8b6634e34",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -482,7 +562,7 @@
       "sha256": "95d5a995a7161ed2928cb71431955c0ec9a7c5c0cef7e74377a2b191e1cf8543",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -492,7 +572,7 @@
       "sha256": "dfb2cfd488e07c9a18cb9967b02cbd6f8657c54fa03227db33a5398ba32863f1",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -502,7 +582,7 @@
       "sha256": "4e42f57bfd9cbd64082766fccefba710de89dff36135d781845e661f1efc81fb",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -512,7 +592,7 @@
       "sha256": "ca0dfbc135e1c867bfcf8531830a7270dee30e370d97c870fb5bc3b271b18dc4",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -522,7 +602,7 @@
       "sha256": "8549c19c289f5e3f17cedac34184da75404e35bd4c1ee7394dc23ceb2d81655b",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -532,7 +612,7 @@
       "sha256": "9dda96af76287e522329f2cd6ed87719eeb5f0d577f9f41dddd38c72d1d1bcbc",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -542,7 +622,7 @@
       "sha256": "cb35858ee87d64b95d3c24ef75b6050df7519aef1424f08b1e0051444bd3145b",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -552,7 +632,7 @@
       "sha256": "5292d019dd30bbd31143389666b0ddff6f65860ef2a55d36049b5733bbd583de",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -562,7 +642,7 @@
       "sha256": "ed99225b054bd0c9dd0619eb4146a1591df74d4c7710437c86ce0cb0a40febb2",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -572,7 +652,7 @@
       "sha256": "9d333d440c05a6acd92f4dc33dca907601c9c9a985b5d8279e2824d6b2779f13",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -582,7 +662,7 @@
       "sha256": "225232d26777b93af06af976ec2f48282a0d7d9b1f1579da2c0d2e0899abbd29",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -592,7 +672,7 @@
       "sha256": "775b7b89bec679762feb42eefe2078fa89293602c2510a48e5daa34ddc5edbba",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -602,7 +682,7 @@
       "sha256": "f8c1d39d1e2c665712a825401a07944848ac632b3d8d36f856ad2672e5152fcc",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -612,7 +692,7 @@
       "sha256": "f4702552d14b3fcad349827dd3dd746f1a4a18e3ee7c6687c8dfdd1557410913",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -622,7 +702,7 @@
       "sha256": "fc14895f76fce56eb94f72a9a2d0efbee7568a83ca51db4a4408df463677f5ba",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -632,7 +712,7 @@
       "sha256": "ec5ac04655335905dc57bd3102514c5167437300a011930f47ca35c5f232c69d",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -642,7 +722,7 @@
       "sha256": "736eb2e052bb285b214ba721239c666e303221deb903431e5f63e636e69bb30f",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -652,7 +732,7 @@
       "sha256": "396f70d3f240ac6561235ef0264876df9c97bc1f5039ff818215318599fbb571",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -662,7 +742,7 @@
       "sha256": "ada6fd1a2461d782002ebc26998bb68efe4df9ef1cdbff6731add45d09911546",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -672,7 +752,7 @@
       "sha256": "b3e1582ea238a3df2e6b1f5d800a6d64789de0c63b722763788909f8a102a162",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -682,7 +762,7 @@
       "sha256": "6be301f85add06cda814508a818b13bed3688fc7a51f927c4eb55695ca8ee32a",
       "category": "Siemens sources",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -692,7 +772,7 @@
       "sha256": "d6c08df18f4351b08447681c2f139e3c32886bcffa959b37f5863f1ddbbd33b8",
       "category": "HMI",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -702,7 +782,7 @@
       "sha256": "524402c624623ea1ffb0491bb7f6a598e2569ccda73757df1ce3f25272fa3ade",
       "category": "HMI",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -712,7 +792,7 @@
       "sha256": "540f999f9f92791f1a5912dcf2458d91ff9d008700b46080dc59149661a3f087",
       "category": "HMI",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -722,7 +802,7 @@
       "sha256": "04431a9330dc3086e9bbe8d22ede2113e07e0e49f1fb7540ae312e9eb4400850",
       "category": "HMI",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -732,7 +812,7 @@
       "sha256": "5ae204a63c1c018468083763d2553504b5800c210468fef5ad17ce99e6b3bb8c",
       "category": "HMI",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -742,7 +822,7 @@
       "sha256": "b3f6e9e8d5edef535a5f42dc890e09ab3d1a6992c21ec63a2ff01e57f23373a0",
       "category": "HMI",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -752,7 +832,7 @@
       "sha256": "4f24dbe2a3f1ea9515f2610c627a5d793a71c80361b5e9d0ab97f679931436ac",
       "category": "HMI",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -762,7 +842,7 @@
       "sha256": "c7acb9b529dfc1dc119dc54c6e8606f66a2e03f534f0610aa63ad46b61016a1c",
       "category": "HMI",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -772,7 +852,7 @@
       "sha256": "0a68194b530babe6969bd9eb46cc10174f5aaef2f0dcd8e5091e47d609c2cb20",
       "category": "Drives",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -782,7 +862,7 @@
       "sha256": "4e2c9470ca7280d5132252486975fedd6a545824283ba933e53b9e2a7060e36e",
       "category": "Drives",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -792,7 +872,7 @@
       "sha256": "da5fcb4d62653b2fec72f8cffa3c4fa0bd458bf9d96a325fa1ce2568b2b30495",
       "category": "Drives",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -802,7 +882,7 @@
       "sha256": "661144926b6c426660a0ca980d61ed4248704e24244a6aa382fb9e74b18d57af",
       "category": "Drives",
       "role": "Revision-F import-ready design source/specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Native compile/configuration not executed"
     },
@@ -812,7 +892,7 @@
       "sha256": "a91afe1198cc46d7558bd184982336131163846305fee9ac0dd928b5cf043807",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -822,7 +902,7 @@
       "sha256": "cc4f949be36b38c61d518acbea1ad569d0a74672e4a351e8c3b207007f9855b2",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -832,7 +912,7 @@
       "sha256": "913f21ff00487e0f382a1fd466d76b0e11e179d8a161c37b4850586180744e44",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -842,7 +922,7 @@
       "sha256": "2900429d0a1b90e6a9f42fc56619522d244e4038921fedecbd94d8fab3a187dc",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -852,7 +932,7 @@
       "sha256": "d1f20fdbe76dd251bd9d6f32e833a8343b56cdc735139cac0989bb930d187c48",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -862,7 +942,7 @@
       "sha256": "3f11f3b19ddd8f4a47ee7e8b73807e646d8d9cf69f186daddce36a2a86953615",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -872,7 +952,7 @@
       "sha256": "3881abd01b783f912863f194c110d2261492f7e4af666624b49dc7fd6f486ddc",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -882,7 +962,7 @@
       "sha256": "d11f3958e0fcfc788d708dfb20453f6a596b5863ec0df14de479e2aa07a9e8ae",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -892,7 +972,7 @@
       "sha256": "691fe3c25bf5a0c507a18f61dfadf60e41bb84bb0a837e94b947b907b4889304",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -902,7 +982,7 @@
       "sha256": "bbfcef0dd3902b6fe76968c0045c754f630b86d8a629bc8b0308943122fd2f4b",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -912,7 +992,7 @@
       "sha256": "3fd8047ee365d8b91341b27b6144cfdc6df5ea45dc10d9ce1075f096c2da48fe",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -922,7 +1002,7 @@
       "sha256": "b257207ae46a371e6ba04f544999c73eaf8cf50b759c091cd19afbf43f345a37",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -932,7 +1012,7 @@
       "sha256": "d3d2ee236a96e074e9bb1e6ae153d50d08a19498a9e069d87574c379b23355fc",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -942,7 +1022,7 @@
       "sha256": "33215e80c716ed1f609f7f7955db1d49a043dfaaa7eac22ff577bce3e00b0df8",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -952,7 +1032,7 @@
       "sha256": "5f673cd064f2c896520c825083a59ee4fc19b85878e2de82dcbf4dc1f1c057fd",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -962,7 +1042,7 @@
       "sha256": "a1af297773390f21dfa5665826ecbdf8312f3735e9aefcb15f8301dee8efb2bf",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -972,7 +1052,7 @@
       "sha256": "46ed69512272df59acdae24601d770bb4777f9491653b01e9842cf77d861d3bf",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -982,7 +1062,7 @@
       "sha256": "8defcfff91ff0311d5947e1aeaa3a9fe025c89f66a2d0519ba097c13248e1a3e",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -992,7 +1072,7 @@
       "sha256": "c64f2c2a29388d344f869cacf55fc56ca3d0df0b4271fc945b46aa0f6754ba77",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1002,7 +1082,7 @@
       "sha256": "18af4c8431232b63e9259e08fe1b8649671e0af7fdd9dcb964d521bcae580460",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1012,7 +1092,7 @@
       "sha256": "01d098620b94c294380c5b88ab557e338b62979253eef64827d53d0d4aaf9901",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1022,7 +1102,7 @@
       "sha256": "aaa5661c13ac62574ada60cc91f6048df99976578ad07515c03afee69594616f",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1032,7 +1112,7 @@
       "sha256": "56d45ca68dfaca51ca7be224d06692c1c22cc0a20783c63f583f8de2cfa4244f",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1042,7 +1122,7 @@
       "sha256": "8bd377a7782377c036a5882bdd51885bb0448fdb2d6ecbc37015e3e5f19133dd",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1052,7 +1132,7 @@
       "sha256": "cfb34fe56e03d9a49c5580bd3a990d42a4ab01b4afdd0301744e0fe9fa53713e",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1062,7 +1142,7 @@
       "sha256": "ee6e8d7a4b15fa9be7847787747e8f9ab6408088135ec2a3bc7349f2bdb1df2a",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1072,7 +1152,7 @@
       "sha256": "60c7cadb9c74d913d8fda713e3a34b8aaa447d760b1f828f6a93508798dc82bb",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1082,7 +1162,7 @@
       "sha256": "7265ebfa5a135990126b72053f567c091562b9a82a4e6c9ab3787ceab9bcc8d4",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1092,7 +1172,7 @@
       "sha256": "eba9c78dbcd68ce5c833b64a22de7cba5ecc961fc0e0aab06afba0963b7d0d00",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1102,7 +1182,7 @@
       "sha256": "71fa65beedc72e25df87c1bce4b009c5ea95cb2b4dc55a584ccb2cfe3bccc602",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1112,7 +1192,7 @@
       "sha256": "a3ede0206a61499d483297feb42fda4d58cca5d3e7da8a2b28be0b3600aac2b3",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1122,7 +1202,7 @@
       "sha256": "736cdf34807032559799a36e4e7569fc54a08965caabde22221e006e6361c8b3",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1132,7 +1212,7 @@
       "sha256": "d4dea8ab95f91b680507479b9f345c88c15434805e2db123d87b3bfcd470778c",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1142,7 +1222,7 @@
       "sha256": "e41892127ec6d0d23f40079bc623a9be51d861cf8326b32940148a0c79a14d00",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1152,7 +1232,7 @@
       "sha256": "ec46e58c920117ceb79523f496e5e5d43094c1a9cecf0c8fe24a589410860c78",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1162,7 +1242,7 @@
       "sha256": "960ad2f1483bc3787c51b4b56300db62c0926951b7cb3d7c992d6b760e215fc8",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1172,7 +1252,7 @@
       "sha256": "438d67d9c9a040f3fdad1869f55dd5702125bb9f2052d0efc3d84dedaed3a19a",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1182,7 +1262,7 @@
       "sha256": "604e0d002c6408ad91514be8a82883b39d583ff64038b493a8aa3093469b273c",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1192,7 +1272,7 @@
       "sha256": "7fb6cbefc7843ef0876a30b95ba62b6b5fbd0f964b4f07c18573c5a52110d076",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1202,7 +1282,7 @@
       "sha256": "7351e4c86eb31fbbae7c556ac442bb5174522e34353421590628ac940b04390f",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1212,7 +1292,7 @@
       "sha256": "37abf1f14c4b4dea72fc1593ce8ec8343c9b61d8c865eef5b363f06952336b2f",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1222,7 +1302,7 @@
       "sha256": "fc1c6bef0aefd54e89df638d4e7c6386c12ea68ab2d8ecdc67ed791ae5936a53",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1232,7 +1312,7 @@
       "sha256": "fe902ee5c62fb3e6b4979fcb4e062c9f8be125bff0297534f54254452400ae9e",
       "category": "Vision",
       "role": "Locally tested source, secure OPC UA adapter and deployment specification",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Real asyncua integration passes; production S7/Jetson endpoint, dataset/model and target runtime remain unavailable"
     },
@@ -1242,7 +1322,7 @@
       "sha256": "3b47a52f534c6bc51c331b121e7863602270b358e3f5f2433c81f380ca6c061b",
       "category": "Digital twin",
       "role": "Architecture/source",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Real dataset/target runtime unavailable"
     },
@@ -1252,7 +1332,7 @@
       "sha256": "0909c4cef5e01f8cc503c1ad830f35990a280936e986f8e73157c5c2a377c6a9",
       "category": "Digital twin",
       "role": "Architecture/source",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Real dataset/target runtime unavailable"
     },
@@ -1262,7 +1342,7 @@
       "sha256": "dc6299aa07590a7130cfadda38ab5b03198534c78e453059a927bbb4cc459a8a",
       "category": "Panel CAD",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1272,7 +1352,7 @@
       "sha256": "306b7376fd2b870b879cf78171e51b02b68fe23678fe15c61c81d48bcc90cf31",
       "category": "Panel CAD",
       "role": "Quarantined historical native baseline",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Historical Revision-A evidence only; never current design authority"
     },
@@ -1282,7 +1362,7 @@
       "sha256": "ad6447e85e81e4960e3e2b8f68287dafe0554401b24169f4ffde34d47fe26630",
       "category": "Panel CAD",
       "role": "Quarantined historical native baseline",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Historical Revision-A evidence only; never current design authority"
     },
@@ -1292,7 +1372,7 @@
       "sha256": "6340777b10172ba7cae5b1749cb5611d00f5dc2f8371ac249a0dd921e96db36a",
       "category": "Panel CAD",
       "role": "Quarantined historical native baseline",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Historical Revision-A evidence only; never current design authority"
     },
@@ -1302,7 +1382,7 @@
       "sha256": "9ddd38069e43c74c92393bf7f2d3dda729dfce041cedcd16fcdfca0dd433828d",
       "category": "Panel CAD",
       "role": "Quarantined historical native baseline",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "OPEN",
       "blocker": "Historical Revision-A evidence only; never current design authority"
     },
@@ -1312,7 +1392,7 @@
       "sha256": "017de0217efd1b41bd24882e3f38bcb0cf5a63267399812553dad999068aa203",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1322,7 +1402,7 @@
       "sha256": "399281557c0f110df0d454654a12411226ce98916926cd98001b690aea1614d0",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1332,7 +1412,7 @@
       "sha256": "5ac05ef162822d88a5d625396177dbf008df194b66c8b2c004c524b1bd4a1573",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1342,7 +1422,7 @@
       "sha256": "41bd5c3e85010d7d76a4805d9f586cf75aed14f5f44629a4be618794e14727cb",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1352,7 +1432,7 @@
       "sha256": "94a7acd78cdcad9630e955d1579db2c1ce87e7c3a35ba9708adec603eda704d9",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1362,7 +1442,7 @@
       "sha256": "60f4a31bfd2c6bf3be6c2edb34fe7a0cc3300e4b263b0f826c59c45bb8565e53",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1372,7 +1452,7 @@
       "sha256": "f839677d9a3ea99b79fef6eb941c50c09d92fe692748731bda76dffc8cc21027",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1382,7 +1462,7 @@
       "sha256": "5172c16bb154e50d4071c94d13b005ef467d34dab008c5e5e90cc80424c4b929",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1392,7 +1472,7 @@
       "sha256": "82fce2e89b3a3745337adc755a61cbb1b7fad30529b2f7b78d30a1f88be9ac1d",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1402,7 +1482,7 @@
       "sha256": "011c590037c29a0f6e4ca2021f6be0194051bf514763071f32912519a32b69e5",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1412,7 +1492,7 @@
       "sha256": "21c2a2b76e93abc4994fd0e8b59812036612648880aa9f68e7f33d3120001082",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1422,7 +1502,7 @@
       "sha256": "1936fd2377dffc547da7ddf6871ea3d1bd256fa2b52f3fccdfddbe306ab3c610",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1432,7 +1512,7 @@
       "sha256": "54c66c8cb51d9ec7ee4a7891cd7d33ab6d9bced7ede4e0a9ac48df9f85703494",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1442,7 +1522,7 @@
       "sha256": "10f043e3fc588014a44cc8cf9a221350b292f0d3d31d33634f19a23262de958e",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1452,7 +1532,7 @@
       "sha256": "931b1e6fc09841f6fb924c483200eeaee1a16dd99f7a8c5a4abdd3da76e4fa3f",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1462,7 +1542,7 @@
       "sha256": "62eb7ea6629b47e3d57f3b43130d5975cb23a3564f2be5014d1c2c8f5a32b428",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1472,7 +1552,7 @@
       "sha256": "a9cc29a15bf096c7b01ee5c7f5971cec26df89fba14c07b1091d836cea137007",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
@@ -1482,27 +1562,27 @@
       "sha256": "fcc1163c6e21131d7e64639ef56f6a8e1fe78c0e99b19094e64c4186b1127e32",
       "category": "Panel CAD",
       "role": "Revision-E native panel source/export/evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "FreeCAD reopen/reimport evidence is controlled separately from construction/site approval"
     },
     {
       "path": "10_schedules/FC01_engineering_schedules.xlsx",
-      "bytes": 131030,
-      "sha256": "fd0e55c47091ad2749d8b963182e5a33b99e2836dbd5b4f066ecf667a06d9b0d",
+      "bytes": 136327,
+      "sha256": "0589860dc2e5dcad681517b596ca9c347abf044937c76209a85d3b038a21565b",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "10_schedules/acceptance_gates.csv",
-      "bytes": 3779,
-      "sha256": "384521f43389dc47460126da5508e93735b7dfb7c57a77a061592455e3044a24",
+      "bytes": 3268,
+      "sha256": "5a17ce2751d499e7020b55a2ad28cb0f41dbf941b12b042f27eda8a94a0d4edc",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1512,7 +1592,7 @@
       "sha256": "fe638efafe0481e5c15e738ce7f0689137138bce8f6b467b93bceb6e21ae807b",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1522,7 +1602,7 @@
       "sha256": "40a9bfce77fc8f4a3eade2c006bf5ff3450e9bf4e72e6846afa8f0fbe943a47a",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1532,7 +1612,7 @@
       "sha256": "08231ccef143733afa488e39271c6fbb41a3d9a3be25f7c5bf874a0b4fdf4a90",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1542,17 +1622,17 @@
       "sha256": "d3d5ecc0640cf2448861210459e2b9d841a89a18d05b2e1e73f724615da67148",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "10_schedules/document_register.csv",
-      "bytes": 3989,
-      "sha256": "cd6d59bb37f3484bd8ab3b45558b236dc245c8d992e1558dae2de8eb7b2b5287",
+      "bytes": 5310,
+      "sha256": "3db058624f341411d1216a37314b96caacd8dd4b7ef8ea96b78e682ef953ade3",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1562,7 +1642,7 @@
       "sha256": "8599432d9f83fb1a52154b81e0eb09021482570f60c372dc9772d87ebdeb3116",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1572,7 +1652,7 @@
       "sha256": "84340ce9300b71a8a0a21f844133e3ffb93ff6b9f19c0368da9796f20221604d",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1582,7 +1662,7 @@
       "sha256": "4ffa5c9542914c0b7080326676ba28c9eee6810dd4f3606b7e1d77c28554fd0e",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1592,7 +1672,7 @@
       "sha256": "2790b7507c4c993fe175b23958a83fc31a6c2b4e43821619d13db6ae723ff096",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1602,7 +1682,7 @@
       "sha256": "3f13cd7606a681f8b2946bd512701ae6adf1a365626e81459ce2bed510f54241",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1612,7 +1692,7 @@
       "sha256": "0e65ec67e292f5051ae3c9283daac630329218ca9221d2ab9a1d1f92f662491d",
       "category": "Schedules",
       "role": "Revision-F provisional NVIDIA electrical delta",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PARTIAL",
       "blocker": "Selected devices, native QET/CAD incorporation, site calculations and qualified review remain open"
     },
@@ -1622,7 +1702,7 @@
       "sha256": "e5b826bfaf10c59afa7835e043d9ef56201405b67169bee9aa49d2f209e09c7e",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1632,7 +1712,7 @@
       "sha256": "8d8e4e684b95c5815afb8afab2eced2523bcba1720b2041ebc538a27f9153895",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1642,7 +1722,7 @@
       "sha256": "93137b8ac3a4c66d07966e35150bb6dcca85070e34244e4a9a41f5606c8239bd",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1652,7 +1732,7 @@
       "sha256": "e0142bad48531f8c2ab7b01209aa883d7cc43c6b8dbff35186df61786560aca5",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1662,7 +1742,7 @@
       "sha256": "0f39ba1cfb37f4cdf8bdacc1afdc5cdfd90c7b6c574205ba813048921329631a",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1672,7 +1752,7 @@
       "sha256": "8dedf5e6f53549e595fce82e664e19ac17379bbc0f263527679c1189fbc199b6",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1682,7 +1762,17 @@
       "sha256": "017e239cf2c8d2d98710c3877f5b7e65882dc60114d682d0630ce8a9d5a93b99",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "10_schedules/revision_g_gap_matrix.csv",
+      "bytes": 5924,
+      "sha256": "38d416778c6e4dce413a2bc0cbac1600ad90d09b5da9c79d2b9036f24ca2251e",
+      "category": "Schedules",
+      "role": "Controlled artifact",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1692,7 +1782,7 @@
       "sha256": "0c0f976e7244176e4fdc756eb9a4ad69954f598ecabababb4411fc2e1010b7c1",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1702,7 +1792,7 @@
       "sha256": "fc6a1a5fa33de4f9bfe0b954cbb6d877e155ecabe70802ac34d589c5d8813924",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1712,7 +1802,7 @@
       "sha256": "d2dea91ecbb61f1db7eb0ec8e988c84732fc904219f24601a6576487625dbff7",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1722,7 +1812,7 @@
       "sha256": "692c83d97e4f5cd4cca33ea610d203be06804620193ca28f207b6af83581f476",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1732,7 +1822,7 @@
       "sha256": "eeeb755bd1d58e959fe0ee79cfd3a8fb75d52d10649ff2f5161ad185e317ca43",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1742,7 +1832,7 @@
       "sha256": "ad98037d0b9a9e158c9dccf992089073786a10419b3444ace246328db0e10193",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1752,7 +1842,7 @@
       "sha256": "0f39ba1cfb37f4cdf8bdacc1afdc5cdfd90c7b6c574205ba813048921329631a",
       "category": "Schedules",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -1762,7 +1852,7 @@
       "sha256": "0157e4b9f68ebfae17aa333d1241a0edc4122884295070b66fdc289782ac4899",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1772,7 +1862,7 @@
       "sha256": "51b7c107de0c4a92db99fb8920cae78d19343a0c03aadcd13b88836dfe5d86c8",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1782,7 +1872,7 @@
       "sha256": "77634c357c7f43c54a2588052d1ce8fa1bce685d9bb61e2487b2c31b6028a6c9",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1792,7 +1882,7 @@
       "sha256": "4ae06e107d55e15a2124a2deb9253d0eee43df51045748ed0e40af8cca119d61",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1802,7 +1892,7 @@
       "sha256": "499ae1a27ea5bc1d9e733015b91cbe1dfde37cb4284e0cddb5be85bee45e14a9",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1812,7 +1902,7 @@
       "sha256": "b98b3b16619c52cc05acbb8d78036a8c518346967c20919f6c71ad3d9df88a44",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1822,7 +1912,7 @@
       "sha256": "0c8e14242422ac7bda53c63b2abb9cc900b0bb14f761f59c7ae85e094d9026ec",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1832,7 +1922,7 @@
       "sha256": "0c8e14242422ac7bda53c63b2abb9cc900b0bb14f761f59c7ae85e094d9026ec",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1842,7 +1932,7 @@
       "sha256": "6dbb8454e3849f24e44cb67a3a42f879f2609d7c137c2b492b20a75b2caa4fcc",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1852,7 +1942,7 @@
       "sha256": "a303a8cba52b332e49a5158c576d3754d991d3c8452485a96a176e6e116116ae",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1862,7 +1952,7 @@
       "sha256": "a10103df88e7559be9c5c204e82392074ec661d0061d64073b60659dc3f42698",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1872,7 +1962,7 @@
       "sha256": "b7a5d95a9d94e22c49f8452c157a15f584f3b8f1501c1e2b7f7b31e3b48472eb",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1882,7 +1972,7 @@
       "sha256": "5a4e3b7cd5ff21a239360df9409706e2bbd2c899527f01cf0fdad48a33403b7d",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1892,7 +1982,7 @@
       "sha256": "1e3aefcb85bf17d4989d5208472816be05334e5a88fec1437d5f9ef9bbf25b38",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1902,7 +1992,7 @@
       "sha256": "305d44f1b7618cffb486a4f8aa96ac11ccaf50af89f25bbc2f72034114542972",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1912,7 +2002,7 @@
       "sha256": "c4c6ef5d1c67a4daf64f52a0e849ea85ef2856a14e09ef75a6087e499faa0bec",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1922,7 +2012,7 @@
       "sha256": "687e5913ea11ae377e98cf7137a56a96c8f44bf0fba328437e2a76c530b5b62e",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1932,7 +2022,7 @@
       "sha256": "03ed309491f296ba6e6d1a082979509717aaa072e150467fc998e4df0bd10070",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1942,7 +2032,7 @@
       "sha256": "09835ddcc393a5be7f41564dd61baef1da74f11e51aeb2f6c9fb26fafb7a4a09",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1952,7 +2042,7 @@
       "sha256": "f35717a405f44b50d0d7494aff5688f467ab304252e2c8b3d3431ac649898c39",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1962,7 +2052,7 @@
       "sha256": "da929cdafe02877656195c7528b9fa56853e17025ba573ba380f72c3215b5e08",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1972,7 +2062,7 @@
       "sha256": "9bbaf1f28ea5f9d281acfa4ea44ece46044125c05e5d017852cc1da587eb6192",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1982,7 +2072,7 @@
       "sha256": "f52333d64cdfe7d8709b296d96e13072066979c682578c5084515de43153035b",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -1992,7 +2082,7 @@
       "sha256": "a4b91c7ebc63949f0f49a510dcd325094b89d4d452800d6a820ef773317086c7",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2002,7 +2092,7 @@
       "sha256": "48c32310eb1f7b8f69d11da626f77a02dbfff2560b1ed73d353ffad4288b1e9a",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2012,7 +2102,7 @@
       "sha256": "b83e356fde7424b6b09f76185b0d83a1c9394a9099fef2599e34a1d88e3737e4",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2022,7 +2112,7 @@
       "sha256": "ff568e18084ecc8fab41ae3e8a8cf2779b6e72e0bbc53a34ce64cf7dcb108337",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2032,7 +2122,7 @@
       "sha256": "645131e7b5823ae7040923aaa901215275f255c7f2f52aa2546fa1bb0fab0cde",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2042,7 +2132,7 @@
       "sha256": "f8fb3f2336a2f4ab57ca5f32242260d2bdd9c8e7306ad29836246ff0739fe9dc",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2052,7 +2142,7 @@
       "sha256": "e1e3e3ae17e8065fdf4433d3fecac4aba8b985da7e7611f385a61d1f7bfc13a7",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2062,7 +2152,7 @@
       "sha256": "14679be6325fb1b0e31840c030fc02a3d0116a6b9ce577b3bf3793f999fb3795",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2072,7 +2162,7 @@
       "sha256": "7465add3f2857151612e1ca98d3b2c73e5c357cd03be25b009433ad3efec87e1",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2082,7 +2172,7 @@
       "sha256": "5c1e41865148b2458c1e806505e0d3a33a5050a83362f3e663bbf5cb48d77d2f",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2092,7 +2182,7 @@
       "sha256": "0323aed78bb05808fb0b0c97d2bcbe8c7dfa0b3f16732d81c366b8163d0376f0",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2102,7 +2192,7 @@
       "sha256": "b5a27f2067f8c469b24fd0f3d18168d49020d11dfa62f6c0d0f18130ced5e1f0",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2112,7 +2202,7 @@
       "sha256": "80e45d2faa3dfe35fee585b5311281fdfff8ccbdf9617b878d8b85679f21c28b",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2122,7 +2212,7 @@
       "sha256": "3887d8e5688c82cc4d4f5b40ac4332744b9ab880e767bf5870fe514bb3eb683e",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2132,7 +2222,7 @@
       "sha256": "af3a0550925e2678a74950837c31fcecd09fefb847dfc758756751e509edc5a1",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2142,7 +2232,7 @@
       "sha256": "c56c43c7502eee0a77254e00dd6e7f8f01412f78d4f0188572450ae9dd90ec0b",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2152,7 +2242,7 @@
       "sha256": "1832ec9045d049f26291740b231d8c1b98a70c41db3a6d0e5a31181bf4e5d5ab",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2162,7 +2252,7 @@
       "sha256": "4cf89834e83d67779ec207bbc08ec53314a25e71eef27a9d7d95cda1532c49bc",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2172,7 +2262,7 @@
       "sha256": "214d4782c803c0118862d7164f942564217716b267ff37e6bb2423dddd1ea63d",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2182,7 +2272,7 @@
       "sha256": "1eb8ba3d4e932b2564a630bb37e4c6c4d5554d47a4149582acfd8f393b3ac9c4",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2192,7 +2282,7 @@
       "sha256": "1f4a09a018e848beebbed320678a940dedb0d75fde18c529ac9ce5347ab5d6fd",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2202,7 +2292,7 @@
       "sha256": "8bcf9106cc1d81b3618d12ee548cf0b320fb052f447937c4c207b4adad11533a",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2212,7 +2302,7 @@
       "sha256": "372f93bb4b1fb52809aa9cd48bdea1d9e35fd65df6dad2884a3b7d61bbf525ac",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2222,7 +2312,7 @@
       "sha256": "e7b8397aa220f9c2dcfb1f3d687a2ad346bcf09000c348d2f9c8bc360bde552a",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2232,7 +2322,7 @@
       "sha256": "66bc20ea03778807b98c07b6b693b90b23afcd4210025c770372e266bc7d731a",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2242,7 +2332,7 @@
       "sha256": "72a2f7cce51af52ba101c5e4e6d77542f247201e7bab2e6457a0fe95a9669333",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2252,7 +2342,7 @@
       "sha256": "da268353e769fa3e31b5bf0bd3d8417b6afae6f3fdfe5bd2762f1d7c3c80b8b4",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2262,7 +2352,7 @@
       "sha256": "f148c141546bff7bfc8e52bd3d9aa6c3a600e3f3616912045fe46a7a56a63648",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2272,7 +2362,7 @@
       "sha256": "f36efb408d72d5834efed8a07e10b19cd079b6f482cc3cbf2d8d0d8d1812053f",
       "category": "Simulation",
       "role": "Independent design evidence",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": "Not Siemens/physical evidence"
     },
@@ -2282,7 +2372,7 @@
       "sha256": "22478e2cd8d9aa9484737bc875d26a9d5348009324252160dda2a9c96a349a17",
       "category": "Testing",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2292,7 +2382,7 @@
       "sha256": "3143e26f6209bdf8746d64d1fa3730e2a9962504ba2a24f200066aa4004c2494",
       "category": "Testing",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2302,7 +2392,7 @@
       "sha256": "2601713fa4ab4bf112a7ef081609ac7311ac70d30eda36b33a764ff97ad70127",
       "category": "Testing",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2312,7 +2402,7 @@
       "sha256": "888a08678cc731bd0831a0f8e64655b0e207fbd2d3f1cee62921cdb3040456af",
       "category": "Testing",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2322,7 +2412,7 @@
       "sha256": "6b9303dd812bf214d241eb419909ccbb270dd5f404adb3214e1eaec56ba20b90",
       "category": "Testing",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2332,7 +2422,7 @@
       "sha256": "9c298cf03ef9cf6d8823e5b0b77db7039e480e822da6be52c267c749d1c83c60",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2342,7 +2432,7 @@
       "sha256": "6b6a8c7e055530e75d42c311cde7e1318599994f312f75ca7e59cd0856e9c556",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2352,7 +2442,7 @@
       "sha256": "9a6b2b69f3befa65310b99a57387bef428746ce3eddbf0470feeb327a507e9fd",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2362,7 +2452,7 @@
       "sha256": "56fde52691a4713ae1a38757a20d09c80ed7f784d64a38d618b45e2bf68ad9ab",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2372,7 +2462,7 @@
       "sha256": "d39ceb9a365cfc2e9ffe544a1c306255cc59eaee73485d34d749fa1c0b983895",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2382,7 +2472,7 @@
       "sha256": "4fecf04cd9d9f94e35d14d1182a98d2cc14c6109d0f3ca27de791510d3cfe112",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2392,7 +2482,7 @@
       "sha256": "5e2c70fab0afdec7fca20ed5a7ed5fddbe7d64b001b66ff868d530ee4f26ab7e",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2402,7 +2492,7 @@
       "sha256": "ff8a8dcb4e8f40c134200f8da20e4ee0fdfb42b46b6818dbb77743dc85cdd7ab",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2412,7 +2502,7 @@
       "sha256": "2c1bd3e048a48afa1c05c226337565d1f561252824ad15114c969559abfae57d",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2422,7 +2512,7 @@
       "sha256": "e795c198d7470b3a5cc9d80547fe9eef35cf1d1bb6293c1605c95a2017760350",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2432,7 +2522,7 @@
       "sha256": "055ec048e8cce672674a30421813fc84950f1b339cb8492049c41acbee785090",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2442,7 +2532,7 @@
       "sha256": "a176f5653c4f9b05b133924ea890afd774285880768cf2210875a93fad171214",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2452,7 +2542,7 @@
       "sha256": "5d7addb64d4218a0e836f377be94a1401a3aa39aa9df61a1b3c969fe352696c7",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2462,17 +2552,17 @@
       "sha256": "ee875d2793d836a112109a95b5a33be023400f720a9c9d6571f91f8380bf21ea",
       "category": "Documentation",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/acceptance_gate_status.md",
-      "bytes": 4387,
-      "sha256": "9c15c412ddbe2425eead131b8ea6cfbb8ee61d2b8d1a4ac297b97efe0756bf2a",
+      "bytes": 3882,
+      "sha256": "5cfde0001555fe336221b713e5c3383fd424713c20a850e7ff01259990c6c053",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2482,7 +2572,7 @@
       "sha256": "dddd4452da3faa0c8150463a9290cb668e66f1b35c7117d44bba9755fa8c78b8",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2492,17 +2582,17 @@
       "sha256": "f3a986146bd7238f220b9c00e9e65365d847049b22bf815ceb3bcdad5314a452",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/determinism_report.md",
       "bytes": 542,
-      "sha256": "6c90a48ab903b6bd135f85b4ef6f6a7ace009a25d11bbabf7a4045922d7fe667",
+      "sha256": "c04704ebc1cf40002f20a2239c15d8f584cfb78d4a76b03b0c892c2113f48e39",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2512,7 +2602,7 @@
       "sha256": "4c162d7414e7be5393be1d50c0fe475938ed51796672338c9d66641684ca98b8",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2522,7 +2612,7 @@
       "sha256": "cbd904c6ce2fc8706a59cee914963a8d920930a6797bf458ee9dfaea5d87f15e",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2532,7 +2622,7 @@
       "sha256": "d7dd777041c5935a61e2c002cc90623cb72bc139866080ef421dabcd86db1fc3",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2542,7 +2632,7 @@
       "sha256": "73f02eaa6e33dccc4a29fbd34d4ce6c0e816636f96d5b1c9ef7035f68473854c",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2552,7 +2642,7 @@
       "sha256": "39c4726565378cfe051d54e0c990864178f18b71d05bf9244f101b5a0cacc550",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2562,7 +2652,7 @@
       "sha256": "302fe90d75851c9610f5be7e71c7548d9e5d9c9acaaa270535f50ad3b9d37a58",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2572,7 +2662,7 @@
       "sha256": "422b9eab85354072ac564fa6aac5181e5f57e37d36feae29e5dec03ed8a16e42",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2582,7 +2672,7 @@
       "sha256": "105f3df7282db8227488e4c28e21376011af24d65981a15897a85d6daff836b4",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2592,7 +2682,7 @@
       "sha256": "414b16be23c323a955fa74d78c9e41beddee9b7dcdf6f5f741d08e024fd9750d",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2602,7 +2692,7 @@
       "sha256": "c6500e2d8175264f48ab42a8b36058f279a6af8bce9072040898d2a03b595a77",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2612,7 +2702,7 @@
       "sha256": "bff90f93e551ec55cb52a78e7dcb840a7ca9a6da169ee55388296222150529f4",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2622,7 +2712,7 @@
       "sha256": "ce4f7b08603036699ba6c5626a86d3fd11d1ca711e79bb88f357228b3f0601b7",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2632,17 +2722,17 @@
       "sha256": "63930d4cb552d210206922a2d9544f98e87d9b7b1ff3fdac1456828acaa9fd24",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/pdf_contact_sheets/release-evidence-contact-01.png",
-      "bytes": 354432,
-      "sha256": "1a4b69090e3e54ebefabcf696f1b74d89e0e76c8aa09ad9e77b3780b27fab6c2",
+      "bytes": 368641,
+      "sha256": "af59b2e1a042f814a19abd597749ee0aef06568be92f05e95d4685ecce6d8d31",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2652,7 +2742,7 @@
       "sha256": "912ca92326602f35a0627b828fcb10b55ddbc522da2afcdafef124be02d8ad57",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2662,7 +2752,7 @@
       "sha256": "68b00fd9757f6d043d12aa8c7dbc06423457cdae8dd4d0de0e71c1844f3cdd3c",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2672,7 +2762,7 @@
       "sha256": "2fde1970e62b53a3c1948d4f19b49b728139965cb075899291754381a8475b39",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2682,7 +2772,7 @@
       "sha256": "fbfef197b0f0affb145406194b9b30092ca2a53ba2a15a3747c9cb061b0df462",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2692,7 +2782,7 @@
       "sha256": "ec026430c77b858479f2d58d0c52509c3d25a358a1f46d178b9dadfeeff372e0",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2702,7 +2792,7 @@
       "sha256": "bd7971b585a9e65c0311e8b865d3c119ee245a16979606725a380be0597087b2",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2712,7 +2802,7 @@
       "sha256": "9b925ab05fd301ee8b5e132ffcb63d4bdf8c82a19cea436a960a539914d80e3c",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2722,7 +2812,7 @@
       "sha256": "a2f9bccfdba68f6c5b8ad641966514040fce612ac07790f54bfa9b99f9be233e",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2732,7 +2822,7 @@
       "sha256": "18c98113504e00b33355be0ecfd5316e06391266e885466da815a89777a1ccb5",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2742,7 +2832,7 @@
       "sha256": "d7089187410f7fc3d7207f4143674ca272f61e3da8a604cb2e8f2f45d5d3007b",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2752,7 +2842,7 @@
       "sha256": "d225814e923e9027ea3e1407a2b5613a2fbbce5a75d172a540c3efb57ab74158",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2762,7 +2852,7 @@
       "sha256": "b8ae733fd5d71bedd3e12408880fc38db6e4e75f56e6345d808fe4ff47b41a20",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2772,7 +2862,7 @@
       "sha256": "3700bbe84cf1684647544788885c01fc8c698ea1b1768cfeba2d89f1358173d3",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2782,7 +2872,7 @@
       "sha256": "0fa0d97ba9c3e5949118b394354f3185a0caaf6ae51150bce4c06aa69a0a833c",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2792,7 +2882,7 @@
       "sha256": "729407b500883ccf7c0f0c1ddcf2f84d45b52423fc96b45c0b78bffcad302251",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2802,7 +2892,7 @@
       "sha256": "d97d5c54d1287ca505bffb08bb0e5881f73ef919ccb9a9cc07321b880e1af2fd",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2812,7 +2902,7 @@
       "sha256": "9fe99765dcc1859988ed722521316597fcbe4dede97d072ee70968a62a958175",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2822,7 +2912,7 @@
       "sha256": "d35106fe3aa97eb1c205f4fe96346f39f1cd189e1417db8adbb2d5f47c198fb2",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2832,7 +2922,7 @@
       "sha256": "114adbfe4a8d4af8d6f10bc7179e0e5318f0622e60c7bfdfcfa02edebb3d8528",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2842,7 +2932,7 @@
       "sha256": "ae02e6938ac6e175de0fb62352685fc226a064a7e9a1dace723159e052ef1b04",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2852,7 +2942,7 @@
       "sha256": "63d298c8d4ec28ed169d78a881d78afc31aa0cdb7111d561f4aced9d68a69220",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2862,7 +2952,7 @@
       "sha256": "42aa0a27cfb00acebd1e44ac02d6d99b51d7a987f85a5f8e7db298b3f01a8cea",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2872,7 +2962,7 @@
       "sha256": "9a55d5e5f19326297a10623ca86e88f15997d9fca22984f85d448b712cc02de4",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2882,7 +2972,7 @@
       "sha256": "a437d56b3cc8f6c8b171d1eae900dec35deb158561c2abb6ea5cee7bb66c8b9f",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2892,7 +2982,7 @@
       "sha256": "7e53c7fad981bdf400dd035fffdb03d9bc06efae1990e7dcb517a18ffe1171fa",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2902,7 +2992,7 @@
       "sha256": "a02dbb614a4b5f8ea21183eb1cc59dd81a6a9caf8367945865b5c2bf778925d5",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2912,7 +3002,7 @@
       "sha256": "9d44d1875121a5e3be040d125baacefe3dd1856011ac51a9757208355e21f04a",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2922,7 +3012,7 @@
       "sha256": "39770cf9b8d8e7a0d16c762f119fcf04613771d4cfbf22263186b2f42146e8e2",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2932,7 +3022,7 @@
       "sha256": "c58578c747899cd044e518cb7b913a639e74eaa611fb17adcceac508f557c888",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2942,7 +3032,7 @@
       "sha256": "6347fd029057a7d95de5355b83fd37676dd6b76edf6f958c0804c594e22a5182",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2952,7 +3042,7 @@
       "sha256": "7411b766083594bc0a84ac824fee84e7c2e7675bcfaccb9b1c4349750874e4a9",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2962,7 +3052,7 @@
       "sha256": "204326ff591f6e44c28db5666da00c7512e3485d2eb1a6bb04144e14bbd28250",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2972,7 +3062,7 @@
       "sha256": "02e0fb6c7b9072b9be85f1d371630585b9d88524cdbfb0b62d8734307ecfdc16",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2982,7 +3072,7 @@
       "sha256": "f3246ae67a1e0215a8dde52a05e64234a8354f02ea7e44257bf31a24ae276f22",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -2992,7 +3082,7 @@
       "sha256": "210c61066debd175bee6f1dd7f82f81ab7db393242785379f44f540653635b55",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3002,7 +3092,7 @@
       "sha256": "788fec461bcc68a5e8f1520540d097660e617c5a199a7f29388e86e34b761cd0",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3012,7 +3102,7 @@
       "sha256": "6f6b34c4a2635c9ee338c8e61a6f45e18c1a28149c5f2b6582457181cd170a1b",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3022,7 +3112,7 @@
       "sha256": "aa204871230ac26fcb7b3cf6f6e9a5df0595b4e92e8001f8e3b073c838787010",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3032,7 +3122,7 @@
       "sha256": "c6615d1c61c1da5af29b2820dcd039362857224aa02dec4e1233200a6d3cdc76",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3042,67 +3132,67 @@
       "sha256": "95a9dd48b7c0f7991f9c96ac5138f008ec8203fd36dd7d7119ca48464067855d",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
-      "path": "14_qa/pdf_renders/release_f/page-1.png",
-      "bytes": 125172,
-      "sha256": "74403f0cd381e9cc4e5b6592363c4897d67ac98df4601b52092c58a3b06e1d75",
+      "path": "14_qa/pdf_renders/release_g/page-1.png",
+      "bytes": 128212,
+      "sha256": "3dea26c9c8a2607ba957c086b97c0f340482c641cac4217c9fbb51e5eecca015",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
-      "path": "14_qa/pdf_renders/release_f/page-2.png",
-      "bytes": 155347,
-      "sha256": "1456530f28689b95636af54035b331128479220ce52ce46360ee76ee432d7969",
+      "path": "14_qa/pdf_renders/release_g/page-2.png",
+      "bytes": 155803,
+      "sha256": "ecf449fc8aa29bd6da45ee680fe464921e5a2fa4e14615867c29d95e50cba73e",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
-      "path": "14_qa/pdf_renders/release_f/page-3.png",
-      "bytes": 148009,
-      "sha256": "992a2c0b2fe125b154abd29abd61496e54998b9eda1cffb218dddeb1b776cd75",
+      "path": "14_qa/pdf_renders/release_g/page-3.png",
+      "bytes": 148340,
+      "sha256": "d1c8959dd70b38756626fc3fc3babc620907d9605ab793d73e1b83cd845ffe4b",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
-      "path": "14_qa/pdf_renders/release_f/page-4.png",
-      "bytes": 160212,
-      "sha256": "cc6e13def41dce2c0c8b8ab76ddabcf2345e0ea8b80b6e70d43d2f3f5ee5514d",
+      "path": "14_qa/pdf_renders/release_g/page-4.png",
+      "bytes": 160356,
+      "sha256": "11fe0015152ebf30ae1265e84fb3ccd959574be58926da0e4222061a2a5620f1",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
-      "path": "14_qa/pdf_renders/release_f/page-5.png",
-      "bytes": 145781,
-      "sha256": "92423237f7fd7e0d4db6d429edc8c5340f415696f47a3bd84a34120e914783b5",
+      "path": "14_qa/pdf_renders/release_g/page-5.png",
+      "bytes": 187408,
+      "sha256": "9206b79e8e9e820e5814ff200c53e0c21bfd2505e3afb2ee338abfc92817a827",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
-      "path": "14_qa/pdf_renders/release_f/page-6.png",
-      "bytes": 186288,
-      "sha256": "8186d366d6cd0efda41fdd473879b36fa4f9ec0e65efef2c291ee0d981ecadaf",
+      "path": "14_qa/pdf_renders/release_g/page-6.png",
+      "bytes": 185251,
+      "sha256": "d5f9dc4e2f8e2bbfc4579ce73042d6fb7c67415a2e82b746755824e3726da019",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3112,7 +3202,7 @@
       "sha256": "8f2c850bf61168100b2c6fdc0307145b50ada82041781099b6fa2f8cd7410373",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3122,7 +3212,7 @@
       "sha256": "9c18f0d6bcb495cabe6c5dd954ee23326f400041e366705ff1b65e2e28a1e9d5",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3132,7 +3222,7 @@
       "sha256": "ad2502a89ef9f9fe639106635082a12a508c83bc047cc9656d95e678f1c9d529",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3142,7 +3232,7 @@
       "sha256": "33cd9434823be86be50af0f178829d13d2f8d71c523fbbcc6840124d114d3418",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3152,7 +3242,7 @@
       "sha256": "3d9b616f5896b443fcd8bc118ff95a6b1148089ee0dcfd7829e14e8bd0e5c63c",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3162,7 +3252,7 @@
       "sha256": "90b6a7ca5f6c178d42b934cd5435aa0c9cc62e91d729f406f9228717a17d8b07",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3172,7 +3262,7 @@
       "sha256": "c18a6739bf2bbaf378b62235d10d9d2b245b5041fc3137401e647aeb48331fda",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3182,7 +3272,7 @@
       "sha256": "6e8806395f71644e72ea9bec2cb2b3ebe25c353f17b85d4b1e54922b5d6300e6",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3192,7 +3282,7 @@
       "sha256": "e22653ce63ee6a441ede91f4489e5750fd632d02624ae3b766c1111b0a0f9874",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3202,7 +3292,7 @@
       "sha256": "c12a80cc4b78fc65d01481ca87e13f9016847a23539de1740e62453f99ddbf8c",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3212,7 +3302,7 @@
       "sha256": "8199fb7ad6824eafeff69a42d859707b93d1d5adbd284b877fbdca783c084699",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3222,7 +3312,7 @@
       "sha256": "0c7a8405f8a833ec600311ab579bfb74ea3ace4b2cd49baca8ae6009cee58658",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3232,7 +3322,7 @@
       "sha256": "cf10c48409cc3e031f8537e74b24e0e343c9e02f5fd66f25e534e3981effa263",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3242,7 +3332,7 @@
       "sha256": "07911e28e333b7a10f4d27a91deb4af3e20a5ac7a80ba1c47abf075e32014da1",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3252,7 +3342,7 @@
       "sha256": "e2f8eb93e62a7539ebf4de1056ad882c054d9e0f75aee6315566b6bcf3f3dd81",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3262,7 +3352,7 @@
       "sha256": "47b232209aabdea43640897d7a5a9b93f531c4019d403e8fe1388862b4125467",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3272,7 +3362,7 @@
       "sha256": "6d68c4bbc0f1819668992aae5a8a2b6c72732edd659a50806f29d02b2c5c8f96",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3282,7 +3372,7 @@
       "sha256": "5385d4957e72895c11feebd207bb363881341b2bcecf006db20aea52119b8beb",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3292,7 +3382,7 @@
       "sha256": "a0f71744cbc9ce07ba204b53fe23f98d8b0e78defc8d859cd0224019f5e8b615",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3302,7 +3392,7 @@
       "sha256": "5d8f2595c57147971177ccc272a76f0d4ce1675198f307100c473297be8fb508",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3312,7 +3402,7 @@
       "sha256": "9cf2ddae7746489df23742f879f7b53731b6cf15bf0eb8e64dd457d786de3ac4",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3322,7 +3412,7 @@
       "sha256": "ce2b8007ba9c11c50ba5d785bd61f65540e546f1b2a99b227c79b3fc07ad1ee5",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3332,7 +3422,7 @@
       "sha256": "184c166630665984308d82731405125b228ed9565f8e49e9cc0b757d5d10476c",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3342,7 +3432,7 @@
       "sha256": "044bf4b3bce1c0040c783836fea5fcb28c2fc510454f1efaad6fe9e1f3977b8d",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3352,7 +3442,7 @@
       "sha256": "9218b0b23b80b3663fa181c25d3968e234fe74408912862e4772f7955c98ba01",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3362,7 +3452,7 @@
       "sha256": "a22b815528cf1092934388430f0f7f2e533ff40de4c124d803f4490078bb85b7",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3372,7 +3462,7 @@
       "sha256": "ea2dcbba33c5895854ea6c3f2b9afdba4e5337ed82eb4835a0917422e464fb62",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3382,7 +3472,7 @@
       "sha256": "16c487136f8eeeeab2dbde8a2955157eb58dda84069e06440b4b1f9c7650a651",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3392,27 +3482,37 @@
       "sha256": "fc4341696d9d533c640345ddbb3c5c1a6c23589a883ea8d0ec643f90e8609d06",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/review_records.csv",
-      "bytes": 18376,
-      "sha256": "06bb454f5ed667b5adadce4537abecda786728db7f7d0d5bf5edde7b48d4226a",
+      "bytes": 21404,
+      "sha256": "9519cc7a0d88177300be4924d5bcea82163aa659ef62ec0c054b59d0f9a8d588",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/revision_f_verification_report.md",
-      "bytes": 6932,
-      "sha256": "31d8507f9aa55e082696d0e1a9b76c83e7290a77b9db0c3b00610b9f0cd36805",
+      "bytes": 7012,
+      "sha256": "4eee5909e66a5360990daf97893fd8be58d1a46ebbe7af4df0e3d04670e8d322",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "14_qa/revision_g_audit_report.md",
+      "bytes": 1543,
+      "sha256": "317d5e69195de05f1b7ddd136a9b717d6fd5c5c4d92afa4a8515fe30bd222eb9",
+      "category": "QA",
+      "role": "Controlled artifact",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3422,7 +3522,7 @@
       "sha256": "3d054e1a10353feb5b747147233c206146efa24a2453fdc70ed72953f45b2903",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3432,7 +3532,7 @@
       "sha256": "949b5ff7baa8640d723503219206889600eb6c665e517807a990a62658fbb03a",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3442,7 +3542,7 @@
       "sha256": "4a52b77530779a987fea9e32c621e4ccb07a8c8671aa4ef1eaadf89eeff2af11",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3452,27 +3552,27 @@
       "sha256": "b160f41064323d926ab7c72ed5d08afd3d14e88a0e170640d5ae3bf9e20d4703",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/workbook_contact_sheets/workbook-contact-01.png",
-      "bytes": 382272,
-      "sha256": "8933582684cf0e5f24bf7e3e03bcb72db526a14309aee2ab701795f1f7d466f4",
+      "bytes": 371474,
+      "sha256": "022f8bf7a3a2020230a1f52f6df41962c5b475b7c612c0bc37169ccee7cc8ba1",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/workbook_contact_sheets/workbook-contact-02.png",
-      "bytes": 351292,
-      "sha256": "0628cb9696bc57480a4efd2aaade2d92241ed0b156c11622af69e7a7cdad3602",
+      "bytes": 340180,
+      "sha256": "67954c7bbd0790666da496b4ce922c536b6b2bc801e81206c7679b85e8e74532",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3482,7 +3582,7 @@
       "sha256": "0654d683c968ae04931454ac7ef56133b63ff1382871c875a9dc904b06155a29",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3492,57 +3592,57 @@
       "sha256": "5f9415df7335d5b2b90d50c1b68bbbe48d6863b9d30cb95a00bc5633af8c8c33",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/workbook_contact_sheets/workbook-contact-05.png",
-      "bytes": 515939,
-      "sha256": "e878d9709200dc9394d26fb5f73ec6b52e4901cadce1019b2703c5ef42800dd2",
+      "bytes": 608300,
+      "sha256": "191f452954042ea3b77d51b9ae03573d8e32e996e9404156f03523d05a6608a1",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/workbook_contact_sheets/workbook-contact-06.png",
-      "bytes": 406929,
-      "sha256": "a12538ae81741d97fe43fdc1188dae4fdb2c5563feafe8f59bd71f2f71df95bd",
+      "bytes": 415187,
+      "sha256": "b50a841924894747f24c3756532cf3f11cbdbcbbd829a14e62233f07afb75628",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/workbook_contact_sheets/workbook-contact-07.png",
-      "bytes": 380168,
-      "sha256": "048319ee27bff7637709fbfd565bcdfe3e32bc482903e0fe0fde1739589b63af",
+      "bytes": 466325,
+      "sha256": "329b65064780a3633ee67ff6a8b6be7e3f4b0d9be2f4d739be6d0286d9028a78",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/workbook_render_baseline.json",
       "bytes": 224,
-      "sha256": "50dcd57c7e64f07078ca0f156dc903d2b302b0162b15b67cc40e58268f159bcf",
+      "sha256": "b026dc05e3a06b7e19821f1d52c03b2d4e2dc072e0ff9e654fcaf2dc0b988a4f",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/workbook_renders/acceptance-gates.png",
-      "bytes": 217952,
-      "sha256": "c4e3a3f5543c2568bae4fe4c0e4472e5280b95e82b75d43420dee086db387c99",
+      "bytes": 189240,
+      "sha256": "309a9515ee36fd8d0d9f837f84eb47a845342ca19ab5fa8cd62dc2dfb23501b2",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3552,7 +3652,7 @@
       "sha256": "f367bc49e5b8b66182b7118ef20e95857686a222653790895843a3afa0b6431e",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3562,7 +3662,7 @@
       "sha256": "45e99d1137ad5521ac2c8813447a939edd53e823b68dd6f49dd6afda3d1d0b99",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3572,17 +3672,17 @@
       "sha256": "d6a73b1b92676b2922a517cfed619c7136c49a846666c8a6b88e59f59cb56bf9",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/workbook_renders/document-register.png",
-      "bytes": 215276,
-      "sha256": "fedea1c0204dcf03947707f2a3a9919cb583bf9ce291496be860b48e3fdd33e8",
+      "bytes": 299605,
+      "sha256": "f7f2ca05a6eb186663c4b7cdfc78ff8a9f92702124525d529f84f39a45609a6e",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3592,7 +3692,7 @@
       "sha256": "c5647b30c003e5d8369a7e6a0066879d4af654eeaed32047eebe4734ede604dd",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3602,7 +3702,7 @@
       "sha256": "addf64a776e362e3b580fb1a485593035ff68fb579f6d51e712c66ef6c0c51f4",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3612,7 +3712,7 @@
       "sha256": "5943c6c9d18bf5a0fc615ec3f4ca1bd15dd2cf541b2660b42b6faa5a83da0708",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3622,7 +3722,7 @@
       "sha256": "41f9c0be3ecfefbf1600aa051e99759355cf82fe32b59a5d8d98726fb958de74",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3632,7 +3732,7 @@
       "sha256": "dcdb58e05ca9397d39fb623be890862c640d53d615fb8841be18a398592ce9f5",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3642,7 +3742,7 @@
       "sha256": "2f0fff6e8cb37bb842814b06082b1d642cb886d1022a2f5ac308bd6246e25404",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3652,7 +3752,7 @@
       "sha256": "50c399ee23e3a91fc46c6660c6b09998ff7355d1ac0ae62c4887bed6e7cf6d85",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3662,7 +3762,7 @@
       "sha256": "e22ca1145864cadcf824f17bc1b904d897d2d3cd8d6b57ab54a6fe4e79097c1c",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3672,7 +3772,7 @@
       "sha256": "a3eadf004078beebb95313b39619ef5b099b38fd0b834cfcdd081fb6e9296af5",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3682,7 +3782,7 @@
       "sha256": "44764ba80c359dc96205f77e4a6c44220723118e50ea61b4c5034a021e7ebec6",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3692,17 +3792,17 @@
       "sha256": "51b47d290d2b492ebb67202306cfb70f9afa9e843bef4ff7e781fad22aa6ec0c",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "14_qa/workbook_renders/release-summary.png",
-      "bytes": 91766,
-      "sha256": "c2e92f35a3ec2b8509a3b09901fcbaa2e42090e6f0ea66d2f8c71fecba988b39",
+      "bytes": 91904,
+      "sha256": "61db04f1f138b47e43faaced137b287ead3c52dd075439be513b457258e6d25a",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3712,7 +3812,7 @@
       "sha256": "38506ba483fa933e972b12656dae5125b96b66ccfd3f0c3664aae547871a0a2c",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3722,7 +3822,17 @@
       "sha256": "8132521ec6cb9883e92608763ff0cc7766d3438e959c94c11a798e3b8b7fadac",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "14_qa/workbook_renders/revision-g-gates.png",
+      "bytes": 245950,
+      "sha256": "3c79bd69e1c44c092b6a1e384fa9bc184b9f4ac80f4c244941dcc283de803332",
+      "category": "QA",
+      "role": "Controlled artifact",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3732,7 +3842,7 @@
       "sha256": "b77742446f6ba6f2a478119544788fc2b3ef44a1e51910aa04b9ac5d987c3548",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3742,7 +3852,7 @@
       "sha256": "c0a3b23449d16f0f3384e5818fb41d9b0f3c992ea4cf4a641edd1f89b9f9c89f",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3752,7 +3862,7 @@
       "sha256": "a2823607d11d9cf347fcb527e59c6d54154a7f00e32a2c3dd621cc784db6795f",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3762,7 +3872,7 @@
       "sha256": "1d0c8415189927d8bc84a2d770e9cd55b141b1742e3c949835296eb8674f76f4",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3772,7 +3882,7 @@
       "sha256": "2c52d3be051422a804a09f602bce11df32ab63ecc6a9d105e27ebf69b7a1de7d",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3782,7 +3892,7 @@
       "sha256": "dd5ba4547d1af4f27603be3f82879f39b1535529e7e6c48b6353d3c09ae94a27",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3792,47 +3902,657 @@
       "sha256": "51b47d290d2b492ebb67202306cfb70f9afa9e843bef4ff7e781fad22aa6ec0c",
       "category": "QA",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "AGENTS.md",
-      "bytes": 2968,
-      "sha256": "c274308e6178d0766f8633c7b08a692bc1911b523dcfeb2a1f11a4263017d756",
+      "bytes": 2970,
+      "sha256": "178b4e8840678de59fa0f856f97bae3f2c4d5d8bd26d86ebc398905341ac2a4a",
       "category": "Repository control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "README.md",
-      "bytes": 1451,
-      "sha256": "43e44449330ed88ef699cab9f6c0a2d6c71a16864ccac5b2d3045e2588eb799d",
+      "bytes": 1445,
+      "sha256": "cb90110f4e4dbc5b2ca4e2ebb7d59331a070254cbb03999a57e0e8248a8a3283",
       "category": "Repository control",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
+      "path": "cloud/architecture.md",
+      "bytes": 2486,
+      "sha256": "7607f7522cb6ad5659375466d35430d9e23eddb0dfdeb7cc1008d6e09a21a221",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/backup_restore_runbook.md",
+      "bytes": 770,
+      "sha256": "0cdc1050ddb5085f2603f82e75f4964be74cf715d22b271c4c26c11e8365a6b5",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/cost_assumptions.md",
+      "bytes": 1549,
+      "sha256": "06c2a298df53bb262ffbb2a71b4d46606abc940aa844ac86548edacff3ac1305",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/deprovisioning_runbook.md",
+      "bytes": 925,
+      "sha256": "32e89598c79b4871edb0b2cfc84b7a87e278ecc7d8f1f02fa3aa145af5b5e76b",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/nvidia_gpu_build_runbook.md",
+      "bytes": 1169,
+      "sha256": "0624355bd47a849b5b2824e6f29c1f79dc32f1fd98c6ba80e7e3084e5ad74ac9",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/plan_status.md",
+      "bytes": 784,
+      "sha256": "6818a619094a1e615b6c6be1965309a51a42e9d412fd726dc5440c94a34e7017",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/scripts/plan_cloud.ps1",
+      "bytes": 1879,
+      "sha256": "0b66fb0aef65f2b52a304c4e9b4b8d388821678309f2bda338e4baeb3f459e9b",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/scripts/validate_cloud_iac.py",
+      "bytes": 2703,
+      "sha256": "aa84d37d521a9543042502aa05dc7b723fb1012a8a17b33784443b1c0507fd57",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/README.md",
+      "bytes": 832,
+      "sha256": "5e7c1349f55cf39101c74393f3f962bc376e166ebe24df440ccf320369e95c15",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/backend.tf.example",
+      "bytes": 128,
+      "sha256": "ae5311b0ca3674e3c020b0e80c90158354011cf66cf4e79590c1a73d4ffd0568",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/budget.tf",
+      "bytes": 721,
+      "sha256": "c3350adc41d1afb08e34d6fb83d26faf6b7b45183bcd45aef6e69daa0cb4ed42",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/compute.tf",
+      "bytes": 3520,
+      "sha256": "baf33dbcd40af5420b418968110d962962a24ecf99bc3a94d158993c900331fe",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/iam.tf",
+      "bytes": 2413,
+      "sha256": "543c1bc8ce7f7af8dff14a33afb6a0e046a3cf312243c2a06408e9a232fda79d",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/main.tf",
+      "bytes": 3707,
+      "sha256": "f8c4270d3a229ba5d7d6455b190174ce087aa1065bbab4c11b443b3ce6aa7b57",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/observability.tf",
+      "bytes": 2333,
+      "sha256": "d81e5d814c0d8cd7374c7b0fe148faad78639558cca71183134dbe017eb8b200",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/outputs.tf",
+      "bytes": 504,
+      "sha256": "82aa32119c7627438e935d37bc3ffeb1125a8fd7580a74a537937bcc887bcc04",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/safety_checks.tf",
+      "bytes": 804,
+      "sha256": "4d8031c8cee434719dd386819e37802de08524aa5696f90959c86dcf205a92cd",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/terraform.tfvars.example",
+      "bytes": 447,
+      "sha256": "da28f196127b72fe764939da9d500d21ac56770536fe2c06d0736a17123c37af",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/variables.tf",
+      "bytes": 1529,
+      "sha256": "447c9f37d75d9b8fdb40a16422d2fedc1e6b50b473e16c036ee0f51da887b3c8",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/terraform/versions.tf",
+      "bytes": 257,
+      "sha256": "6d35f358d14332efb12b7bf38e61053ea888632059d012c54ac16891f839d8f8",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/threat_model.md",
+      "bytes": 1726,
+      "sha256": "91eaf636d2991054a1b0c7279cb4ca43b3203735176b3fd48d1c4568af1720c7",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "cloud/windows_tia_build_runbook.md",
+      "bytes": 1225,
+      "sha256": "3c0cdaf601e1e5366813b8d1dc25d226a5fc2ef7b448e11abbb39f0426a744c8",
+      "category": "Cloud execution",
+      "role": "Disabled-by-default reviewable cloud source",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Custom static controls pass; provider-native fmt/validate/plan, approval and provisioning remain open"
+    },
+    {
+      "path": "commissioning/FAT_procedure.md",
+      "bytes": 957,
+      "sha256": "2471b26f56176141416200c8d5a682501e8ad5152d99c599105a42276b29ed0d",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "commissioning/README.md",
+      "bytes": 677,
+      "sha256": "9c632824e879da6a95652fffaf5ddb96792d44536b54f40b4be5dd62bcae4602",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "commissioning/SAT_procedure.md",
+      "bytes": 819,
+      "sha256": "e6041bd23f75343563cc73da8d04eff3d2de758638110f2d45be34458674903f",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "commissioning/as_built_redline_register.csv",
+      "bytes": 113,
+      "sha256": "def0df5cbace23523d47578c1966d340a9add3bad5e12c44adae61d4b31446d0",
+      "category": "Commissioning",
+      "role": "Controlled blank execution record",
+      "revision": "G",
+      "gate_status": "OPEN",
+      "blocker": "No physical measurement, tester, witness or signature exists"
+    },
+    {
+      "path": "commissioning/calibration_records_template.csv",
+      "bytes": 170,
+      "sha256": "c20d32636ee82d86b9a80b31522c2b196eed76c1ebda9af080e6eb901f9f34c9",
+      "category": "Commissioning",
+      "role": "Controlled blank execution record",
+      "revision": "G",
+      "gate_status": "OPEN",
+      "blocker": "No physical measurement, tester, witness or signature exists"
+    },
+    {
+      "path": "commissioning/guarding_reset_restart_philosophy.md",
+      "bytes": 986,
+      "sha256": "32ee5a63b1a5197a46fc0372fd2c84dcc7b929232042491ff81c76849b600f2f",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "commissioning/hazard_and_safety_input_register.csv",
+      "bytes": 1875,
+      "sha256": "904f28768c6c394d9038e6fd5bac66eb9472a4438d77dd9657da481e2ef63f51",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "commissioning/inspection_forms.md",
+      "bytes": 755,
+      "sha256": "4a655e03c96993225cf646980f0561a0f351187d456c82d7664053ee0912b171",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "commissioning/io_checkout.csv",
+      "bytes": 125,
+      "sha256": "02ff49c727deaf85670edb8d328831b01318c7f4473dd9c17b5f81f33ef742f0",
+      "category": "Commissioning",
+      "role": "Controlled blank execution record",
+      "revision": "G",
+      "gate_status": "OPEN",
+      "blocker": "No physical measurement, tester, witness or signature exists"
+    },
+    {
+      "path": "commissioning/open_safety_decisions.csv",
+      "bytes": 832,
+      "sha256": "80a3096f09aedf010b233705a1fe7a9117d3a997f889edb7eaf98993554923fd",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "commissioning/physical_test_records.csv",
+      "bytes": 152,
+      "sha256": "916f0b7ebeb1cdf23ccb480a37963a69e8f47546c534fa4caf0941b163ff74ec",
+      "category": "Commissioning",
+      "role": "Controlled blank execution record",
+      "revision": "G",
+      "gate_status": "OPEN",
+      "blocker": "No physical measurement, tester, witness or signature exists"
+    },
+    {
+      "path": "commissioning/punch_list.csv",
+      "bytes": 109,
+      "sha256": "526babc99b0fb6ae6354e8cd657d2159771c75e8de9a50316284bb1bc3a0d13f",
+      "category": "Commissioning",
+      "role": "Controlled blank execution record",
+      "revision": "G",
+      "gate_status": "OPEN",
+      "blocker": "No physical measurement, tester, witness or signature exists"
+    },
+    {
+      "path": "commissioning/qualified_review_handoff.md",
+      "bytes": 919,
+      "sha256": "3371989ff10bcf942c351d8a60d2e75793173bba6b57f8258fc066ae40657da1",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "commissioning/qualified_review_signature_block.md",
+      "bytes": 941,
+      "sha256": "cb40078c9c29feb7628a599a2913f9dd4e0ad93a8f5e9bce2c81ffdcd5d1fda2",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "commissioning/safety_function_list.csv",
+      "bytes": 1046,
+      "sha256": "cb8066691cfaa105c964b9fdfcf2d86ad9580c59d5d65bd27e8f126ed45236d2",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "commissioning/safety_validation_plan_template.md",
+      "bytes": 720,
+      "sha256": "53c1f698070f976b58d251897021c0834bf932f6c06fc4ec0e4c7e152bd3fd30",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "commissioning/standards_applicability_register.csv",
+      "bytes": 971,
+      "sha256": "975dd7ec881fb100c026e6104ce59caf9a87cff9b9a6ce102a7af8798e28baf0",
+      "category": "Commissioning",
+      "role": "Commissioning and qualified-review preparation",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Physical execution and qualified electrical/machinery-safety review remain open"
+    },
+    {
+      "path": "nvidia_native/confusion_matrix_status.md",
+      "bytes": 673,
+      "sha256": "e7e2f4a62b94d755593c2f7d787f3d1d9e1d4822b5c7f162774da2c9a264d68a",
+      "category": "NVIDIA native execution",
+      "role": "Data/model/runtime execution prerequisite",
+      "revision": "G",
+      "gate_status": "BLOCKED",
+      "blocker": "Representative data, trained model and target CUDA/TensorRT/DeepStream runtime are absent"
+    },
+    {
+      "path": "nvidia_native/container/Dockerfile",
+      "bytes": 657,
+      "sha256": "2f56de83fd98eb281ba7c3c8c89b7b1509e7a681f9b01566e004f572c676e55c",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/container/Dockerfile.dockerignore",
+      "bytes": 70,
+      "sha256": "540547df38e4b180ed3308457e203a3ea864d20e2e25e8eb6b9b284aa2ab6f10",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/container/README.md",
+      "bytes": 1241,
+      "sha256": "4f3bc3438b374b4d8f5e5659211e9c47dcd091bae193c332e1c75f1452e24352",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/container/sbom_status.json",
+      "bytes": 206,
+      "sha256": "219ecb699f5dcaffddb3ae6d20ceff2f7b5b00511706cfc152d725e7a168c9e8",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/data_acquisition_plan.md",
+      "bytes": 1428,
+      "sha256": "3484355afd4ba86c2ea435b262cef26422ecca45c24a5f95c9040c9861b7fe73",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/data_card.md",
+      "bytes": 672,
+      "sha256": "219a1b53b34a4000413019d7bc6e045c164f635e0c077ee8657ce22a0a46b0a8",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/dataset_manifest.csv",
+      "bytes": 207,
+      "sha256": "d1f20fdbe76dd251bd9d6f32e833a8343b56cdc735139cac0989bb930d187c48",
+      "category": "NVIDIA native execution",
+      "role": "Data/model/runtime execution prerequisite",
+      "revision": "G",
+      "gate_status": "BLOCKED",
+      "blocker": "Representative data, trained model and target CUDA/TensorRT/DeepStream runtime are absent"
+    },
+    {
+      "path": "nvidia_native/deepstream_config.txt",
+      "bytes": 256,
+      "sha256": "9aa65c5c7fcc057cf06b9b85996412fabd14c0a214f40fd0977c04f9ffa16620",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/dependency_vulnerability_status.json",
+      "bytes": 413,
+      "sha256": "055dd938ae0b6439d88cfe49618daf614e36b6a4fb1f91fa83b81ec1edeb9310",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/environment_inventory/inventory.json",
+      "bytes": 689,
+      "sha256": "8a18c36467254d840f8e7143dc95a428eb4223633aa9f6521369340c78478d59",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/evaluation_config.yaml",
+      "bytes": 395,
+      "sha256": "15546f0c84a1fe1fd208e36c2e5e5466a67fb5abf04db388ade650092c840fa3",
+      "category": "NVIDIA native execution",
+      "role": "Data/model/runtime execution prerequisite",
+      "revision": "G",
+      "gate_status": "BLOCKED",
+      "blocker": "Representative data, trained model and target CUDA/TensorRT/DeepStream runtime are absent"
+    },
+    {
+      "path": "nvidia_native/interface_harness_summary.md",
+      "bytes": 827,
+      "sha256": "b57f8c61cd5785509e5b9af5409d4f159780954f5d58829f404783e7774d6e58",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/labeling_guide.md",
+      "bytes": 874,
+      "sha256": "9c02e3d38d23d17eb08e2eb3c162e13f4c4bdbbff4e3e2af7c88696e8f1ac5cb",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/latency_results_status.md",
+      "bytes": 793,
+      "sha256": "72463ffbcff58508a3ccf1a6bead7e43cfdaf366b0bd5cff735ec0de1340a929",
+      "category": "NVIDIA native execution",
+      "role": "Data/model/runtime execution prerequisite",
+      "revision": "G",
+      "gate_status": "BLOCKED",
+      "blocker": "Representative data, trained model and target CUDA/TensorRT/DeepStream runtime are absent"
+    },
+    {
+      "path": "nvidia_native/model_card.md",
+      "bytes": 868,
+      "sha256": "95a58278c84541d7a3fe124ddf652d9c66c2d30c4b4e12970fc73911c9dc9d2d",
+      "category": "NVIDIA native execution",
+      "role": "Data/model/runtime execution prerequisite",
+      "revision": "G",
+      "gate_status": "BLOCKED",
+      "blocker": "Representative data, trained model and target CUDA/TensorRT/DeepStream runtime are absent"
+    },
+    {
+      "path": "nvidia_native/native_execution_report.md",
+      "bytes": 1267,
+      "sha256": "3020011cf3b0dc7b1fe72a358935361979aafa59d8ce44f65807cb061911d215",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/raw_logs/README.md",
+      "bytes": 602,
+      "sha256": "f1a66987ec648fd40240a8c13a7c6fcf76f6a6f094e26f07614e86a0fac4ecc7",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/synthetic_smoke.py",
+      "bytes": 2530,
+      "sha256": "2891c4ebed462e86166889aa47918f6b48dca416309e8e063f17eccb6e25ad56",
+      "category": "NVIDIA native execution",
+      "role": "Source-tested fail-closed execution prerequisite",
+      "revision": "G",
+      "gate_status": "PARTIAL",
+      "blocker": "Synthetic/local software evidence only; production data/model/runtime/container evidence remains open"
+    },
+    {
+      "path": "nvidia_native/training_config.yaml",
+      "bytes": 399,
+      "sha256": "e937f01cf53d904cd1f5d2c7274ca0d3975e79b53f1fb8e35cde7992da14bf41",
+      "category": "NVIDIA native execution",
+      "role": "Data/model/runtime execution prerequisite",
+      "revision": "G",
+      "gate_status": "BLOCKED",
+      "blocker": "Representative data, trained model and target CUDA/TensorRT/DeepStream runtime are absent"
+    },
+    {
       "path": "release/FC01_release_evidence.pdf",
-      "bytes": 86829,
-      "sha256": "a8d43926fd64fd4ff1b337d040059f84c306a803380664c043e27e698ada5175",
+      "bytes": 87315,
+      "sha256": "71c6e60d6632a692250f0709e25436f18f6b7c35f203494900acc87f2d5f447d",
       "category": "Release",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "release/RELEASE_NOTES.md",
-      "bytes": 1222,
-      "sha256": "a788788736c785c69ed758741dca6b05534c87a36d2bd9ad00e5cc40594a4d5c",
+      "bytes": 971,
+      "sha256": "4c44c174cd0134de3e084b855336f5abb8a644c7cb36ab12839fa62ffac09eda",
       "category": "Release",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "release/REVISION_G_FINAL_CHECKLIST.md",
+      "bytes": 1107,
+      "sha256": "06e857d1ad82d7ab62f58d44aff84d61cd43d30ab82e4db1b4648e118cdc32aa",
+      "category": "Release",
+      "role": "Controlled artifact",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "release/REVISION_G_KNOWN_LIMITATIONS.md",
+      "bytes": 1024,
+      "sha256": "41a4c9af962dd19435cf9386d384e2b96299fb246396ffa3c32c49fda6b24f53",
+      "category": "Release",
+      "role": "Controlled artifact",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3842,17 +4562,17 @@
       "sha256": "1acd662de04cde35d45f0f522ea5b25793e830af0efec6148ede6162f46076f5",
       "category": "Release",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "release/reproduction_toolchain_lock.json",
-      "bytes": 1573,
-      "sha256": "a394253d191921f7ce545aee6b9cdde48cdfaa7b6911a78dd052ca8c93830f23",
+      "bytes": 1589,
+      "sha256": "48bf16306974b3dddf75dc7818345c10f75334a5e9b1581f50872dfa6256a0f5",
       "category": "Release",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3862,7 +4582,7 @@
       "sha256": "0043aca3a7381487084576995105e1099e3786ae8add5a6c0951d305b0e0e757",
       "category": "Release",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3872,7 +4592,7 @@
       "sha256": "587dafeae469d6fcdca05b277e3a35dba8baa7538e1c489bf31232c3a2ccba40",
       "category": "Release",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3882,67 +4602,67 @@
       "sha256": "4e2fa9bf5ca7af2efa54fdbd4fe1ea8b538966c7c6fc5eda51ee66882cd58c51",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "scripts/build_manifest.py",
       "bytes": 2086,
-      "sha256": "ef4446dd5ae6acb2d59bd44f162f6ada0fa9e3548db281e6b3a0ecf7cb3e4ece",
+      "sha256": "3f2a477aa34cf38627f274af4c906755ffc968cc1e5fcf99744323ac30cb23a2",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "scripts/build_pdf_contact_sheets.py",
       "bytes": 1653,
-      "sha256": "e99cb52d927dcfa9f2ac1a31f5602c25db1b51a80576f82ec01802329f5bc9c1",
+      "sha256": "91d3b27230ac0ba077c7163f7f52d8c91ea6c8170b3c86bf28c7352c66b3b43e",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "scripts/build_project.py",
-      "bytes": 73579,
-      "sha256": "8c8099a3d7c758b61fba57c9f2b9ca1e287ae2638f7045770108ce079ea1a575",
+      "bytes": 73652,
+      "sha256": "f3889b8ae9da6e371fc33e7bf98ed39542a4b7590f7ea6c2ce9b17d9d205c3cd",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "scripts/build_release_pdf.py",
-      "bytes": 15562,
-      "sha256": "c849c10b68efcccc279221879d2de857f62d185305445bfea2a36f86f271cfe9",
+      "bytes": 16163,
+      "sha256": "ef7823311ee4916b74d76dbde2be8d54c82e899d82b62106bec875f2d35b079e",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "scripts/build_workbook.mjs",
-      "bytes": 12831,
-      "sha256": "1c674e0dd6a03688e68e26eb1b4b77219b69b490c3a5b0331b9828d3437ea9d8",
+      "bytes": 12897,
+      "sha256": "ef18e45ae4071d9e1635d3a4b6e5f5eb67f7b0264f936476e5c30208f3dccf52",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "scripts/check_determinism.py",
-      "bytes": 4402,
-      "sha256": "a7dfa08b6ab00702c5465e9a589d653fb907fd03d07fd694b05ec8ba187cda38",
+      "bytes": 4460,
+      "sha256": "a21400bf54c40f07db91e622c80a99fc5d4524fe4a39c79231c6e4ec0eb2ddde",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3952,7 +4672,7 @@
       "sha256": "2773db0b06be7f9131e5ae7a41d4c6bd5ef996d6d45f9d838a59a98320b069ce",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3962,17 +4682,17 @@
       "sha256": "3253b45f47309fddad390ee9a9cc4193a12b4b4695beccf7a8a09e4bca83bb72",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "scripts/manifest_policy.py",
-      "bytes": 4416,
-      "sha256": "3fc4ba93f737477ccab1c171eb8eef07e4a2a58c2599052c5dd798fdabfcfeb9",
+      "bytes": 6190,
+      "sha256": "f8f792fb99c4c26286b1206e6525495dc47ec21ad93b0aceb99e574fb46f18b3",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3982,7 +4702,7 @@
       "sha256": "ab77e48b8febde2174bda27c3d2b7bb969e75170873c1c9f777ad52ea4329e73",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -3992,17 +4712,17 @@
       "sha256": "ce9a241dfaf85801e74156d9628a71c4c6211ea13e22b27b740dd5ee66d39e69",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "scripts/reproduce_validation.ps1",
-      "bytes": 12424,
-      "sha256": "bc5d179da9eecf55967aee8f04a967f9076f072712cb2d33f88b275a5ee5f228",
+      "bytes": 12481,
+      "sha256": "e0df3b5a056c963476d4fd17a7d014341883ea98fd860435ee22bd5f57ae1604",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4012,7 +4732,7 @@
       "sha256": "9b9bb1a9479d213c6626b32221d1daa12d358203cc9ef1b3e736d1616095c67c",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4022,7 +4742,7 @@
       "sha256": "7253364f53f1d185d60a3d5c4237163731a81a9dbb15caa27e69908ae7492cb2",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4032,7 +4752,7 @@
       "sha256": "a803e2d1a486b1fa1708c03f5afe9a1ced2057f1bf76409cd22a3ca114caf7a6",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4042,7 +4762,7 @@
       "sha256": "04476e2b4739f1dc998864598d642f9ced577f2b5be3f8d864622926a877ba94",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4052,7 +4772,7 @@
       "sha256": "4a024d0c886f44c2a7c77111285411f8c5224b1d334737f8528500a3c23d2aeb",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4062,7 +4782,7 @@
       "sha256": "2900429d0a1b90e6a9f42fc56619522d244e4038921fedecbd94d8fab3a187dc",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4072,7 +4792,7 @@
       "sha256": "8bd377a7782377c036a5882bdd51885bb0448fdb2d6ecbc37015e3e5f19133dd",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4082,7 +4802,7 @@
       "sha256": "e41892127ec6d0d23f40079bc623a9be51d861cf8326b32940148a0c79a14d00",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4092,7 +4812,7 @@
       "sha256": "438d67d9c9a040f3fdad1869f55dd5702125bb9f2052d0efc3d84dedaed3a19a",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4102,7 +4822,7 @@
       "sha256": "af5c80c9848eaaa75af378954b1ec4a2e0dd19ca7f39cd6c4b5197fab48a0480",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4112,7 +4832,7 @@
       "sha256": "ca0dfbc135e1c867bfcf8531830a7270dee30e370d97c870fb5bc3b271b18dc4",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4122,7 +4842,7 @@
       "sha256": "9dda96af76287e522329f2cd6ed87719eeb5f0d577f9f41dddd38c72d1d1bcbc",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4132,7 +4852,7 @@
       "sha256": "9d333d440c05a6acd92f4dc33dca907601c9c9a985b5d8279e2824d6b2779f13",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4142,7 +4862,7 @@
       "sha256": "ec5ac04655335905dc57bd3102514c5167437300a011930f47ca35c5f232c69d",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4152,17 +4872,27 @@
       "sha256": "736eb2e052bb285b214ba721239c666e303221deb903431e5f63e636e69bb30f",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "scripts/revision_g_generator.py",
+      "bytes": 98198,
+      "sha256": "3907b7281a8408e95b07c242f4846deac688d14a59e05cc12a24cc228cc37b5b",
+      "category": "Reproduction",
+      "role": "Controlled artifact",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "scripts/test_release_integrity.py",
-      "bytes": 2948,
-      "sha256": "ead10dda1737863cf47757a406a11a7fa099b81e1f9b99e017202b380238ab23",
+      "bytes": 2972,
+      "sha256": "1bcd0a4d6167498bf224c0ca5b7cad0600d4668efdb71ab888ff31c49194ff39",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4172,17 +4902,17 @@
       "sha256": "d2e7d54bae3240e9728f7a56129f3a8785d568df13f551bf905117807a865e2e",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "scripts/validate_project.py",
-      "bytes": 38736,
-      "sha256": "1db8b1c5d0bab2b9caf7aea53ea3a942c04bf610c475858e04578d2060f42593",
+      "bytes": 38738,
+      "sha256": "c431a800a89c6b4f45022ea0b15c357cdac81690922d0fa23da6d92c019fdf14",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4192,7 +4922,7 @@
       "sha256": "0b2bf5dc40a44f7f770e27dc9a6e40109843a41c62845a71c70f7a3898c79144",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4202,7 +4932,7 @@
       "sha256": "186973f2eccc4b738edcbf373260d2af039d670e674ed5dbec6430d20f718a11",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4212,7 +4942,7 @@
       "sha256": "0815925e1e5f51268a1641853304cdfc94c7039d2478d200db8f287537ab7218",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4222,7 +4952,7 @@
       "sha256": "d53ddc367e5e9347dedbf7289f406d74968fc0ec013edb7e4bc04fdae7978c3c",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4232,17 +4962,27 @@
       "sha256": "77620be123aba6d497feb3b3372654d3709e02d989f61597cbecb23cf42560f0",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
     {
       "path": "scripts/verify_revision_f.py",
-      "bytes": 15344,
-      "sha256": "83f759ddc55a17d6782f6d89e806d4ebead9ad2097900931b1aae57a68cb8d95",
+      "bytes": 15438,
+      "sha256": "7bb7ccd146d88fb2fc79386859bca0c084d2640b9b5d1893b15ae70c463bcd80",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
+      "gate_status": "PASS",
+      "blocker": ""
+    },
+    {
+      "path": "scripts/verify_revision_g.py",
+      "bytes": 13118,
+      "sha256": "2547f8d16e7438c643a590b09ca73115e69684a1d0f52e24a643f7078e08d4b0",
+      "category": "Reproduction",
+      "role": "Controlled artifact",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
     },
@@ -4252,9 +4992,59 @@
       "sha256": "f78d009011770ee805403e35a0c8c753aaae7dbd830887d3da496090d5b0652b",
       "category": "Reproduction",
       "role": "Controlled artifact",
-      "revision": "F",
+      "revision": "G",
       "gate_status": "PASS",
       "blocker": ""
+    },
+    {
+      "path": "siemens_native/environment_inventory/inventory.json",
+      "bytes": 1301,
+      "sha256": "22ca7a26b6bafba044cee45c40ecbb8fba35e335c60131644536c7f50a188b11",
+      "category": "Siemens native execution",
+      "role": "Native access inventory and exact handoff",
+      "revision": "G",
+      "gate_status": "BLOCKED",
+      "blocker": "TIA/WinCC licence and Openness authorization are unproven; Startdrive and PLCSIM are absent"
+    },
+    {
+      "path": "siemens_native/licence_status.md",
+      "bytes": 732,
+      "sha256": "126f9d6198b39d019ab920de75fd6d80449cb7a57c52121c71cb44c311898e9d",
+      "category": "Siemens native execution",
+      "role": "Native access inventory and exact handoff",
+      "revision": "G",
+      "gate_status": "BLOCKED",
+      "blocker": "TIA/WinCC licence and Openness authorization are unproven; Startdrive and PLCSIM are absent"
+    },
+    {
+      "path": "siemens_native/native_execution_report.md",
+      "bytes": 965,
+      "sha256": "5417305d060fe346874af3ca36bb93cc55afbb561b54610b12897f87a50dc17a",
+      "category": "Siemens native execution",
+      "role": "Native access inventory and exact handoff",
+      "revision": "G",
+      "gate_status": "BLOCKED",
+      "blocker": "TIA/WinCC licence and Openness authorization are unproven; Startdrive and PLCSIM are absent"
+    },
+    {
+      "path": "siemens_native/openness_execution_runbook.md",
+      "bytes": 976,
+      "sha256": "5901e61f5ee9679877dfca1828ead6633b3f5f1c0051599309400e38cdf88c35",
+      "category": "Siemens native execution",
+      "role": "Native access inventory and exact handoff",
+      "revision": "G",
+      "gate_status": "BLOCKED",
+      "blocker": "TIA/WinCC licence and Openness authorization are unproven; Startdrive and PLCSIM are absent"
+    },
+    {
+      "path": "siemens_native/preflight.ps1",
+      "bytes": 1522,
+      "sha256": "6798f9cff34d05b4fb0b5e029427481ca6b8dca4709547842c3ebd0d5c628f0c",
+      "category": "Siemens native execution",
+      "role": "Native access inventory and exact handoff",
+      "revision": "G",
+      "gate_status": "BLOCKED",
+      "blocker": "TIA/WinCC licence and Openness authorization are unproven; Startdrive and PLCSIM are absent"
     }
   ]
 }

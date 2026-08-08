@@ -6,3 +6,4 @@ D,2026-08-02,Controlled engineering-development release,"Fail-closed vision reco
 D.1,2026-08-03,Release candidate,"Git-object release integrity, retained PLC transaction identity, post-fault disposition, immutable edge publication and clean-clone reproduction"
 E,2026-08-03,Native-engineering release candidate,"Genuine FreeCAD/QElectroTech execution where verified, poll-safe PLC request handshake, encrypted asyncua integration and refreshed release evidence"
 F,2026-08-03,NVIDIA implementation-readiness release candidate,"Expanded 47-node PLC-AI contract, production-structured acquisition/configuration/dataset tooling, 28-case behavioral fault-injection model, electrical delta and refreshed evidence"
+G,2026-08-08,Cloud/native-execution-ready release candidate,"Disabled-by-default secure cloud foundation, exact Siemens/NVIDIA inventories, data-gated native pipeline, commissioning records and requalified release evidence"

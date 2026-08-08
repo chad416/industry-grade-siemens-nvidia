@@ -153,9 +153,9 @@ try {
     $PdfHash2 = (Get-FileHash -Algorithm SHA256 'release\FC01_release_evidence.pdf').Hash
     if ($PdfHash1 -ne $PdfHash2) { throw "Release PDF is not binary deterministic: $PdfHash1 != $PdfHash2" }
 
-    Reset-GeneratedDirectory '14_qa\pdf_renders\release_f'
-    Invoke-Native $Pdftoppm '-png' '-r' '140' 'release\FC01_release_evidence.pdf' '14_qa\pdf_renders\release_f\page'
-    $ReleasePages = @(Get-ChildItem '14_qa\pdf_renders\release_f' -File | Sort-Object Name | ForEach-Object Name)
+    Reset-GeneratedDirectory '14_qa\pdf_renders\release_g'
+    Invoke-Native $Pdftoppm '-png' '-r' '140' 'release\FC01_release_evidence.pdf' '14_qa\pdf_renders\release_g\page'
+    $ReleasePages = @(Get-ChildItem '14_qa\pdf_renders\release_g' -File | Sort-Object Name | ForEach-Object Name)
     $ExpectedReleasePages = @(1..6 | ForEach-Object { "page-$_.png" })
     if (Compare-Object $ExpectedReleasePages $ReleasePages) { throw 'Release PDF render set is not exactly pages 1 through 6' }
 
@@ -187,6 +187,7 @@ try {
 
     Invoke-Native $Python 'scripts\validate_project.py'
     Invoke-Native $Python 'scripts\verify_revision_f.py'
+    Invoke-Native $Python 'scripts\verify_revision_g.py'
     Assert-CleanGitState
     Invoke-Native $Python 'scripts\verify_manifest.py' '--source' 'head' '--require-clean'
     Write-Output "reproduction_result=PASS source=HEAD workbook_sha256=$WorkbookHash2 pdf_sha256=$PdfHash2"

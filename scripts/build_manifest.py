@@ -48,7 +48,7 @@ payload = {
     "project": "FC01",
     "revision": REVISION,
     "status": "PROFESSIONAL CONTROLLED ENGINEERING-DEVELOPMENT PACKAGE",
-    "generated": "2026-08-03",
+    "generated": "2026-08-08",
     "byte_source": "Git index (staged authoritative bytes)",
     "file_count": len(rows),
     "files": rows,

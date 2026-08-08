@@ -1,4 +1,4 @@
-# Revision F controlled byte policy.
+# Revision G controlled byte policy.
 #
 # Source and document text is canonical LF in both the Git object database and
 # every checkout. Native engineering, exchange, Office, PDF, image and archive
@@ -19,8 +19,10 @@
 *.mjs      text eol=lf
 *.yml      text eol=lf
 *.yaml     text eol=lf
+*.tf       text eol=lf
 *.service  text eol=lf
 *.example  text eol=lf
+*.dockerignore text eol=lf
 *.log      text eol=lf
 .gitignore text eol=lf
 .gitattributes text eol=lf

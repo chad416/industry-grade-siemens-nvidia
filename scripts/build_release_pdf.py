@@ -16,7 +16,7 @@ OUT = ROOT / "release/FC01_release_evidence.pdf"
 NOTICE = "FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION"
 SAFETY = ("CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, "
           "VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, "
-          "SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.")
+          "SIL, CATEGORY, CE/UKCA CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED.")
 
 
 def load_json(relative: str) -> dict:
@@ -57,7 +57,7 @@ def footer(canvas, doc):
     canvas.saveState()
     canvas.setFont("ProjectSans", 7)
     canvas.setFillColor(colors.HexColor("#526875"))
-    canvas.drawString(18 * mm, 10 * mm, "FC01 | Revision F | 2026-08-03 | Evidence summary - not a native acceptance certificate")
+    canvas.drawString(18 * mm, 10 * mm, "FC01 | Revision G | 2026-08-08 | Evidence summary - not a native acceptance certificate")
     canvas.drawRightString(279 * mm, 10 * mm, f"Page {doc.page}")
     canvas.restoreState()
 
@@ -79,19 +79,19 @@ def table(data, widths):
     return t
 
 
-doc = SimpleDocTemplate(str(OUT), pagesize=landscape(A4), leftMargin=18*mm, rightMargin=18*mm, topMargin=15*mm, bottomMargin=16*mm, title="FC01 Revision F release evidence", invariant=1, pageCompression=1)
+doc = SimpleDocTemplate(str(OUT), pagesize=landscape(A4), leftMargin=18*mm, rightMargin=18*mm, topMargin=15*mm, bottomMargin=16*mm, title="FC01 Revision G release evidence", invariant=1, pageCompression=1)
 story = [
     Paragraph("FC01 compact two-nozzle filling cell", styles["PTitle"]),
     Paragraph("Siemens-authoritative controls and bounded NVIDIA quality architecture", styles["PHead"]),
     Spacer(1, 5*mm),
     Paragraph(NOTICE, styles["PWarn"]), Spacer(1, 3*mm), Paragraph(SAFETY, styles["PWarn"]), Spacer(1, 7*mm),
     table([["Release status", "What is implemented", "What remains blocked"],
-           ["NVIDIA IMPLEMENTATION-READINESS RELEASE CANDIDATE", "Revision-F canonical model; Git-object byte authority; 47-node immutable PLC/AI contract; production-shaped edge and dataset tools; 32 process scenarios plus 28 structured behavioral vision fault injections; inherited native CAD/QET evidence.", "TIA/WinCC compile/archive; Startdrive; PLCSIM; final site electrical inputs; real dataset/model/target runtime; physical FAT/SAT and qualified safety work."]], [45*mm, 105*mm, 105*mm]),
+           ["CLOUD-READY / NATIVE-EXECUTION-READY CANDIDATE", "Revision-G Git-object authority; disabled-by-default secure cloud IaC; exact native-tool inventories; 47-node immutable PLC/AI contract; production-shaped edge/data pipeline; commissioning blank records; re-executed native FreeCAD evidence.", "Terraform provider plan/apply; TIA/WinCC compile/archive; Startdrive; PLCSIM; site electrical inputs; real dataset/model/target runtime; physical FAT/SAT and qualified review."]], [45*mm, 105*mm, 105*mm]),
     Spacer(1, 8*mm),
     Paragraph("This report is an evidence index. It is not proof of construction readiness, functional safety, native compile, FAT, SAT, electrical test, physical commissioning or AI performance.", styles["PBody"]),
     PageBreak(),
     Paragraph("Integrated architecture and deterministic ownership", styles["PTitle"]),
-    Paragraph("The PLC owns all machine sequence, interlocks, timeouts, product disposition and transfer permission. THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL.", styles["PBody"]),
+    Paragraph("The PLC owns all machine sequence, interlocks, timeouts, product disposition and transfer permission. THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT COMMAND HAZARDOUS MOTION, BYPASS PLC INTERLOCKS OR BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION.", styles["PBody"]),
     table([["Layer", "Owner", "Deterministic responsibility", "Failure behavior"],
            ["Field / power", "Electrical", "Identified device, cable/core, terminal and I/O channel", "Fail-closed valves; external safety removes hazardous energy"],
            ["Equipment control", "S7-1500 FB instances", "Gate, clamp, two fill channels, conveyor/pump VFD, capper", "Module timeout/contradiction fault; outputs safe"],
@@ -121,26 +121,28 @@ story = [
     Spacer(1, 7*mm),
     Paragraph("The adapter requires Basic256Sha256 SignAndEncrypt, X.509 application/user identity, controlled trust/CRL stores and an exact 47-node typed map. Local certificate-backed asyncua tests use a synthetic endpoint. No model is delivered. No training, ONNX export, TensorRT engine, DeepStream execution, accuracy, confusion matrix, false-accept/reject analysis or production latency is claimed. The RTX 5060 Laptop GPU does not substitute for the absent CUDA/TAO/DeepStream target stack or representative dataset.", styles["PBody"]),
     PageBreak(),
-    Paragraph("NVIDIA implementation-readiness engineering", styles["PTitle"]),
-    table([["Work package", "Revision-F controlled result", "Open acceptance boundary"],
+    Paragraph("Revision-G cloud and NVIDIA execution readiness", styles["PTitle"]),
+    table([["Work package", "Revision-G controlled result", "Open acceptance boundary"],
+           ["Secure cloud foundation", "Separate private Windows and Linux GPU environments, IAP-only administration, separate keyless service accounts, budget/schedule/storage controls and disabled VM creation flags", "Terraform/OpenTofu native validate/plan, project IAM/cost approval and any provisioning"],
            ["Acquisition/runtime", "Exactly-once recorded-image source, bounded preprocessing, production-prohibited mock backend and hash-gated ONNX adapter boundary", "Physical camera/lens/light, actual tensor contract and target runtime"],
            ["Dataset/evaluation", "Versioned annotation/manifest schemas, file hashes, lot/session split controls, duplicate/leakage checks and FAR/FRR evaluation math", "Representative independently labeled multi-lot data, approved thresholds and model-change approval"],
            ["Platform policy", "DeepStream 9.1 and TAO 7.0.1 tracked; generic TensorRT 11.1 is not treated as a Jetson compatibility lock", "Selected JetPack/carrier image, CUDA/TensorRT/DeepStream/TAO execution and deployment validation"],
            ["Electrical delta", "Separate provisional 24 V branches: 60 W edge, 12 W camera, 20 W lighting and 8 W service/network; X200 and switch-port reservations", "Selected devices, inrush, protection, cable, voltage-drop, thermal, EMC and native schematic/CAD incorporation"],
-           ["Service lifecycle", "Schema-controlled configuration, structured diagnostics, durable event-store boundary, health/metrics, rollback and troubleshooting procedures", "Site PKI/time/retention/privacy policy, production endpoint and operational acceptance"]], [52*mm, 122*mm, 81*mm]),
+           ["Service lifecycle", "Schema-controlled configuration, structured diagnostics, durable event-store boundary, health/metrics, rollback and troubleshooting procedures", "Site PKI/time/retention/privacy policy, production endpoint and operational acceptance"],
+           ["Qualified-review preparation", "Conceptual hazard/input, safety-function, standards-applicability and open-decision registers plus blank signature block", "Named qualified electrical and machinery-safety reviewers, project inputs, validated design and signed evidence"]], [52*mm, 122*mm, 81*mm]),
     Spacer(1, 6*mm),
     Paragraph("Synthetic fixtures and local timing harnesses prove software plumbing only. They cannot authorize production READY, establish optical feasibility, or support any accuracy, false-accept, false-reject, throughput or latency claim.", styles["PWarn"]),
     PageBreak(),
     Paragraph("Validation evidence and release blockers", styles["PTitle"]),
     table([["Gate", "Evidence", "Status"],
-           ["Canonical consistency", f"{validation_passes} engineering-validator checks plus 96 dedicated Revision-F checks cover generator parity, schedules, ownership, edge behavioral fault injection, safety boundaries and prohibited artifacts. The standalone electrical delta is not incorporated into every authority.", "PARTIAL"],
+           ["Canonical consistency", f"{validation_passes} inherited engineering-validator checks plus the dedicated Revision-G verifier cover generator parity, cloud security, evidence boundaries, commissioning blanks and prohibited artifacts. The standalone electrical delta is not incorporated into every authority.", "PARTIAL"],
            ["Deterministic regression", "99 Siemens/simulator/source/native-contract + 86 edge-service + 17 interface-harness tests; 32 process and 28 structured behavioral fault-injection cases", "SOURCE/LOCAL PASS - not PLCSIM/HIL"],
-           ["Workbook", "26 summary/schedule sheets; deterministic normalized build, formula-error scan and all-sheet rendered review", "PASS after final freeze"],
+           ["Workbook", "27 summary/schedule sheets; deterministic normalized build, formula-error scan and all-sheet rendered review", "PASS after final freeze"],
            ["QElectroTech", f"Corrected 26-folio QET {qet_sha[:12]}... reopened at the exact hash and exported natively to 26 pages. All pages reviewed; folio 25 has one clipped in-body safety sentence and automatic cross-reference resolution is unsupported", "NATIVE REOPEN/EXPORT PASS; OVERALL PARTIAL"],
            ["Panel CAD", f"FreeCADCmd reopened {cad_evidence['fcstd']['document_objects']} objects / {cad_evidence['fcstd']['controlled_physical_solids']} controlled solids; STEP solid, IGES bounded-face and DXF/hole reimports verified", cad_evidence['result']],
            ["TIA / WinCC / drives", "V20 installed; no native project, compile, cross-reference, archive restore or Startdrive evidence", "BLOCKED"],
            ["PLCSIM", "Not installed", "BLOCKED"],
-           ["NVIDIA software", "86/86 edge tests including 10 certificate-backed local asyncua cases; 47-node map, terminal-before-valid ordering, durable-audit failure interlock and 28-case behavioral injection pass", "PARTIAL - production endpoint/native binding open"],
+           ["NVIDIA software", "86/86 edge tests including certificate-backed local asyncua cases; 47-node map, synthetic-backend READY refusal, durable-audit interlock and 28-case behavioral injection pass", "PARTIAL - production endpoint/native binding open"],
            ["NVIDIA model/runtime", "Production PLC/PKI, representative dataset, trained model and CUDA/TensorRT/DeepStream target stack absent", "MODEL/RUNTIME BLOCKED"]], [56*mm, 142*mm, 57*mm]),
     Spacer(1, 7*mm),
     Paragraph(f"Gate totals: {gate_counts['PASS']} PASS, {gate_counts['PARTIAL']} PARTIAL, {gate_counts['BLOCKED']} BLOCKED, {gate_counts['OPEN']} OPEN. Release use: controlled design review and continuation in qualified native tools only. Read the manifest, acceptance-gate report and open-input register before work.", styles["PBody"]),

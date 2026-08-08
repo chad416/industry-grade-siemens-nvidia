@@ -18,7 +18,7 @@ BINARY_SUFFIXES = {
     ".pdf", ".png", ".jpg", ".jpeg", ".gif", ".zip", ".7z", ".ap20", ".zap20",
     ".onnx", ".engine", ".plan", ".usd", ".usda", ".usdc",
 }
-TEXT_SUFFIXES = {".md", ".csv", ".json", ".scl", ".txt", ".mmd", ".py", ".ps1", ".mjs", ".yml", ".yaml", ".service", ".example", ".log"}
+TEXT_SUFFIXES = {".md", ".csv", ".json", ".scl", ".txt", ".mmd", ".py", ".ps1", ".mjs", ".yml", ".yaml", ".tf", ".dockerignore", ".service", ".example", ".log"}
 EXPECTED_NATIVE = {
     "03_electrical/native_baseline/filling_cell.qet": (875734, "d817036497afbf0f48379da4dbce81cd1d7b7cca28bfc8341d5b437d2421660b"),
     "09_panel_cad/native_baseline/mounting_plate.dxf": (15277, "9ddd38069e43c74c92393bf7f2d3dda729dfce041cedcd16fcdfca0dd433828d"),

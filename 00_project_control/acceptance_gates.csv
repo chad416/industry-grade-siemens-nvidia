@@ -1,23 +1,23 @@
 gate,acceptance_gate,status,evidence_or_blocker
-1,Requirements/interfaces traceable,PARTIAL,Revision-F requirements and evidence are traceable; identified owner approval remains absent
-2,Canonical model reconciles schedules,PARTIAL,Core canonical/interface schedules reconcile; the standalone Revision-F NVIDIA electrical delta is internally consistent but is not yet incorporated into canonical BOM/terminal/cable/P2P/QET/CAD authorities
-3,Siemens hardware baseline confirmed,PARTIAL,V20/FW4.0 source baseline and selected envelopes documented; authorized native catalog confirmation and delivered-state evidence remain open
-4,Native TIA project opens,BLOCKED,No genuine AP20 project; active identity is not TIA Engineer/Openness-authorized and V20 entitlement is unproven
-5,Native TIA archive restores,BLOCKED,No genuine ZAP20 archive exists; native authorized project creation/restoration was not available
-6,PLC compiles zero errors,BLOCKED,Expanded import-ready SCL/source contracts pass locally; native TIA V20 compile was not run
-7,HMI compiles zero errors,BLOCKED,Expanded HMI definitions are source-controlled; native WinCC Unified compile/usability review was not run
-8,Startdrive configured/reviewed,BLOCKED,"Startdrive is not installed; motor, pump and site inputs are also missing"
-9,PLCSIM traces pass,BLOCKED,PLCSIM/PLCSIM Advanced are not installed; deterministic Python evidence is explicitly independent
-10,Revision-E QET reopens and reconciles,PARTIAL,Exact controlled Revision-E QET hash reopened natively with 26/26 folios; automatic cross-reference resolution remains unsupported
-11,Schematics export and all-page visual review,PARTIAL,"Native 26-page PDF export completed; all pages were reviewed, with one clipped in-body statement on folio 25 and dense text noted"
-12,Revision-E FCStd reopens,PASS,FreeCADCmd independently reopened 165 objects / 148 controlled solids; STEP retained 148 solids; IGES retained bounded face geometry; DXF entities and 30 scheduled holes reconciled
-13,STEP/IGES/DXF reimport,PASS,FreeCADCmd independently reopened 165 objects / 148 controlled solids; STEP retained 148 solids; IGES retained bounded face geometry; DXF entities and 30 scheduled holes reconciled
-14,Full BOM/panel layout reconcile,PARTIAL,Revision-E panel CAD remains natively verified; Revision-F electrical delta uses provisional carrier/camera/light envelopes and is not incorporated into QET/CAD
-15,Electrical calculations confirmed,BLOCKED,"Supply, earthing, fault current, motors/pump, cable routes, installation method, ambient and enclosure/site requirements remain unconfirmed"
-16,Real NVIDIA dataset controlled,BLOCKED,"Dataset tooling, schema, collection matrix and leakage-safe split checks are ready; no representative labeled dataset exists"
-17,Genuine model training/evaluation,BLOCKED,"Training/evaluation tooling is ready; no approved dataset, training run, model or defensible production metrics exist"
-18,TensorRT/DeepStream target runtime,BLOCKED,DeepStream 9.1/TAO 7.0.1 policy is documented; CUDA/TAO/TensorRT/DeepStream/Docker and target hardware are absent
-19,PLC-NVIDIA failure tests,PARTIAL,"Source, edge, durable-audit, encrypted OPC UA and interface tests pass locally; native SCL enum binding, production S7/Jetson endpoint and physical timing remain unverified"
-20,FAT/SAT/commissioning,OPEN,"Controlled procedures issued; no FAT, SAT or commissioning was executed"
-21,Qualified safety activities,BLOCKED,"Project-specific qualified machinery-safety engineering, verification and validation are external and not performed"
-22,Manifest independently verifies,PASS,"Published candidate f6e9f3b1e928a2e04d21913caac2547469b0f647 reproduced from GitHub with 425/425 manifest entries, zero discrepancies and final Git-clean assertion"
+1,Requirements/interfaces traceable,PARTIAL,"Revision-G requirements, execution gates and evidence are traceable; owner and qualified-human approvals remain absent"
+2,Canonical model reconciles schedules,PARTIAL,Core authorities reconcile; the Revision-F NVIDIA electrical delta remains provisional and outside final QET/CAD/construction authorities
+3,Siemens hardware baseline confirmed,PARTIAL,TIA V20/Openness installation is inventoried exactly; authorized native catalog confirmation and delivered hardware remain open
+4,Native TIA project opens,BLOCKED,TIA V20 exists but no licensed/Openness-authorized session or genuine AP20 project was available
+5,Native TIA archive restores,BLOCKED,No genuine ZAP20 archive exists; no native archive was fabricated
+6,PLC compiles zero errors,BLOCKED,99 Siemens/source/simulator contract tests pass; native TIA compile was not run
+7,HMI compiles zero errors,BLOCKED,HMI definitions are controlled; native WinCC Unified compile/usability review was not run
+8,Startdrive configured/reviewed,BLOCKED,Startdrive is absent and motor/pump/site data remain unconfirmed
+9,PLCSIM traces pass,BLOCKED,PLCSIM/PLCSIM Advanced are absent; Python evidence is independent and explicitly non-native
+10,Revision-E QET reopens and reconciles,PARTIAL,Inherited exact-hash 26-folio QET reopen remains valid; executable was not found for a new Revision-G execution and automatic cross-references remain unsupported
+11,Schematics export and all-page visual review,PARTIAL,Inherited 26-page native export was reviewed; folio 25 clipping/density limitation remains open
+12,Revision-E FCStd reopens,PASS,"FreeCADCmd 1.1.3 re-executed in Revision G: 165 objects, 148 solids, zero invalid shapes"
+13,STEP/IGES/DXF reimport,PASS,Revision-G FreeCAD execution reimported STEP/IGES/DXF and reconciled 30 mounting holes
+14,Full BOM/panel layout reconcile,PARTIAL,Revision-E CAD remains natively verified; final selected vision envelopes and electrical delta incorporation remain open
+15,Electrical calculations confirmed,BLOCKED,"Supply, earthing, fault current, motor/pump, routes, installation, ambient and enclosure inputs remain absent"
+16,Real NVIDIA dataset controlled,BLOCKED,Dataset acquisition/labeling/schema tooling is controlled; representative real data is absent
+17,Genuine model training/evaluation,BLOCKED,"Training/evaluation configuration is ready; no approved dataset, training run, model or metric exists"
+18,TensorRT/DeepStream target runtime,BLOCKED,"RTX 5060 driver query passed; CUDA, Docker, TAO, TensorRT, DeepStream and target Jetson/cloud runtime are absent"
+19,PLC-NVIDIA failure tests,PARTIAL,Fail-closed edge/OPC UA/harness/synthetic-authorization tests pass; production S7/Jetson endpoint and physical timing remain unverified
+20,FAT/SAT/commissioning,OPEN,"G3A procedures and blank records are issued; no FAT, SAT or commissioning measurement was executed"
+21,Qualified safety activities,BLOCKED,Conceptual boundary and handoff exist; qualified machinery-safety/electrical verification and validation were not performed
+22,Manifest independently verifies,PARTIAL,"Revision-G candidate manifest, final commit and post-push fresh-clone reproduction are pending release freeze"

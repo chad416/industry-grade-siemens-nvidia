@@ -1,0 +1,5 @@
+function_id,conceptual_function,required_behavior,implementation_owner,standard_plc_role,status
+SF-001,Emergency stop,Stop hazardous motion/energy according to qualified risk assessment; prevent automatic restart,Qualified machinery-safety engineer,Monitor status only; no safety claim,UNSPECIFIED / EXTERNAL
+SF-002,Guard/access interlocking,Prevent or stop hazardous operation when protected access is open,Qualified machinery-safety engineer,Monitor validated aggregate status only,UNSPECIFIED / EXTERNAL
+SF-003,Drive hazardous-torque removal,Use an approved architecture and validated stop behavior where risk assessment requires it,Qualified machinery-safety and drive engineers,No direct safety authority,STO INTERFACE CONCEPT ONLY
+SF-004,Prevention of unexpected restart,Restoration/reset returns to STOPPED; separate deliberate start and valid permissives required,Controls plus qualified machinery-safety engineer,Deterministic non-safety restart inhibition implemented in source model,SOURCE TESTED / NATIVE AND PHYSICAL VALIDATION OPEN

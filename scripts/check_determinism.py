@@ -46,6 +46,7 @@ def run_clean(destination: Path) -> dict[str, str]:
         [sys.executable, "11_simulation/run_vision_fault_scenarios.py"],
         [sys.executable, "scripts/validate_project.py", "--check"],
         [sys.executable, "scripts/verify_revision_f.py", "--check"],
+        [sys.executable, "scripts/verify_revision_g.py"],
     ]
     for command in commands:
         subprocess.run(command, cwd=destination, check=True, stdout=subprocess.PIPE, stderr=subprocess.STDOUT, text=True)
@@ -75,7 +76,7 @@ extra = sorted(set(second) - set(first))
 mismatched = sorted(path for path in set(first) & set(second) if first[path] != second[path])
 passed = not (missing or extra or mismatched)
 report = [
-    "# Determinism report - Revision F",
+    "# Determinism report - Revision G",
     "",
     "Result: **PASS**" if passed else "Result: **FAIL**",
     "",

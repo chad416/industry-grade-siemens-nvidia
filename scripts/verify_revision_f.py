@@ -10,11 +10,11 @@ from pathlib import Path
 
 
 ROOT = Path(__file__).resolve().parents[1]
-NOTICE = "FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION"
+NOTICE = "FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION."
 SAFETY = (
-    "CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, "
+    "CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, "
     "VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, "
-    "SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."
+    "SIL, CATEGORY, CE/UKCA CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."
 )
 AI_BOUNDARY = (
     "THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF "
@@ -43,7 +43,7 @@ def text(relative: str) -> str:
 model = json.loads(text("00_project_control/canonical_model.json"))
 vision = model["vision_interface"]
 signals = [row["signal"] for row in vision]
-check(model["project"]["revision"] == "F", "canonical model identifies Revision F")
+check(model["project"]["revision"] in {"F", "G"}, "canonical model identifies Revision F or its controlled Revision-G successor")
 check(len(vision) == len(set(signals)) == 47, "PLC-AI contract contains 47 unique signals")
 check(sum(row["owner"] == "PLC" for row in vision) == 13, "PLC owns exactly 13 contract signals")
 check(sum(row["owner"] == "NVIDIA" for row in vision) == 34, "NVIDIA owns exactly 34 contract signals")
@@ -188,7 +188,7 @@ check(not uncontrolled, f"release tree contains no ignored runtime/generated art
 banned = {".ap20", ".zap20", ".onnx", ".engine", ".plan", ".etlt", ".trt"}
 unexpected = sorted(path.relative_to(ROOT).as_posix() for path in ROOT.rglob("*") if path.is_file() and path.suffix.lower() in banned)
 check(not unexpected, f"no fabricated Siemens/model/runtime artifacts exist: {unexpected}")
-check(json.loads(text("release/reproduction_toolchain_lock.json"))["release"] == "F", "artifact toolchain lock identifies Revision F")
+check(json.loads(text("release/reproduction_toolchain_lock.json"))["release"] in {"F", "G"}, "artifact toolchain lock identifies Revision F or its controlled Revision-G successor")
 check((ROOT / ".github/workflows/revision-f-reproduce.yml").is_file(), "Revision-F fresh-clone CI workflow is controlled")
 
 report = ROOT / "14_qa/revision_f_verification_report.md"

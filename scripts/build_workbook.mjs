@@ -25,6 +25,7 @@ const sheets = [
   ["nvidia_electrical_delta.csv", "NVIDIA Electrical"],
   ["nvidia_version_baseline.csv", "NVIDIA Versions"],
   ["revision_f_gap_matrix.csv", "Revision-F Gaps"],
+  ["revision_g_gap_matrix.csv", "Revision-G Gates"],
   ["network_nodes.csv", "Network Nodes"],
   ["terminal_plan.csv", "Terminal Plan"],
   ["point_to_point_connections.csv", "Point-to-Point"],
@@ -105,6 +106,7 @@ const proseSheets = new Set([
   "NVIDIA Electrical",
   "NVIDIA Versions",
   "Revision-F Gaps",
+  "Revision-G Gates",
   "BOM",
   "Load Budget",
   "Panel Placement",
@@ -162,10 +164,10 @@ summary.getRange("A1:H2").merge();
 summary.getRange("A1").values = [["FC01 - SIEMENS / NVIDIA ENGINEERING SCHEDULES"]];
 summary.getRange("A1:H2").format = { fill: "#12304A", font: { bold: true, color: "#FFFFFF", size: 18 }, verticalAlignment: "center" };
 summary.getRange("A3:H3").merge();
-summary.getRange("A3").values = [["FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION | Revision F | NVIDIA implementation-readiness release candidate"]];
+summary.getRange("A3").values = [["FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION | Revision G | cloud-ready and native-execution-ready release candidate"]];
 summary.getRange("A3:H3").format = { fill: "#EAF1F5", font: { bold: true, color: "#324B5C", size: 10 }, wrapText: true };
 summary.getRange("A4:H4").merge();
-summary.getRange("A4").values = [["CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."]];
+summary.getRange("A4").values = [["CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE/UKCA CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."]];
 summary.getRange("A4:H4").format = { fill: "#FFF1F1", font: { bold: true, color: "#8B1E2D", size: 8 }, wrapText: true };
 summary.getRange("A5:B17").values = [
   ["Controlled metric", "Value"],
@@ -204,7 +206,7 @@ summary.getRange("B15").formulas = [["=COUNTIF('Acceptance Gates'!C2:C100,\"BLOC
 // release-summary values without depending on cross-sheet recalculation support.
 summary.getRange("B16").formulas = [["=55+24+120+100"]];
 summary.getRange("B17").formulas = [["=(55+24+120+100)/24*1.25"]];
-summary.getRange("D6").values = [["Revision F includes a source-tested 47-node fail-closed PLC/AI contract, production-structured edge and dataset tooling, 28 structured behavioral vision fault injections, a controlled electrical delta, secure local asyncua integration and inherited native CAD/QET evidence. The behavioral model is software-only evidence, not PLCSIM, HIL or physical testing. THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT BE USED AS THE SOLE MEANS OF PERSONNEL PROTECTION, SAFE STOP, GUARD MONITORING OR HAZARDOUS-MOTION CONTROL. Native Siemens, real dataset/model, target runtime, site electrical, FAT/SAT, qualified safety and physical commissioning remain blocked or open exactly as listed."]];
+summary.getRange("D6").values = [["Revision G preserves the source-tested 47-node fail-closed PLC/AI contract, secure local asyncua integration, 28 structured behavioral fault injections and inherited native CAD/QET evidence. It adds disabled-by-default cloud infrastructure, actual Siemens/NVIDIA inventory, exact external handoffs, data/model execution scaffolding and blank commissioning records. The evidence is software/laboratory only: no cloud apply, TIA/WinCC/Startdrive/PLCSIM compile, representative dataset, trained model, target runtime, physical test or qualified approval exists. THE NVIDIA VISION SUBSYSTEM IS NON-SAFETY-RELATED AND MUST NOT COMMAND HAZARDOUS MOTION OR BYPASS PLC INTERLOCKS."]];
 summary.getRange("D6:H15").format = { fill: "#FFF1F1", font: { color: "#642F36", size: 10 }, wrapText: true, verticalAlignment: "center" };
 for (const col of ["D", "E", "F", "G", "H"]) summary.getRange(`${col}5:${col}17`).format.columnWidthPx = 110;
 

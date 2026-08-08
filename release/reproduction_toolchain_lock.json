@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "release": "F",
+  "release": "G",
   "python": {
     "version": "3.12.13",
     "executable_sha256": "3c6a206b7d93cca823934a83732220dcffd413fd1036d9fb82eebb64599cf7f3",
@@ -14,7 +14,7 @@
     "version": "v24.14.0",
     "executable_sha256": "63c259c81e5d472b5f11c8d506070130cb04a1ecf84b80377a34ed6ec9048088",
     "packages": {
-      "@oai/artifact-tool": "2.8.31"
+      "@oai/artifact-tool": "2.8.39"
     }
   },
   "pdftoppm": {
@@ -39,5 +39,5 @@
       "pyopenssl_version": "26.4.0"
     }
   },
-  "policy": "Complete binary reproduction is valid only when this exact release toolchain verifies. A different toolchain requires a controlled lock update and complete two-build visual and hash requalification."
+  "policy": "Revision G requalifies the available artifact-tool 2.8.39 through complete two-build hash, formula, all-sheet render and fresh-clone verification. Any later tool change requires the same controlled requalification."
 }

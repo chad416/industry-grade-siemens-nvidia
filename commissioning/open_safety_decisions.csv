@@ -1,0 +1,6 @@
+decision_id,decision,required_input,owner,status
+SD-001,"Machine limits, intended use and foreseeable misuse",Process/equipment/use specification,Project owner plus qualified safety engineer,OPEN
+SD-002,"Guarding type, access points, reset locations and escape prevention",Mechanical layout and task-based risk assessment,Qualified machinery-safety engineer,OPEN
+SD-003,Emergency-stop coverage and stop category/behavior,"Hazard analysis, drive/mechanical stopping data",Qualified machinery-safety/drive engineers,OPEN - NO CATEGORY CLAIM
+SD-004,Required PL/SIL and architecture,Completed risk assessment and standards route,Qualified machinery-safety engineer,OPEN - NO PL/SIL CLAIM
+SD-005,Electrical conformity and inspection route,"Jurisdiction, site supply/environment and owner requirements",Qualified electrical engineer,OPEN

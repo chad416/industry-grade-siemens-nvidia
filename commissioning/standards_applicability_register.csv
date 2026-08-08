@@ -1,0 +1,7 @@
+reference_family,topic,edition,applicability,owner
+ISO 12100,Machinery risk assessment and risk reduction,TO BE CONFIRMED,REQUIRES QUALIFIED DETERMINATION,Qualified machinery-safety engineer
+IEC 60204-1,Electrical equipment of machines,TO BE CONFIRMED,REQUIRES SITE/JURISDICTION REVIEW,Qualified electrical engineer
+ISO 13849-1/-2 or IEC 62061,Safety-related control-system design and validation,TO BE CONFIRMED,ROUTE NOT SELECTED; NO PL/SIL CLAIM,Qualified machinery-safety engineer
+ISO 13850,Emergency-stop principles,TO BE CONFIRMED,REQUIRES QUALIFIED DETERMINATION,Qualified machinery-safety engineer
+IEC 61800-5-2,Functional safety of drive systems,TO BE CONFIRMED,ONLY IF SELECTED ARCHITECTURE USES DRIVE SAFETY FUNCTIONS,Qualified drive/safety engineer
+Local electrical/building/product rules,"Supply, installation, inspection and conformity route",JURISDICTION UNKNOWN,REQUIRES PROJECT LOCATION AND AHJ/OWNER INPUT,Project owner and qualified electrical engineer

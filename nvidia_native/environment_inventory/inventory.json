@@ -1,0 +1,34 @@
+{
+  "captured_utc": "2026-08-08T20:48:00Z",
+  "cloud_resources": [],
+  "cuda_nvcc": {
+    "installed": false
+  },
+  "deepstream": {
+    "installed": false
+  },
+  "docker": {
+    "installed": false
+  },
+  "gpu": {
+    "compute_capability": "12.0",
+    "driver": "595.95",
+    "evidence": "nvidia-smi query",
+    "memory_mib": 8151,
+    "name": "NVIDIA GeForce RTX 5060 Laptop GPU"
+  },
+  "nvidia_container_toolkit": {
+    "installed": false
+  },
+  "openusd_omniverse": {
+    "installed": false
+  },
+  "runtime_smoke": "DRIVER QUERY ONLY",
+  "scope": "Local inventory; no cloud or target Jetson execution",
+  "tao": {
+    "installed": false
+  },
+  "tensorrt": {
+    "installed": false
+  }
+}

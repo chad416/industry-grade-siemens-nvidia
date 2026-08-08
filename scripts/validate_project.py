@@ -28,7 +28,7 @@ def csv_rows(name: str) -> list[dict]:
 
 
 model = json.loads((ROOT / "00_project_control/canonical_model.json").read_text(encoding="utf-8"))
-ok(model["project"]["revision"] == "F", "canonical revision F")
+ok(model["project"]["revision"] == "G", "canonical revision G")
 ok(model["project"]["status"].startswith("CONTROLLED NVIDIA IMPLEMENTATION-READINESS RELEASE CANDIDATE"), "truthful NVIDIA implementation-readiness release-candidate status")
 
 required_dirs = [f"{i:02d}_{name}" for i,name in enumerate(["project_control","requirements","system_architecture","electrical","controls_siemens","hmi","drives","nvidia_vision","digital_twin","panel_cad","schedules","simulation","testing","documentation","qa"])] + ["release"]
@@ -264,9 +264,9 @@ attributes = (ROOT / ".gitattributes").read_text(encoding="utf-8")
 for token in ["* text=auto eol=lf","*.qet      -text","*.dxf      -text","*.FCStd    -text","*.step     -text","*.iges     -text","*.xlsx     -text","*.pdf      -text","*.png      -text","*.service  text eol=lf","*.example  text eol=lf","*.log      text eol=lf"]:
     ok(token in attributes, f"explicit Git byte policy includes {token}")
 toolchain_lock = json.loads((ROOT / "release/reproduction_toolchain_lock.json").read_text(encoding="utf-8"))
-ok(toolchain_lock["release"] == "F", "artifact-reproduction toolchain lock is Revision F")
+ok(toolchain_lock["release"] == "G", "artifact-reproduction toolchain lock is Revision G")
 ok(toolchain_lock["python"]["version"] == "3.12.13", "artifact-reproduction Python version is locked")
-ok(toolchain_lock["node"]["packages"]["@oai/artifact-tool"] == "2.8.31", "artifact-tool version is locked")
+ok(toolchain_lock["node"]["packages"]["@oai/artifact-tool"] == "2.8.39", "artifact-tool version is locked")
 ok(toolchain_lock["pdftoppm"]["version"] == "26.05.0", "Poppler renderer version is locked")
 ok("verify_release_toolchain.py" in reproduction, "complete reproduction verifies the locked artifact toolchain")
 manifest_builder = (ROOT / "scripts/build_manifest.py").read_text(encoding="utf-8")
@@ -278,15 +278,15 @@ ok("checkout-index" in determinism and "git\", \"archive" in determinism, "deter
 ok("authoritative Git {OPTIONS.source}" not in determinism and "selected authoritative Git snapshot" in determinism, "determinism report is byte-identical for index and HEAD sources")
 determinism_report = (ROOT / "14_qa/determinism_report.md").read_text(encoding="utf-8")
 ok("selected authoritative Git snapshot" in determinism_report and "authoritative Git index bytes" not in determinism_report and "authoritative Git head bytes" not in determinism_report.lower(), "controlled determinism report uses source-neutral authoritative-snapshot wording")
-ok((ROOT / ".github/workflows/revision-f-reproduce.yml").exists(), "fresh-clone Revision-F CI workflow is controlled")
+ok((ROOT / ".github/workflows/revision-g-reproduce.yml").exists(), "fresh-clone Revision-G CI workflow is controlled")
 ok((ROOT / "00_project_control/repository_release_workflow.md").exists() and (ROOT / "14_qa/release_integrity_reproduction.md").exists(), "release-byte and clean-clone evidence documents are controlled")
 ok(all(not (ROOT / "14_qa/pdf_renders" / stale).exists() or not any((ROOT / "14_qa/pdf_renders" / stale).iterdir()) for stale in ["release","release_c"]), "stale pre-Revision-D PDF render directories are empty")
 ok("FS03 / FW4.0" in (ROOT / "04_controls_siemens/cpu_tia_v20_compatibility.md").read_text(encoding="utf-8"), "CPU/TIA V20 firmware baseline documented")
 network_decision = (ROOT / "02_system_architecture/network_hardware_decision.md").read_text(encoding="utf-8")
 ok(all(term in network_decision for term in ["XB008","unmanaged","XC208","managed","S615"]), "switch misidentification corrected with managed/firewall design")
 
-notice = "FICTIONAL ENGINEERING PROJECT — NOT FOR CONSTRUCTION"
-safety = "CONCEPTUAL SAFETY ARCHITECTURE — REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."
+notice = "FICTIONAL ENGINEERING PROJECT - NOT FOR CONSTRUCTION."
+safety = "CONCEPTUAL SAFETY ARCHITECTURE - REQUIRES PROJECT-SPECIFIC RISK ASSESSMENT, DESIGN, VERIFICATION AND VALIDATION BY A QUALIFIED MACHINERY-SAFETY ENGINEER. NO PERFORMANCE LEVEL, SIL, CATEGORY, CE/UKCA CONFORMITY OR REGULATORY COMPLIANCE IS CLAIMED."
 for rel in ["README.md","AGENTS.md","00_project_control/design_basis.md","14_qa/acceptance_gate_status.md","release/RELEASE_NOTES.md"]:
     text = (ROOT / rel).read_text(encoding="utf-8")
     ok(notice in text, f"exact notice present: {rel}")

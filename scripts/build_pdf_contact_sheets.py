@@ -29,7 +29,7 @@ def contacts(source: Path, prefix: str, per_page: int, cols: int, rows: int) -> 
 
 contacts(ROOT / "14_qa/pdf_renders/qet_baseline", "qet-baseline", 6, 3, 2)
 contacts(ROOT / "14_qa/qet_revision_f_rendered", "qet-revision-f", 6, 3, 2)
-contacts(ROOT / "14_qa/pdf_renders/release_f", "release-evidence", 6, 3, 2)
+contacts(ROOT / "14_qa/pdf_renders/release_g", "release-evidence", 6, 3, 2)
 contacts(ROOT / "14_qa/pdf_renders/cad_general_arrangement", "cad-general-arrangement", 4, 2, 2)
 contacts(ROOT / "14_qa/pdf_renders/cad_mounting_plate", "cad-mounting-plate", 2, 2, 1)
 print("Created PDF contact sheets")
