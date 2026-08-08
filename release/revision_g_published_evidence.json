@@ -1,0 +1,77 @@
+{
+  "schema_version": "1.0",
+  "recorded_utc": "2026-08-08T21:57:30Z",
+  "result": "PASS",
+  "branch": "codex/revision-g-native-cloud-execution",
+  "candidate_commit": "38ab54deace5e6b71479bb4a347cd39c0233f37d",
+  "source": "fresh GitHub clone outside the development worktree",
+  "clone_worktree_clean_after_reproduction": true,
+  "manifest": {
+    "controlled_files": 504,
+    "discrepancies": 0
+  },
+  "release_integrity": {
+    "passed": 871,
+    "failed": 0
+  },
+  "engineering_validator": {
+    "passed": 551,
+    "failed": 0
+  },
+  "revision_f_verifier": {
+    "passed": 96,
+    "failed": 0
+  },
+  "revision_g_verifier": {
+    "passed": 113,
+    "failed": 0
+  },
+  "test_suites": {
+    "siemens_simulator_source_native_contract": {"passed": 99, "failed": 0},
+    "nvidia_edge_opcua": {"passed": 86, "failed": 0},
+    "plc_ai_interface_harness": {"passed": 17, "failed": 0}
+  },
+  "scenarios": {
+    "timed_process": {"passed": 32, "failed": 0},
+    "vision_fault": {"passed": 28, "failed": 0, "intended_releases": 1, "unsafe_outputs": 0}
+  },
+  "qelectrotech": {
+    "revision_e_static": {"passed": 24, "failed": 0},
+    "revision_f_static": {"passed": 19, "failed": 0},
+    "native_revision_g_execution": "NOT RUN; executable unavailable; inherited exact-hash native evidence retained"
+  },
+  "freecad": {
+    "passed": 80,
+    "failed": 0,
+    "objects": 165,
+    "solids": 148,
+    "invalid_shapes": 0,
+    "step_shapes": 148,
+    "dxf_shapes": 34,
+    "dxf_circles": 30,
+    "mounting_holes": 30
+  },
+  "workbook": {
+    "sheets": 27,
+    "formula_errors": 0,
+    "visual_review": "PASS",
+    "sha256": "0589860dc2e5dcad681517b596ca9c347abf044937c76209a85d3b038a21565b"
+  },
+  "pdf": {
+    "pages": 6,
+    "visual_review": "PASS",
+    "sha256": "71c6e60d6632a692250f0709e25436f18f6b7c35f203494900acc87f2d5f447d"
+  },
+  "determinism": {
+    "controlled_outputs": 350,
+    "missing": 0,
+    "extra": 0,
+    "mismatched": 0
+  },
+  "limitations": [
+    "The reproduced candidate predates this attestation record; the attestation commit must be verified separately after publication.",
+    "No qualified-human or independent-professional approval is claimed.",
+    "No native Siemens compile, HMI compile, Startdrive execution or PLCSIM execution was performed.",
+    "No production model, representative dataset, NVIDIA production runtime, physical FAT/SAT, commissioning or safety validation exists."
+  ]
+}

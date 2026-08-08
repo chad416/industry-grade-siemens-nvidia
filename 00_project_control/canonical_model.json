@@ -10237,8 +10237,8 @@
     {
       "gate": "22",
       "acceptance_gate": "Manifest independently verifies",
-      "status": "PARTIAL",
-      "evidence_or_blocker": "Revision-G candidate manifest, final commit and post-push fresh-clone reproduction are pending release freeze"
+      "status": "PASS",
+      "evidence_or_blocker": "Published candidate 38ab54deace5e6b71479bb4a347cd39c0233f37d reproduced from a fresh GitHub clone: manifest 504/504, zero discrepancies; see DOC-G-015"
     }
   ],
   "rationales": [

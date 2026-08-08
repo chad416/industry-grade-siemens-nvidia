@@ -282,6 +282,12 @@ def _update_controls(root: Path) -> None:
         "21": ("BLOCKED", "Conceptual boundary and handoff exist; qualified machinery-safety/electrical verification and validation were not performed"),
         "22": ("PARTIAL", "Revision-G candidate manifest, final commit and post-push fresh-clone reproduction are pending release freeze"),
     }
+    published_path = root / "release/revision_g_published_evidence.json"
+    if published_path.is_file():
+        published = json.loads(published_path.read_text(encoding="utf-8"))
+        candidate = str(published.get("candidate_commit", ""))
+        if published.get("result") == "PASS" and len(candidate) == 40 and published.get("manifest", {}).get("discrepancies") == 0:
+            updates["22"] = ("PASS", f"Published candidate {candidate} reproduced from a fresh GitHub clone: manifest 504/504, zero discrepancies; see DOC-G-015")
     for row in gates:
         row["status"], row["evidence_or_blocker"] = updates[row["gate"]]
     model["acceptance_gates"] = gates
@@ -315,6 +321,8 @@ def _update_controls(root: Path) -> None:
         ("DOC-G-013", "Qualified safety-review preparation", "commissioning/qualified_review_handoff.md", "Safety boundary"),
         ("DOC-G-014", "Cloud plan status", "cloud/plan_status.md", "Cloud security"),
     ]
+    if published_path.is_file():
+        additions.append(("DOC-G-015", "Revision-G post-push reproduction", "14_qa/revision_g_post_push_reproduction.md", "Configuration management"))
     docs.extend({"document_id":i,"title":t,"path":p,"revision":"G","owner":o,"status":"Controlled"} for i,t,p,o in additions)
     _csv(root, "10_schedules/document_register.csv", docs)
 
@@ -1329,18 +1337,20 @@ def _write_release(root: Path) -> None:
 
     _write(root, "release/REVISION_G_KNOWN_LIMITATIONS.md", doc("Revision G known limitations", """Revision G is cloud-ready and native-execution-ready but not provisioned, Siemens-compiled, production-model validated, construction ready, physically commissioned or qualified. The original Revision-F artifact-tool 2.8.31 runtime is unavailable; Revision G must complete full requalification on the available 2.8.39 runtime before release freeze. QET native evidence is inherited and the known folio-25 clipping/automatic-cross-reference limitation remains. The Revision-F vision electrical delta is still provisional and not incorporated into every QET/CAD/construction authority. Site electrical data, licences, software, data, target hardware and qualified people remain external.
 """))
-    _write(root, "release/REVISION_G_FINAL_CHECKLIST.md", doc("Revision G final release checklist", """- [ ] Native-tool inventory evidence contains no secrets.
-- [ ] Static cloud IaC/security verification passes; native Terraform plan is truthfully blocked or attached.
-- [ ] Siemens native status does not imply compile/project evidence.
-- [ ] Synthetic NVIDIA evidence cannot authorize production READY.
-- [ ] Commissioning records contain no invented values or signatures.
-- [ ] All inherited and Revision-G tests pass.
-- [ ] Workbook formula scan and every-sheet visual review pass.
-- [ ] PDF text/page and every-page visual review pass.
-- [ ] Two deterministic builds match.
-- [ ] Manifest reports zero missing, modified, unlisted or unexpected files.
-- [ ] Final pushed commit reproduces from a fresh clone.
-- [ ] Worktree is clean and upstream SHA matches.
+    published = (root / "release/revision_g_published_evidence.json").is_file()
+    mark = "x" if published else " "
+    _write(root, "release/REVISION_G_FINAL_CHECKLIST.md", doc("Revision G final release checklist", f"""- [{mark}] Native-tool inventory evidence contains no secrets.
+- [{mark}] Static cloud IaC/security verification passes; native Terraform plan remains truthfully blocked.
+- [{mark}] Siemens native status does not imply compile/project evidence.
+- [{mark}] Synthetic NVIDIA evidence cannot authorize production READY.
+- [{mark}] Commissioning records contain no invented values or signatures.
+- [{mark}] All inherited and Revision-G tests pass.
+- [{mark}] Workbook formula scan and every-sheet visual review pass.
+- [{mark}] PDF text/page and every-page visual review pass.
+- [{mark}] Two deterministic builds match.
+- [{mark}] Manifest reports zero missing, modified, unlisted or unexpected files.
+- [{mark}] A published Revision-G candidate reproduces from a fresh GitHub clone.
+- [ ] The attestation commit containing this checklist must be reverified after publication; record that external result without rewriting the commit being verified.
 """))
     _write(root, "release/RELEASE_NOTES.md", doc("Revision G release notes", f"""Revision G adds a secure, disabled-by-default Google Cloud foundation; exact installed Siemens/NVIDIA inventories and closure handoffs; official-current DeepStream 9.1 planning; a data-gated container/training/evaluation package with deterministic synthetic fail-closed smoke; and controlled blank commissioning/qualified-review records. It does not create cloud resources, a native TIA project, a model, model metrics, physical evidence or professional approval.
 

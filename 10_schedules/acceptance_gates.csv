@@ -20,4 +20,4 @@ gate,acceptance_gate,status,evidence_or_blocker
 19,PLC-NVIDIA failure tests,PARTIAL,Fail-closed edge/OPC UA/harness/synthetic-authorization tests pass; production S7/Jetson endpoint and physical timing remain unverified
 20,FAT/SAT/commissioning,OPEN,"G3A procedures and blank records are issued; no FAT, SAT or commissioning measurement was executed"
 21,Qualified safety activities,BLOCKED,Conceptual boundary and handoff exist; qualified machinery-safety/electrical verification and validation were not performed
-22,Manifest independently verifies,PARTIAL,"Revision-G candidate manifest, final commit and post-push fresh-clone reproduction are pending release freeze"
+22,Manifest independently verifies,PASS,"Published candidate 38ab54deace5e6b71479bb4a347cd39c0233f37d reproduced from a fresh GitHub clone: manifest 504/504, zero discrepancies; see DOC-G-015"

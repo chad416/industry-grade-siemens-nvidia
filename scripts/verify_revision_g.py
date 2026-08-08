@@ -61,6 +61,8 @@ required = [
     "commissioning/open_safety_decisions.csv", "commissioning/qualified_review_signature_block.md",
     "release/REVISION_G_KNOWN_LIMITATIONS.md",
     "release/REVISION_G_FINAL_CHECKLIST.md",
+    "release/revision_g_published_evidence.json",
+    "14_qa/revision_g_post_push_reproduction.md",
 ]
 for rel in required:
     check((ROOT / rel).is_file() and (ROOT / rel).stat().st_size > 0, f"required artifact: {rel}")
@@ -92,6 +94,18 @@ check(next(r for r in gates if r["gate"] == "4")["status"] == "BLOCKED", "TIA pr
 check(next(r for r in gates if r["gate"] == "18")["status"] == "BLOCKED", "NVIDIA runtime gate remains blocked")
 check(next(r for r in gates if r["gate"] == "20")["status"] == "OPEN", "physical commissioning remains open")
 check(next(r for r in gates if r["gate"] == "21")["status"] == "BLOCKED", "qualified safety remains blocked")
+
+published = json.loads(text("release/revision_g_published_evidence.json"))
+candidate = published.get("candidate_commit", "")
+check(published.get("result") == "PASS", "published-candidate reproduction passed")
+check(isinstance(candidate, str) and bool(re.fullmatch(r"[0-9a-f]{40}", candidate)), "published candidate has full Git SHA")
+check(published.get("branch") == "codex/revision-g-native-cloud-execution", "published candidate is Revision-G branch")
+check(published.get("source") == "fresh GitHub clone outside the development worktree", "published evidence identifies uncontaminated source")
+check(published.get("manifest") == {"controlled_files": 504, "discrepancies": 0}, "published candidate manifest result")
+check(published.get("release_integrity") == {"passed": 871, "failed": 0}, "published candidate release-integrity result")
+check(published.get("determinism") == {"controlled_outputs": 350, "missing": 0, "extra": 0, "mismatched": 0}, "published candidate deterministic-build result")
+check(published.get("workbook", {}).get("sheets") == 27 and published.get("pdf", {}).get("pages") == 6, "published candidate workbook/PDF review scope")
+check(next(r for r in gates if r["gate"] == "22")["status"] == "PASS", "published-candidate manifest/reproduction gate passes")
 
 cloud_text = "\n".join(text(f"cloud/terraform/{name}") for name in ("versions.tf","variables.tf","main.tf","iam.tf","compute.tf","observability.tf","safety_checks.tf","budget.tf","outputs.tf"))
 check(cloud_text.count("default = false") >= 2, "cloud VMs disabled by default")

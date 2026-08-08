@@ -44,3 +44,4 @@ DOC-G-011,Revision-G adversarial self-audit,14_qa/revision_g_audit_report.md,G,R
 DOC-G-012,NVIDIA model/runtime evidence status,nvidia_native/model_card.md,G,Vision,Controlled
 DOC-G-013,Qualified safety-review preparation,commissioning/qualified_review_handoff.md,G,Safety boundary,Controlled
 DOC-G-014,Cloud plan status,cloud/plan_status.md,G,Cloud security,Controlled
+DOC-G-015,Revision-G post-push reproduction,14_qa/revision_g_post_push_reproduction.md,G,Configuration management,Controlled
