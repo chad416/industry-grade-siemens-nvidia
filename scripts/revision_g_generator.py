@@ -322,6 +322,7 @@ def _update_controls(root: Path) -> None:
         "RR-F-004": "e71d99d01c63889d229b1cd3d76e558bca6387d3df9174c428d5a6bd5a3922c5",
         "RR-F-006": "885c50a543f3600abcd182b5f744cb10e22613d5e7bf5811ab86997c0b13746b",
         "RR-F-007": "e5213d5fec0919ee242246fe56ab1b2727472d3e4bb3f4ebc4dc9ff97bdf9a6a",
+        "RR-F-008": "b9bcec7510f2de1d157a4b5dcc27f968be9fcc0c71c03e0e9510db3688129d82",
     }
     reviews = _read_csv(root / "14_qa/review_records.csv")
     reviews = [row for row in reviews if not row["review_record_id"].startswith("RR-G-")]

@@ -2569,7 +2569,7 @@
     {
       "path": "14_qa/automated_validation_report.md",
       "bytes": 32316,
-      "sha256": "dddd4452da3faa0c8150463a9290cb668e66f1b35c7117d44bba9755fa8c78b8",
+      "sha256": "18188dfb8c69c8c55359a1ca744cf38dd4ba53779928915a621b32d0053bb2a2",
       "category": "QA",
       "role": "Controlled artifact",
       "revision": "G",
@@ -4878,8 +4878,8 @@
     },
     {
       "path": "scripts/revision_g_generator.py",
-      "bytes": 98198,
-      "sha256": "3907b7281a8408e95b07c242f4846deac688d14a59e05cc12a24cc228cc37b5b",
+      "bytes": 98286,
+      "sha256": "4e8f2751dab875a6fbf37007ad417b544401131bb7aa4364137f93d5b24a1e8d",
       "category": "Reproduction",
       "role": "Controlled artifact",
       "revision": "G",

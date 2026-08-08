@@ -46,7 +46,7 @@ This is deterministic static/data/independent-model validation. Native QET/FreeC
 - all writable HMI tags use DB_HMI command requests
 - analog/HSC shields scheduled
 - artifact-reproduction Python version is locked
-- artifact-reproduction toolchain lock is Revision F
+- artifact-reproduction toolchain lock is Revision G
 - artifact-tool version is locked
 - balanced DATA_BLOCK endings: DB_CellMain.scl
 - balanced DATA_BLOCK endings: DB_Global.scl
@@ -88,7 +88,7 @@ This is deterministic static/data/independent-model validation. Native QET/FreeC
 - cable_schedule.csv exactly derives from canonical model
 - canonical cell inputs are normalized and consumed: []
 - canonical major-device coordinates, envelopes and clearances match the native Revision-E placement schedule
-- canonical revision F
+- canonical revision G
 - capper external/handshake faults map to alarm 1402
 - capper reset requires all diagnosed causes cleared
 - command arbitration separated from output mapper
@@ -187,7 +187,7 @@ This is deterministic static/data/independent-model validation. Native QET/FreeC
 - fill-channel implements tAnalogNoFlow
 - fill-channel implements tPulseMissing
 - fill-channel implements tValveClose
-- fresh-clone Revision-F CI workflow is controlled
+- fresh-clone Revision-G CI workflow is controlled
 - generated Siemens source parity: 00_types.scl
 - generated Siemens source parity: DB_CellMain.scl
 - generated Siemens source parity: DB_Global.scl
